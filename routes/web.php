@@ -20,3 +20,9 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/dashboard','DashboardController@index');
+
+Route::resource('/customer','CustomerController');
+
+Route::resource('/staff','StaffController');
+
+Route::resource('work-sheet','WorkSheetController');
