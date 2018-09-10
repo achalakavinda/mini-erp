@@ -26,3 +26,5 @@ Route::resource('/customer','CustomerController');
 Route::resource('/staff','StaffController');
 
 Route::resource('work-sheet','WorkSheetController');
+
+Route::resource('job-type','JobTypeController');

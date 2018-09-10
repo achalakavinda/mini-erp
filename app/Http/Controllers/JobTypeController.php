@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class CustomerController extends Controller
+class JobTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('Customer.index');
+        return view('JobType.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('Customer.create');
+        return view('JobType.create');
     }
 
     /**
