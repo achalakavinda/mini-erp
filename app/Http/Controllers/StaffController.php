@@ -13,7 +13,7 @@ class StaffController extends Controller
      */
     public function index()
     {
-        return view('Staff.index');
+        return view('staff.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class StaffController extends Controller
      */
     public function create()
     {
-        return view('Staff.create');
+        return view('staff.create');
     }
 
     /**

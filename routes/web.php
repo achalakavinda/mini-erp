@@ -26,3 +26,9 @@ Route::resource('/customer','CustomerController');
 Route::resource('/staff','StaffController');
 
 Route::resource('work-sheet','WorkSheetController');
+
+// Protected route example
+Route::group(['middleware' => ['role:super-admin']], function () {
+	// super-admin is a role in the role table
+	// anything can be changed to anything
+});
