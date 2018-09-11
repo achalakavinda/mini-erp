@@ -55,8 +55,8 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="salary">Salary</label>
-                                <input type="text" class="form-control" id="salary" placeholder="Salary">
+                                <label for="cost">Cost</label>
+                                <input type="text" class="form-control" id="cost" placeholder="Cost">
                             </div>
                         </div>
 
@@ -70,7 +70,7 @@
                         <div class="col-md-6">
                             <!-- select -->
                             <div class="form-group">
-                                <label>Job Type</label>
+                                <label>Designation</label>
                                 <select class="form-control">
                                     <option>External Audit</option>
                                     <option>Internal Audit</option>

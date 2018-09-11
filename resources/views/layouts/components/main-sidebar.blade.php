@@ -21,6 +21,7 @@
             <!-- Optionally, you can add icons to the links -->
             <li><a href="{{ url('/staff') }}"><i class="fa fa-link"></i> <span>Staff Reg</span></a></li>
             <li><a href="{{ url('work-sheet') }}"><i class="fa fa-link"></i> <span>Work Sheet</span></a></li>
+            <li><a href="{{ url('designation') }}"><i class="fa fa-link"></i> <span>Designation</span></a></li>
             <li><a href="{{ url('job-type') }}"><i class="fa fa-link"></i> <span>Job Type</span></a></li>
             <li class="treeview">
                 <a href="{{ url('/staff') }}"><i class="fa fa-link"></i> <span>Staff</span>

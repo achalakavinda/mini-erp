@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class WorkSheetController extends Controller
+class DesignationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class WorkSheetController extends Controller
      */
     public function index()
     {
-        return view('work_sheet.index');
+        return view('designation.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class WorkSheetController extends Controller
      */
     public function create()
     {
-        return view('work_sheet.create');
+        return view('designation.create');
     }
 
     /**

@@ -29,6 +29,8 @@ Route::resource('work-sheet', 'WorkSheetController');
 
 Route::resource('job-type', 'JobTypeController');
 
+Route::resource('designation','DesignationController');
+
 Route::group(['middleware' => ['role:super-admin']], function () {
 	// super-admin is a role in the role table
 	// anything can be changed to anything
