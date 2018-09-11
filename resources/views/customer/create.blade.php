@@ -5,19 +5,21 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Staff Board</h3>
+            <h3 class="box-title">Customers</h3>
         </div>
         <div class="box-body">
             <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/staff') }}" class="btn btn-success">Staff</a>
-            <a href="{{ url('/staff/create') }}" class="btn btn-success">New</a>
+            <a href="{{ url('/customer') }}" class="btn btn-success">Customer</a>
+            <a href="{{ url('/customer/create') }}" class="btn btn-success">New</a>
         </div>
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
+    <!-- /.box -->
 @endsection
 <!-- /main header section -->
 
+<!-- main section -->
 <!-- main section -->
 @section('main-content')
     <div class="row">
@@ -25,7 +27,7 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Add New Employee</h3>
+                    <h3 class="box-title">Add New Company</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -34,36 +36,22 @@
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Employee Name">
+                                <label for="name">Company</label>
+                                <input type="text" class="form-control" id="name" placeholder="Company Name">
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="address">Address</label>
-                                <input type="text" class="form-control" id="address" placeholder="Employee Address">
+                                <label for="contact">Contact</label>
+                                <input type="text" class="form-control" id="name" placeholder="Contact">
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="employeeNo">Employee No</label>
-                                <input type="text" class="form-control" id="employeeNo" placeholder="Employee No">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="salary">Salary</label>
-                                <input type="text" class="form-control" id="salary" placeholder="Salary">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="hourlyRate">Hourly Rate</label>
-                                <input type="text" class="form-control" id="hourlyRate" placeholder="Hourly Rate">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="Email">
                             </div>
                         </div>
 
@@ -78,24 +66,6 @@
                                 </select>
                             </div>
                         </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="nic">ID Number</label>
-                                <input type="text" class="form-control" id="employeeNic" placeholder="ID Number">
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleInputFile">Picture</label>
-                                <input type="file" id="exampleInputFile">
-
-                                <p class="help-block">Upload If necessary.</p>
-                            </div>
-                        </div>
-
 
                     </div>
                     <!-- /.box-body -->

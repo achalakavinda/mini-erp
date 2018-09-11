@@ -12,23 +12,26 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+	return view('welcome');
 });
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/dashboard','DashboardController@index');
+Route::get('/dashboard', 'DashboardController@index');
 
-Route::resource('/customer','CustomerController');
+Route::resource('/customer', 'CustomerController');
 
-Route::resource('/staff','StaffController');
+Route::resource('/staff', 'StaffController');
 
-Route::resource('work-sheet','WorkSheetController');
+Route::resource('work-sheet', 'WorkSheetController');
 
-// Protected route example
+Route::resource('job-type', 'JobTypeController');
+
 Route::group(['middleware' => ['role:super-admin']], function () {
 	// super-admin is a role in the role table
 	// anything can be changed to anything
 });
+
+
