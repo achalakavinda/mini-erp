@@ -26,12 +26,19 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Work Sheet | {{ new \Carbon\Carbon() }}</h3>
+                    <h3 class="box-title">Work Sheet |  {{ new \Carbon\Carbon() }}</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
                 <form role="form">
                     <div class="box-body">
+
+                        <div class="form-group">
+                            <label>Employee</label>
+                            <select class="form-control">
+                                <option>Samith</option>
+                            </select>
+                        </div>
 
                         <table id="example1" class="table table-responsive table-bordered table-striped">
                             <thead>

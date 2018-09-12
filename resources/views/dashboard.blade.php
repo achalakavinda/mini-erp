@@ -24,7 +24,7 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Staff Registry</h3>
+                        <h3 class="box-title">Project Wise Summery</h3>
                     </div>
                     <!-- /.box-header -->
                     <div style="overflow: auto" class="box-body">
@@ -32,29 +32,53 @@
                             <thead>
                             <tr>
                                 <th>#ID</th>
-                                <th>Full Name</th>
-                                <th>Employee Number</th>
-                                <th>Category</th>
-                                <th>Hour Rate</th>
+                                <th>Name Of Project</th>
+                                <th>Budget Cost</th>
+                                <th>Actual Cost</th>
+                                <th>Revenue</th>
+                                <th>Recovery Ratio</th>
+                                <th>view</th>
                             </tr>
                             </thead>
                             <tbody>
 
                             <tr>
                                <td>1</td>
-                               <td>Rakitha</td>
-                               <td>152</td>
-                               <td>Partner</td>
-                               <td>RS. 70,000</td>
+                               <td>x</td>
+                               <td>LKR 60,000</td>
+                               <td>LKR 50,000</td>
+                               <td>LKR 65,000</td>
+                               <td>130%</td>
+                               <td>
+                                   <a href="#" class="btn btn-sm btn-danger">view</a>
+                               </td>
                             </tr>
 
                             <tr>
                                 <td>2</td>
-                                <td>Sugith</td>
-                                <td>75</td>
-                                <td>Supervisor</td>
-                                <td>RS. 5,000</td>
+                                <td>y</td>
+                                <td>LKR 60,000</td>
+                                <td>LKR 50,000</td>
+                                <td>LKR 65,000</td>
+                                <td>130%</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-danger">view</a>
+                                </td>
                             </tr>
+
+                            <tr>
+                                <td>3</td>
+                                <td>z</td>
+                                <td>LKR 60,000</td>
+                                <td>LKR 50,000</td>
+                                <td>LKR 65,000</td>
+                                <td>130%</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-danger">view</a>
+                                </td>
+                            </tr>
+
+
 
                             </tbody>
                         </table>

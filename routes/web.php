@@ -12,28 +12,32 @@
 */
 
 Route::get('/', function () {
-	return view('welcome');
+	return redirect('/dashboard');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/dashboard', 'DashboardController@index');
 
-Route::resource('/customer', 'CustomerController');
+Route::group(['middleware' => ['auth']], function () {
 
-Route::resource('/staff', 'StaffController');
+    Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('work-sheet', 'WorkSheetController');
+    Route::get('/dashboard', 'DashboardController@index');
 
-Route::resource('job-type', 'JobTypeController');
+    Route::resource('/customer', 'CustomerController');
 
-Route::resource('designation','DesignationController');
+    Route::resource('/staff', 'StaffController');
 
-Route::group(['middleware' => ['role:super-admin']], function () {
-	// super-admin is a role in the role table
-	// anything can be changed to anything
+    Route::resource('work-sheet', 'WorkSheetController');
+
+    Route::resource('job-type', 'JobTypeController');
+
+    Route::resource('designation','DesignationController');
+
+    Route::group(['middleware' => ['role:super-admin']], function () {
+        // super-admin is a role in the role table
+        // anything can be changed to anything
+    });
+
 });
-
-
