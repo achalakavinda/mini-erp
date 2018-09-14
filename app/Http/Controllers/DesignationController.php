@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Designation;
 use Illuminate\Http\Request;
 
 class DesignationController extends Controller
@@ -13,7 +14,9 @@ class DesignationController extends Controller
      */
     public function index()
     {
-        return view('designation.index');
+        $Rows = Designation::all();
+
+        return view('designation.index',compact('Rows'));
     }
 
     /**
@@ -34,7 +37,16 @@ class DesignationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'designationType' => 'required | min:3',
+        ]);
+
+        Designation::create([
+            'designationType'=>$request->designationType,
+            'description'=>$request->description
+        ]);
+
+        return redirect('designation/create')->with('created',true);
     }
 
     /**

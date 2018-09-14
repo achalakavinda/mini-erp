@@ -38,11 +38,13 @@
                         </thead>
                         <tbody>
 
-                        <tr>
-                            <td>1</td>
-                            <td>Rakitha</td>
-                            <td>152</td>
-                        </tr>
+                        @foreach($Rows as $row)
+                            <tr>
+                                <td>{{ $row->id }}</td>
+                                <td>{{ $row->jobType }}</td>
+                                <td>{{ $row->description }}</td>
+                            </tr>
+                        @endforeach
 
                         </tbody>
                     </table>

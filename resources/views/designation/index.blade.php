@@ -38,17 +38,13 @@
                         </thead>
                         <tbody>
 
-                        <tr>
-                            <td>1</td>
-                            <td>Manager</td>
-                            <td>description</td>
-                        </tr>
-
-                        <tr>
-                            <td>2</td>
-                            <td>Staff</td>
-                            <td>description</td>
-                        </tr>
+                            @foreach($Rows as $row)
+                                <tr>
+                                    <td>{{ $row->id }}</td>
+                                    <td>{{ $row->designationType }}</td>
+                                    <td>{{ $row->description }}</td>
+                                </tr>
+                            @endforeach
 
                         </tbody>
                     </table>

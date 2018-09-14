@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JobType;
 use Illuminate\Http\Request;
 
 class JobTypeController extends Controller
@@ -13,7 +14,9 @@ class JobTypeController extends Controller
      */
     public function index()
     {
-        return view('job_type.index');
+        $Rows = JobType::all();
+
+        return view('job_type.index',compact('Rows'));
     }
 
     /**
@@ -34,7 +37,18 @@ class JobTypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'jobType' => 'required | min:3',
+        ]);
+
+        JobType::create([
+            'jobType'=>$request->jobType,
+            'description'=>$request->description
+        ]);
+
+        return redirect('job-type/create')->with('created',true);
+
     }
 
     /**
