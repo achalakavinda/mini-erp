@@ -25,13 +25,12 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Add Designation Type</h3>
+                    <h3 class="box-title">{{ $Designation->designationType }}</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                {!! Form::open(['action'=>'DesignationController@store','class'=>'form-horizontal','id'=>'Form']) !!}
-                    @include('error.error')
-                    @include('designation._partials.createForm')
+                {!! Form::model($Designation, ['method' => 'PATCH', 'action' => ['DesignationController@update', $Designation->id],'class'=>'form-horizontal']) !!}
+                @include('designation._partials.updateForm')
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->

@@ -57,7 +57,8 @@ class DesignationController extends Controller
      */
     public function show($id)
     {
-        //
+        $Designation = Designation::findOrFail($id);
+        return view('designation.edit',compact('Designation'));
     }
 
     /**
@@ -68,7 +69,8 @@ class DesignationController extends Controller
      */
     public function edit($id)
     {
-        //
+        $Designation = Designation::findOrFail($id);
+        return view('designation.edit',compact('Designation'));
     }
 
     /**
@@ -80,7 +82,7 @@ class DesignationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        dd($request->all());
     }
 
     /**

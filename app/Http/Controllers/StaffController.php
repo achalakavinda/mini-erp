@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Designation;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class StaffController extends Controller
@@ -13,7 +15,8 @@ class StaffController extends Controller
      */
     public function index()
     {
-        return view('staff.index');
+        $Rows = User::all();
+        return view('staff.index',compact('Rows'));
     }
 
     /**
@@ -23,7 +26,8 @@ class StaffController extends Controller
      */
     public function create()
     {
-        return view('staff.create');
+        $Designation = Designation::all()->pluck('designationType','id');
+        return view('staff.create',compact('Designation'));
     }
 
     /**
@@ -34,7 +38,28 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'name'=>'required',
+            'emp_no'=>'required | unique:users',
+            'cost'=>'required',
+            'hr_rates'=>'required',
+            'designation_id'=>'required',
+            'email'=>'required | unique:users'
+        ]);
+
+        User::create([
+            'name'=>$request->name,
+            'address'=>$request->address,
+            'emp_no'=>$request->emp_no,
+            'cost'=>$request->cost,
+            'hr_rates'=>$request->hr_rates,
+            'designation_id'=>$request->designation_id,
+            'nic'=>$request->nic,
+            'email'=>$request->email,
+            'password'=> bcrypt('password')
+        ]);
+
     }
 
     /**

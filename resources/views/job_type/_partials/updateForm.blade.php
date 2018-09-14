@@ -13,11 +13,9 @@
             {!! Form::text('description',null,['class'=>'form-control','id'=>'description','placeholder'=>'Description']) !!}
         </div>
     </div>
-
-
 </div>
 <!-- /.box-body -->
 
 <div class="box-footer">
-    {!! Form::submit('Submit',['class'=>'btn btn-primary']) !!}
+    {!! Form::submit('Update',['class'=>'btn btn-danger']) !!}
 </div>
