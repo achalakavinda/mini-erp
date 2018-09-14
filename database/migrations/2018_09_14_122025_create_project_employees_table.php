@@ -14,8 +14,17 @@ class CreateProjectEmployeesTable extends Migration
     public function up()
     {
         Schema::create('project_employees', function (Blueprint $table) {
-            $table->increments('id');
+            $table->unsignedInteger('project_id');
+            $table->unsignedInteger('user_id');
+            $table->float('paying_hrs')->default(0);
+            $table->float('volunteer_hrs')->default(0);
+            $table->float('hour_rate')->default(0);
+            $table->float('cost')->default('0');
             $table->timestamps();
+
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelte('cascade');
+            $table->primary(array('project_id','user_id'));
         });
     }
 
