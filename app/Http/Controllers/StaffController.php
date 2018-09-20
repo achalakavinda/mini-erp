@@ -60,6 +60,8 @@ class StaffController extends Controller
             'password'=> bcrypt('password')
         ]);
 
+        return redirect('/staff');
+
     }
 
     /**

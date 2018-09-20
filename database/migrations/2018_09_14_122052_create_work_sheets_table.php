@@ -19,9 +19,12 @@ class CreateWorkSheetsTable extends Migration
             $table->unsignedInteger('customer_id');
             $table->unsignedInteger('project_id');
             $table->unsignedInteger('job_type_id');
-            $table->unsignedInteger('time_slot_id');
+            $table->Integer('time_slot_id');
             $table->time('from');
             $table->time('to');
+            $table->float('work_hrs');
+            $table->float('hr_rate');
+            $table->float('hr_cost');
             $table->text('remark')->nullable();
             $table->timestamps();
 
@@ -29,7 +32,6 @@ class CreateWorkSheetsTable extends Migration
             $table->foreign('customer_id')->references('id')->on('customers')->onDelte('cascade');
             $table->foreign('project_id')->references('id')->on('projects')->onDelte('cascade');
             $table->foreign('job_type_id')->references('id')->on('job_types')->onDelte('cascade');
-            $table->foreign('time_slot_id')->references('id')->on('time_slots')->onDelte('cascade');
         });
     }
 

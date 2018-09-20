@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TimeSlot;
+use App\Models\WorkSheet;
 use Illuminate\Http\Request;
 
 class WorkSheetController extends Controller
@@ -23,7 +25,8 @@ class WorkSheetController extends Controller
      */
     public function create()
     {
-        return view('work_sheet.create');
+        $Rows = TimeSlot::all();
+        return view('work_sheet.create',compact('Rows'));
     }
 
     /**

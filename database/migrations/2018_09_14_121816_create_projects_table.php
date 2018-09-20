@@ -23,6 +23,7 @@ class CreateProjectsTable extends Migration
             $table->float('actual_cost')->default('0');
             $table->float('revenue')->default('0');
             $table->float('recovery_ratio')->default('0');
+            $table->boolean('close')->default(0);
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('customers')->onDelte('cascade');
