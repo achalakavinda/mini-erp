@@ -30,67 +30,10 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form role="form">
-                    <div class="box-body">
-
-                        <div class="form-group">
-                            <label>Employee</label>
-                            <select class="form-control">
-                                <option>Samith</option>
-                            </select>
-                        </div>
-
-                        <table id="example1" class="table table-responsive table-bordered table-striped">
-                            <thead>
-                            <tr>
-                                <th>Time</th>
-                                <th>Work</th>
-                                <th>Customer</th>
-                                <th>Job Type</th>
-                                <th>Remark</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            @foreach($Rows as $row)
-
-                                <tr>
-                                    <td>{{ $row->from }} - {{ $row->to }}</td>
-                                    <td>
-                                        <input type="checkbox">
-                                    </td>
-                                    <td>
-                                          <?php $Company =  \App\Models\Customer::all()->pluck('name','id') ?>
-                                        {!! Form::select('company',$Company,null,['class'=>'form-control']) !!}
-                                    </td>
-                                    <td>
-                                        <select class="form-control">
-                                            <option>External Audit</option>
-                                            <option>Internal Audit</option>
-                                            <option>Feasibility</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" id="remark" placeholder="remark">
-                                    </td>
-
-                                </tr>
-
-                            @endforeach
-
-
-                            </tbody>
-                        </table>
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-
-
-                </form>
+                {!! Form::open(['action'=>'WorkSheetController@store','class'=>'form-horizontal','id'=>'Form']) !!}
+                @include('error.error')
+                @include('work_sheet._partials.createForm')
+                {!! Form::close() !!}
             </div>
             <!-- /.box -->
         </div>

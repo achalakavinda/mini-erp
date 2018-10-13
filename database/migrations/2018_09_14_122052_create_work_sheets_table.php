@@ -17,6 +17,7 @@ class CreateWorkSheetsTable extends Migration
             $table->increments('id');
             $table->date('date');
             $table->unsignedInteger('customer_id');
+            $table->unsignedInteger('user_id');
             $table->unsignedInteger('project_id');
             $table->unsignedInteger('job_type_id');
             $table->Integer('time_slot_id');
@@ -30,6 +31,7 @@ class CreateWorkSheetsTable extends Migration
 
 
             $table->foreign('customer_id')->references('id')->on('customers')->onDelte('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelte('cascade');
             $table->foreign('project_id')->references('id')->on('projects')->onDelte('cascade');
             $table->foreign('job_type_id')->references('id')->on('job_types')->onDelte('cascade');
         });

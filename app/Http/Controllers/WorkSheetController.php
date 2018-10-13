@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\TimeSlot;
 use App\Models\WorkSheet;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class WorkSheetController extends Controller
@@ -15,7 +16,8 @@ class WorkSheetController extends Controller
      */
     public function index()
     {
-        return view('work_sheet.index');
+        $WorkSheet = WorkSheet::all();
+        return view('work_sheet.index',compact('WorkSheet'));
     }
 
     /**
@@ -25,8 +27,8 @@ class WorkSheetController extends Controller
      */
     public function create()
     {
-        $Rows = TimeSlot::all();
-        return view('work_sheet.create',compact('Rows'));
+
+        return view('work_sheet.create');
     }
 
     /**
@@ -37,7 +39,49 @@ class WorkSheetController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $ROWS = $request->row;
+
+        foreach ($ROWS as $row){
+
+            $diffInMin = $this->timeDiff($row['from'],$row['to']);
+            $work_hr = $this->convertToHoursMins($diffInMin);
+
+            WorkSheet::create([
+                'date'=>$request->date,
+                'customer_id'=>$row['company'],
+                'user_id'=>$request->user_id,
+                'project_id'=>1,
+                'job_type_id'=>$row['job_type_id'],
+                'time_slot_id'=>$row['time_slot_id'],
+                'from'=>$row['from'],
+                'to'=>$row['to'],
+                'work_hrs'=>$work_hr,
+                'hr_rate'=>1,
+                'hr_cost'=>1,
+                'remark'=>$row['remark']
+            ]);
+
+        }
+
+        return redirect()->back();
+
+
+    }
+
+    public function timeDiff($from,$to){
+        $startTime = Carbon::parse($to);
+        $finishTime = Carbon::parse($from);
+        return $totalDuration = $finishTime->diffInMinutes($startTime);
+    }
+
+    function convertToHoursMins($time) {
+        $format = '%02d:%02d';
+        if ($time < 1) {
+            return;
+        }
+        $hours = $time / 60;
+        return $hours;
     }
 
     /**
