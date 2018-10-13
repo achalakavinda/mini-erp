@@ -59,7 +59,8 @@ class JobTypeController extends Controller
      */
     public function show($id)
     {
-        //
+        $JobType = JobType::findOrFail($id);
+        return view('job_type.edit',compact('JobType'));
     }
 
     /**

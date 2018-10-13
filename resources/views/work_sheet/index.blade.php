@@ -41,27 +41,20 @@
                         </thead>
                         <tbody>
 
+                        @foreach($WorkSheet as $row)
                             <tr>
-                                <td>1</td>
-                                <td>09-11-2018</td>
                                 <td>X</td>
-                                <td>10</td>
-                                <td>10,000</td>
+                                <td>{!! $row->date !!}</td>
+                                <td>{!! \App\Models\Customer::find($row->customer_id) !!}</td>
+                                <td>{!! $row->work_hrs !!}</td>
+                                <td></td>
                                 <td>
-                                    <a class="btn btn-danger btn-sm" href="{{ url('work-sheet') }}/1">view</a>
-                                </td>
-                            </tr>
 
-                            <tr>
-                                <td>2</td>
-                                <td>09-11-2018</td>
-                                <td>y</td>
-                                <td>12</td>
-                                <td>10,500</td>
-                                <td>
-                                    <a class="btn btn-danger btn-sm" href="{{ url('work-sheet') }}/2">view</a>
                                 </td>
                             </tr>
+                        @endforeach
+
+
 
                         </tbody>
                     </table>

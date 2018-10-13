@@ -2,8 +2,8 @@
 
     <div class="col-md-6">
         <div class="form-group">
-            {!! Form::label('Job Type') !!}
-            {!! Form::text('jobType',null,['class'=>'form-control','id'=>'jobType','placeholder'=>'Job Type']) !!}
+            {!! Form::label('Designation Type') !!}
+            {!! Form::text('designationType',null,['class'=>'form-control','id'=>'designationType','placeholder'=>'Designation Type']) !!}
         </div>
     </div>
 
@@ -19,5 +19,5 @@
 <!-- /.box-body -->
 
 <div class="box-footer">
-    {!! Form::submit('Submit',['class'=>'btn btn-primary']) !!}
+    {!! Form::submit('Edit',['class'=>'btn btn-danger']) !!}
 </div>

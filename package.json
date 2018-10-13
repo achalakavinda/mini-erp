@@ -18,5 +18,10 @@
         "lodash": "^4.17.5",
         "popper.js": "^1.12",
         "vue": "^2.5.7"
+    },
+    "dependencies": {
+        "@angular/animations": "^6.1.7",
+        "@angular/cdk": "^6.4.7",
+        "@angular/material": "^6.4.7"
     }
 }

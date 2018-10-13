@@ -30,6 +30,7 @@
                 <!-- /.box-header -->
                 <!-- form start -->
                 {!! Form::open(['action'=>'DesignationController@store','class'=>'form-horizontal','id'=>'Form']) !!}
+                    @include('error.error')
                     @include('designation._partials.createForm')
                 {!! Form::close() !!}
             </div>

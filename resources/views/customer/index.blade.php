@@ -44,125 +44,31 @@
                         </thead>
                         <tbody>
 
-                        <tr>
-                            <td>1</td>
-                            <td>x</td>
-                            <td>077 3584572</td>
-                            <td>info@9xlabs.com</td>
-                            <td>
-                                <ul>
-                                    <li> External Audit </li>
-                                    <li> Feasibility </li>
-                                </ul>
-                            </td>
-                            <td>
-                                <ul>
-                                    <li> Kasun  | 5hr </li>
-                                    <li> Lakshan | 6hr  </li>
-                                </ul>
-                            </td>
-                            <td>170,000</td>
-                            <td>250,000</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-danger">view</a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td>x</td>
-                            <td>077 3584572</td>
-                            <td>info@9xlabs.com</td>
-                            <td>
-                                <ul>
-                                    <li> External Audit </li>
-                                    <li> Feasibility </li>
-                                </ul>
-                            </td>
-                            <td>
-                                <ul>
-                                    <li> Kasun  | 5hr </li>
-                                    <li> Lakshan | 6hr  </li>
-                                </ul>
-                            </td>
-                            <td>170,000</td>
-                            <td>250,000</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-danger">view</a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td>x</td>
-                            <td>077 3584572</td>
-                            <td>info@9xlabs.com</td>
-                            <td>
-                                <ul>
-                                    <li> External Audit </li>
-                                    <li> Feasibility </li>
-                                </ul>
-                            </td>
-                            <td>
-                                <ul>
-                                    <li> Kasun  | 5hr </li>
-                                    <li> Lakshan | 6hr  </li>
-                                </ul>
-                            </td>
-                            <td>170,000</td>
-                            <td>250,000</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-danger">view</a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td>x</td>
-                            <td>077 3584572</td>
-                            <td>info@9xlabs.com</td>
-                            <td>
-                                <ul>
-                                    <li> External Audit </li>
-                                    <li> Feasibility </li>
-                                </ul>
-                            </td>
-                            <td>
-                                <ul>
-                                    <li> Kasun  | 5hr </li>
-                                    <li> Lakshan | 6hr  </li>
-                                </ul>
-                            </td>
-                            <td>170,000</td>
-                            <td>250,000</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-danger">view</a>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>1</td>
-                            <td>x</td>
-                            <td>077 3584572</td>
-                            <td>info@9xlabs.com</td>
-                            <td>
-                                <ul>
-                                    <li> External Audit </li>
-                                    <li> Feasibility </li>
-                                </ul>
-                            </td>
-                            <td>
-                                <ul>
-                                    <li> Kasun  | 5hr </li>
-                                    <li> Lakshan | 6hr  </li>
-                                </ul>
-                            </td>
-                            <td>170,000</td>
-                            <td>250,000</td>
-                            <td>
-                                <a href="#" class="btn btn-sm btn-danger">view</a>
-                            </td>
-                        </tr>
+                        @foreach($Customers as $customer)
+                            <tr>
+                                <td>{!! $customer->id !!}</td>
+                                <td>{!! $customer->name !!}</td>
+                                <td>{!! $customer->contact !!}</td>
+                                <td>{!! $customer->email !!}</td>
+                                <td>
+                                    <ul>
+                                        <li> External Audit </li>
+                                        <li> Feasibility </li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        <li> Kasun  | 5hr </li>
+                                        <li> Lakshan | 6hr  </li>
+                                    </ul>
+                                </td>
+                                <td>170,000</td>
+                                <td>250,000</td>
+                                <td>
+                                    <a href="#" class="btn btn-sm btn-danger">view</a>
+                                </td>
+                            </tr>
+                        @endforeach
 
 
                         </tbody>

@@ -30,6 +30,7 @@
                 <!-- /.box-header -->
                 <!-- form start -->
                 {!! Form::open(['action'=>'JobTypeController@store','class'=>'form-horizontal','id'=>'Form']) !!}
+                @include('error.error')
                 @include('job_type._partials.createForm')
                 {!! Form::close() !!}
             </div>
