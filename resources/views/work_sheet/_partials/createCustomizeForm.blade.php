@@ -37,32 +37,22 @@
         </thead>
         <tbody>
 
-        <?php $count=0;?>
-        @foreach($Rows as $row)
-
             <tr>
-                <td>{{ $row->from }} - {{ $row->to }}</td>
-                <input type="text" style="display: none" name="row[{!! $count !!}][time_slot_id]" value="{!! $row->id !!}">
-                <input type="text" style="display: none" name="row[{!! $count !!}][from]" value="{!! $row->from !!}">
-                <input type="text" style="display: none" name="row[{!! $count !!}][to]" value="{!! $row->to !!}">
+                <td> <input name="row[0][from]" type="time"> - <input name="row[0][to]" type="time"></td>
                 <td>
                     <input checked type="checkbox">
                 </td>
                 <td>
                     <?php $Company =  \App\Models\Customer::all()->pluck('name','id') ?>
-                    {!! Form::select('row['.$count.'][company]',$Company,null,['class'=>'form-control']) !!}
+                    {!! Form::select('row[0][company]',$Company,null,['class'=>'form-control']) !!}
                 </td>
                 <td>
-                    {!! Form::select('row['.$count.'][job_type_id]',$JobTypes,null,['class'=>'form-control','id'=>'job_type_id']) !!}
+                    {!! Form::select('row[0][job_type_id]',$JobTypes,null,['class'=>'form-control','id'=>'job_type_id']) !!}
                 </td>
                 <td>
-                    {!! Form::text('row['.$count.'][remark]',null,["class"=>"form-control","id"=>"remark" ,"placeholder"=>"remark"]) !!}
+                    {!! Form::text('row[0][remark]',null,["class"=>"form-control","id"=>"remark" ,"placeholder"=>"remark"]) !!}
                 </td>
-
             </tr>
-
-            <?php $count++;?>
-        @endforeach
 
 
         </tbody>

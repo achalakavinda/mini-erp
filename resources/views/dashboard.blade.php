@@ -24,61 +24,53 @@
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Project Wise Summery</h3>
+                        <h3 class="box-title">Projects</h3>
                     </div>
                     <!-- /.box-header -->
                     <div style="overflow: auto" class="box-body">
-                        <table id="example1" class="table table-responsive table-bordered table-striped">
+                        <table id="table" class="table table-responsive table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th>#ID</th>
-                                <th>Name Of Project</th>
-                                <th>Budget Cost</th>
-                                <th>Actual Cost</th>
+                                <th>Code</th>
+                                <th>Customer</th>
+                                <th>Number OF Hrs</th>
+                                <th>Budget</th>
+                                <th>Quoted</th>
+                                <th>Cost</th>
                                 <th>Revenue</th>
                                 <th>Recovery Ratio</th>
-                                <th>view</th>
+                                <th>status</th>
                             </tr>
                             </thead>
                             <tbody>
 
-                            <tr>
-                               <td>1</td>
-                               <td>x</td>
-                               <td>LKR 60,000</td>
-                               <td>LKR 50,000</td>
-                               <td>LKR 65,000</td>
-                               <td>130%</td>
-                               <td>
-                                   <a href="#" class="btn btn-sm btn-danger">view</a>
-                               </td>
-                            </tr>
+                            <?php $Rows = \App\Models\Project::all();?>
 
-                            <tr>
-                                <td>2</td>
-                                <td>y</td>
-                                <td>LKR 60,000</td>
-                                <td>LKR 50,000</td>
-                                <td>LKR 65,000</td>
-                                <td>130%</td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-danger">view</a>
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <td>3</td>
-                                <td>z</td>
-                                <td>LKR 60,000</td>
-                                <td>LKR 50,000</td>
-                                <td>LKR 65,000</td>
-                                <td>130%</td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-danger">view</a>
-                                </td>
-                            </tr>
-
-
+                            @foreach($Rows as $row)
+                                <?php
+                                $Customer="";
+                                $CM = \App\Models\Customer::find($row->customer_id );
+                                if(!empty($CM)){
+                                    $Customer = $CM->name;
+                                }
+                                ?>
+                                <tr>
+                                    <td>{{ $row->id }}</td>
+                                    <td>{{ $row->code }}</td>
+                                    <td>{{ $Customer }}</td>
+                                    <td>{{ $row->number_of_hrs }}</td>
+                                    <td>{{ $row->budget_cost }}</td>
+                                    <td>{{ $row->quoted_price }}</td>
+                                    <td>{{ $row->actual_cost }}</td>
+                                    <td>{{ $row->revenue }}</td>
+                                    <td>{{ $row->recovery_ratio }}</td>
+                                    <td>{{ $row->close }}</td>
+                                    <td>
+                                        <a class="btn btn-danger btn-sm" href="{{ url('/job-type') }}/{{ $row->id }}">view</a>
+                                    </td>
+                                </tr>
+                            @endforeach
 
                             </tbody>
                         </table>

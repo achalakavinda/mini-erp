@@ -34,7 +34,7 @@ class CreateUsersTable extends Migration
             [
                 'name' => 'admin',
                 'email' => 'admin@test.com',
-                'password' => bcrypt('admin')
+                'password' => bcrypt('admin123')
             ]
         ]);
     }

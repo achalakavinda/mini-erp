@@ -33,6 +33,7 @@
                         <tr>
                             <th>#ID</th>
                             <th>Date</th>
+                            <th>Project</th>
                             <th>Company</th>
                             <th>No of Hrs</th>
                             <th>Cost</th>
@@ -42,10 +43,32 @@
                         <tbody>
 
                         @foreach($WorkSheet as $row)
+
+                            <?php
+                                $Customer_name = "";
+                                $Project_name = "";
+                                $Staff_name = "";
+                                $customer  = \App\Models\Customer::find($row->customer_id);
+                                $project  = \App\Models\Project::find($row->project_id);
+                                $user = \App\Models\User::find($row->user_id);
+
+                                if(!empty($customer)){
+                                    $Customer_name = $customer->name;
+                                }
+                                if(!empty($project)){
+                                    $Project_name = $project->code;
+                                }
+                                if(!empty($user)){
+                                    $Staff_name = $user->name;
+                                }
+                            ?>
+
                             <tr>
-                                <td>X</td>
+                                <td>{!! $row->id !!}</td>
                                 <td>{!! $row->date !!}</td>
-                                <td>{!! \App\Models\Customer::find($row->customer_id) !!}</td>
+                                <td>{!! $Staff_name !!}</td>
+                                <td>{!! $Project_name !!}</td>
+                                <td>{!! $Customer_name !!}</td>
                                 <td>{!! $row->work_hrs !!}</td>
                                 <td></td>
                                 <td>

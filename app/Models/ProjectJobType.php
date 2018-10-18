@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProjectJobType extends Model
 {
-    //
+    public $guarded = ['id'];
 }

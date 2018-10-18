@@ -20,6 +20,7 @@
             <li class="header">System</li>
             <!-- Optionally, you can add icons to the links -->
             <li><a href="{{ url('/dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+            <li><a href="{{ url('/project') }}"><i class="fa fa-print"></i> <span>Project</span></a></li>
             <li><a href="{{ url('/work-sheet/create') }}"><i class="fa fa-book"></i> <span>Work Report</span></a></li>
             <li><a href="{{ url('/staff') }}"><i class="fa fa-user"></i> <span>Staff Reg</span></a></li>
             <li><a href="{{ url('work-sheet') }}"><i class="fa fa-file"></i> <span>Work Sheet</span></a></li>
