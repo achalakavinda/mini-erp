@@ -38,11 +38,13 @@ class CustomerController extends Controller
     {
         $request->validate([
            'name'=>'required',
+           'code'=>'required',
            'contact'=>'required',
         ]);
 
         Customer::create([
             'name'=>$request->name,
+            'code'=>$request->code,
             'contact'=>$request->contact,
             'email'=>$request->email,
             'description'=>$request->description

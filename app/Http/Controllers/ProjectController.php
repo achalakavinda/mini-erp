@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
+use App\Models\JobType;
 use App\Models\Project;
 use App\Models\ProjectEmployee;
 use App\Models\ProjectJobType;
@@ -47,15 +49,19 @@ class ProjectController extends Controller
             'details' => 'required',
         ]);
 
+        $CUSTOMER = Customer::find($request->customer_id);
+
         $Project = Project::create([
             'customer_id'=>$request->customer_id,
-            'code'=>$request->code,
+            'code'=>$request->code." - ".$CUSTOMER->code,
             'budget_cost'=>$request->budget_cost,
             'quoted_price'=>$request->qouted_price,
         ]);
 
+        $tempJobTypeID = 0;
         //assign jobs to projects
         foreach ($request->job_types as $item){
+            $tempJobTypeID = $item;
             ProjectJobType::create([
                 'project_id'=>$Project->id,
                 'jop_type_id'=>$item
@@ -66,6 +72,7 @@ class ProjectController extends Controller
         foreach ($request->details as $item){
             ProjectEmployee::create([
                 'project_id'=>$Project->id,
+                'job_type_id'=>$tempJobTypeID,
                 'user_id'=>$item['employee_id'],
                 'paying_hrs'=>$item['paying_hrs'],
                 'volunteer_hrs'=>$item['volunteer_hrs'],

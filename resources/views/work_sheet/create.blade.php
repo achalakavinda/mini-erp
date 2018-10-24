@@ -48,3 +48,72 @@
 
 @endsection
 <!-- /main section -->
+
+@section('js')
+    <script type="text/javascript">
+
+        $(function() {
+            console.log( "ready!" );
+
+            var projectSelector = $( "#project" );
+            var jobTypeSelector = $( "#jobtypeid" );
+            var customerSelector = $( "#customerid" );
+
+
+            ajax(projectSelector.val());
+
+            projectSelector.click(function() {
+                ajax(projectSelector.val());
+            });
+            
+            
+
+
+        });
+        
+        function ajax(id) {
+            var url = '{!! url('api/project') !!}/'+id;
+            $( "#jobtypeid" ).find('option').remove().end();
+            $( "#customerid" ).find('option').remove().end();
+            $.ajax({
+                url: url,
+                success: filler,
+                statusCode: {
+                    404: function() {
+                        alert( "page not found" );
+                    }
+                }
+            });
+        }
+
+        function filler(data) {
+            console.log(data)
+            console.log(data.status.length)
+            if(data.status.length>0 && data.status =='ok'){
+
+                var jobTypes = data.job_types;
+
+                $( "#customerid" ).find('option').remove().end();
+
+                $( "#customerid" ).append($('<option>', {
+                    value: data.customer.id,
+                    text : data.customer.name
+                }));
+
+
+                jobTypes.forEach(function (item) {
+                    $( "#jobtypeid" ).find('option').remove().end();
+
+                    $( "#jobtypeid" ).append($('<option>', {
+                        value: item.id,
+                        text : item.jobType
+                    }));
+                })
+            }else{
+                $( "#jobtypeid" ).find('option').remove().end();
+            }
+        }
+        
+    </script>
+
+@endsection

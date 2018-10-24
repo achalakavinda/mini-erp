@@ -20,7 +20,7 @@
     <div class="col-md-6">
         <div class="form-group">
             <label>Project</label>
-            {!! Form::select('project_id',$Project,null,['class'=>'form-control','id'=>'project_id']) !!}
+            {!! Form::select('project_id',$Project,null,['class'=>'form-control','id'=>'project']) !!}
 
         </div>
     </div>
@@ -44,10 +44,10 @@
                 </td>
                 <td>
                     <?php $Company =  \App\Models\Customer::all()->pluck('name','id') ?>
-                    {!! Form::select('row[0][company]',$Company,null,['class'=>'form-control']) !!}
+                    {!! Form::select('row[0][company]',$Company,null,['class'=>'form-control','id'=>'customerid']) !!}
                 </td>
                 <td>
-                    {!! Form::select('row[0][job_type_id]',$JobTypes,null,['class'=>'form-control','id'=>'job_type_id']) !!}
+                    {!! Form::select('row[0][job_type_id]',$JobTypes,null,['class'=>'form-control','id'=>'jobtypeid']) !!}
                 </td>
                 <td>
                     {!! Form::text('row[0][remark]',null,["class"=>"form-control","id"=>"remark" ,"placeholder"=>"remark"]) !!}

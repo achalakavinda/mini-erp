@@ -66,24 +66,28 @@ class DatabaseSeeder extends Seeder
         DB::table('customers')->insert([
             [
                 'name'=>'Richard Peris Lk',
+                'code'=>'R P L',
                 'contact'=>'077 3584571',
                 'email'=>'test@1.com',
                 'description'=>'customer description'
             ],
             [
                 'name'=>'9X Labs',
+                'code'=>'9X',
                 'contact'=>'077 3584572',
                 'email'=>'test@2.com',
                 'description'=>'customer description'
             ],
             [
                 'name'=>'Sysco Labs',
+                'code'=>'Sysco',
                 'contact'=>'077 3584573',
                 'email'=>'test@3.com',
                 'description'=>'customer description'
             ],
             [
                 'name'=>'IFS R&D',
+                'code'=>'IFS',
                 'contact'=>'077 3584574',
                 'email'=>'test@4.com',
                 'description'=>'customer description'

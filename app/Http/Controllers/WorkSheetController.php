@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use App\Models\TimeSlot;
+use App\Models\User;
 use App\Models\WorkSheet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -63,6 +65,9 @@ class WorkSheetController extends Controller
                 $time_slot_id= $row['time_slot_id'];
             }
 
+            $USER = User::find($request->user_id);
+
+
             WorkSheet::create([
                 'date'=>$request->date,
                 'customer_id'=>$row['company'],
@@ -73,10 +78,17 @@ class WorkSheetController extends Controller
                 'from'=>$row['from'],
                 'to'=>$row['to'],
                 'work_hrs'=>$work_hr,
-                'hr_rate'=>1,
-                'hr_cost'=>1,
+                'hr_rate'=>$USER->hr_rates,
+                'hr_cost'=>$USER->hr_rates*$work_hr,
                 'remark'=>$row['remark']
             ]);
+
+            $PJ = Project::find($request->project_id);
+
+            if($PJ) {
+                $PJ->actual_cost = $PJ->actual_cost + ($USER->hr_rates*$work_hr);
+                $PJ->save();
+            }
 
         }
 

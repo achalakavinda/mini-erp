@@ -1,7 +1,7 @@
 <?php
     $Customers = \App\Models\Customer::all()->pluck('name','id');
     $JobTypes = \App\Models\JobType::all()->pluck('jobType','id');
-    $Employess = \App\Models\User::all()->pluck('name','id');
+    $Employess = \App\Models\User::where('designation_id','!=',-999)->pluck('name','id');
 ?>
 
 <div class="box-body">
@@ -50,7 +50,7 @@
     <div class="col-md-12">
         <div class="form-group">
             {!! Form::label('Jobs') !!}
-            {!! Form::select('job_types',$JobTypes,null,['class'=>'form-control','id'=>'job_types','multiple'=>'multiple','name'=>'job_types[]']) !!}
+            {!! Form::select('job_types',$JobTypes,null,['class'=>'form-control','id'=>'job_types','name'=>'job_types[]']) !!}
         </div>
     </div>
 </div>

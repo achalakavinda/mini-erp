@@ -16,6 +16,7 @@ class CreateProjectEmployeesTable extends Migration
         Schema::create('project_employees', function (Blueprint $table) {
             $table->unsignedInteger('project_id');
             $table->unsignedInteger('user_id');
+            $table->unsignedInteger('job_type_id');
             $table->float('paying_hrs')->default(0);
             $table->float('volunteer_hrs')->default(0);
             $table->float('hour_rate')->default(0);

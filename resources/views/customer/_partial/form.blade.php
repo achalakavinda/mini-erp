@@ -2,8 +2,15 @@
 
     <div class="col-md-12">
         <div class="form-group">
-            <label for="name"></label>
+            <label for="name">Company</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="Company Name">
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="code">Code</label>
+            <input type="text" class="form-control" id="code" name="code" placeholder="Code">
         </div>
     </div>
 

@@ -32,6 +32,7 @@
                         <thead>
                         <tr>
                             <th>#ID</th>
+                            <th>Code</th>
                             <th>Name</th>
                             <th>Contact</th>
                             <th>Email</th>
@@ -47,6 +48,7 @@
                         @foreach($Customers as $customer)
                             <tr>
                                 <td>{!! $customer->id !!}</td>
+                                <td>{!! $customer->code !!}</td>
                                 <td>{!! $customer->name !!}</td>
                                 <td>{!! $customer->contact !!}</td>
                                 <td>{!! $customer->email !!}</td>

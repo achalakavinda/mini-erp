@@ -33,6 +33,7 @@
                         <tr>
                             <th>#ID</th>
                             <th>Date</th>
+                            <th>Employee</th>
                             <th>Project</th>
                             <th>Company</th>
                             <th>No of Hrs</th>
@@ -70,10 +71,8 @@
                                 <td>{!! $Project_name !!}</td>
                                 <td>{!! $Customer_name !!}</td>
                                 <td>{!! $row->work_hrs !!}</td>
+                                <td>{!! $row->hr_cost !!}</td>
                                 <td></td>
-                                <td>
-
-                                </td>
                             </tr>
                         @endforeach
 

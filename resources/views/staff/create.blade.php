@@ -56,7 +56,7 @@
 
         function calculate() {
             var cost =parseFloat($( "#cost" ).val());
-            $("#hourlyRate").val(cost/160);
+            $("#hourlyRate").val(cost/240);
         }
 
     </script>
