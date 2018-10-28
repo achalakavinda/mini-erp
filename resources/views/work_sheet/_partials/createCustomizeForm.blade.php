@@ -5,13 +5,16 @@
 
 
     $Project = \App\Models\Project::all()->where('close',0)->pluck('code','id');
+
+
+
 ?>
 <div class="box-body">
 
     <div class="col-md-6">
         <div class="form-group">
             <label>Employee</label>
-            {!! Form::select('user_id',$Users,null,['class'=>'form-control','id'=>'user_id']) !!}
+            {!! Form::select('user_id',$Users,null,['class'=>'form-control','id'=>'userid']) !!}
             <input type="text" style="display: none" name="date" value="{{ new \Carbon\Carbon() }}">
 
         </div>
@@ -25,7 +28,7 @@
         </div>
     </div>
 
-    <table id="example1" class="table table-responsive table-bordered table-striped">
+    <table id="worksheetTable" class="table table-responsive table-bordered table-striped">
         <thead>
         <tr>
             <th>Time</th>
@@ -38,7 +41,7 @@
         <tbody>
 
             <tr>
-                <td> <input name="row[0][from]" type="time"> - <input name="row[0][to]" type="time"></td>
+                <td> <input name="row[0][from]" type="time" value="08:30:00"> - <input name="row[0][to]" type="time" value="17:30:00"></td>
                 <td>
                     <input checked type="checkbox">
                 </td>
@@ -53,6 +56,11 @@
                     {!! Form::text('row[0][remark]',null,["class"=>"form-control","id"=>"remark" ,"placeholder"=>"remark"]) !!}
                 </td>
             </tr>
+
+
+        </tbody>
+
+        <tbody id="worksheetTable">
 
 
         </tbody>

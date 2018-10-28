@@ -76,6 +76,17 @@ class StaffController extends Controller
     }
 
     /**
+     * show profile
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function profile($id){
+
+        $User = User::findOrFail($id);
+        return view('staff.profile.profile',compact('User'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id

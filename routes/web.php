@@ -29,6 +29,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('/staff', 'StaffController');
 
+    Route::get('/staff/profile/{id}', 'StaffController@profile');
+
     Route::resource('work-sheet', 'WorkSheetController');
 
     Route::resource('job-type', 'JobTypeController');

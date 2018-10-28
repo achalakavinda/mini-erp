@@ -53,26 +53,23 @@
     <script type="text/javascript">
 
         $(function() {
-            console.log( "ready!" );
 
             var projectSelector = $( "#project" );
-            var jobTypeSelector = $( "#jobtypeid" );
-            var customerSelector = $( "#customerid" );
+            var userSelector = $( "#userid" );
 
-
-            ajax(projectSelector.val());
+            ajax(projectSelector.val(),userSelector.val());
 
             projectSelector.click(function() {
-                ajax(projectSelector.val());
+                ajax(projectSelector.val(),userSelector.val());
             });
-            
-            
 
-
+            userSelector.click(function() {
+                ajax(projectSelector.val(),userSelector.val());
+            });
         });
         
-        function ajax(id) {
-            var url = '{!! url('api/project') !!}/'+id;
+        function ajax(id,user_id) {
+            var url = '{!! url('api/project') !!}/'+id+'/user/'+user_id;
             $( "#jobtypeid" ).find('option').remove().end();
             $( "#customerid" ).find('option').remove().end();
             $.ajax({
@@ -80,15 +77,13 @@
                 success: filler,
                 statusCode: {
                     404: function() {
-                        alert( "page not found" );
+                        alert( "Error Request" );
                     }
                 }
             });
         }
 
         function filler(data) {
-            console.log(data)
-            console.log(data.status.length)
             if(data.status.length>0 && data.status =='ok'){
 
                 var jobTypes = data.job_types;
@@ -101,17 +96,27 @@
                 }));
 
 
-                jobTypes.forEach(function (item) {
-                    $( "#jobtypeid" ).find('option').remove().end();
+                $( "#jobtypeid" ).find('option').remove().end();
 
+                jobTypes.forEach(function (item) {
                     $( "#jobtypeid" ).append($('<option>', {
                         value: item.id,
                         text : item.jobType
                     }));
                 })
+
+                $('.removeRW').remove();
+                data.worksheet.forEach(function (item) {
+                    tableRowAdd(item);
+                })
+
             }else{
                 $( "#jobtypeid" ).find('option').remove().end();
             }
+        }
+
+        function tableRowAdd(item){
+            $('#worksheetTable').append('<tr class="removeRW"><td>'+item.from+' ----- '+item.to+'</td><td>Worked</td><td>'+item.company+'</td><td>'+item.project_value+' - '+item.job_type_name+'</td><td>'+item.remark+'</td></tr>');
         }
         
     </script>

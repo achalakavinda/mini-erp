@@ -63,6 +63,7 @@
                             <th>Hour Rate</th>
                             <th>Nic</th>
                             <th>Email</th>
+                            <th>Options</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -78,6 +79,7 @@
                                 <td>{!! $row->hr_rates !!}</td>
                                 <td>{!! $row->nic !!}</td>
                                 <td>{!! $row->email !!}</td>
+                                <td><a href="{!! url('/staff/profile') !!}/{!! $row->id !!}" class="btn btn-sm btn-danger">Profile</a> </td>
                             </tr>
 
                         @endforeach

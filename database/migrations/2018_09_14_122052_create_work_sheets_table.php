@@ -24,8 +24,10 @@ class CreateWorkSheetsTable extends Migration
             $table->time('from');
             $table->time('to');
             $table->float('work_hrs');
+            $table->float('actual_work_hrs');
             $table->float('hr_rate');
             $table->float('hr_cost');
+            $table->float('actual_hr_cost');
             $table->text('remark')->nullable();
             $table->timestamps();
 

@@ -17,12 +17,12 @@ class CreateProjectsTable extends Migration
             $table->increments('id');
             $table->integer('customer_id')->unsigned();
             $table->string('code');
-            $table->float('number_of_hrs')->default(0);
-            $table->float('budget_cost')->default('0');
-            $table->float('quoted_price')->default('0');
-            $table->float('actual_cost')->default('0');
-            $table->float('revenue')->default('0');
-            $table->float('recovery_ratio')->default('0');
+            $table->double('number_of_hrs')->default(0);
+            $table->double('budget_cost')->default('0');
+            $table->double('quoted_price')->default('0');
+            $table->double('actual_cost')->default('0');
+            $table->double('revenue')->default('0');
+            $table->double('recovery_ratio')->default('0');
             $table->boolean('close')->default(0);
             $table->timestamps();
 

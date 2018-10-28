@@ -69,13 +69,15 @@
                         </thead>
                         <tbody>
 
+                        <?php $Rows = \App\Models\Project::all();?>
+
                         @foreach($Rows as $row)
                             <?php
-                                $Customer="";
-                                $CM = \App\Models\Customer::find($row->customer_id );
-                                if(!empty($CM)){
-                                    $Customer = $CM->name;
-                                }
+                            $Customer="";
+                            $CM = \App\Models\Customer::find($row->customer_id );
+                            if(!empty($CM)){
+                                $Customer = $CM->name;
+                            }
                             ?>
                             <tr>
                                 <td>{{ $row->id }}</td>
@@ -89,7 +91,7 @@
                                 <td>{{ $row->recovery_ratio }}</td>
                                 <td>{{ $row->close }}</td>
                                 <td>
-                                    <a class="btn btn-danger btn-sm" href="{{ url('/job-type') }}/{{ $row->id }}">view</a>
+                                    <a class="btn btn-danger btn-sm" href="{{ url('/project') }}/{{ $row->id }}">view</a>
                                 </td>
                             </tr>
                         @endforeach

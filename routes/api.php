@@ -17,4 +17,4 @@ use Illuminate\Http\Request;
 Route::get('project/{id}/job-types','ApiController@GetProjectJobTypeById');
 
 ///to get project all details
-Route::get('project/{id}','ApiController@GetProjectDetailsByID');
+Route::get('project/{id}/user/{user_id}','ApiController@GetProjectDetailsByID');

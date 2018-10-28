@@ -58,6 +58,10 @@ class WorkSheetController extends Controller
 
             $diffInMin = $this->timeDiff($row['from'],$row['to']);
             $work_hr = $this->convertToHoursMins($diffInMin);
+            $actual_work_hr = $work_hr;
+            if($work_hr>8){
+                $work_hr = 8;
+            }
 
             $time_slot_id= -999;
 
@@ -78,8 +82,10 @@ class WorkSheetController extends Controller
                 'from'=>$row['from'],
                 'to'=>$row['to'],
                 'work_hrs'=>$work_hr,
+                'actual_work_hrs'=>$actual_work_hr,
                 'hr_rate'=>$USER->hr_rates,
                 'hr_cost'=>$USER->hr_rates*$work_hr,
+                'actual_hr_cost'=>$USER->hr_rates*$actual_work_hr,
                 'remark'=>$row['remark']
             ]);
 
