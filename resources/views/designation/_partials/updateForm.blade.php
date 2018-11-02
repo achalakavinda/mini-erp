@@ -19,5 +19,5 @@
 <!-- /.box-body -->
 
 <div class="box-footer">
-    {!! Form::submit('Edit',['class'=>'btn btn-danger']) !!}
+    {!! Form::submit('Update',['class'=>'btn btn-danger']) !!}
 </div>

@@ -36,10 +36,6 @@
                             <th>Name</th>
                             <th>Contact</th>
                             <th>Email</th>
-                            <th>Job Type</th>
-                            <th>Staff</th>
-                            <th>Budget Cost</th>
-                            <th>Quoted Price</th>
                             <th>Option</th>
                         </tr>
                         </thead>
@@ -53,21 +49,7 @@
                                 <td>{!! $customer->contact !!}</td>
                                 <td>{!! $customer->email !!}</td>
                                 <td>
-                                    <ul>
-                                        <li> External Audit </li>
-                                        <li> Feasibility </li>
-                                    </ul>
-                                </td>
-                                <td>
-                                    <ul>
-                                        <li> Kasun  | 5hr </li>
-                                        <li> Lakshan | 6hr  </li>
-                                    </ul>
-                                </td>
-                                <td>170,000</td>
-                                <td>250,000</td>
-                                <td>
-                                    <a href="#" class="btn btn-sm btn-danger">view</a>
+                                    <a href="{!! url('/customer/') !!}/{!! $customer->id !!}" class="btn btn-sm btn-danger">view</a>
                                 </td>
                             </tr>
                         @endforeach

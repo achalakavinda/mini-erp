@@ -47,6 +47,25 @@ class CustomerController extends Controller
             'code'=>$request->code,
             'contact'=>$request->contact,
             'email'=>$request->email,
+            'file_no'=>$request->file_no,
+            'address_1'=>$request->address_1,
+            'address_2'=>$request->address_2,
+            'address_3'=>$request->address_3,
+            'fax_number'=>$request->fax_number,
+            'secretary_id'=>$request->secretary_id,
+            'date_of_incorporation'=>$request->date_of_incorporation,
+            'tin_no'=>$request->tin_no,
+            'vat_no'=>$request->vat_no,
+            'ceo'=>$request->ceo,
+            'ceo_contact'=>$request->ceo_contact,
+            'ceo_email'=>$request->ceo_email,
+            'cfo'=>$request->cfo,
+            'cfo_contact'=>$request->cfo_contact,
+            'cfo_email'=>$request->cfo_email,
+            'website'=>$request->website,
+            'service_id'=>$request->service_id,
+            'sector_id'=>$request->sector_id,
+            'location'=>$request->location,
             'description'=>$request->description
         ]);
 
@@ -61,7 +80,8 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        //
+        $Customer = Customer::find($id);
+        return view('customer.show',compact('Customer'));
     }
 
     /**

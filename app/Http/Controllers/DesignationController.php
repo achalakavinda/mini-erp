@@ -82,7 +82,20 @@ class DesignationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
+        $request->validate([
+            'designationType' => 'required | min:3',
+        ]);
+
+        $DESIGNATION = Designation::find($id);
+
+        if(!empty($DESIGNATION)){
+            $DESIGNATION->designationType = $request->designationType;
+            $DESIGNATION->description = $request->description;
+            $DESIGNATION->save();
+        }
+
+        return redirect()->back()->with('created',true);
+
     }
 
     /**

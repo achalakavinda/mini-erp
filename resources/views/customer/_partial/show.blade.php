@@ -1,8 +1,8 @@
 <?php
 
-    $Secretary = \App\Models\CustomerSecretary::all()->pluck('name','id');
-    $Service = \App\Models\CustomerService::all()->pluck('name','id');
-    $Sector = \App\Models\CustomerSector::all()->pluck('name','id');
+$Secretary = \App\Models\CustomerSecretary::all()->pluck('name','id');
+$Service = \App\Models\CustomerService::all()->pluck('name','id');
+$Sector = \App\Models\CustomerSector::all()->pluck('name','id');
 
 ?>
 
@@ -194,5 +194,5 @@
 <!-- /.box-body -->
 
 <div class="box-footer">
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">update</button>
 </div>

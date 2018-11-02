@@ -39,6 +39,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('project','ProjectController');
 
+
+    Route::get('settings','SettingController@index');
+
     Route::group(['middleware' => ['role:super-admin']], function () {
         // super-admin is a role in the role table
         // anything can be changed to anything

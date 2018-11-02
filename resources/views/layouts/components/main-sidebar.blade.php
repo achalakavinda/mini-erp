@@ -50,6 +50,8 @@
                 </ul>
             </li>
 
+            <li><a href="{{ url('settings') }}"><i class="fa fa-cogs"></i> <span>Settings</span></a></li>
+
         </ul>
         <!-- /.sidebar-menu -->
     </section>

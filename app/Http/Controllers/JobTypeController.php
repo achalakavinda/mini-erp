@@ -83,7 +83,19 @@ class JobTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'jobType' => 'required | min:3',
+        ]);
+
+        $JOBTYPE = JobType::find($id);
+
+        if(!empty($JOBTYPE)){
+            $JOBTYPE->jobType = $request->jobType;
+            $JOBTYPE->description = $request->description;
+            $JOBTYPE->save();
+        }
+
+        return redirect()->back()->with('created',true);
     }
 
     /**
