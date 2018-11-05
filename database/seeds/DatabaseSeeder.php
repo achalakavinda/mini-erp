@@ -14,29 +14,82 @@ class DatabaseSeeder extends Seeder
 
         DB::table('designations')->insert([
             [
-                'designationType' => "CEO",
+                'id'=>1,
+                'designationType' => "Partner",
                 'description' => str_random(10),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
             ],
             [
+                'id'=>2,
+                'designationType' => "Director",
+                'description' => str_random(10),
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at'=> \Carbon\Carbon::now()
+            ],
+            [
+                'id'=>3,
+                'designationType' => "Senior Manager",
+                'description' => str_random(10),
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at'=> \Carbon\Carbon::now()
+            ],
+            [
+                'id'=>4,
                 'designationType' => "Manager",
                 'description' => str_random(10),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
             ],
             [
-                'designationType' => "Auditor",
+                'id'=>5,
+                'designationType' => "Assistant Manager",
                 'description' => str_random(10),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
             ],
             [
-                'designationType' => "Clark",
+                'id'=>6,
+                'designationType' => "Senior Executive",
                 'description' => str_random(10),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
-            ]
+            ],
+            [
+                'id'=>7,
+                'designationType' => "Executive",
+                'description' => str_random(10),
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at'=> \Carbon\Carbon::now()
+            ],
+            [
+                'id'=>8,
+                'designationType' => "Senior Audit Associate",
+                'description' => str_random(10),
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at'=> \Carbon\Carbon::now()
+            ],
+            [
+                'id'=>9,
+                'designationType' => "Accounts Associates (BPS)",
+                'description' => str_random(10),
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at'=> \Carbon\Carbon::now()
+            ],
+            [
+                'id'=>10,
+                'designationType' => "Audit Associate 1",
+                'description' => str_random(10),
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at'=> \Carbon\Carbon::now()
+            ],
+            [
+                'id'=>11,
+                'designationType' => "Audit Associate 2",
+                'description' => str_random(10),
+                'created_at' => \Carbon\Carbon::now(),
+                'updated_at'=> \Carbon\Carbon::now()
+            ],
 
         ]);
 
@@ -91,56 +144,48 @@ class DatabaseSeeder extends Seeder
         //seed customer secretaries
         DB::table('customer_services')->insert([
             [
-                'id'=>1,
                 'name'=>'External Audit',
                 'description'=>'description',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
             [
-                'id'=>2,
                 'name'=>'Tax Compliance',
                 'description'=>'description',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
             [
-                'id'=>3,
                 'name'=>'BPO',
                 'description'=>'description',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
             [
-                'id'=>4,
                 'name'=>'Company Secretarial',
                 'description'=>'description',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
             [
-                'id'=>5,
                 'name'=>'Internal Audit',
                 'description'=>'description',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
             [
-                'id'=>6,
                 'name'=>'Winidng Up',
                 'description'=>'description',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
             [
-                'id'=>7,
                 'name'=>'Advisory',
                 'description'=>'description',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
             [
-                'id'=>8,
                 'name'=>'Other',
                 'description'=>'description',
                 "created_at"=>\Carbon\Carbon::now(),
@@ -247,30 +292,6 @@ class DatabaseSeeder extends Seeder
                 "updated_at"=>\Carbon\Carbon::now()
             ],
 
-        ]);
-
-        //seed customer
-        DB::table('customers')->insert([
-            [
-                'name'=>'Richard Peris Lk',
-                'code'=>'R P L',
-                'contact'=>'077 3584571',
-                'email'=>'test@1.com',
-                'description'=>'customer description',
-                'secretary_id'=>1,
-                'service_id'=>1,
-                'sector_id'=>3
-            ],
-            [
-                'name'=>'IFS R&D',
-                'code'=>'IFS',
-                'contact'=>'077 3584574',
-                'email'=>'test@4.com',
-                'description'=>'customer description',
-                'secretary_id'=>1,
-                'service_id'=>1,
-                'sector_id'=>3
-            ]
         ]);
 
     }

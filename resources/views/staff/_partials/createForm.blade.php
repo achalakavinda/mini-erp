@@ -9,6 +9,53 @@
 
     <div class="col-md-6">
         <div class="form-group">
+            <label for="name">Date Joined</label>
+            {!! Form::date('date_joined',null,['class'=>'form-control','id'=>'datejoined']) !!}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="address">Mobile</label>
+            {!! Form::text('mobile',null,['class'=>'form-control','id'=>'mobile' , 'placeholder'=>'Mobile']) !!}
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <hr/>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="address">Hometown Districts</label>
+            {!! Form::select('hometown_district_id',[],null,['class'=>'form-control','id'=>'hometowndistrictid']) !!}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="address">Mobile</label>
+            {!! Form::text('mobile',null,['class'=>'form-control','id'=>'mobile' , 'placeholder'=>'Mobile']) !!}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="address">Mobile</label>
+            {!! Form::text('mobile',null,['class'=>'form-control','id'=>'mobile' , 'placeholder'=>'Mobile']) !!}
+        </div>
+    </div>
+
+
+    <div class="col-md-6">
+        <div class="form-group">
+            <label for="address">Residence</label>
+            {!! Form::text('residence',null,['class'=>'form-control','id'=>'residence' , 'placeholder'=>'Residence']) !!}
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
             <label for="address">Address</label>
             {!! Form::text('address',null,['class'=>'form-control','id'=>'address' , 'placeholder'=>'Employee Address']) !!}
         </div>

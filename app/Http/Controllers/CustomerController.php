@@ -104,7 +104,47 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $request->validate([
+            'name'=>'required',
+            'code'=>'required',
+            'contact'=>'required',
+        ]);
+
+        $Customer = Customer::find($id);
+
+        if(!empty($Customer)){
+            $Customer->name = $request->name;
+            $Customer->code = $request->code;
+            $Customer->contact = $request->contact;
+            $Customer->email = $request->email;
+            $Customer->file_no = $request->file_no;
+            $Customer->address_1=$request->address_1;
+            $Customer->address_2=$request->address_2;
+            $Customer->address_3=$request->address_3;
+            $Customer->fax_number=$request->fax_number;
+            $Customer->secretary_id=$request->secretary_id;
+            $Customer->date_of_incorporation=$request->date_of_incorporation;
+            $Customer->tin_no=$request->tin_no;
+            $Customer->vat_no=$request->vat_no;
+            $Customer->ceo=$request->ceo;
+            $Customer->ceo_contact=$request->ceo_contact;
+            $Customer->ceo_email=$request->ceo_email;
+            $Customer->cfo=$request->cfo;
+            $Customer->cfo_contact=$request->cfo_contact;
+            $Customer->cfo_email=$request->cfo_email;
+            $Customer->website=$request->website;
+            $Customer->service_id=$request->service_id;
+            $Customer->sector_id=$request->sector_id;
+            $Customer->location=$request->location;
+            $Customer->description=$request->description;
+            $Customer->save();
+        }
+
+        return redirect()->back()->with('created',true);
+
+        return redirect('customer/create');
+
     }
 
     /**
