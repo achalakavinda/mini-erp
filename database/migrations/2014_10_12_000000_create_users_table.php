@@ -29,12 +29,13 @@ class CreateUsersTable extends Migration
             $table->text('hometown_city')->nullable();
             $table->integer('cmb_location_district')->nullable();
             $table->text('cmb_city')->nullable();
-
             $table->text('address')->nullable();
+
             $table->string('emp_no')->nullable();
             $table->string('epf_no')->nullable();
             $table->integer('designation_id')->default(-999);
             $table->string('nic')->nullable();
+
 
             $table->integer('user_id')->default(-999);
 
