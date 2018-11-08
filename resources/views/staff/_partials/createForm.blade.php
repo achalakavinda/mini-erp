@@ -1,3 +1,9 @@
+<?php
+
+    $CA_TRAINGINS = \App\Models\CaTraining::all()->pluck('name','id');
+    $CM_LOCATION_DISTRICTS = \App\Models\CmbLocationDistrict::all()->pluck('name','id');
+    $HOMETOWN_DISTRICTS = \App\Models\HometownDistrict::all()->pluck('name','id');
+?>
 <div class="box-body">
 
     <div class="col-md-6">
@@ -35,7 +41,7 @@
     <div class="col-md-4">
         <div class="form-group">
             <label for="address">Hometown Districts</label>
-            {!! Form::select('hometown_district_id',[],null,['class'=>'form-control','id'=>'hometowndistrict']) !!}
+            {!! Form::select('hometown_district_id',$HOMETOWN_DISTRICTS,null,['class'=>'form-control','id'=>'hometowndistrict']) !!}
         </div>
     </div>
 
@@ -49,7 +55,7 @@
     <div class="col-md-4">
         <div class="form-group">
             <label for="address">Colombo Location</label>
-            {!! Form::select('cmb_location_district',[],null,['class'=>'form-control','id'=>'cmblocationdistrict']) !!}
+            {!! Form::select('cmb_location_district',$CM_LOCATION_DISTRICTS,null,['class'=>'form-control','id'=>'cmblocationdistrict']) !!}
         </div>
     </div>
 
@@ -145,7 +151,7 @@
     <div class="col-md-3">
         <div class="form-group">
             {!! Form::label('CA Training') !!}
-            {!! Form::select('ca_training',[],null,['class'=>'form-control','id'=>'catraining'])  !!}
+            {!! Form::select('ca_training',$CA_TRAINGINS,null,['class'=>'form-control','id'=>'catraining'])  !!}
         </div>
     </div>
 

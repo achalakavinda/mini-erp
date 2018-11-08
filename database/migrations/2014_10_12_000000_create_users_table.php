@@ -13,6 +13,22 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
+        Schema::create('ca_trainings', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+        });
+
+        Schema::create('hometown_districts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+        });
+
+        Schema::create('cmb_location_districts', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+        });
+
+
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
@@ -22,7 +38,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
 
 
-            $table->date('date_joined');
+            $table->date('date_joined')->default(\Carbon\Carbon::now());
             $table->text('mobile')->nullable();
             $table->text('residence')->nullable();
             $table->integer('hometown_district_id')->nullable();
@@ -67,6 +83,139 @@ class CreateUsersTable extends Migration
                 'date_joined'=>\Carbon\Carbon::now()
             ]
         ]);
+
+        DB::table('ca_trainings')->insert([
+            [
+                'name' => 'EL'
+            ],
+            [
+                'name' => 'BL'
+            ],
+            [
+                'name' => 'CL'
+            ]
+        ]);
+
+        DB::table('hometown_districts')->insert([
+            [
+                'name' => 'Ampara'
+            ],
+            [
+                'name' => 'Anuradhapura'
+            ],
+            [
+                'name' => 'Badulla'
+            ],
+            [
+                'name' => 'Batticaloa'
+            ],
+            [
+                'name' => 'Colombo'
+            ],
+            [
+                'name' => 'Galle'
+            ],
+            [
+                'name' => 'Gampaha'
+            ],
+            [
+                'name' => 'Hambantota'
+            ],
+            [
+                'name' => 'Jaffna'
+            ],
+            [
+                'name' => 'Kalutara'
+            ],
+            [
+                'name' => 'Kandy'
+            ],
+            [
+                'name' => 'Kegalle'
+            ],
+            [
+                'name' => 'Kilinochchi'
+            ],
+            [
+                'name' => 'Kurunegala'
+            ],
+            [
+                'name' => 'Mannar'
+            ],
+            [
+                'name' => 'Matale'
+            ],
+            [
+                'name' => 'Matara'
+            ],
+            [
+                'name' => 'Monaragala'
+            ],
+            [
+                'name' => 'Mullaitivu'
+            ],
+            [
+                'name' => 'Nuwara Eliya'
+            ],
+            [
+                'name' => 'Polonnaruwa'
+            ],
+            [
+                'name' => 'Puttalam'
+            ],
+            [
+                'name' => 'Ratnapura'
+            ],
+            [
+                'name' => 'Trincomalee'
+            ],
+            [
+                'name' => 'Vavuniya'
+            ]
+        ]);
+
+        DB::table('cmb_location_districts')->insert([
+            [
+                'name' => 'Colombo'
+            ],
+            [
+                'name' => 'Dehiwala'
+            ],
+            [
+                'name' => 'Homagama'
+            ],
+            [
+                'name' => 'Kaduwela'
+            ],
+            [
+                'name' => 'Kesbewa'
+            ],
+            [
+                'name' => 'Kolonnawa'
+            ],
+            [
+                'name' => 'Maharagama'
+            ],
+            [
+                'name' => 'Moratuwa'
+            ],
+            [
+                'name' => 'Padukka'
+            ],
+            [
+                'name' => 'Ratmalana'
+            ],
+            [
+                'name' => 'Seethawaka'
+            ],
+            [
+                'name' => 'Sri Jayawardenepura Kotte'
+            ],
+            [
+                'name' => 'Thimbirigasyaya'
+            ],
+
+        ]);
     }
 
     /**
@@ -76,6 +225,9 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('ca_trainings');
+        Schema::dropIfExists('hometown_districts');
+        Schema::dropIfExists('cmb_location_districts');
         Schema::dropIfExists('users');
     }
 }
