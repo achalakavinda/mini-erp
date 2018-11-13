@@ -52,6 +52,10 @@ class WorkSheetController extends Controller
             'row' => 'required'
         ]);
 
+        $DATE_VAR = date_format(date_create($request->date),"Y-m-d");
+
+
+
 
 
         foreach ($ROWS as $row){
@@ -59,6 +63,7 @@ class WorkSheetController extends Controller
             $diffInMin = $this->timeDiff($row['from'],$row['to']);
             $work_hr = $this->convertToHoursMins($diffInMin);
             $actual_work_hr = $work_hr;
+
             if($work_hr>8){
                 $work_hr = 8;
             }
@@ -70,6 +75,16 @@ class WorkSheetController extends Controller
             }
 
             $USER = User::find($request->user_id);
+
+
+            //Recode check
+                $Tuple_Checker = \DB::table('work_sheets')->where(['user_id'=>$request->user_id,'date'=>$DATE_VAR])
+                    ->whereBetween('from',[$row['from'],$row['to']])
+                    ->get();
+                if (!$Tuple_Checker->isEmpty()){
+                    dd($Tuple_Checker->isEmpty());
+                }
+            //recode checker
 
 
             WorkSheet::create([
@@ -100,12 +115,7 @@ class WorkSheetController extends Controller
 
         return redirect()->back();
 
-
     }
-
-
-
-
 
     public function timeDiff($from,$to){
         $startTime = Carbon::parse($to);

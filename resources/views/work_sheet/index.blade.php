@@ -36,6 +36,8 @@
                             <th>Employee</th>
                             <th>Project</th>
                             <th>Company</th>
+                            <th>From</th>
+                            <th>To</th>
                             <th>No of Hrs</th>
                             <th>Cost</th>
                             <th>view</th>
@@ -70,6 +72,8 @@
                                 <td>{!! $Staff_name !!}</td>
                                 <td>{!! $Project_name !!}</td>
                                 <td>{!! $Customer_name !!}</td>
+                                <td>{!! $row->from !!}</td>
+                                <td>{!! $row->to !!}</td>
                                 <td>{!! $row->work_hrs !!}</td>
                                 <td>{!! $row->hr_cost !!}</td>
                                 <td></td>

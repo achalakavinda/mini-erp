@@ -116,7 +116,14 @@
         }
 
         function tableRowAdd(item){
-            $('#worksheetTable').append('<tr class="removeRW"><td>'+item.from+' ----- '+item.to+'</td><td>Worked</td><td>'+item.company+'</td><td>'+item.project_value+' - '+item.job_type_name+'</td><td>'+item.remark+'</td></tr>');
+            $('#worksheetTable').append('<tr class="removeRW"><td>'+item.from+' ----- '+item.to+'</td><td>Worked</td><td>'+item.company+'</td><td>'+item.project_value+' - '+item.job_type_name+'</td><td>'+item.remark+'</td><td>' +
+                '<a style="color: red" href="#" onclick="deleteRecord('+item.id+')">DEL</a> </td></tr>');
+        }
+        
+        function deleteRecord(x) {
+            var Token = "{{ csrf_token() }}";
+            console.log(Token);
+            alert("delete option");
         }
         
     </script>
