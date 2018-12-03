@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\TimeSlot;
 use App\Models\User;
+use App\Models\WorkCodes;
 use App\Models\WorkSheet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -42,21 +43,22 @@ class WorkSheetController extends Controller
     public function store(Request $request)
     {
 
-        $ROWS = $request->row;
-
+        //validate the post request body
         $request->validate([
-            'project_id' => 'required',
-            'user_id' => 'required',
+            'work_code_id'=> 'required',
             'user_id' => 'required',
             'date' => 'required',
             'row' => 'required'
         ]);
 
+
+        $WorkCode = WorkCodes::findOrFail($request->work_code_id);
+        $Worked = $WorkCode->worked;
+
+
+        $ROWS = $request->row;
+
         $DATE_VAR = date_format(date_create($request->date),"Y-m-d");
-
-
-
-
 
         foreach ($ROWS as $row){
 
@@ -68,14 +70,7 @@ class WorkSheetController extends Controller
                 $work_hr = 8;
             }
 
-            $time_slot_id= -999;
-
-            if(!empty($row['time_slot_id'])){
-                $time_slot_id= $row['time_slot_id'];
-            }
-
-            $USER = User::find($request->user_id);
-
+            $USER = User::findOrFail($request->user_id);
 
             //Recode check
                 $Tuple_Checker = \DB::table('work_sheets')->where(['user_id'=>$request->user_id,'date'=>$DATE_VAR])
@@ -86,31 +81,49 @@ class WorkSheetController extends Controller
                 }
             //recode checker
 
-
-            WorkSheet::create([
-                'date'=>$request->date,
-                'customer_id'=>$row['company'],
-                'user_id'=>$request->user_id,
-                'project_id'=>$request->project_id,
-                'job_type_id'=>$row['job_type_id'],
-                'time_slot_id'=>$time_slot_id,
-                'from'=>$row['from'],
-                'to'=>$row['to'],
-                'work_hrs'=>$work_hr,
-                'actual_work_hrs'=>$actual_work_hr,
-                'hr_rate'=>$USER->hr_rates,
-                'hr_cost'=>$USER->hr_rates*$work_hr,
-                'actual_hr_cost'=>$USER->hr_rates*$actual_work_hr,
-                'remark'=>$row['remark']
-            ]);
-
-            $PJ = Project::find($request->project_id);
-
-            if($PJ) {
-                $PJ->actual_cost = $PJ->actual_cost + ($USER->hr_rates*$work_hr);
-                $PJ->save();
+            if($Worked){
+                WorkSheet::create([
+                    'date'=>$request->date,
+                    'customer_id'=>$row['company'],
+                    'user_id'=>$request->user_id,
+                    'project_id'=>$request->project_id,
+                    'job_type_id'=>$row['job_type_id'],
+                    'work_code_id'=>$WorkCode->id,
+                    'worked'=>$Worked,
+                    'from'=>$row['from'],
+                    'to'=>$row['to'],
+                    'work_hrs'=>$work_hr,
+                    'actual_work_hrs'=>$actual_work_hr,
+                    'hr_rate'=>$USER->hr_rates,
+                    'hr_cost'=>$USER->hr_rates*$work_hr,
+                    'actual_hr_cost'=>$USER->hr_rates*$actual_work_hr,
+                    'remark'=>$row['remark']
+                ]);
+                //check the
+                $PJ = Project::find($request->project_id);
+                if($PJ) {
+                    $PJ->actual_cost = $PJ->actual_cost + ($USER->hr_rates*$work_hr);
+                    $PJ->save();
+                }
+            }else{
+                WorkSheet::create([
+                    'date'=>$request->date,
+                    'customer_id'=>null,
+                    'user_id'=>$request->user_id,
+                    'project_id'=>null,
+                    'job_type_id'=>null,
+                    'work_code_id'=>$WorkCode->id,
+                    'worked'=>$Worked,
+                    'from'=>$row['from'],
+                    'to'=>$row['to'],
+                    'work_hrs'=>0-$work_hr,
+                    'actual_work_hrs'=>0-$actual_work_hr,
+                    'hr_rate'=>$USER->hr_rates,
+                    'hr_cost'=>$USER->hr_rates*$work_hr,
+                    'actual_hr_cost'=>0-$USER->hr_rates*$actual_work_hr,
+                    'remark'=>$row['remark']
+                ]);
             }
-
         }
 
         return redirect()->back();

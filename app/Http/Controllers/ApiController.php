@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\JobType;
 use App\Models\Project;
+use App\Models\WorkCodes;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -56,6 +57,22 @@ class ApiController extends Controller
 
             if(!empty($WORKSHEETRECORD)){
                 foreach ($WORKSHEETRECORD as $row){
+                    $IN_CUM = Customer::find($row->customer_id);
+                    $IN_JOB = JobType::find($row->job_type_id);
+                    if($IN_CUM){
+                        $IN_CUM = $IN_CUM->name;
+                    }
+                    if($IN_JOB){
+                        $IN_JOB = $IN_JOB->jobType;
+                    }
+
+                    $PJTNAME = null;
+                    if($row->project_id == null){
+                        $PJTNAME = WorkCodes::find($row->work_code_id)->name;
+                    }else{
+                        $PJTNAME = Project::find($row->project_id)->code;
+                    }
+
                     $arr = [
                         'id'=>$row->id,
                         'date'=>$row->date,
@@ -63,9 +80,9 @@ class ApiController extends Controller
                         'to'=>$row->to,
                         'project_id'=>$row->project_id,
                         'job_type_id'=>$row->job_type_id,
-                        'company'=>Customer::find($row->customer_id)->name,
-                        'job_type_name'=>JobType::find($row->job_type_id)->jobType,
-                        'project_value'=>Project::find($row->project_id)->code,
+                        'company'=>$IN_CUM,
+                        'job_type_name'=>$IN_JOB,
+                        'project_value'=>$PJTNAME,
                         'remark'=>$row->remark
                     ];
                     $WORKARRAY[] = $arr;

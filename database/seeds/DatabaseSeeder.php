@@ -294,5 +294,29 @@ class DatabaseSeeder extends Seeder
 
         ]);
 
+        DB::table('work_codes')->insert([
+            [
+                'id'=>1,
+                'name'=>'Work',
+                'from' => '08:00:00',
+                'to'=>'17:30:00',
+                'worked'=>1
+            ],
+            [
+                'id'=>2,
+                'name'=>'Leave Full Day',
+                'from' => '08:00:00',
+                'to'=>'17:30:00',
+                'worked'=>0
+            ],
+            [
+                'id'=>4,
+                'name'=>'Leave Half Day',
+                'from' => '08:00:00',
+                'to'=>'12:30:00',
+                'worked'=>0
+            ],
+        ]);
+
     }
 }

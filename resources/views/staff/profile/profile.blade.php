@@ -19,7 +19,7 @@
     //project
         $PROJECTS = DB::table('work_sheets')
             ->select(['work_sheets.project_id',DB::raw('sum(work_sheets.work_hrs) as hrs')])
-            ->where('work_sheets.user_id',$User->id)
+            ->where('work_sheets.user_id',$User->id)->where('project_id','!=',null)
             ->groupBy('work_sheets.project_id')
             ->paginate(15,['*'],'projects');
     //--project

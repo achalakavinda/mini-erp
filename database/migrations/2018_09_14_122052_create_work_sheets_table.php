@@ -16,11 +16,12 @@ class CreateWorkSheetsTable extends Migration
         Schema::create('work_sheets', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date');
-            $table->unsignedInteger('customer_id');
+            $table->unsignedInteger('customer_id')->nullable();
             $table->unsignedInteger('user_id');
-            $table->unsignedInteger('project_id');
-            $table->unsignedInteger('job_type_id');
-            $table->Integer('time_slot_id');
+            $table->unsignedInteger('project_id')->nullable();
+            $table->unsignedInteger('job_type_id')->nullable();
+            $table->unsignedInteger('work_code_id');
+            $table->boolean('worked');
             $table->time('from');
             $table->time('to');
             $table->float('work_hrs');
@@ -36,6 +37,7 @@ class CreateWorkSheetsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelte('cascade');
             $table->foreign('project_id')->references('id')->on('projects')->onDelte('cascade');
             $table->foreign('job_type_id')->references('id')->on('job_types')->onDelte('cascade');
+            $table->foreign('work_code_id')->references('id')->on('work_codes')->onDelte('cascade');
         });
     }
 

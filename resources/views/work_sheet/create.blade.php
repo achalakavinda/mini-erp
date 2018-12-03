@@ -30,14 +30,9 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                {!! Form::open(['action'=>'WorkSheetController@store','class'=>'form-horizontal','id'=>'Form','style'=>'display:none']) !!}
-                @include('error.error')
-                @include('work_sheet._partials.createForm')
-                {!! Form::close() !!}
-
                 {!! Form::open(['action'=>'WorkSheetController@store','class'=>'form-horizontal','id'=>'Form']) !!}
                 @include('error.error')
-                @include('work_sheet._partials.createCustomizeForm')
+                @include('work_sheet._partials.createForm')
                 {!! Form::close() !!}
 
             </div>
@@ -52,10 +47,11 @@
 @section('js')
     <script type="text/javascript">
 
-        $(function() {
+        var projectSelector = $( "#project" );
+        var userSelector = $( "#userid" );
+        var workCodeSelector = $( "#workcodeid" );
 
-            var projectSelector = $( "#project" );
-            var userSelector = $( "#userid" );
+        $(function() {
 
             ajax(projectSelector.val(),userSelector.val());
 
@@ -66,12 +62,23 @@
             userSelector.click(function() {
                 ajax(projectSelector.val(),userSelector.val());
             });
+
         });
         
         function ajax(id,user_id) {
+            if(id === 'undefine' || id === null || id ===''){
+                $( "#jobtypeid" ).find('option').remove().end();
+                $( "#customerid" ).find('option').remove().end();
+                id = 0;
+            }
+
+
             var url = '{!! url('api/project') !!}/'+id+'/user/'+user_id;
+            console.log(url);
             $( "#jobtypeid" ).find('option').remove().end();
+            $( "#jobtypeid" ).show();
             $( "#customerid" ).find('option').remove().end();
+            $( "#customerid" ).show();
             $.ajax({
                 url: url,
                 success: filler,
@@ -116,7 +123,7 @@
         }
 
         function tableRowAdd(item){
-            $('#worksheetTable').append('<tr class="removeRW"><td>'+item.from+' ----- '+item.to+'</td><td>Worked</td><td>'+item.company+'</td><td>'+item.project_value+' - '+item.job_type_name+'</td><td>'+item.remark+'</td><td>' +
+            $('#worksheetTable').append('<tr class="removeRW"><td>'+item.from+' ----- '+item.to+'</td><td>Report</td><td>'+item.company+'</td><td>'+item.project_value+' - '+item.job_type_name+'</td><td>'+item.remark+'</td><td>' +
                 '<a style="color: red" href="#" onclick="deleteRecord('+item.id+')">DEL</a> </td></tr>');
         }
         
