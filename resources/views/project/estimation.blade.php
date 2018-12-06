@@ -5,12 +5,7 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Project | {!! $Project->code !!}</h3>
-        </div>
-        <div class="box-body">
-            <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/project') }}" class="btn btn-success">Project</a>
-            <a href="{{ url('/project/create') }}" class="btn btn-success">New</a>
+            <h3 class="box-title">Project Estimations | {!! $Project->code !!}</h3>
         </div>
         <!-- /.box-body -->
     </div>
@@ -30,9 +25,9 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                {!! Form::open(['action'=>'ProjectController@store','class'=>'form-horizontal','id'=>'Form']) !!}
+                {!! Form::open(['action'=>'ProjectController@finalized','class'=>'form-horizontal','id'=>'Form']) !!}
                 @include('error.error')
-                @include('project._partials.showForm')
+                @include('project._partials.estimateForm')
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->

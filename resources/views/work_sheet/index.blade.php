@@ -74,7 +74,7 @@
                                 <td>{!! $Customer_name !!}</td>
                                 <td>{!! $row->from !!}</td>
                                 <td>{!! $row->to !!}</td>
-                                <td>{!! $row->work_hrs !!}</td>
+                                <td><?php if($row->work_hrs<0){echo "<i style='color:red'>Leave</i>";}else{echo $row->work_hrs;}?></td>
                                 <td>{!! $row->hr_cost !!}</td>
                                 <td></td>
                             </tr>

@@ -131,7 +131,8 @@
                                 <th>Cost</th>
                                 <th>Revenue</th>
                                 <th>Recovery Ratio</th>
-                                <th>status</th>
+                                <th>Status</th>
+                                <th>View</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -158,7 +159,7 @@
                                     <td>{{ $row->recovery_ratio }}</td>
                                     <td>{{ $row->close }}</td>
                                     <td>
-                                        <a class="btn btn-danger btn-sm" href="{{ url('/project') }}/{{ $row->id }}">view</a>
+                                        <a href="{{ url('/project') }}/{{ $row->id }}"><i class="fa fa-paper-plane"></i></a>
                                     </td>
                                 </tr>
                             @endforeach

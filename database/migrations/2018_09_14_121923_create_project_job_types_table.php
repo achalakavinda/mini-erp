@@ -16,8 +16,8 @@ class CreateProjectJobTypesTable extends Migration
         Schema::create('project_job_types', function (Blueprint $table) {
             $table->unsignedInteger('project_id');
             $table->unsignedInteger('jop_type_id');
-            $table->timestamps();
 
+            $table->timestamps();
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->foreign('jop_type_id')->references('id')->on('job_types')->onDelte('cascade');
             $table->primary(array('project_id','jop_type_id'));

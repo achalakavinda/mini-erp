@@ -42,50 +42,50 @@
 @endsection
 <!-- /main section -->
 
-@section('js')
-    <script>
-        $(document).ready(function(){
-            var i = 0;
-            $('#add').click(function(){
-                var emp = $('#employee');
-                var inp = $('#box');
+{{--@section('js')--}}
+    {{--<script>--}}
+        {{--$(document).ready(function(){--}}
+            {{--var i = 0;--}}
+            {{--$('#add').click(function(){--}}
+                {{--var emp = $('#employee');--}}
+                {{--var inp = $('#box');--}}
 
-                 try {
-                     i = $('.sub_count').size();
-                 }catch (e) {
-                     console.log(e.toString());
-                 }
+                 {{--try {--}}
+                     {{--i = $('.sub_count').size();--}}
+                 {{--}catch (e) {--}}
+                     {{--console.log(e.toString());--}}
+                 {{--}--}}
 
-                var empName = $('#employee :selected').text();
-                    if(empName.length<1){
-                        alert('you already add all employees')
-                        return;
-                    }
-                $('<div style="margin-top: 10px;">' +
-                    '<label class="col-md-2 control-label sub_count">Employee</label>' +
-                    '<div class="col-sm-2">' +
-                    '<div id="box' + i +'">' +
-                    '<input type="text" id="employee_name_'+i+'" class="form-control" name="details['+i+'][employee_name]" placeholder=""/>' +
-                    '<input type="text" id="employee_id_'+i+'" style="display:none" class="form-control" name="details['+i+'][employee_id]" placeholder=""/>' +
-                    '</div>' +
-                    '</div>' +
-                    '<label class="col-md-2 control-label sub_count">Paying Hrs</label>' +
-                    '<div class="col-sm-1">' +
-                    '<div id="box' + i +'">' +
-                    '<input type="number" id="paying_hrs" class="form-control" name="details['+i+'][paying_hrs]" placeholder=""/>' +
-                    '</div>' +
-                    '</div>' +
-                    '<label class="col-sm-2 control-label">Volunteer Hrs</label>' +
-                    '<div class="col-sm-1">' +
-                    '<div id="box' + i +'">' +
-                    '<input type="number" id="volunteer_hrs" value="0" class="form-control" name="details['+i+'][volunteer_hrs]" placeholder=""/>' +
-                    '</div>' +
-                    '</div></div><div class="col-md-12" style="padding-bottom: 10px"></div>').appendTo(inp);
-                    $('#employee_name_'+i).val(empName);
-                    $('#employee_id_'+i).val( $('#employee :selected').val());
-                    $('#employee :selected').remove();
-                i++;
-            });
-        });
-    </script>
-@endsection
+                {{--var empName = $('#employee :selected').text();--}}
+                    {{--if(empName.length<1){--}}
+                        {{--alert('you already add all employees')--}}
+                        {{--return;--}}
+                    {{--}--}}
+                {{--$('<div style="margin-top: 10px;">' +--}}
+                    {{--'<label class="col-md-2 control-label sub_count">Employee</label>' +--}}
+                    {{--'<div class="col-sm-2">' +--}}
+                    {{--'<div id="box' + i +'">' +--}}
+                    {{--'<input type="text" id="employee_name_'+i+'" class="form-control" name="details['+i+'][employee_name]" placeholder=""/>' +--}}
+                    {{--'<input type="text" id="employee_id_'+i+'" style="display:none" class="form-control" name="details['+i+'][employee_id]" placeholder=""/>' +--}}
+                    {{--'</div>' +--}}
+                    {{--'</div>' +--}}
+                    {{--'<label class="col-md-2 control-label sub_count">Paying Hrs</label>' +--}}
+                    {{--'<div class="col-sm-1">' +--}}
+                    {{--'<div id="box' + i +'">' +--}}
+                    {{--'<input type="number" id="paying_hrs" class="form-control" name="details['+i+'][paying_hrs]" placeholder=""/>' +--}}
+                    {{--'</div>' +--}}
+                    {{--'</div>' +--}}
+                    {{--'<label class="col-sm-2 control-label">Volunteer Hrs</label>' +--}}
+                    {{--'<div class="col-sm-1">' +--}}
+                    {{--'<div id="box' + i +'">' +--}}
+                    {{--'<input type="number" id="volunteer_hrs" value="0" class="form-control" name="details['+i+'][volunteer_hrs]" placeholder=""/>' +--}}
+                    {{--'</div>' +--}}
+                    {{--'</div></div><div class="col-md-12" style="padding-bottom: 10px"></div>').appendTo(inp);--}}
+                    {{--$('#employee_name_'+i).val(empName);--}}
+                    {{--$('#employee_id_'+i).val( $('#employee :selected').val());--}}
+                    {{--$('#employee :selected').remove();--}}
+                {{--i++;--}}
+            {{--});--}}
+        {{--});--}}
+    {{--</script>--}}
+{{--@endsection--}}

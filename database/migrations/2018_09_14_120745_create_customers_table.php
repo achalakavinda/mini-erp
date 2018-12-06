@@ -23,7 +23,7 @@ class CreateCustomersTable extends Migration
         Schema::create('customer_services', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
 

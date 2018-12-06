@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -45,8 +46,12 @@ class ProjectController extends Controller
         $request->validate([
             'code' => 'required',
             'customer_id' => 'required',
-            'job_types' => 'required'
+            'job_types' => 'required',
+            'number_of_hrs' => 'required',
+            'budget_cost' => 'required',
+            'qouted_price' => 'required',
         ]);
+
 
         $CUSTOMER = Customer::find($request->customer_id);
 
@@ -55,35 +60,33 @@ class ProjectController extends Controller
             'code'=>$request->code." - ".$CUSTOMER->code,
             'budget_cost'=>$request->budget_cost,
             'quoted_price'=>$request->qouted_price,
+            'created_by_id'=>\Auth::id()
         ]);
 
-        $tempJobTypeID = 0;
+
         //assign jobs to projects
         foreach ($request->job_types as $item){
-            $tempJobTypeID = $item;
             ProjectJobType::create([
                 'project_id'=>$Project->id,
                 'jop_type_id'=>$item
             ]);
         }
 
-        //
-        if(!empty($request->details)){
-            foreach ($request->details as $item){
-                ProjectEmployee::create([
-                    'project_id'=>$Project->id,
-                    'job_type_id'=>$tempJobTypeID,
-                    'user_id'=>$item['employee_id'],
-                    'paying_hrs'=>$item['paying_hrs'],
-                    'volunteer_hrs'=>$item['volunteer_hrs'],
-                ]);
-            }
-        }
+        //this part remove due to requirement changes
+//        if(!empty($request->details)){
+//            foreach ($request->details as $item){
+//                ProjectEmployee::create([
+//                    'project_id'=>$Project->id,
+//                    'job_type_id'=>$tempJobTypeID,
+//                    'user_id'=>$item['employee_id'],
+//                    'paying_hrs'=>$item['paying_hrs'],
+//                    'volunteer_hrs'=>$item['volunteer_hrs'],
+//                ]);
+//            }
+//        }
 
-
-
-        return redirect('project/create')->with('created',true);
-
+//        return redirect('project/'.$Project->id)->with('created',true);
+        return $this->estimation($Project);
     }
 
     /**
@@ -130,5 +133,15 @@ class ProjectController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function estimation($Project)
+    {
+        return view('project.estimation',compact('Project'));
+    }
+
+    public function finalized(Request $request)
+    {
+
     }
 }

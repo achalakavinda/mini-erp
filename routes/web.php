@@ -38,6 +38,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('designation','DesignationController');
 
     Route::resource('project','ProjectController');
+    Route::post('project/finalized','ProjectController@finalized');
 
 
     Route::get('settings','SettingController@index');
