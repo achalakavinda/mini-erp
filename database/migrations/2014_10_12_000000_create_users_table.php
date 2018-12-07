@@ -49,7 +49,7 @@ class CreateUsersTable extends Migration
 
             $table->string('emp_no')->nullable();
             $table->string('epf_no')->nullable();
-            $table->integer('designation_id')->default(-999);
+            $table->unsignedInteger('designation_id')->nullable();
             $table->string('nic')->nullable();
 
 
@@ -60,15 +60,15 @@ class CreateUsersTable extends Migration
             $table->date('ca_training_period_to')->nullable();
             $table->string('ca_training')->nullable();
 
-            $table->float('basic_sal')->default(0);
-            $table->float('epf_cost')->default(0);
-            $table->float('etf_cost')->default(0);
-            $table->float('allowance_cost')->default(0);
-            $table->float('gratuity_cost')->default(0);
-            $table->float('other_cost')->default(0);
-            $table->float('cost')->default(0);
-            $table->float('hr_rates')->default(0);
-            $table->float('hr_billing_rates')->default(0);
+            $table->double('basic_sal')->default(0);
+            $table->double('epf_cost')->default(0);
+            $table->double('etf_cost')->default(0);
+            $table->double('allowance_cost')->default(0);
+            $table->double('gratuity_cost')->default(0);
+            $table->double('other_cost')->default(0);
+            $table->double('cost')->default(0);
+            $table->double('hr_rates')->default(0);
+            $table->double('hr_billing_rates')->default(0);
 
 
             $table->rememberToken();
@@ -77,144 +77,12 @@ class CreateUsersTable extends Migration
 
         DB::table('users')->insert([
             [
+                'id'=>1,
                 'name' => 'admin',
                 'email' => 'admin@test.com',
                 'password' => bcrypt('admin123'),
                 'date_joined'=>\Carbon\Carbon::now()
             ]
-        ]);
-
-        DB::table('ca_trainings')->insert([
-            [
-                'name' => 'EL'
-            ],
-            [
-                'name' => 'BL'
-            ],
-            [
-                'name' => 'CL'
-            ]
-        ]);
-
-        DB::table('hometown_districts')->insert([
-            [
-                'name' => 'Ampara'
-            ],
-            [
-                'name' => 'Anuradhapura'
-            ],
-            [
-                'name' => 'Badulla'
-            ],
-            [
-                'name' => 'Batticaloa'
-            ],
-            [
-                'name' => 'Colombo'
-            ],
-            [
-                'name' => 'Galle'
-            ],
-            [
-                'name' => 'Gampaha'
-            ],
-            [
-                'name' => 'Hambantota'
-            ],
-            [
-                'name' => 'Jaffna'
-            ],
-            [
-                'name' => 'Kalutara'
-            ],
-            [
-                'name' => 'Kandy'
-            ],
-            [
-                'name' => 'Kegalle'
-            ],
-            [
-                'name' => 'Kilinochchi'
-            ],
-            [
-                'name' => 'Kurunegala'
-            ],
-            [
-                'name' => 'Mannar'
-            ],
-            [
-                'name' => 'Matale'
-            ],
-            [
-                'name' => 'Matara'
-            ],
-            [
-                'name' => 'Monaragala'
-            ],
-            [
-                'name' => 'Mullaitivu'
-            ],
-            [
-                'name' => 'Nuwara Eliya'
-            ],
-            [
-                'name' => 'Polonnaruwa'
-            ],
-            [
-                'name' => 'Puttalam'
-            ],
-            [
-                'name' => 'Ratnapura'
-            ],
-            [
-                'name' => 'Trincomalee'
-            ],
-            [
-                'name' => 'Vavuniya'
-            ]
-        ]);
-
-        DB::table('cmb_location_districts')->insert([
-            [
-                'name' => 'Colombo'
-            ],
-            [
-                'name' => 'Dehiwala'
-            ],
-            [
-                'name' => 'Homagama'
-            ],
-            [
-                'name' => 'Kaduwela'
-            ],
-            [
-                'name' => 'Kesbewa'
-            ],
-            [
-                'name' => 'Kolonnawa'
-            ],
-            [
-                'name' => 'Maharagama'
-            ],
-            [
-                'name' => 'Moratuwa'
-            ],
-            [
-                'name' => 'Padukka'
-            ],
-            [
-                'name' => 'Ratmalana'
-            ],
-            [
-                'name' => 'Seethawaka'
-            ],
-            [
-                'name' => 'Sri Jayawardenepura Kotte'
-            ],
-            [
-                'name' => 'Thimbirigasyaya'
-            ],
-
         ]);
     }
 
