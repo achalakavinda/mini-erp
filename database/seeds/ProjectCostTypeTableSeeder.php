@@ -15,24 +15,28 @@ class ProjectCostTypeTableSeeder extends Seeder
             [
                 'id'=>1,
                 'name'=>'Incentives',
+                'remarks'=>'remarks',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
             [
                 'id'=>2,
                 'name'=>'Overtime',
+                'remarks'=>'remarks',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
             [
                 'id'=>3,
                 'name'=>'Travelling',
+                'remarks'=>'remarks',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
             [
                 'id'=>4,
                 'name'=>'Administration Overheads',
+                'remarks'=>'remarks',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],

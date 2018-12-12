@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             JobTypeTableSeeder::class,
             CustomerSeeder::class,
             ProjectCostTypeTableSeeder::class,
-            UserTableSeeder::class
+            UserTableSeeder::class,
+            ProjectSeeder::class
         ]);
 
 

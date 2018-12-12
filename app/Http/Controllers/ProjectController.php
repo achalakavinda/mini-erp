@@ -86,7 +86,7 @@ class ProjectController extends Controller
 //        }
 
 //        return redirect('project/'.$Project->id)->with('created',true);
-        return $this->estimation($Project);
+        return $this->estimation($Project->id);
     }
 
     /**
@@ -135,8 +135,9 @@ class ProjectController extends Controller
         //
     }
 
-    private function estimation($Project)
+    public function estimation($id)
     {
+        $Project = Project::findOrFail($id);
         return view('project.estimation',compact('Project'));
     }
 

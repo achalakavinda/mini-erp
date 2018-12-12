@@ -78,27 +78,48 @@ $WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,su
 </div>
 <!-- /.box-body -->
 
+<!-- Cost assignment-->
+<div class="box-header with-border">
+    <h4 class="box-title">Cost Estimation <b id="COSTESTIMATIONVALUE"></b> <i id="COSTESTIMATIONVALUEREFRESH" style="font-size: 70%; color: green; cursor: pointer" class="fa fa-refresh"></i></h4>
+    <div class="box-body">
+        <div class="col-md-12">
+            <table id="CostTable" class="table table-responsive table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Cost Type</th>
+                        <th>Cost</th>
+                        <th>Remark</th>
+                        <th>Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
 
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-10">
+                <div class="form-group">
+                    {!! Form::select('cost_type_id',\App\Models\ProjectCostType::get()->pluck('name','id'),null,['class'=>'form-control','id'=>'CostTypeId','placeholder'=>'Other Cost']) !!}
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <button class="form-control" type="button" id="addNewCost">Cost</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- /Cost assignment-->
+
+<!-- Employee assignment-->
 <div class="box-header with-border">
     <h4 class="box-title">Assign Employees</h4>
 </div>
-
 <div class="box-body">
-    <div class="col-md-12">
-        <table class="table table-responsive table-bordered table-striped">
-            <?php
-            $count =1;
-            if(!empty($PROJECTEMPLOYEES)){
-                foreach ($PROJECTEMPLOYEES as $val){
-                    $user =  \App\Models\User::find($val->user_id);
-                    echo '<tr style="padding-left: 20px"><th>'.$count.',  '.$user->name.'</th></tr>';
-                    $count++;
-                }
-            }
-            ?>
-
-        </table>
-    </div>
     <div class="col-md-12">
         <table class="table table-responsive table-bordered table-striped">
             <thead>
@@ -117,4 +138,64 @@ $WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,su
 
     </div>
 </div>
-<!-- /.box-body -->
+<!-- /Employee assignment -->
+
+@section('js')
+    <script>
+
+        var table = $('#CostTable');
+        var count = 0;
+        var RawCount = 1;
+        var CostTypeSum = 0;
+
+        $( document ).ready(function() {
+
+            $('#COSTESTIMATIONVALUEREFRESH').click(function() {
+                calculateCostForTypes(count);
+            });
+
+            $('#addNewCost').click(function() {
+                var SelectCostTypeId = $('#CostTypeId').val();
+                var SelectCostTypeName = $('#CostTypeId option:selected').text();
+
+                table.append('<tr class="tr_'+count+'">\n' +
+                    '                        <td>\n' +
+                    '                            <input style="display:none" type="number" value="'+SelectCostTypeId+'" name="cost_row['+count+'][cost_type_id]" class="form-control">\n' +
+                    '                            <input type="text" name="cost_row['+count+'][cost_type_name]" value="'+SelectCostTypeName+'" class="form-control">\n' +
+                    '                        </td>\n' +
+                    '                        <td>\n' +
+                    '                            <input  type="text" name="cost_row['+count+'][cost]" id="CostRow'+count+'" value="" class="form-control">\n' +
+                    '                        </td>\n' +
+                    '                        <td>\n' +
+                    '                            <input  type="text" name="cost_row['+count+'][remark]"  value="" class="form-control">\n' +
+                    '                        </td>\n' +
+                    '                        <td>\n' +
+                    '                            <a style="cursor: pointer" type="button" onclick="rowRemove(\'.tr_'+count+'\')"><i class="fa fa-remove"></i></a>\n' +
+                    '                        </td>\n' +
+                    '                    <tr/>');
+                count++;
+                RawCount++;
+
+                calculateCostForTypes(count);
+            });
+
+        });
+
+        function calculateCostForTypes(count) {
+            CostTypeSum =0;
+            for (i=0;i<count;i++){
+                var costField = $("#CostRow"+i).val();
+                if(parseFloat(costField)>0){
+                    CostTypeSum = CostTypeSum + parseFloat(costField);
+                }
+            }
+            $('#COSTESTIMATIONVALUE').text(" : "+CostTypeSum+'/=');
+        }
+
+        function rowRemove(value) {
+            alert(value);
+            $(value).remove();
+        }
+    </script>
+
+@endsection
