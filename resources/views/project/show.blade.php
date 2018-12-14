@@ -29,11 +29,7 @@
                     <h3 class="box-title">Project</h3>
                 </div>
                 <!-- /.box-header -->
-                <!-- form start -->
-                {!! Form::open(['action'=>'ProjectController@store','class'=>'form-horizontal','id'=>'Form']) !!}
-                @include('error.error')
-                @include('project._partials.showForm')
-                {!! Form::close() !!}
+                 @include('project._partials.showForm')
             </div>
             <!-- /.box -->
         </div>

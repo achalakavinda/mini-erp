@@ -21,6 +21,45 @@ class CreateWorkCodesTable extends Migration
             $table->boolean('worked');
             $table->timestamps();
         });
+
+        DB::table('work_codes')->insert([
+                [
+                    'id'=>1,
+                    'name'=>'Work',
+                    'from'=>'08:30:00',
+                    'to'=>'17:30:00',
+                    'worked'=>true,
+                    "created_at"=>\Carbon\Carbon::now(),
+                    "updated_at"=>\Carbon\Carbon::now()
+                ],
+                [
+                    'id'=>2,
+                    'name'=>'Half Day - Morning',
+                    'from'=>'08:30:00',
+                    'to'=>'12:30:00',
+                    'worked'=>false,
+                    "created_at"=>\Carbon\Carbon::now(),
+                    "updated_at"=>\Carbon\Carbon::now()
+                ],
+                [
+                    'id'=>3,
+                    'name'=>'Half Day - Evening',
+                    'from'=>'12:30:00',
+                    'to'=>'17:30:00',
+                    'worked'=>false,
+                    "created_at"=>\Carbon\Carbon::now(),
+                    "updated_at"=>\Carbon\Carbon::now()
+                ],
+                [
+                    'id'=>4,
+                    'name'=>'Full day leave',
+                    'from'=>'08:30:00',
+                    'to'=>'17:30:00',
+                    'worked'=>false,
+                    "created_at"=>\Carbon\Carbon::now(),
+                    "updated_at"=>\Carbon\Carbon::now()
+                ],
+            ]);
     }
 
     /**

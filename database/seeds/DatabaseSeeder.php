@@ -13,12 +13,13 @@ class DatabaseSeeder extends Seeder
     {
 
         $this->call([
-            DesignationSeeder::class,
-            JobTypeTableSeeder::class,
-            CustomerSeeder::class,
-            ProjectCostTypeTableSeeder::class,
-            UserTableSeeder::class,
-            ProjectSeeder::class
+            Important::class,
+//            DesignationSeeder::class,
+//            JobTypeTableSeeder::class,
+//            CustomerSeeder::class,
+//            ProjectCostTypeTableSeeder::class,
+//            UserTableSeeder::class,
+//            ProjectSeeder::class
         ]);
 
 

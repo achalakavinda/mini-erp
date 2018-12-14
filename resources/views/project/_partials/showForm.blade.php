@@ -1,28 +1,24 @@
 <?php
-$Customers = \App\Models\Customer::all()->pluck('name','id');
-$JobTypes = \App\Models\JobType::all()->pluck('jobType','id');
-$Employess = \App\Models\User::where('designation_id','!=',-999)->pluck('name','id');
+    $Customers = \App\Models\Customer::where('id',$Project->customer_id)->pluck('name','id');
 
-$PROJECTJOBTYPE = \App\Models\ProjectJobType::where('project_id',$Project->id)->get();
+    $PROJECTJOBTYPE = \App\Models\ProjectJobType::where('project_id',$Project->id)->get();
 
-$PROJECTEMPLOYEES = \App\Models\ProjectEmployee::where('project_id',$Project->id)->get();
-
-$WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,sum(work_hrs) as hrs,sum(hr_rate) as rate, user_id'))->where('project_id',$Project->id)->groupBy('user_id')->get();
+    $WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,sum(work_hrs) as hrs,sum(hr_rate) as rate, user_id'))->where('project_id',$Project->id)->groupBy('user_id')->get();
 
 ?>
 
 <div class="box-body">
 
-    <div class="col-md-12">
+    <div class="col-md-3">
         <div class="form-group">
             {!! Form::label('Code') !!}
             {!! Form::text('code',$Project->code,['class'=>'form-control','id'=>'code','placeholder'=>'Code','disabled']) !!}
         </div>
     </div>
-    <div class="col-md-12">
+    <div class="col-md-3">
         <div class="form-group">
             {!! Form::label('Company') !!}
-            {!! Form::select('customer_id',$Customers,$Project->customer_id,['class'=>'form-control','id'=>'company_id','disabled']) !!}
+            {!! Form::select('customer_id',$Customers,null,['class'=>'form-control','id'=>'company_id','disabled']) !!}
         </div>
     </div>
 
@@ -47,7 +43,7 @@ $WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,su
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="form-group">
             {!! Form::label('Actual Cost') !!}
             {!! Form::text('actual_cost',$Project->actual_cost,['class'=>'form-control','id'=>'actual_cost','placeholder'=>'Actual Cost','disabled']) !!}
@@ -62,13 +58,13 @@ $WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,su
 </div>
 
 <div class="box-body">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <table class="table table-responsive table-bordered table-striped">
             <?php
             $count =1;
                 foreach ($PROJECTJOBTYPE as $val){
                     $JBTYPE =  \App\Models\JobType::find($val->jop_type_id);
-                    echo '<tr style="padding-left: 20px"><th>'.$count.',  '.$JBTYPE->jobType.'</th></tr>';
+                    echo '<tr style="padding-left: 20px"><th>'.$count.'.  '.$JBTYPE->jobType.'</th></tr>';
                     $count++;
                 }
             ?>
@@ -80,25 +76,9 @@ $WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,su
 
 
 <div class="box-header with-border">
-    <h4 class="box-title">Assign Employees</h4>
+    <h4 class="box-title">Employees work report</h4>
 </div>
-
 <div class="box-body">
-    <div class="col-md-12">
-        <table class="table table-responsive table-bordered table-striped">
-            <?php
-            $count =1;
-            if(!empty($PROJECTEMPLOYEES)){
-                foreach ($PROJECTEMPLOYEES as $val){
-                    $user =  \App\Models\User::find($val->user_id);
-                    echo '<tr style="padding-left: 20px"><th>'.$count.',  '.$user->name.'</th></tr>';
-                    $count++;
-                }
-            }
-            ?>
-
-        </table>
-    </div>
     <div class="col-md-12">
         <table class="table table-responsive table-bordered table-striped">
             <tbody>
@@ -140,5 +120,21 @@ $WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,su
 
 
     </div>
+
+
 </div>
 <!-- /.box-body -->
+
+<div class="box-header with-border">
+    <h4 class="box-title">Settings <i class="fa fa-cogs"></i></h4>
+</div>
+<div class="box-body">
+    <div class="col-md-1">
+
+        {!! Form::model($Project, ['method' => 'PATCH', 'action' => ['ProjectController@update', $Project->id],'class'=>'form-horizontal']) !!}
+        {!! Form::text('set_delete',"value",['style'=>'display:none']) !!}
+            <button type="submit" class="btn btn-sm btn-danger">Delete <i class="fa fa-trash"></i></button>
+        {!! Form::close() !!}
+
+    </div>
+</div>

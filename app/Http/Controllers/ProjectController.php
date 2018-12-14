@@ -5,9 +5,13 @@ namespace App\Http\Controllers;
 use App\Models\Customer;
 use App\Models\JobType;
 use App\Models\Project;
+use App\Models\ProjectCostType;
+use App\Models\ProjectDesignation;
 use App\Models\ProjectEmployee;
 use App\Models\ProjectJobType;
+use App\Models\ProjectOverhead;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class ProjectController extends Controller
 {
@@ -123,7 +127,12 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        if(isset($request->set_delete)){
+            $Project = Project::find($id)->delete();
+        }
+
+        return redirect('project');
     }
 
     /**
@@ -153,20 +162,42 @@ class ProjectController extends Controller
 
         $Project = Project::find($request->project_id);
 
-        dd($request->all());
+        if(isset($request->cost_row)){
+            foreach ($request->cost_row as $item){
 
-        foreach ($request->cost_row as $item){
-            
-        }
-        foreach ($request->designation_row as $item) {
-            
+                ProjectOverhead::create([
+                    'project_id'=>$Project->id,
+                    'project_cost_type_id'=>$item['cost_type_id'],
+                    'project_cost_type'=>$item['cost_type_name'],
+                    'cost'=>$item['cost'],
+                    'remarks'=>$item['remark'],
+                    'created_by_id'=>\Auth::id(),
+                    'updated_by_id'=>\Auth::id()
+                ]);
+
+            }
         }
 
-        $Project->budget_cost=budget_cost;
-        $Project->quoted_price=qouted_price;
-        $Project->profit_ratio=profit_margin;
+        if(isset($request->designation_row)){
+            foreach ($request->designation_row as $item) {
+                ProjectDesignation::create([
+                    'project_id'=>$Project->id,
+                    'project_designation_id'=>$item['designation_id'],
+                    'hr'=>$item['hrs'],
+                    'hr_rates'=>$item['hr_rate'],
+                    'total'=>$item['hrs']*$item['hr_rate'],
+                    'created_by_id'=>\Auth::id(),
+                    'updated_by_id'=>\Auth::id(),
+                ]);
+            }
+        }
+
+        $Project->budget_cost=$request->budget_cost;
+        $Project->quoted_price=$request->qouted_price;
+        $Project->profit_ratio=$request->profit_margin;
         $Project->updated_by_id = \Auth::id();
         $Project->save();
 
+        return redirect('project/'.$Project->id)->with('created',true);
     }
 }
