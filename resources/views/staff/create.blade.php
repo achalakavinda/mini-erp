@@ -29,83 +29,11 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form role="form">
-                    <div class="box-body">
 
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Name</label>
-                                <input type="text" class="form-control" id="name" placeholder="Employee Name">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="address">Address</label>
-                                <input type="text" class="form-control" id="address" placeholder="Employee Address">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="employeeNo">Employee No</label>
-                                <input type="text" class="form-control" id="employeeNo" placeholder="Employee No">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="salary">Salary</label>
-                                <input type="text" class="form-control" id="salary" placeholder="Salary">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="hourlyRate">Hourly Rate</label>
-                                <input type="text" class="form-control" id="hourlyRate" placeholder="Hourly Rate">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <!-- select -->
-                            <div class="form-group">
-                                <label>Job Type</label>
-                                <select class="form-control">
-                                    <option>External Audit</option>
-                                    <option>Internal Audit</option>
-                                    <option>Feasibility</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="nic">ID Number</label>
-                                <input type="text" class="form-control" id="employeeNic" placeholder="ID Number">
-                            </div>
-                        </div>
-
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="exampleInputFile">Picture</label>
-                                <input type="file" id="exampleInputFile">
-
-                                <p class="help-block">Upload If necessary.</p>
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-
-
-                </form>
+                {!! Form::open(['action'=>'StaffController@store','class'=>'form-horizontal','id'=>'Form']) !!}
+                    @include('error.error')
+                    @include('staff._partials.createForm')
+                {!! Form::close() !!}
             </div>
             <!-- /.box -->
         </div>
@@ -114,3 +42,22 @@
 
 @endsection
 <!-- /main section -->
+
+@section('js')
+    <script type="text/javascript">
+
+        $("#cost").keyup(function () {
+            calculate();
+        });
+
+        $( "#cost" ).change(function() {
+            calculate();
+        });
+
+        function calculate() {
+            var cost =parseFloat($( "#cost" ).val());
+            $("#hourlyRate").val(cost/240);
+        }
+
+    </script>
+@endsection

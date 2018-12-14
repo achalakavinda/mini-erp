@@ -27,55 +27,15 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Add New Company</h3>
+                    <h3 class="box-title">New Company</h3>
+
+                    @include('error.error')
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form role="form">
-                    <div class="box-body">
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="name">Company</label>
-                                <input type="text" class="form-control" id="name" placeholder="Company Name">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="contact">Contact</label>
-                                <input type="text" class="form-control" id="name" placeholder="Contact">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" class="form-control" id="email" placeholder="Email">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <!-- select -->
-                            <div class="form-group">
-                                <label>Job Type</label>
-                                <select class="form-control">
-                                    <option>External Audit</option>
-                                    <option>Internal Audit</option>
-                                    <option>Feasibility</option>
-                                </select>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-
-
-                </form>
+                {!! Form::open(['action'=>'CustomerController@store','class'=>'form-horizontal','id'=>'Form']) !!}
+                    @include('customer._partial.form')
+                {!! Form::close() !!}
             </div>
             <!-- /.box -->
         </div>

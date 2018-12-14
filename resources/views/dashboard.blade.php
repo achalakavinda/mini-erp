@@ -14,47 +14,112 @@
             </div>
             <!-- /.box-body -->
         </div>
+        <div class="row">
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-aqua">
+                    <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Projects</span>
+                        <span class="info-box-number">{!! DB::table('projects')->count() !!}</span>
+
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
+                        <span class="progress-description">
+                    Number of Project Completed
+                  </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+
+
+            <!-- /.col -->
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box bg-green">
+                    <span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
+
+                    <div class="info-box-content">
+                        <span class="info-box-text">Employees</span>
+                        <span class="info-box-number">{!! DB::table('users')->count() !!}</span>
+
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 70%"></div>
+                        </div>
+                        <span class="progress-description">
+                    Number Of Staff
+                  </span>
+                    </div>
+                    <!-- /.info-box-content -->
+                </div>
+                <!-- /.info-box -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
         <!-- /.box -->
     @endsection
 <!-- /main header section -->
 
 <!-- main section -->
     @section('main-content')
+        <!-- Main content -->
         <div class="row">
             <div class="col-xs-12">
                 <div class="box">
                     <div class="box-header">
-                        <h3 class="box-title">Staff Registry</h3>
+                        <h3 class="box-title">Projects</h3>
                     </div>
                     <!-- /.box-header -->
                     <div style="overflow: auto" class="box-body">
-                        <table id="example1" class="table table-responsive table-bordered table-striped">
+                        <table id="table" class="table table-responsive table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th>#ID</th>
-                                <th>Full Name</th>
-                                <th>Employee Number</th>
-                                <th>Category</th>
-                                <th>Hour Rate</th>
+                                <th>Code</th>
+                                <th>Customer</th>
+                                <th>Number OF Hrs</th>
+                                <th>Budget</th>
+                                <th>Quoted</th>
+                                <th>Cost</th>
+                                <th>Revenue</th>
+                                <th>Recovery Ratio</th>
+                                <th>Status</th>
+                                <th>View</th>
                             </tr>
                             </thead>
                             <tbody>
 
-                            <tr>
-                               <td>1</td>
-                               <td>Rakitha</td>
-                               <td>152</td>
-                               <td>Partner</td>
-                               <td>RS. 70,000</td>
-                            </tr>
+                            <?php $Rows = \App\Models\Project::all();?>
 
-                            <tr>
-                                <td>2</td>
-                                <td>Sugith</td>
-                                <td>75</td>
-                                <td>Supervisor</td>
-                                <td>RS. 5,000</td>
-                            </tr>
+                            @foreach($Rows as $row)
+                                <?php
+                                $Customer="";
+                                $CM = \App\Models\Customer::find($row->customer_id );
+                                if(!empty($CM)){
+                                    $Customer = $CM->name;
+                                }
+                                ?>
+                                <tr>
+                                    <td>{{ $row->id }}</td>
+                                    <td>{{ $row->code }}</td>
+                                    <td>{{ $Customer }}</td>
+                                    <td>{{ $row->number_of_hrs }}</td>
+                                    <td>{{ $row->budget_cost }}</td>
+                                    <td>{{ $row->quoted_price }}</td>
+                                    <td>{{ $row->actual_cost }}</td>
+                                    <td>{{ $row->revenue }}</td>
+                                    <td>{{ $row->recovery_ratio }}</td>
+                                    <td>{{ $row->close }}</td>
+                                    <td>
+                                        <a href="{{ url('/project') }}/{{ $row->id }}"><i class="fa fa-paper-plane"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
 
                             </tbody>
                         </table>

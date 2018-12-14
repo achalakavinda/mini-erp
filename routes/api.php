@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//to get project details without customer array
+Route::get('project/{id}/job-types','ApiController@GetProjectJobTypeById');
+
+///to get project all details
+Route::get('project/{id}/user/{user_id}','ApiController@GetProjectDetailsByID');

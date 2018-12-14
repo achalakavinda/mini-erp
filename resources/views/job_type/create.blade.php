@@ -29,33 +29,10 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <form role="form">
-                    <div class="box-body">
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="jobType">Job Type</label>
-                                <input type="text" class="form-control" id="jobType" placeholder="Job Type">
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="description">Description</label>
-                                <input type="text" class="form-control" id="description" placeholder="Description">
-                            </div>
-                        </div>
-
-
-                    </div>
-                    <!-- /.box-body -->
-
-                    <div class="box-footer">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-
-
-                </form>
+                {!! Form::open(['action'=>'JobTypeController@store','class'=>'form-horizontal','id'=>'Form']) !!}
+                @include('error.error')
+                @include('job_type._partials.createForm')
+                {!! Form::close() !!}
             </div>
             <!-- /.box -->
         </div>

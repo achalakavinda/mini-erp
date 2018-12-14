@@ -1,5 +1,29 @@
 @extends('layouts.admin')
 
+@section('style')
+    {!! Html::style('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') !!}
+@endsection
+
+@section('js')
+    {!! Html::script('bower_components/datatables.net/js/jquery.dataTables.min.js') !!}
+    {!! Html::script('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') !!}
+
+    <script type="text/javascript">
+
+        $(function () {
+            $('#table').DataTable({
+                'paging'      : true,
+                'lengthChange': false,
+                'searching'   : true,
+                'ordering'    : true,
+                'info'        : true,
+                'autoWidth'   : true
+            })
+        })
+    </script>
+
+@endsection
+
 <!-- main header section -->
 @section('main-content-header')
     <!-- Default box -->
@@ -28,21 +52,27 @@
                 </div>
                 <!-- /.box-header -->
                 <div style="overflow: auto" class="box-body">
-                    <table id="example1" class="table table-responsive table-bordered table-striped">
+                    <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>#ID</th>
                             <th>Job</th>
                             <th>Description</th>
+                            <th>View</th>
                         </tr>
                         </thead>
                         <tbody>
 
-                        <tr>
-                            <td>1</td>
-                            <td>Rakitha</td>
-                            <td>152</td>
-                        </tr>
+                        @foreach($Rows as $row)
+                            <tr>
+                                <td>{{ $row->id }}</td>
+                                <td>{{ $row->jobType }}</td>
+                                <td>{{ $row->description }}</td>
+                                <td>
+                                    <a class="btn btn-danger btn-sm" href="{{ url('/job-type') }}/{{ $row->id }}">view</a>
+                                </td>
+                            </tr>
+                        @endforeach
 
                         </tbody>
                     </table>
