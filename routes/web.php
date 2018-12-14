@@ -41,7 +41,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('project/{id}/estimation','ProjectController@estimation');
 
-    Route::post('project/finalized ','ProjectController@finalized');
+    Route::post('project/finalized','ProjectController@finalized');
 
 
     Route::get('settings','SettingController@index');

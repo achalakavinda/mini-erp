@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
-use App\Models\TimeSlot;
 use App\Models\User;
 use App\Models\WorkCodes;
 use App\Models\WorkSheet;
@@ -42,7 +41,6 @@ class WorkSheetController extends Controller
      */
     public function store(Request $request)
     {
-
         //validate the post request body
         $request->validate([
             'work_code_id'=> 'required',
@@ -50,37 +48,34 @@ class WorkSheetController extends Controller
             'date' => 'required',
             'row' => 'required'
         ]);
-
-
-        $WorkCode = WorkCodes::findOrFail($request->work_code_id);
-        $Worked = $WorkCode->worked;
-
-
         $ROWS = $request->row;
 
+        //check for the working states
+        $WorkCode = WorkCodes::findOrFail($request->work_code_id);
+        $Worked = $WorkCode->worked;
+        //date time convert to sql format
         $DATE_VAR = date_format(date_create($request->date),"Y-m-d");
 
-        foreach ($ROWS as $row){
-
+        //loop the row array and insert row into worksheet table
+        foreach ($ROWS as $row)
+        {
             $diffInMin = $this->timeDiff($row['from'],$row['to']);
             $work_hr = $this->convertToHoursMins($diffInMin);
             $actual_work_hr = $work_hr;
 
-            if($work_hr>8){
-                $work_hr = 8;
-            }
+            if($work_hr>8){$work_hr = 8;}//set the working hr to 8
 
             $USER = User::findOrFail($request->user_id);
-
             //Recode check
-                $Tuple_Checker = \DB::table('work_sheets')->where(['user_id'=>$request->user_id,'date'=>$DATE_VAR])
-                    ->whereBetween('from',[$row['from'],$row['to']])
-                    ->get();
+            $Tuple_Checker = \DB::table('work_sheets')->where(['user_id'=>$request->user_id,'date'=>$DATE_VAR])
+                                    ->whereBetween('from',[$row['from'],$row['to']])
+                                    ->get();
+
                 if (!$Tuple_Checker->isEmpty()){
                     dd($Tuple_Checker->isEmpty());
                 }
-            //recode checker
 
+            //check the work state
             if($Worked){
                 WorkSheet::create([
                     'date'=>$request->date,
@@ -99,7 +94,8 @@ class WorkSheetController extends Controller
                     'actual_hr_cost'=>$USER->hr_rates*$actual_work_hr,
                     'remark'=>$row['remark']
                 ]);
-                //check the
+
+                //update the time report project
                 $PJ = Project::find($request->project_id);
                 if($PJ) {
                     $PJ->actual_cost = $PJ->actual_cost + ($USER->hr_rates*$work_hr);
@@ -126,23 +122,8 @@ class WorkSheetController extends Controller
             }
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('created');
 
-    }
-
-    public function timeDiff($from,$to){
-        $startTime = Carbon::parse($to);
-        $finishTime = Carbon::parse($from);
-        return $totalDuration = $finishTime->diffInMinutes($startTime);
-    }
-
-    function convertToHoursMins($time) {
-        $format = '%02d:%02d';
-        if ($time < 1) {
-            return;
-        }
-        $hours = $time / 60;
-        return $hours;
     }
 
     /**
@@ -188,5 +169,28 @@ class WorkSheetController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * calculate the time difference.
+     *
+     * @param  int  $from
+     * @param  int  $to
+     * @return float
+     */
+    public function timeDiff($from,$to)
+    {
+        $startTime = Carbon::parse($to);
+        $finishTime = Carbon::parse($from);
+        return $totalDuration = $finishTime->diffInMinutes($startTime);
+    }
+
+    function convertToHoursMins($time)
+    {
+        if ($time < 1) {
+            return;
+        }
+        $hours = $time / 60;
+        return $hours;
     }
 }

@@ -8,7 +8,7 @@ use Illuminate\Database\Migrations\Migration;
  * this information are use to store the project assign costs
  * */
 
-class CreateProjectOverheadsTable extends Migration
+class CreateProjectDesignationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,29 +17,19 @@ class CreateProjectOverheadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('project_cost_types', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->text('remarks')->nullable();
-            $table->timestamps();
-        });
-
-        Schema::create('project_overheads', function (Blueprint $table) {
+        Schema::create('project_designations', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('project_id');
-
-            $table->unsignedInteger('project_cost_type_id')->nullable();
-            $table->string('project_cost_type');
-            $table->boolean('project_cost_default')->default(true);
-            $table->double('cost')->default(0);
-            $table->text('remarks')->nullable();
-
-
+            $table->unsignedInteger('project_designation_id')->nullable();
+            $table->double('hr')->default(0);
+            $table->double('hr_rates')->default(0);
+            $table->double('total')->default(0);
             $table->timestamps();
             $table->unsignedInteger('created_by_id');
             $table->unsignedInteger('updated_by_id');
 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreign('project_designation_id')->references('id')->on('designations')->onDelete('cascade');
             $table->foreign('created_by_id')->references('id')->on('users');
             $table->foreign('updated_by_id')->references('id')->on('users');
         });
@@ -52,7 +42,6 @@ class CreateProjectOverheadsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('project_overheads');
-        Schema::dropIfExists('project_cost_types');
+        Schema::dropIfExists('project_designations');
     }
 }

@@ -60,7 +60,9 @@ class ProjectController extends Controller
             'code'=>$request->code." - ".$CUSTOMER->code,
             'budget_cost'=>$request->budget_cost,
             'quoted_price'=>$request->qouted_price,
-            'created_by_id'=>\Auth::id()
+            'created_by_id'=>\Auth::id(),
+            'updated_by_id'=>\Auth::id(),
+
         ]);
 
 
@@ -143,6 +145,28 @@ class ProjectController extends Controller
 
     public function finalized(Request $request)
     {
+
+        $request->validate([
+            'number_of_hrs' => 'required',
+            'qouted_price' => 'required'
+            ]);
+
+        $Project = Project::find($request->project_id);
+
+        dd($request->all());
+
+        foreach ($request->cost_row as $item){
+            
+        }
+        foreach ($request->designation_row as $item) {
+            
+        }
+
+        $Project->budget_cost=budget_cost;
+        $Project->quoted_price=qouted_price;
+        $Project->profit_ratio=profit_margin;
+        $Project->updated_by_id = \Auth::id();
+        $Project->save();
 
     }
 }
