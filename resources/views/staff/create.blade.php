@@ -60,4 +60,6 @@
         }
 
     </script>
+
+    @include('error.swal')
 @endsection

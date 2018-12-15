@@ -46,7 +46,7 @@ class CreateCustomersTable extends Migration
             $table->text('address_2')->nullable();
             $table->text('address_3')->nullable();
             $table->text('fax_number')->nullable();
-            $table->unsignedInteger('secretary_id');
+            $table->unsignedInteger('secretary_id')->nullable();
             $table->text('date_of_incorporation')->nullable();
             $table->string('tin_no')->nullable();
             $table->string('vat_no')->nullable();
@@ -57,11 +57,13 @@ class CreateCustomersTable extends Migration
             $table->string('cfo_contact')->nullable();
             $table->string('cfo_email')->nullable();
             $table->string('website')->nullable();
-            $table->unsignedInteger('service_id');
-            $table->unsignedInteger('sector_id');
+            $table->unsignedInteger('service_id')->nullable();
+            $table->unsignedInteger('sector_id')->nullable();
             $table->string('location')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
 
             $table->foreign('secretary_id')->references('id')->on('customer_secretaries')->onDelete('cascade');
             $table->foreign('service_id')->references('id')->on('customer_services')->onDelete('cascade');

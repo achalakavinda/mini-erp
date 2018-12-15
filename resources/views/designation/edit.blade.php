@@ -26,6 +26,7 @@
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">{{ $Designation->designationType }}</h3>
+                    @include('error.error')
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -40,3 +41,7 @@
 
 @endsection
 <!-- /main section -->
+
+@section('js')
+    @include('error.swal')
+@endsection

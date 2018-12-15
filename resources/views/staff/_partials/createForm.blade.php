@@ -1,5 +1,4 @@
 <?php
-
     $CA_TRAINGINS = \App\Models\CaTraining::all()->pluck('name','id');
     $CM_LOCATION_DISTRICTS = \App\Models\CmbLocationDistrict::all()->pluck('name','id');
     $HOMETOWN_DISTRICTS = \App\Models\HometownDistrict::all()->pluck('name','id');
@@ -8,22 +7,22 @@
 
     <div class="col-md-6">
         <div class="form-group">
-            <label for="name">Name</label>
+            {!! Form::label('*Name') !!}
             {!! Form::text('name',null,['class'=>'form-control','id'=>'name' , 'placeholder'=>'']) !!}
         </div>
     </div>
 
     <div class="col-md-6">
         <div class="form-group">
-            <label for="name">Date Joined</label>
-            {!! Form::date('date_joined',null,['class'=>'form-control','id'=>'datejoined']) !!}
+            {!! Form::label('Date Joined') !!}
+            {!! Form::date('date_joined',null,['class'=>'form-control','id'=>'dateJoined']) !!}
         </div>
     </div>
 
     <div class="col-md-6">
         <div class="form-group">
-            <label for="address">Mobile</label>
-            {!! Form::text('mobile',null,['class'=>'form-control','id'=>'mobile' , 'placeholder'=>'']) !!}
+            {!! Form::label('Mobile') !!}
+            {!! Form::text('mobile',null,['class'=>'form-control','id'=>'mobile']) !!}
         </div>
     </div>
 
@@ -33,43 +32,43 @@
 
     <div class="col-md-4">
         <div class="form-group">
-            <label for="address">Residence</label>
-            {!! Form::text('residence',null,['class'=>'form-control','id'=>'residence' , 'placeholder'=>'']) !!}
+            {!! Form::label('Residence') !!}
+            {!! Form::text('residence',null,['class'=>'form-control','id'=>'residence']) !!}
         </div>
     </div>
 
     <div class="col-md-4">
         <div class="form-group">
-            <label for="address">Hometown Districts</label>
-            {!! Form::select('hometown_district_id',$HOMETOWN_DISTRICTS,null,['class'=>'form-control','id'=>'hometowndistrict']) !!}
+            {!! Form::label('Hometown Districts') !!}
+            {!! Form::select('hometown_district_id',$HOMETOWN_DISTRICTS,null,['class'=>'form-control','id'=>'hometownDistrict']) !!}
         </div>
     </div>
 
     <div class="col-md-4">
         <div class="form-group">
-            <label for="address">Hometown City</label>
-            {!! Form::text('hometown_city',null,['class'=>'form-control','id'=>'hometowncity' , 'placeholder'=>'']) !!}
+            {!! Form::label('Hometown City') !!}
+            {!! Form::text('hometown_city',null,['class'=>'form-control','id'=>'hometownCity']) !!}
         </div>
     </div>
 
     <div class="col-md-4">
         <div class="form-group">
-            <label for="address">Colombo Location</label>
-            {!! Form::select('cmb_location_district',$CM_LOCATION_DISTRICTS,null,['class'=>'form-control','id'=>'cmblocationdistrict']) !!}
+            {!! Form::label('Colombo Location') !!}
+            {!! Form::select('cmb_location_district',$CM_LOCATION_DISTRICTS,null,['class'=>'form-control','id'=>'cmbLocationDistrict']) !!}
         </div>
     </div>
 
     <div class="col-md-4">
         <div class="form-group">
-            <label for="address">Colombo City</label>
-            {!! Form::text('cmb_city',null,['class'=>'form-control','id'=>'cmbcity' , 'placeholder'=>'']) !!}
+            {!! Form::label('Colombo City') !!}
+            {!! Form::text('cmb_city',null,['class'=>'form-control','id'=>'cmbCity', 'placeholder'=>'']) !!}
         </div>
     </div>
 
     <div class="col-md-4">
         <div class="form-group">
-            <label for="address">Address</label>
-            {!! Form::text('address',null,['class'=>'form-control','id'=>'address' , 'placeholder'=>'']) !!}
+            {!! Form::label('Address') !!}
+            {!! Form::text('address',null,['class'=>'form-control','id'=>'address', 'placeholder'=>'']) !!}
         </div>
     </div>
 
@@ -81,34 +80,34 @@
 
     <div class="col-md-6">
         <div class="form-group">
-            <label for="employeeNo">Employee No</label>
-            {!! Form::text('emp_no',null,['class'=>'form-control','id'=>'employeeNo' , 'placeholder'=>'']) !!}
+            {!! Form::label('*Employee No') !!}
+            {!! Form::text('emp_no',null,['class'=>'form-control','id'=>'employeeNo', 'placeholder'=>'']) !!}
         </div>
     </div>
 
     <div class="col-md-6">
         <div class="form-group">
-            <label for="employeeNo">EPF No</label>
-            {!! Form::text('epf_no',null,['class'=>'form-control','id'=>'epfno' , 'placeholder'=>'']) !!}
+            {!! Form::label('EPF No') !!}
+            {!! Form::text('epf_no',null,['class'=>'form-control','id'=>'epfNo', 'placeholder'=>'']) !!}
         </div>
     </div>
 
     <div class="col-md-4">
         <div class="form-group">
-            {!! Form::label('Designation') !!}
-            {!! Form::select('designation_id',$Designation,null,['class'=>'form-control'])  !!}
+            {!! Form::label('*Designation') !!}
+            {!! Form::select('designation_id',$Designation,null,['class'=>'form-control', 'placeholder'=>''])  !!}
         </div>
     </div>
     <div class="col-md-4">
         <div class="form-group">
-            {!! Form::label('Email') !!}
-            {!! Form::email('email',null,['class'=>'form-control','id'=>'email' , 'placeholder'=>'Email Address']) !!}
+            {!! Form::label('*Email') !!}
+            {!! Form::email('email',null,['class'=>'form-control','id'=>'email', 'placeholder'=>'']) !!}
         </div>
     </div>
 
     <div class="col-md-4">
         <div class="form-group">
-            {!! Form::label('NIC Number') !!}
+            {!! Form::label('*NIC Number') !!}
             {!! Form::text('nic',null,['class'=>'form-control','id'=>'employeeNic' , 'placeholder'=>'NIC Number']) !!}
         </div>
     </div>
@@ -120,7 +119,7 @@
     <div class="col-md-12">
         <div class="form-group">
             {!! Form::label('Supervising Member') !!}
-            {!! Form::select('user_id',[],null,['class'=>'form-control','id'=>'userid'])  !!}
+            {!! Form::select('user_id',[],null,['class'=>'form-control','id'=>'userId', 'placeholder'=>''])  !!}
         </div>
     </div>
 
@@ -131,27 +130,27 @@
     <div class="col-md-3">
         <div class="form-group">
             {!! Form::label('CA Agreement No') !!}
-            {!! Form::text('ca_agree_no',null,['class'=>'form-control','id'=>'caagreeno' , 'placeholder'=>'']) !!}
+            {!! Form::text('ca_agree_no',null,['class'=>'form-control','id'=>'caAgreeNo' , 'placeholder'=>'']) !!}
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="form-group">
             {!! Form::label('From') !!}
-            {!! Form::date('ca_training_period_from',null,['class'=>'form-control','id'=>'catrainingperiodfrom']) !!}
+            {!! Form::date('ca_training_period_from',null,['class'=>'form-control','id'=>'caTrainingPeriodFrom', 'placeholder'=>'']) !!}
         </div>
     </div>
     <div class="col-md-3">
         <div class="form-group">
             {!! Form::label('To') !!}
-            {!! Form::date('ca_training_period_to',null,['class'=>'form-control','id'=>'catrainingperiodto']) !!}
+            {!! Form::date('ca_training_period_to',null,['class'=>'form-control','id'=>'caTrainingPeriodTo', 'placeholder'=>'']) !!}
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="form-group">
             {!! Form::label('CA Training') !!}
-            {!! Form::select('ca_training',$CA_TRAINGINS,null,['class'=>'form-control','id'=>'catraining'])  !!}
+            {!! Form::select('ca_training',$CA_TRAINGINS,null,['class'=>'form-control','id'=>'caTraining', 'placeholder'=>''])  !!}
         </div>
     </div>
 
@@ -159,65 +158,60 @@
         <hr/>
     </div>
 
-
     <div class="col-md-6">
         <div class="form-group">
-            <label for="cost">Basic Salary</label>
-            {!! Form::text('basic_sal',null,['class'=>'form-control','id'=>'basicsal' , 'placeholder'=>'']) !!}
+            {!! Form::label('*Basic Salary') !!}
+            {!! Form::text('basic_sal',null,['class'=>'form-control','id'=>'basicSalary', 'placeholder'=>'']) !!}
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label for="cost">EPF Cost</label>
-            {!! Form::text('epf_cost',null,['class'=>'form-control','id'=>'epfcost' , 'placeholder'=>'']) !!}
+            {!! Form::label('EPF Cost') !!}
+            {!! Form::text('epf_cost',null,['class'=>'form-control','id'=>'epfCost' , 'placeholder'=>'']) !!}
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label for="cost">ETF Cost</label>
-            {!! Form::text('etf_cost',null,['class'=>'form-control','id'=>'etfcost' , 'placeholder'=>'']) !!}
+            {!! Form::label('ETF Cost') !!}
+            {!! Form::text('etf_cost',null,['class'=>'form-control','id'=>'etfCost' , 'placeholder'=>'']) !!}
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label for="cost">Allowance Cost</label>
-            {!! Form::text('allowance_cost',null,['class'=>'form-control','id'=>'allowancecost' , 'placeholder'=>'']) !!}
+            {!! Form::label('Allowance Cost') !!}
+            {!! Form::text('allowance_cost',null,['class'=>'form-control','id'=>'allowanceCost' , 'placeholder'=>'']) !!}
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label for="cost">Gratuity Cost</label>
-            {!! Form::text('gratuity_cost',null,['class'=>'form-control','id'=>'gratuitycost' , 'placeholder'=>'']) !!}
+            {!! Form::label('Gratuity Cost') !!}
+            {!! Form::text('gratuity_cost',null,['class'=>'form-control','id'=>'gratuityCost' , 'placeholder'=>'']) !!}
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label for="cost">Other Cost</label>
-            {!! Form::text('other_cost',null,['class'=>'form-control','id'=>'othercost' , 'placeholder'=>'']) !!}
+            {!! Form::label('Other Cost') !!}
+            {!! Form::text('other_cost',null,['class'=>'form-control','id'=>'otherCost' , 'placeholder'=>'']) !!}
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label for="cost">Cost</label>
+            {!! Form::label('*Cost') !!}
             {!! Form::text('cost',null,['class'=>'form-control','id'=>'cost' , 'placeholder'=>'']) !!}
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label for="hourlyRate">Hourly Rate</label>
+            {!! Form::label('*Hourly Rate') !!}
             {!! Form::text('hr_rates',null,['class'=>'form-control','id'=>'hourlyRate' , 'placeholder'=>'']) !!}
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            <label for="hourlyRate">Hourly Billing Rate</label>
-            {!! Form::text('hr_billing_rates',null,['class'=>'form-control','id'=>'hrbillingrates' , 'placeholder'=>'']) !!}
+            {!! Form::label('Hourly Billing Rate') !!}
+            {!! Form::text('hr_billing_rates',null,['class'=>'form-control','id'=>'hrBillingRates' , 'placeholder'=>'']) !!}
         </div>
     </div>
-
-
-
-
 </div>
 <!-- /.box-body -->
 

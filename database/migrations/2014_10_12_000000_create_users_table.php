@@ -38,7 +38,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
 
 
-            $table->date('date_joined')->default(\Carbon\Carbon::now());
+            $table->date('date_joined')->nullable();
             $table->text('mobile')->nullable();
             $table->text('residence')->nullable();
             $table->integer('hometown_district_id')->nullable();
@@ -61,18 +61,21 @@ class CreateUsersTable extends Migration
             $table->string('ca_training')->nullable();
 
             $table->double('basic_sal')->default(0);
-            $table->double('epf_cost')->default(0);
-            $table->double('etf_cost')->default(0);
-            $table->double('allowance_cost')->default(0);
-            $table->double('gratuity_cost')->default(0);
-            $table->double('other_cost')->default(0);
+            $table->double('epf_cost')->nullable();
+            $table->double('etf_cost')->nullable();
+            $table->double('allowance_cost')->nullable();
+            $table->double('gratuity_cost')->nullable();
+            $table->double('other_cost')->nullable();
             $table->double('cost')->default(0);
             $table->double('hr_rates')->default(0);
-            $table->double('hr_billing_rates')->default(0);
+            $table->double('hr_billing_rates')->nullable();
 
 
             $table->rememberToken();
             $table->timestamps();
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
+
         });
 
         DB::table('users')->insert([

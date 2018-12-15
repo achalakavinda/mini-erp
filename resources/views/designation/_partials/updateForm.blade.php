@@ -2,7 +2,7 @@
 
     <div class="col-md-6">
         <div class="form-group">
-            {!! Form::label('Designation Type') !!}
+            {!! Form::label('*Designation Type') !!}
             {!! Form::text('designationType',null,['class'=>'form-control','id'=>'designationType','placeholder'=>'Designation Type']) !!}
         </div>
     </div>

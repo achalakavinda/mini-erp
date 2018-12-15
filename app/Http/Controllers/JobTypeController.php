@@ -42,12 +42,15 @@ class JobTypeController extends Controller
             'jobType' => 'required | min:3',
         ]);
 
-        JobType::create([
-            'jobType'=>$request->jobType,
-            'description'=>$request->description
-        ]);
-
-        return redirect('job-type/create')->with('created',true);
+        try{
+            JobType::create([
+                'jobType'=>$request->jobType,
+                'description'=>$request->description
+            ]);
+        }catch (\Exception $exception){
+            return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
+        }
+        return redirect()->back()->with(['created'=>'success','message'=>'Successfully created!']);
 
     }
 
@@ -87,15 +90,18 @@ class JobTypeController extends Controller
             'jobType' => 'required | min:3',
         ]);
 
-        $JOBTYPE = JobType::find($id);
+        try{
+            $JOBTYPE = JobType::find($id);
 
-        if(!empty($JOBTYPE)){
-            $JOBTYPE->jobType = $request->jobType;
-            $JOBTYPE->description = $request->description;
-            $JOBTYPE->save();
+            if(!empty($JOBTYPE)){
+                $JOBTYPE->jobType = $request->jobType;
+                $JOBTYPE->description = $request->description;
+                $JOBTYPE->save();
+            }
+        }catch (\Exception $exception){
+            return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
         }
-
-        return redirect()->back()->with('created',true);
+        return redirect()->back()->with(['created'=>'success','message'=>'Successfully updated!']);
     }
 
     /**

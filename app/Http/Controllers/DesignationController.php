@@ -15,7 +15,6 @@ class DesignationController extends Controller
     public function index()
     {
         $Rows = Designation::all();
-
         return view('designation.index',compact('Rows'));
     }
 
@@ -41,12 +40,17 @@ class DesignationController extends Controller
             'designationType' => 'required | min:3',
         ]);
 
-        Designation::create([
-            'designationType'=>$request->designationType,
-            'description'=>$request->description
-        ]);
+        try{
+            Designation::create([
+                'designationType'=>$request->designationType,
+                'description'=>$request->description
+            ]);
 
-        return redirect('designation/create')->with('created',true);
+        }catch (\Exception $exception){
+            return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
+        }
+        return redirect()->back()->with(['created'=>'success','message'=>'Successfully created!']);
+
     }
 
     /**
@@ -86,15 +90,20 @@ class DesignationController extends Controller
             'designationType' => 'required | min:3',
         ]);
 
-        $DESIGNATION = Designation::find($id);
-
-        if(!empty($DESIGNATION)){
-            $DESIGNATION->designationType = $request->designationType;
-            $DESIGNATION->description = $request->description;
-            $DESIGNATION->save();
+        try {
+            $DESIGNATION = Designation::findOrFail($id);
+            if (!empty($DESIGNATION)) {
+                $DESIGNATION->designationType = $request->designationType;
+                $DESIGNATION->description = $request->description;
+                $DESIGNATION->save();
+            }else{
+                return redirect()->back()->with(['created'=>'error','message'=>'Designation type cannot be empty!']);
+            }
+        }catch (\Exception $exception){
+            return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
         }
+        return redirect()->back()->with(['created'=>'success','message'=>'Successfully updated!']);
 
-        return redirect()->back()->with('created',true);
 
     }
 

@@ -10,14 +10,14 @@
 
     <div class="col-md-6">
         <div class="form-group">
-            {!! Form::label('Company') !!}
+            {!! Form::label('*Company') !!}
             {!! Form::text('name',null,['class'=>'form-control','id'=>'name','placeholder'=>'Company Name']) !!}
         </div>
     </div>
 
     <div class="col-md-6">
         <div class="form-group">
-            {!! Form::label('Code') !!}
+            {!! Form::label('*Code') !!}
             {!! Form::text('code',null,['class'=>'form-control','id'=>'code','placeholder'=>'Company Code']) !!}
         </div>
     </div>
@@ -184,7 +184,7 @@
 
     <div class="col-md-12">
         <div class="form-group">
-            {!! Form::label('*Note') !!}
+            {!! Form::label('Note') !!}
             {!! Form::textarea('description',null,['class'=>'form-control','id'=>'description']) !!}
         </div>
     </div>

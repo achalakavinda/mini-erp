@@ -41,48 +41,50 @@ class StaffController extends Controller
 
         $request->validate([
             'name'=>'required',
-            'date_joined'=>'required',
             'nic'=>'required',
             'designation_id'=>'required',
             'emp_no'=>'required | unique:users',
+            'basic_sal'=>'required',
             'cost'=>'required',
             'hr_rates'=>'required',
-            'designation_id'=>'required',
-            'email'=>'required | unique:users'
+            'email'=>'required | unique:users',
         ]);
 
-        User::create([
-            'name'=>$request->name,
-            'date_joined'=>$request->date_joined,
-            'mobile'=>$request->mobile,
-            'residence'=>$request->residence,
-            'hometown_district_id'=>$request->hometown_district_id,
-            'hometown_city'=>$request->hometown_city,
-            'cmb_location_district'=>$request->cmb_location_district,
-            'cmb_city'=>$request->cmb_city,
-            'address'=>$request->address,
-            'emp_no'=>$request->emp_no,
-            'epf_no'=>$request->epf_no,
-            'designation_id'=>$request->designation_id,
-            'email'=>$request->email,
-            'nic'=>$request->nic,
-            'ca_agree_no'=>$request->ca_agree_no,
-            'ca_training_period_from'=>$request->ca_training_period_from,
-            'ca_training_period_to'=>$request->ca_training_period_to,
-            'ca_training'=>$request->ca_training,
-            'basic_sal'=>$request->basic_sal,
-            'epf_cost'=>$request->epf_cost,
-            'etf_cost'=>$request->etf_cost,
-            'allowance_cost'=>$request->allowance_cost,
-            'gratuity_cost'=>$request->gratuity_cost,
-            'other_cost'=>$request->other_cost,
-            'cost'=>$request->cost,
-            'hr_rates'=>$request->hr_rates,
-            'hr_billing_rates'=>$request->hr_billing_rates,
-            'password'=> bcrypt('password')
-        ]);
-
-        return redirect('/staff');
+        try {
+            User::create([
+                'name'=>$request->name,
+                'date_joined'=>$request->date_joined,
+                'mobile'=>$request->mobile,
+                'residence'=>$request->residence,
+                'hometown_district_id'=>$request->hometown_district_id,
+                'hometown_city'=>$request->hometown_city,
+                'cmb_location_district'=>$request->cmb_location_district,
+                'cmb_city'=>$request->cmb_city,
+                'address'=>$request->address,
+                'emp_no'=>$request->emp_no,
+                'epf_no'=>$request->epf_no,
+                'designation_id'=>$request->designation_id,
+                'email'=>$request->email,
+                'nic'=>$request->nic,
+                'ca_agree_no'=>$request->ca_agree_no,
+                'ca_training_period_from'=>$request->ca_training_period_from,
+                'ca_training_period_to'=>$request->ca_training_period_to,
+                'ca_training'=>$request->ca_training,
+                'basic_sal'=>$request->basic_sal,
+                'epf_cost'=>$request->epf_cost,
+                'etf_cost'=>$request->etf_cost,
+                'allowance_cost'=>$request->allowance_cost,
+                'gratuity_cost'=>$request->gratuity_cost,
+                'other_cost'=>$request->other_cost,
+                'cost'=>$request->cost,
+                'hr_rates'=>$request->hr_rates,
+                'hr_billing_rates'=>$request->hr_billing_rates,
+                'password'=> bcrypt('password')
+            ]);
+        }catch (\Exception $exception){
+            return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
+        }
+        return redirect()->back()->with(['created'=>'success','message'=>'Successfully created!']);
 
     }
 

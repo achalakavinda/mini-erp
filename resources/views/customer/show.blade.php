@@ -105,3 +105,6 @@
 
 @endsection
 <!-- /main section -->
+@section('js')
+    @include('error.swal')
+@endsection

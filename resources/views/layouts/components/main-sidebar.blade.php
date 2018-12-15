@@ -22,24 +22,25 @@
             <li><a href="{{ url('/dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             <li><a href="{{ url('/project') }}"><i class="fa fa-print"></i> <span>Project</span></a></li>
             <li><a href="{{ url('/work-sheet/create') }}"><i class="fa fa-book"></i> <span>Work Report</span></a></li>
-            <li><a href="{{ url('/staff') }}"><i class="fa fa-user"></i> <span>Staff Reg</span></a></li>
             <li><a href="{{ url('work-sheet') }}"><i class="fa fa-file"></i> <span>Work Sheet</span></a></li>
-            <li><a href="{{ url('designation') }}"><i class="fa fa-pencil"></i> <span>Designation</span></a></li>
-            <li><a href="{{ url('job-type') }}"><i class="fa fa-link"></i> <span>Job Type</span></a></li>
+
+
             <li class="treeview">
-                <a href="{{ url('/staff') }}"><i class="fa fa-link"></i> <span>Staff</span>
+                <a href="{{ url('/staff') }}"><i class="fa fa-user"></i> <span>Staff</span>
                     <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
                 </a>
                 <ul class="treeview-menu">
+                    <li><a href="{{ url('designation') }}">Designation</a></li>
+                    <li><a href="{{ url('job-type') }}">Job Type</a></li>
                     <li><a href="{{ url('/staff') }}">Registry</a></li>
                     <li><a href="{{ url('/staff/create') }}">New</a></li>
                 </ul>
             </li>
 
             <li class="treeview">
-                <a href="{{ url('/customer') }}"><i class="fa fa-link"></i> <span>Customer</span>
+                <a href="{{ url('/customer') }}"><i class="fa fa-users"></i> <span>Customer</span>
                     <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -50,7 +51,7 @@
                 </ul>
             </li>
 
-            <li><a href="{{ url('settings') }}"><i class="fa fa-cogs"></i> <span>Settings</span></a></li>
+            {{--<li><a href="{{ url('settings') }}"><i class="fa fa-cogs"></i> <span>Settings</span></a></li>--}}
 
         </ul>
         <!-- /.sidebar-menu -->
