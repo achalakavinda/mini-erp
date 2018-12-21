@@ -19,7 +19,7 @@ class WorkSheetController extends Controller
     public function index()
     {
         $WorkSheet = WorkSheet::all();
-        return view('work_sheet.index',compact('WorkSheet'));
+        return view('admin.work_sheet.index',compact('WorkSheet'));
     }
 
     /**
@@ -30,7 +30,7 @@ class WorkSheetController extends Controller
     public function create()
     {
 
-        return view('work_sheet.create');
+        return view('admin.work_sheet.create');
     }
 
      /**

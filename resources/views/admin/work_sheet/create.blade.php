@@ -32,7 +32,7 @@
                 <!-- form start -->
                 {!! Form::open(['action'=>'WorkSheetController@store','class'=>'form-horizontal','id'=>'Form']) !!}
                 @include('error.error')
-                @include('work_sheet._partials.createForm')
+                @include('admin.work_sheet._partials.createForm')
                 {!! Form::close() !!}
 
             </div>

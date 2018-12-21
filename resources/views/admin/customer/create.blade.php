@@ -5,19 +5,21 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Designation Type</h3>
+            <h3 class="box-title">Customers</h3>
         </div>
         <div class="box-body">
             <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/designation') }}" class="btn btn-success">Designation</a>
-            <a href="{{ url('/designation/create') }}" class="btn btn-success">New</a>
+            <a href="{{ url('/customer') }}" class="btn btn-success">Customer</a>
+            <a href="{{ url('/customer/create') }}" class="btn btn-success">New</a>
         </div>
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
+    <!-- /.box -->
 @endsection
 <!-- /main header section -->
 
+<!-- main section -->
 <!-- main section -->
 @section('main-content')
     <div class="row">
@@ -25,13 +27,14 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">{{ $Designation->designationType }}</h3>
+                    <h3 class="box-title">New Company</h3>
+
                     @include('error.error')
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                {!! Form::model($Designation, ['method' => 'PATCH', 'action' => ['DesignationController@update', $Designation->id],'class'=>'form-horizontal']) !!}
-                @include('designation._partials.updateForm')
+                {!! Form::open(['action'=>'CustomerController@store','class'=>'form-horizontal','id'=>'Form']) !!}
+                    @include('admin.customer._partial.form')
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->

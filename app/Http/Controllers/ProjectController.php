@@ -25,7 +25,7 @@ class ProjectController extends Controller
     {
         $Rows = Project::all();
 
-        return view('project.index',compact('Rows'));
+        return view('admin.project.index',compact('Rows'));
     }
 
     /**
@@ -35,7 +35,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('project.create');
+        return view('admin.project.create');
     }
 
     /**
@@ -104,7 +104,7 @@ class ProjectController extends Controller
     public function show($id)
     {
         $Project = Project::findOrFail($id);
-        return view('project.show',compact('Project'));
+        return view('admin.project.show',compact('Project'));
     }
 
     /**
@@ -149,7 +149,7 @@ class ProjectController extends Controller
     public function estimation($id)
     {
         $Project = Project::findOrFail($id);
-        return view('project.estimation',compact('Project'));
+        return view('admin.project.estimation',compact('Project'));
     }
 
     public function finalized(Request $request)

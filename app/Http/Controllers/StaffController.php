@@ -16,7 +16,7 @@ class StaffController extends Controller
     public function index()
     {
         $Rows = User::all();
-        return view('staff.index',compact('Rows'));
+        return view('admin.staff.index',compact('Rows'));
     }
 
     /**
@@ -27,7 +27,7 @@ class StaffController extends Controller
     public function create()
     {
         $Designation = Designation::all()->pluck('designationType','id');
-        return view('staff.create',compact('Designation'));
+        return view('admin.staff.create',compact('Designation'));
     }
 
     /**
@@ -107,7 +107,7 @@ class StaffController extends Controller
     public function profile($id){
 
         $User = User::findOrFail($id);
-        return view('staff.profile.profile',compact('User'));
+        return view('admin.staff.profile.profile',compact('User'));
     }
 
     /**

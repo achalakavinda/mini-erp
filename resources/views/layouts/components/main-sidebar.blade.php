@@ -6,7 +6,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
             <div class="pull-left image">
-                <img src="{!! url('dist/img/user2-160x160.jpg') !!}" class="img-circle" alt="User Image">
+                <img src="{!! url('admin/dist/img/user2-160x160.jpg') !!}" class="img-circle" alt="User Image">
             </div>
             <div class="pull-left info">
                 <p>{{ Auth::user()->name }}</p>
@@ -51,7 +51,34 @@
                 </ul>
             </li>
 
-            {{--<li><a href="{{ url('settings') }}"><i class="fa fa-cogs"></i> <span>Settings</span></a></li>--}}
+
+            <li class="treeview">
+                <a href="{{ url('/settings') }}"><i class="fa fa-cogs"></i> <span>Settings</span>
+                    <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ url('/settings') }}"><i class="fa fa-cogs"></i> Settings</a></li>
+
+
+                    <li class="treeview">
+                        <a href="{{ url('/settings/access-control') }}"><i class="fa fa-users"></i> <span>Access Control</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                              </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{ url('/settings/access-control') }}"><i class="fa fa-stop"></i>Access Control</a></li>
+                            <li><a href="{{ url('/settings/access-control/permissions') }}"><i class="fa fa-universal-access"></i>Permission</a></li>
+                            <li><a href="{{ url('/settings/access-control/roles') }}"><i class="fa fa-level-up"></i>Roles</a></li>
+                            <li><a href="{{ url('/settings/access-control/user-management') }}"><i class="fa fa-users"></i>User Management</a></li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </li>
+
 
         </ul>
         <!-- /.sidebar-menu -->

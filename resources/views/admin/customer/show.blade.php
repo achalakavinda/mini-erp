@@ -34,7 +34,7 @@
                 <!-- /.box-header -->
                 <!-- form start -->
                 {!! Form::model($Customer, ['method' => 'PATCH', 'action' => ['CustomerController@update', $Customer->id],'class'=>'form-horizontal']) !!}
-                @include('customer._partial.show')
+                @include('admin.customer._partial.show')
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->

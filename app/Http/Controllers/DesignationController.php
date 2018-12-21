@@ -15,7 +15,7 @@ class DesignationController extends Controller
     public function index()
     {
         $Rows = Designation::all();
-        return view('designation.index',compact('Rows'));
+        return view('admin.designation.index',compact('Rows'));
     }
 
     /**
@@ -25,7 +25,7 @@ class DesignationController extends Controller
      */
     public function create()
     {
-        return view('designation.create');
+        return view('admin.designation.create');
     }
 
     /**
@@ -62,7 +62,7 @@ class DesignationController extends Controller
     public function show($id)
     {
         $Designation = Designation::findOrFail($id);
-        return view('designation.edit',compact('Designation'));
+        return view('admin.designation.edit',compact('Designation'));
     }
 
     /**
@@ -74,7 +74,7 @@ class DesignationController extends Controller
     public function edit($id)
     {
         $Designation = Designation::findOrFail($id);
-        return view('designation.edit',compact('Designation'));
+        return view('admin.designation.edit',compact('Designation'));
     }
 
     /**

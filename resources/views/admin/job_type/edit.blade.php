@@ -5,12 +5,12 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Staff Board</h3>
+            <h3 class="box-title">Job Type</h3>
         </div>
         <div class="box-body">
             <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/staff') }}" class="btn btn-success">Staff</a>
-            <a href="{{ url('/staff/create') }}" class="btn btn-success">New</a>
+            <a href="{{ url('/job-type') }}" class="btn btn-success">Job Type</a>
+            <a href="{{ url('/job-type/create') }}" class="btn btn-success">New</a>
         </div>
         <!-- /.box-body -->
     </div>
@@ -25,14 +25,13 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Add New Employee</h3>
+                    <h3 class="box-title">{{ $JobType->jobType }}</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-
-                {!! Form::open(['action'=>'StaffController@store','class'=>'form-horizontal','id'=>'Form']) !!}
-                    @include('error.error')
-                    @include('staff._partials.createForm')
+                {!! Form::model($JobType, ['method' => 'PATCH', 'action' => ['JobTypeController@update', $JobType->id],'class'=>'form-horizontal']) !!}
+                @include('error.error')
+                @include('admin.job_type._partials.updateForm')
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->
@@ -44,22 +43,5 @@
 <!-- /main section -->
 
 @section('js')
-    <script type="text/javascript">
-
-        $("#cost").keyup(function () {
-            calculate();
-        });
-
-        $( "#cost" ).change(function() {
-            calculate();
-        });
-
-        function calculate() {
-            var cost =parseFloat($( "#cost" ).val());
-            $("#hourlyRate").val(cost/240);
-        }
-
-    </script>
-
     @include('error.swal')
 @endsection

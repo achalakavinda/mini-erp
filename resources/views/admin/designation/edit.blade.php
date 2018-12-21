@@ -5,12 +5,12 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Job Type</h3>
+            <h3 class="box-title">Designation Type</h3>
         </div>
         <div class="box-body">
             <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/job-type') }}" class="btn btn-success">Job Type</a>
-            <a href="{{ url('/job-type/create') }}" class="btn btn-success">New</a>
+            <a href="{{ url('/designation') }}" class="btn btn-success">Designation</a>
+            <a href="{{ url('/designation/create') }}" class="btn btn-success">New</a>
         </div>
         <!-- /.box-body -->
     </div>
@@ -25,13 +25,13 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Add New Job Type</h3>
+                    <h3 class="box-title">{{ $Designation->designationType }}</h3>
+                    @include('error.error')
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                {!! Form::open(['action'=>'JobTypeController@store','class'=>'form-horizontal','id'=>'Form']) !!}
-                @include('error.error')
-                @include('job_type._partials.createForm')
+                {!! Form::model($Designation, ['method' => 'PATCH', 'action' => ['DesignationController@update', $Designation->id],'class'=>'form-horizontal']) !!}
+                @include('admin.designation._partials.updateForm')
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->

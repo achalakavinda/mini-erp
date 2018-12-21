@@ -16,7 +16,7 @@ class JobTypeController extends Controller
     {
         $Rows = JobType::all();
 
-        return view('job_type.index',compact('Rows'));
+        return view('admin.job_type.index',compact('Rows'));
     }
 
     /**
@@ -26,7 +26,7 @@ class JobTypeController extends Controller
      */
     public function create()
     {
-        return view('job_type.create');
+        return view('admin.job_type.create');
     }
 
     /**
@@ -63,7 +63,7 @@ class JobTypeController extends Controller
     public function show($id)
     {
         $JobType = JobType::findOrFail($id);
-        return view('job_type.edit',compact('JobType'));
+        return view('admin.job_type.edit',compact('JobType'));
     }
 
     /**

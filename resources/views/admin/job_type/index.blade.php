@@ -1,12 +1,12 @@
 @extends('layouts.admin')
 
 @section('style')
-    {!! Html::style('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') !!}
+    {!! Html::style('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') !!}
 @endsection
 
 @section('js')
-    {!! Html::script('bower_components/datatables.net/js/jquery.dataTables.min.js') !!}
-    {!! Html::script('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') !!}
+    {!! Html::script('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') !!}
+    {!! Html::script('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') !!}
 
     <script type="text/javascript">
 
@@ -17,7 +17,7 @@
                 'searching'   : true,
                 'ordering'    : true,
                 'info'        : true,
-                'autoWidth'   : true,
+                'autoWidth'   : true
             })
         })
     </script>
@@ -29,12 +29,12 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Designation Type</h3>
+            <h3 class="box-title">Job Type</h3>
         </div>
         <div class="box-body">
             <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/designation') }}" class="btn btn-success">Designation</a>
-            <a href="{{ url('/designation/create') }}" class="btn btn-success">New</a>
+            <a href="{{ url('/job-type') }}" class="btn btn-success">Job Type</a>
+            <a href="{{ url('/job-type/create') }}" class="btn btn-success">New</a>
         </div>
         <!-- /.box-body -->
     </div>
@@ -48,7 +48,7 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Designation Registry</h3>
+                    <h3 class="box-title">Job Type Registry</h3>
                 </div>
                 <!-- /.box-header -->
                 <div style="overflow: auto" class="box-body">
@@ -56,23 +56,23 @@
                         <thead>
                         <tr>
                             <th>#ID</th>
-                            <th>Type</th>
+                            <th>Job</th>
                             <th>Description</th>
-                            <th>Options</th>
+                            <th>View</th>
                         </tr>
                         </thead>
                         <tbody>
 
-                            @foreach($Rows as $row)
-                                <tr>
-                                    <td>{{ $row->id }}</td>
-                                    <td>{{ $row->designationType }}</td>
-                                    <td>{{ $row->description }}</td>
-                                    <td>
-                                        <a href="{{ url('designation') }}/{{ $row->id }}" class="btn btn-danger btn-sm">view</a>
-                                    </td>
-                                </tr>
-                            @endforeach
+                        @foreach($Rows as $row)
+                            <tr>
+                                <td>{{ $row->id }}</td>
+                                <td>{{ $row->jobType }}</td>
+                                <td>{{ $row->description }}</td>
+                                <td>
+                                    <a class="btn btn-danger btn-sm" href="{{ url('/job-type') }}/{{ $row->id }}">view</a>
+                                </td>
+                            </tr>
+                        @endforeach
 
                         </tbody>
                     </table>

@@ -15,7 +15,7 @@ class CustomerController extends Controller
     public function index()
     {
         $Customers = Customer::all();
-        return view('customer.index',compact('Customers'));
+        return view('admin.customer.index',compact('Customers'));
     }
 
     /**
@@ -25,7 +25,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        return view('customer.create');
+        return view('admin.customer.create');
     }
 
     /**
@@ -86,7 +86,7 @@ class CustomerController extends Controller
     public function show($id)
     {
         $Customer = Customer::find($id);
-        return view('customer.show',compact('Customer'));
+        return view('admin.customer.show',compact('Customer'));
     }
 
     /**

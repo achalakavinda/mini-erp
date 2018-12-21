@@ -25,13 +25,13 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">{{ $JobType->jobType }}</h3>
+                    <h3 class="box-title">Add New Job Type</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                {!! Form::model($JobType, ['method' => 'PATCH', 'action' => ['JobTypeController@update', $JobType->id],'class'=>'form-horizontal']) !!}
+                {!! Form::open(['action'=>'JobTypeController@store','class'=>'form-horizontal','id'=>'Form']) !!}
                 @include('error.error')
-                @include('job_type._partials.updateForm')
+                @include('admin.job_type._partials.createForm')
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->
@@ -41,3 +41,7 @@
 
 @endsection
 <!-- /main section -->
+
+@section('js')
+    @include('error.swal')
+@endsection

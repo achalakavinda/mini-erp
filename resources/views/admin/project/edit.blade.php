@@ -5,12 +5,12 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Project | {!! $Project->code !!}</h3>
+            <h3 class="box-title">Job Type</h3>
         </div>
         <div class="box-body">
             <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/project') }}" class="btn btn-success">Project</a>
-            <a href="{{ url('/project/create') }}" class="btn btn-success">New</a>
+            <a href="{{ url('/job-type') }}" class="btn btn-success">Job Type</a>
+            <a href="{{ url('/job-type/create') }}" class="btn btn-success">New</a>
         </div>
         <!-- /.box-body -->
     </div>
@@ -21,15 +21,18 @@
 <!-- main section -->
 @section('main-content')
     <div class="row">
-
         <div class="col-md-12">
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Project</h3>
+                    <h3 class="box-title">{{ $JobType->jobType }}</h3>
                 </div>
                 <!-- /.box-header -->
-                 @include('project._partials.showForm')
+                <!-- form start -->
+                {!! Form::model($JobType, ['method' => 'PATCH', 'action' => ['JobTypeController@update', $JobType->id],'class'=>'form-horizontal']) !!}
+                @include('error.error')
+                @include('admin.job_type._partials.updateForm')
+                {!! Form::close() !!}
             </div>
             <!-- /.box -->
         </div>
