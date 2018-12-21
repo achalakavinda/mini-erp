@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             Important::class,
+            RolesAndPermissionsSeeder::class,
 //            DesignationSeeder::class,
 //            JobTypeTableSeeder::class,
 //            CustomerSeeder::class,

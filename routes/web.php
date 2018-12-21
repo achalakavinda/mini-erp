@@ -47,8 +47,17 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('settings','SettingController@index');
 
     Route::group(['middleware' => ['role:super-admin']], function () {
-        // super-admin is a role in the role table
-        // anything can be changed to anything
+
+        Route::prefix('settings')->group(function () {
+
+            Route::get('/','SettingController@index');
+            Route::get('/access-control','AccessControlController@index');
+            Route::Resource('/access-control/permissions','PermissionsController');
+            Route::Resource('/access-control/roles','RolesController');
+            Route::Resource('/access-control/user-management','UserManagementController');
+
+        });
+
     });
 
 });
