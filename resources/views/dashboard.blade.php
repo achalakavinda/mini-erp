@@ -2,6 +2,7 @@
 
 <!-- main header section -->
     @section('main-content-header')
+
         <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">

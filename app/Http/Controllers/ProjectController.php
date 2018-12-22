@@ -77,21 +77,6 @@ class ProjectController extends Controller
                 'jop_type_id'=>$item
             ]);
         }
-
-        //this part remove due to requirement changes
-//        if(!empty($request->details)){
-//            foreach ($request->details as $item){
-//                ProjectEmployee::create([
-//                    'project_id'=>$Project->id,
-//                    'job_type_id'=>$tempJobTypeID,
-//                    'user_id'=>$item['employee_id'],
-//                    'paying_hrs'=>$item['paying_hrs'],
-//                    'volunteer_hrs'=>$item['volunteer_hrs'],
-//                ]);
-//            }
-//        }
-
-//        return redirect('project/'.$Project->id)->with('created',true);
         return $this->estimation($Project->id);
     }
 
