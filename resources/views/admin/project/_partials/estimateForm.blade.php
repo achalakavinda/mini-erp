@@ -2,62 +2,58 @@
     $Customers = \App\Models\Customer::all()->pluck('name','id');
     $JobTypes = \App\Models\JobType::all()->pluck('jobType','id');
     $Employess = \App\Models\User::where('designation_id','!=',-999)->pluck('name','id');
-
     $PROJECTJOBTYPE = \App\Models\ProjectJobType::where('project_id',$Project->id)->get();
-
     $PROJECTEMPLOYEES = \App\Models\ProjectEmployee::where('project_id',$Project->id)->get();
-
     $WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,sum(work_hrs) as hrs,sum(hr_rate) as rate, user_id'))->where('project_id',$Project->id)->groupBy('user_id')->get();
-
 ?>
 
 <div class="box-body">
 
     <div class="col-md-6">
         <div class="form-group">
-            {!! Form::label('Code') !!}
+            {!! Form::label('code','Code',['class' => 'control-label']) !!}
             {!! Form::text('code',$Project->code,['class'=>'form-control','id'=>'code','placeholder'=>'Code','disabled']) !!}
             {!! Form::number('project_id',$Project->id,['class'=>'form-control','style'=>'display:none']) !!}
         </div>
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            {!! Form::label('Company') !!}
+            {!! Form::label('customer_id','Company',['class' => 'control-label']) !!}
             {!! Form::select('customer_id',$Customers,$Project->customer_id,['class'=>'form-control','id'=>'company_id','disabled']) !!}
         </div>
     </div>
 
     <div class="col-md-12">
         <div class="form-group">
-            {!! Form::label('Number of Hrs') !!}
+            {!! Form::label('number_of_hrs','Number of Hrs',['class' => 'control-label']) !!}
             {!! Form::text('number_of_hrs',$Project->number_of_hrs,['class'=>'form-control','id'=>'numberOfHrs','placeholder'=>'Number of Hrs','readonly']) !!}
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="form-group">
-            {!! Form::label('Budget Cost') !!}
+            {!! Form::label('budget_cost','Budget Cost',['class' => 'control-label']) !!}
             {!! Form::text('budget_cost',$Project->budget_cost,['class'=>'form-control','id'=>'BudgetCost','placeholder'=>'Budget Cost','readonly']) !!}
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="form-group">
-            {!! Form::label('Profit Margin') !!}
+            {!! Form::label('profit_margin','Profit Margin',['class' => 'control-label']) !!}
             {!! Form::text('profit_margin',null,['class'=>'form-control','id'=>'ProfitMargin','placeholder'=>'Profit Margin in Decimal']) !!}
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="form-group">
-            {!! Form::label('Quoted Price') !!}
+            {!! Form::label('qouted_price','Quoted Price',['class' => 'control-label']) !!}
             {!! Form::text('qouted_price',$Project->quoted_price,['class'=>'form-control','id'=>'QuotedPrice','placeholder'=>'Qouted Price','readonly']) !!}
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="form-group">
-            {!! Form::label('refresh values') !!}
+            {!! Form::label('refresh_value','refresh values',['class' => 'control-label']) !!}
             <button class="form-control" type="button" id="CalculateBtn">Calculate</button>
         </div>
     </div>
@@ -80,7 +76,6 @@
                     $count++;
                 }
             ?>
-
         </table>
     </div>
 </div>

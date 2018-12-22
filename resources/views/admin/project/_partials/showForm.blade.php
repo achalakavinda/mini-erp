@@ -11,41 +11,41 @@
 
     <div class="col-md-3">
         <div class="form-group">
-            {!! Form::label('Code') !!}
+            {!! Form::label('code','Code',['class' => 'control-label']) !!}
             {!! Form::text('code',$Project->code,['class'=>'form-control','id'=>'code','placeholder'=>'Code','disabled']) !!}
         </div>
     </div>
     <div class="col-md-3">
         <div class="form-group">
-            {!! Form::label('Company') !!}
+            {!! Form::label('customer_id','Company',['class' => 'control-label']) !!}
             {!! Form::select('customer_id',$Customers,null,['class'=>'form-control','id'=>'company_id','disabled']) !!}
         </div>
     </div>
 
     <div class="col-md-6">
         <div class="form-group">
-            {!! Form::label('Number of Hrs') !!}
+            {!! Form::label('number_of_hrs','Number of Hrs',['class' => 'control-label']) !!}
             {!! Form::text('number_of_hrs',$Project->number_of_hrs,['class'=>'form-control','id'=>'number_of_hrs','placeholder'=>'Number of Hrs','disabled']) !!}
         </div>
     </div>
 
     <div class="col-md-6">
         <div class="form-group">
-            {!! Form::label('Budget Cost') !!}
+            {!! Form::label('budget_cost','Budget Cost',['class' => 'control-label']) !!}
             {!! Form::text('budget_cost',$Project->budget_cost,['class'=>'form-control','id'=>'budget_cost','placeholder'=>'Budget Cost','disabled']) !!}
         </div>
     </div>
 
     <div class="col-md-6">
         <div class="form-group">
-            {!! Form::label('Quoted Price') !!}
+            {!! Form::label('qouted_price','Quoted Price',['class' => 'control-label']) !!}
             {!! Form::text('qouted_price',$Project->quoted_price,['class'=>'form-control','id'=>'qouted_price','placeholder'=>'Qouted Price','disabled']) !!}
         </div>
     </div>
 
     <div class="col-md-12">
         <div class="form-group">
-            {!! Form::label('Actual Cost') !!}
+            {!! Form::label('actual_cost','Actual Cost',['class' => 'control-label']) !!}
             {!! Form::text('actual_cost',$Project->actual_cost,['class'=>'form-control','id'=>'actual_cost','placeholder'=>'Actual Cost','disabled']) !!}
         </div>
     </div>

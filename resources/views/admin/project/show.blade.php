@@ -21,7 +21,6 @@
 <!-- main section -->
 @section('main-content')
     <div class="row">
-
         <div class="col-md-12">
             <!-- general form elements -->
             <div class="box box-primary">
@@ -35,6 +34,5 @@
         </div>
     </div>
     <!-- /.row -->
-
 @endsection
 <!-- /main section -->
