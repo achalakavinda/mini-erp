@@ -19,14 +19,12 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">System</li>
 
-            <li><a href="{{ url('/work-sheet/create') }}"><i class="fa fa-book"></i> <span>Work Report</span></a></li>
-
             @can('default')
                 <!-- Optionally, you can add icons to the links -->
                     <li><a href="{{ url('/dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
                     <li><a href="{{ url('/project') }}"><i class="fa fa-print"></i> <span>Project</span></a></li>
                     <li><a href="{{ url('work-sheet') }}"><i class="fa fa-file"></i> <span>Work Sheet</span></a></li>
-
+                    <li><a href="{{ url('/work-sheet/create') }}"><i class="fa fa-book"></i> <span>Work Report</span></a></li>
 
                     <li class="treeview">
                         <a href="{{ url('/staff') }}"><i class="fa fa-user"></i> <span>Staff</span>
@@ -53,6 +51,10 @@
                             <li><a href="{{ url('/customer/create') }}"> New </a></li>
                         </ul>
                     </li>
+
+            @else
+                    <li><a href="{{ url('staff/work-sheet') }}"><i class="fa fa-file"></i> <span>Work Sheet</span></a></li>
+                    <li><a href="{{ url('/staff/profile/') }}/{!! \Illuminate\Support\Facades\Auth::id() !!}"><i class="fa fa-user"></i> <span>Profile</span></a></li>
             @endcan
 
             @can('Settings')

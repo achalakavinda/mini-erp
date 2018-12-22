@@ -30,7 +30,13 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                {!! Form::open(['action'=>'WorkSheetController@store','class'=>'form-horizontal','id'=>'Form']) !!}
+                <?php
+                    if(isset($PageController)){
+                        echo Form::open(['action'=>'PageController@workSheetStore','class'=>'form-horizontal','id'=>'Form']);
+                    }else{
+                        echo Form::open(['action'=>'WorkSheetController@store','class'=>'form-horizontal','id'=>'Form']);
+                    }
+                ?>
                 @include('error.error')
                 @include('admin.work_sheet._partials.createForm')
                 {!! Form::close() !!}

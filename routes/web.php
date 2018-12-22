@@ -19,19 +19,22 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
 
-    Route::get('/home', 'HomeController@index')->name('home');
-
     Route::get('/dashboard', 'DashboardController@index');
 
-    Route::resource('work-sheet', 'WorkSheetController');
+    Route::get('/staff/profile/{id}', 'StaffController@profile');
+
+    Route::get('/staff/work-sheet', 'PageController@workSheet');
+    Route::post('/staff/work-sheet/store', 'PageController@workSheetStore');
 
     Route::group(['middleware' => ['permission:default']], function () {
+
+        Route::resource('work-sheet', 'WorkSheetController');
 
         Route::resource('/customer', 'CustomerController');
 
         Route::resource('/staff', 'StaffController');
 
-        Route::get('/staff/profile/{id}', 'StaffController@profile');
+
 
         Route::resource('job-type', 'JobTypeController');
 
