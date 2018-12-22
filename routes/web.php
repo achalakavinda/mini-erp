@@ -17,36 +17,37 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
-
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/dashboard', 'DashboardController@index');
 
-    Route::resource('/customer', 'CustomerController');
-
-    Route::resource('/staff', 'StaffController');
-
-    Route::get('/staff/profile/{id}', 'StaffController@profile');
-
     Route::resource('work-sheet', 'WorkSheetController');
 
-    Route::resource('job-type', 'JobTypeController');
+    Route::group(['middleware' => ['permission:default']], function () {
 
-    Route::resource('designation','DesignationController');
+        Route::resource('/customer', 'CustomerController');
 
-    Route::resource('project','ProjectController');
+        Route::resource('/staff', 'StaffController');
 
-    Route::get('project/{id}/estimation','ProjectController@estimation');
+        Route::get('/staff/profile/{id}', 'StaffController@profile');
 
-    Route::post('project/finalized','ProjectController@finalized');
+        Route::resource('job-type', 'JobTypeController');
 
+        Route::resource('designation','DesignationController');
 
-    Route::get('settings','SettingController@index');
+        Route::resource('project','ProjectController');
 
-    Route::group(['middleware' => ['role:super-admin']], function () {
+        Route::get('project/{id}/estimation','ProjectController@estimation');
+
+        Route::post('project/finalized','ProjectController@finalized');
+
+    });
+
+    Route::group(['middleware' => ['permission:Settings']], function () {
+
+        Route::get('settings','SettingController@index');
 
         Route::prefix('settings')->group(function () {
 

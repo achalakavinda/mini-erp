@@ -18,66 +18,74 @@
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">System</li>
-            <!-- Optionally, you can add icons to the links -->
-            <li><a href="{{ url('/dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-            <li><a href="{{ url('/project') }}"><i class="fa fa-print"></i> <span>Project</span></a></li>
+
             <li><a href="{{ url('/work-sheet/create') }}"><i class="fa fa-book"></i> <span>Work Report</span></a></li>
-            <li><a href="{{ url('work-sheet') }}"><i class="fa fa-file"></i> <span>Work Sheet</span></a></li>
 
-
-            <li class="treeview">
-                <a href="{{ url('/staff') }}"><i class="fa fa-user"></i> <span>Staff</span>
-                    <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="{{ url('designation') }}">Designation</a></li>
-                    <li><a href="{{ url('job-type') }}">Job Type</a></li>
-                    <li><a href="{{ url('/staff') }}">Registry</a></li>
-                    <li><a href="{{ url('/staff/create') }}">New</a></li>
-                </ul>
-            </li>
-
-            <li class="treeview">
-                <a href="{{ url('/customer') }}"><i class="fa fa-users"></i> <span>Customer</span>
-                    <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="{{ url('/customer') }}">Registry</a></li>
-                    <li><a href="{{ url('/customer/create') }}"> New </a></li>
-                </ul>
-            </li>
-
-
-            <li class="treeview">
-                <a href="{{ url('/settings') }}"><i class="fa fa-cogs"></i> <span>Settings</span>
-                    <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href="{{ url('/settings') }}"><i class="fa fa-cogs"></i> Settings</a></li>
+            @can('default')
+                <!-- Optionally, you can add icons to the links -->
+                    <li><a href="{{ url('/dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+                    <li><a href="{{ url('/project') }}"><i class="fa fa-print"></i> <span>Project</span></a></li>
+                    <li><a href="{{ url('work-sheet') }}"><i class="fa fa-file"></i> <span>Work Sheet</span></a></li>
 
 
                     <li class="treeview">
-                        <a href="{{ url('/settings/access-control') }}"><i class="fa fa-users"></i> <span>Access Control</span>
+                        <a href="{{ url('/staff') }}"><i class="fa fa-user"></i> <span>Staff</span>
                             <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                              </span>
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ url('/settings/access-control') }}"><i class="fa fa-stop"></i>Access Control</a></li>
-                            <li><a href="{{ url('/settings/access-control/permissions') }}"><i class="fa fa-universal-access"></i>Permission</a></li>
-                            <li><a href="{{ url('/settings/access-control/roles') }}"><i class="fa fa-level-up"></i>Roles</a></li>
-                            <li><a href="{{ url('/settings/access-control/user-management') }}"><i class="fa fa-users"></i>User Management</a></li>
+                            <li><a href="{{ url('designation') }}">Designation</a></li>
+                            <li><a href="{{ url('job-type') }}">Job Type</a></li>
+                            <li><a href="{{ url('/staff') }}">Registry</a></li>
+                            <li><a href="{{ url('/staff/create') }}">New</a></li>
                         </ul>
                     </li>
 
-                </ul>
-            </li>
+                    <li class="treeview">
+                        <a href="{{ url('/customer') }}"><i class="fa fa-users"></i> <span>Customer</span>
+                            <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{ url('/customer') }}">Registry</a></li>
+                            <li><a href="{{ url('/customer/create') }}"> New </a></li>
+                        </ul>
+                    </li>
+            @endcan
+
+            @can('Settings')
+                <li class="treeview">
+                    <a href="{{ url('/settings') }}"><i class="fa fa-cogs"></i> <span>Settings</span>
+                        <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ url('/settings') }}"><i class="fa fa-cogs"></i> Settings</a></li>
+
+
+                        <li class="treeview">
+                            <a href="{{ url('/settings/access-control') }}"><i class="fa fa-users"></i> <span>Access Control</span>
+                                <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                              </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ url('/settings/access-control') }}"><i class="fa fa-stop"></i>Access Control</a></li>
+                                <li><a href="{{ url('/settings/access-control/permissions') }}"><i class="fa fa-universal-access"></i>Permission</a></li>
+                                <li><a href="{{ url('/settings/access-control/roles') }}"><i class="fa fa-level-up"></i>Roles</a></li>
+                                <li><a href="{{ url('/settings/access-control/user-management') }}"><i class="fa fa-users"></i>User Management</a></li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </li>
+            @endcan
+
+
+
 
 
         </ul>
