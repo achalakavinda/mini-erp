@@ -15,19 +15,18 @@ class RolesAndPermissionsSeeder extends Seeder
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $role_super_admin = Role::create(['name' => 'super-admin']);
-        $role_staff = Role::create(['name' => 'staff']);
-        $role_admin = Role::create(['name' => 'admin']);
+        $role_admin = Role::create(['name' => 'Admin']);
+        $role_hr = Role::create(['name' => 'HR']);
+        Role::create(['name' => 'Staff']);
 
-        $permission = Permission::create(['name' => 'default']);
-        $role_super_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => 'Default']);
         $role_admin->givePermissionTo($permission);
-        $role_staff->givePermissionTo($permission);
+        $role_hr->givePermissionTo($permission);
 
         $permission = Permission::create(['name' => 'Settings']);
-        $role_super_admin->givePermissionTo($permission);
+        $role_admin->givePermissionTo($permission);
 
         $user = \App\Models\User::where('email','admin@test.com')->first();
-        $user->assignRole('super-admin');
+        $user->assignRole('Admin');
     }
 }

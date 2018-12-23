@@ -1,11 +1,12 @@
 <?php
-$Users = \App\Models\User::all()->pluck('name','id');
-if(isset($PageController)){
-    $Users = \App\Models\User::where('id',\Illuminate\Support\Facades\Auth::id())->pluck('name','id');
-}
-$JobTypes = \App\Models\JobType::all()->pluck('jobType','id');
-$Project = \App\Models\Project::all()->where('close',0)->pluck('code','id');
-$WorkCodes = \App\Models\WorkCodes::all()->pluck('name','id');
+    $Users = \App\Models\User::all()->pluck('name','id');
+    if(isset($PageController))
+    {
+        $Users = \App\Models\User::where('id',\Illuminate\Support\Facades\Auth::id())->pluck('name','id');
+    }
+    $JobTypes = \App\Models\JobType::all()->pluck('jobType','id');
+    $Project = \App\Models\Project::all()->where('close',0)->pluck('code','id');
+    $WorkCodes = \App\Models\WorkCodes::all()->pluck('name','id');
 ?>
 
 <div class="box-body">

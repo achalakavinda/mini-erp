@@ -26,15 +26,13 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/staff/work-sheet', 'PageController@workSheet');
     Route::post('/staff/work-sheet/store', 'PageController@workSheetStore');
 
-    Route::group(['middleware' => ['permission:default']], function () {
+    Route::group(['middleware' => ['permission:Default']], function () {
 
         Route::resource('work-sheet', 'WorkSheetController');
 
         Route::resource('/customer', 'CustomerController');
 
         Route::resource('/staff', 'StaffController');
-
-
 
         Route::resource('job-type', 'JobTypeController');
 

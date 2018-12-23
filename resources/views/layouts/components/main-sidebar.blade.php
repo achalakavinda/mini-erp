@@ -19,7 +19,7 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li class="header">System</li>
 
-            @can('default')
+            @can('Default')
                 <!-- Optionally, you can add icons to the links -->
                     <li><a href="{{ url('/dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
                     <li><a href="{{ url('/project') }}"><i class="fa fa-print"></i> <span>Project</span></a></li>

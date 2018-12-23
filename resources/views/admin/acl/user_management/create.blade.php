@@ -20,3 +20,14 @@
     <!-- /.box -->
 @endsection
 <!-- /main header section -->
+
+@section('main-content')
+    <!-- row -->
+    <div class="row">
+        <div class="col-xs-12">
+            <h1>Create a User</h1>
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+@endsection

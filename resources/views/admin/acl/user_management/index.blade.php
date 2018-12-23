@@ -53,11 +53,6 @@
                     <h3 class="box-title">User Access Controls</h3>
                 </div>
                 <!-- /.box-header -->
-
-                <div class="box-body">
-                    <a href="{{ url('/settings/access-control/user-management/create') }}" class="btn btn-sm btn-danger"><i class="fa fa-plus-square"></i> New</a>
-                   </div>
-
                 <div style="overflow: auto" class="box-body">
                     <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>
@@ -81,12 +76,8 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    <a href="{!! url('/settings/access-control/user-management') !!}/{{ $user->id }}/edit">Edit <i class="fa fa-paper-plane"></i></a>
+                                    <a href="{!! url('/settings/access-control/user-management') !!}/{{ $user->id }}/edit">Change <i class="fa fa-cog"></i></a>
                                 </td>
-                                {{--{!! Form::model($permission, ['method' => 'PATCH', 'action' => ['PermissionsController@update', $permission->id],'class'=>'form-horizontal']) !!}--}}
-                                {{--{!! Form::text('set_delete',"value",['style'=>'display:none']) !!}--}}
-                                {{--<a style="position:relative;display: block" type="submit" ><i class="fa fa-trash"></i></a>--}}
-                                {{--{!! Form::close() !!}--}}
                             </tr>
                         @endforeach
 

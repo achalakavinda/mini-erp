@@ -51,7 +51,7 @@ class StaffController extends Controller
         ]);
 
         try {
-            User::create([
+           $user =  User::create([
                 'name'=>$request->name,
                 'date_joined'=>$request->date_joined,
                 'mobile'=>$request->mobile,
@@ -81,6 +81,9 @@ class StaffController extends Controller
                 'hr_billing_rates'=>$request->hr_billing_rates,
                 'password'=> bcrypt('password')
             ]);
+
+           $user->assignRole('Staff');
+
         }catch (\Exception $exception){
             return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
         }
