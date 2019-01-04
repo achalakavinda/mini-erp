@@ -42,50 +42,42 @@
 @endsection
 <!-- /main section -->
 
-{{--@section('js')--}}
-    {{--<script>--}}
-        {{--$(document).ready(function(){--}}
-            {{--var i = 0;--}}
-            {{--$('#add').click(function(){--}}
-                {{--var emp = $('#employee');--}}
-                {{--var inp = $('#box');--}}
+@section('js')
+    <script>
+        $(document).ready(function(){
 
-                 {{--try {--}}
-                     {{--i = $('.sub_count').size();--}}
-                 {{--}catch (e) {--}}
-                     {{--console.log(e.toString());--}}
-                 {{--}--}}
+            var BudgetCost = $('#budgeCost');
+            var ProfitRation = $('#profitRatio');
+            var QuotedPrice = $('#quotedPrice');
 
-                {{--var empName = $('#employee :selected').text();--}}
-                    {{--if(empName.length<1){--}}
-                        {{--alert('you already add all employees')--}}
-                        {{--return;--}}
-                    {{--}--}}
-                {{--$('<div style="margin-top: 10px;">' +--}}
-                    {{--'<label class="col-md-2 control-label sub_count">Employee</label>' +--}}
-                    {{--'<div class="col-sm-2">' +--}}
-                    {{--'<div id="box' + i +'">' +--}}
-                    {{--'<input type="text" id="employee_name_'+i+'" class="form-control" name="details['+i+'][employee_name]" placeholder=""/>' +--}}
-                    {{--'<input type="text" id="employee_id_'+i+'" style="display:none" class="form-control" name="details['+i+'][employee_id]" placeholder=""/>' +--}}
-                    {{--'</div>' +--}}
-                    {{--'</div>' +--}}
-                    {{--'<label class="col-md-2 control-label sub_count">Paying Hrs</label>' +--}}
-                    {{--'<div class="col-sm-1">' +--}}
-                    {{--'<div id="box' + i +'">' +--}}
-                    {{--'<input type="number" id="paying_hrs" class="form-control" name="details['+i+'][paying_hrs]" placeholder=""/>' +--}}
-                    {{--'</div>' +--}}
-                    {{--'</div>' +--}}
-                    {{--'<label class="col-sm-2 control-label">Volunteer Hrs</label>' +--}}
-                    {{--'<div class="col-sm-1">' +--}}
-                    {{--'<div id="box' + i +'">' +--}}
-                    {{--'<input type="number" id="volunteer_hrs" value="0" class="form-control" name="details['+i+'][volunteer_hrs]" placeholder=""/>' +--}}
-                    {{--'</div>' +--}}
-                    {{--'</div></div><div class="col-md-12" style="padding-bottom: 10px"></div>').appendTo(inp);--}}
-                    {{--$('#employee_name_'+i).val(empName);--}}
-                    {{--$('#employee_id_'+i).val( $('#employee :selected').val());--}}
-                    {{--$('#employee :selected').remove();--}}
-                {{--i++;--}}
-            {{--});--}}
-        {{--});--}}
-    {{--</script>--}}
-{{--@endsection--}}
+            $('#budgeCost').on('click', function() {
+                    calculate(BudgetCost.val(),ProfitRation.val());
+                }
+            );
+            $('#profitRatio').on('click', function() {
+                    calculate(BudgetCost.val(),ProfitRation.val())
+                }
+            );
+
+            $('#budgeCost').on('keyup', function() {
+                    calculate(BudgetCost.val(),ProfitRation.val());
+                }
+            );
+            $('#profitRatio').on('keyup', function() {
+                    calculate(BudgetCost.val(),ProfitRation.val())
+                }
+            );
+
+
+        });
+
+        function calculate(budget_cost, profile_ratio) {
+
+            budget_cost = parseFloat(budget_cost);
+            profile_ratio = parseFloat(profile_ratio);
+
+            $('#quotedPrice').val(budget_cost+(budget_cost*profile_ratio));
+        }
+
+    </script>
+@endsection

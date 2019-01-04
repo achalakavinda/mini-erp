@@ -7,53 +7,86 @@
     $WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,sum(work_hrs) as hrs,sum(hr_rate) as rate, user_id'))->where('project_id',$Project->id)->groupBy('user_id')->get();
 ?>
 
+<div style="overflow: auto" class="box-body">
+    <table id="table" class="table table-responsive table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Code</th>
+            <th>Customer</th>
+            <th>Job</th>
+            <th>B.Hrs</th>
+            <th>B.Cost</th>
+            <th>B.Revenue</th>
+            <th>A.Hrs</th>
+            <th>A.Cost</th>
+            <th>A.Revenue</th>
+            <th>Cost Variance</th>
+            <th>Recovery Ratio</th>
+            <th>status</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr>
+            <td>{!! $Project->code !!}</td>
+            <td>{!! \App\Models\Customer::where('id',$Project->customer_id)->first()->name !!}</td>
+            <td>
+                <?php
+                foreach ($PROJECTJOBTYPE as $val){
+                    $JBTYPE =  \App\Models\JobType::find($val->jop_type_id);
+                    echo $JBTYPE->jobType;
+                }
+                ?>
+            </td>
+            <td>{!! $Project->budget_number_of_hrs  !!}</td>
+            <td>{!! $Project->budget_cost  !!}</td>
+            <td>{!! $Project->budget_revenue  !!}</td>
+            <td>{!! $Project->actual_number_of_hrs  !!}</td>
+            <td>{!! $Project->actual_cost  !!}</td>
+            <td>{!! $Project->actual_revenue  !!}</td>
+            <td>{!! $Project->cost_variance  !!}</td>
+            <td>{!! $Project->recovery_ratio  !!}</td>
+            <td>{!! $Project->close  !!}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
 <div class="box-body">
 
-    <div class="col-md-6">
-        <div class="form-group">
-            {!! Form::label('code','Code',['class' => 'control-label']) !!}
-            {!! Form::text('code',$Project->code,['class'=>'form-control','id'=>'code','placeholder'=>'Code','disabled']) !!}
-            {!! Form::number('project_id',$Project->id,['class'=>'form-control','style'=>'display:none']) !!}
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            {!! Form::label('customer_id','Company',['class' => 'control-label']) !!}
-            {!! Form::select('customer_id',$Customers,$Project->customer_id,['class'=>'form-control','id'=>'company_id','disabled']) !!}
-        </div>
-    </div>
-
-    <div class="col-md-12">
+    <div class="col-md-2">
         <div class="form-group">
             {!! Form::label('number_of_hrs','Number of Hrs',['class' => 'control-label']) !!}
-            {!! Form::text('number_of_hrs',$Project->number_of_hrs,['class'=>'form-control','id'=>'numberOfHrs','placeholder'=>'Number of Hrs','readonly']) !!}
+            {!! Form::text('number_of_hrs',$Project->budget_number_of_hrs,['class'=>'form-control','id'=>'numberOfHrs','placeholder'=>'Number of Hrs','readonly']) !!}
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="form-group">
             {!! Form::label('budget_cost','Budget Cost',['class' => 'control-label']) !!}
-            {!! Form::text('budget_cost',$Project->budget_cost,['class'=>'form-control','id'=>'BudgetCost','placeholder'=>'Budget Cost','readonly']) !!}
+            {!! Form::number('budget_cost',0,['class'=>'form-control','id'=>'BudgetCost','placeholder'=>'Budget Cost','readonly', 'step'=>'0.01']) !!}
+            {!! Form::number('project_id',$Project->id,['class'=>'form-control','id'=>'ProjectId','style'=>'display:none']) !!}
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="form-group">
             {!! Form::label('profit_margin','Profit Margin',['class' => 'control-label']) !!}
-            {!! Form::text('profit_margin',null,['class'=>'form-control','id'=>'ProfitMargin','placeholder'=>'Profit Margin in Decimal']) !!}
+            {!! Form::number('profit_margin',0,['class'=>'form-control','id'=>'ProfitMargin','placeholder'=>'Profit Margin in Decimal', 'step'=>'0.01']) !!}
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="form-group">
             {!! Form::label('qouted_price','Quoted Price',['class' => 'control-label']) !!}
-            {!! Form::text('qouted_price',$Project->quoted_price,['class'=>'form-control','id'=>'QuotedPrice','placeholder'=>'Qouted Price','readonly']) !!}
+            {!! Form::number('qouted_price',0,['class'=>'form-control','id'=>'QuotedPrice','placeholder'=>'Qouted Price','readonly', 'step'=>'0.01']) !!}
         </div>
     </div>
 
     <div class="col-md-3">
         <div class="form-group">
-            {!! Form::label('refresh_value','refresh values',['class' => 'control-label']) !!}
+            {!! Form::label('refresh_value','Refresh values',['class' => 'control-label']) !!}
             <button class="form-control" type="button" id="CalculateBtn">Calculate</button>
         </div>
     </div>
@@ -61,29 +94,11 @@
 </div>
 <!-- /.box-body -->
 
-<div class="box-header with-border">
-    <h4 class="box-title">Assign Jobs</h4>
-</div>
-
-<div class="box-body">
-    <div class="col-md-12">
-        <table class="table table-responsive table-bordered table-striped">
-            <?php
-            $count =1;
-                foreach ($PROJECTJOBTYPE as $val){
-                    $JBTYPE =  \App\Models\JobType::find($val->jop_type_id);
-                    echo '<tr style="padding-left: 20px"><th>'.$count.',  '.$JBTYPE->jobType.'</th></tr>';
-                    $count++;
-                }
-            ?>
-        </table>
-    </div>
-</div>
-<!-- /.box-body -->
-
 <!-- Cost assignment-->
 <div class="box-header with-border">
+
     <h4 class="box-title">Cost Estimation <b id="COSTESTIMATIONVALUE"></b> <i id="COSTESTIMATIONVALUEREFRESH" style="font-size: 70%; color: green; cursor: pointer" class="fa fa-refresh"></i></h4>
+
     <div class="box-body">
         <div class="col-md-12">
             <table id="CostTable" class="table table-responsive table-bordered table-striped">
@@ -99,8 +114,8 @@
             </table>
         </div>
 
-        <div class="col-md-12">
-            <div class="col-md-10">
+        <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="form-group">
                     {!! Form::select('cost_type_id',\App\Models\ProjectCostType::get()->pluck('name','id'),null,['class'=>'form-control','id'=>'CostTypeId','placeholder'=>'Other Cost']) !!}
                 </div>
@@ -108,6 +123,11 @@
             <div class="col-md-2">
                 <div class="form-group">
                     <button class="form-control" type="button" id="addNewCost">Add</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <button class="form-control" type="button" id="calculateNewCost">Calculate</button>
                 </div>
             </div>
         </div>
@@ -136,8 +156,8 @@
         </table>
     </div>
 
-    <div class="col-md-12">
-        <div class="col-md-10">
+    <div class="col-md-6">
+        <div class="col-md-8">
             <div class="form-group">
                 {!! Form::select('designation_type_id',\App\Models\Designation::get()->pluck('designationType','id'),null,['class'=>'form-control','id'=>'DesignationTypeId']) !!}
             </div>
@@ -145,6 +165,11 @@
         <div class="col-md-2">
             <div class="form-group">
                 <button class="form-control" type="button" id="addNewDesignation">Add</button>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <button class="form-control" type="button" id="addNewDesignationCalculation">Calculate</button>
             </div>
         </div>
     </div>
@@ -162,7 +187,7 @@
     <script>
         'use strict'
 
-        var BugetCost = parseFloat("{{ $Project->budget_cost }}");
+        var BugetCost = 0;
 
         var costTable = $('#CostTable');
         var designationTable = $('#DesignationTable');
@@ -192,6 +217,16 @@
             $('#addNewCost').click(function() {
                 addNewCostTypes();
             });
+
+            $('#calculateNewCost').click(function() {
+                calculateCostForTypes(count);
+            });
+
+            $('#addNewDesignationCalculation').click(function() {
+                calculateCostDesignationTypes(designation_count);
+            });
+
+
 
             $('#CalculateBtn').click(function () {
                 calculateCostForTypes(count);
@@ -246,7 +281,7 @@
                 '                            <input type="text" name="cost_row['+count+'][cost_type_name]" value="'+SelectCostTypeName+'" class="form-control">\n' +
                 '                        </td>\n' +
                 '                        <td>\n' +
-                '                            <input  type="text" name="cost_row['+count+'][cost]" id="CostRow'+count+'" value="" class="form-control">\n' +
+                '                            <input  type="number" name="cost_row['+count+'][cost]" id="CostRow'+count+'" value="" class="form-control">\n' +
                 '                        </td>\n' +
                 '                        <td>\n' +
                 '                            <input  type="text" name="cost_row['+count+'][remark]"  value="" class="form-control">\n' +
@@ -268,7 +303,7 @@
 
             designationTable.append('<tr class="tr_designation_'+designation_count+'">\n' +
                 '                        <td>\n' +
-                '                            <input style="display:block" type="number" value="'+SelectDesignationTypeId+'" name="designation_row['+designation_count+'][designation_id]" class="form-control">\n' +
+                '                            <input style="display:none" type="number" value="'+SelectDesignationTypeId+'" name="designation_row['+designation_count+'][designation_id]" class="form-control">\n' +
                 '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control">\n' +
                 '                        </td>\n' +
                 '                        <td>\n' +

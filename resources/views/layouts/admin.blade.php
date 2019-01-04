@@ -16,8 +16,15 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Ionicons -->
     {!! Html::style('admin/bower_components/Ionicons/css/ionicons.min.css') !!}
     <!-- Theme style -->
-    {!! Html::style('admin/dist/css/AdminLTE.min.css') !!}
-    {!! Html::style('admin/dist/css/skins/skin-blue.min.css') !!}
+    {!! Html::style('admin/css/AdminLTE.min.css') !!}
+    {!! Html::style('admin/css/skins/skin-blue.min.css') !!}
+
+    <style>
+        .form-group{
+            padding-left:5px;
+            padding-right: 5px;
+        }
+    </style>
 
     @yield('style')
 
@@ -79,7 +86,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- Bootstrap 3.3.7 -->
 {!! Html::script('admin/bower_components/bootstrap/dist/js/bootstrap.min.js') !!}
 <!-- AdminLTE App -->
-{!! Html::script('admin/dist/js/adminlte.min.js') !!}
+{!! Html::script('admin/js/adminlte.min.js') !!}
+
 
 
 @yield('js')

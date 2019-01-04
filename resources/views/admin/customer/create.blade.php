@@ -11,6 +11,7 @@
             <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
             <a href="{{ url('/customer') }}" class="btn btn-success">Customer</a>
             <a href="{{ url('/customer/create') }}" class="btn btn-success">New</a>
+            <button id="ShowAdvance" type="button" class=" btn btn-light">Show All Fields <i class="fa fa-list"></i></button>
         </div>
         <!-- /.box-body -->
     </div>
@@ -34,7 +35,7 @@
                 <!-- /.box-header -->
                 <!-- form start -->
                 {!! Form::open(['action'=>'CustomerController@store','class'=>'form-horizontal','id'=>'Form']) !!}
-                    @include('admin.customer._partial.form')
+                    @include('admin.customer._partial.createForm')
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->
@@ -47,4 +48,10 @@
 
 @section('js')
     @include('error.swal')
+    <script>
+        $('#ShowAdvance').on('click',function () {
+            $('#AdvanceForm').fadeIn('slow');
+            $('#ShowAdvance').hide();
+        })
+    </script>
 @endsection

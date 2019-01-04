@@ -14,30 +14,39 @@
     <div class="col-md-12">
         <div class="form-group">
             {!! Form::label('customer_id','Company',['class' => 'control-label']) !!}
-            {!! Form::select('customer_id',$Customers,null,['class'=>'form-control','id'=>'company_id']) !!}
+            {!! Form::select('customer_id',$Customers,null,['class'=>'form-control','id'=>'companyId']) !!}
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <div class="form-group">
-            {!! Form::label('number_of_hrs','Number of Hrs',['class' => 'control-label']) !!}
-            {!! Form::text('number_of_hrs',0,['class'=>'form-control','id'=>'number_of_hrs','placeholder'=>'Number of Hrs']) !!}
+            {!! Form::label('budget_number_of_hrs','Budgeted Number of Hrs',['class' => 'control-label']) !!}
+            {!! Form::number('budget_number_of_hrs',0,['class'=>'form-control','id'=>'budgetNumberOfHrs']) !!}
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <div class="form-group">
             {!! Form::label('budget_cost','Budget Cost',['class' => 'control-label']) !!}
-            {!! Form::text('budget_cost',0,['class'=>'form-control','id'=>'budget_cost','placeholder'=>'Budget Cost']) !!}
+            {!! Form::number('budget_cost',0,['class'=>'form-control','id'=>'budgeCost']) !!}
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <div class="form-group">
-            {!! Form::label('qouted_price','Quoted Price',['class' => 'control-label']) !!}
-            {!! Form::text('qouted_price',0,['class'=>'form-control','id'=>'qouted_price','placeholder'=>'Qouted Price']) !!}
+            {!! Form::label('profit_ratio','Profit Ratio',['class' => 'control-label']) !!}
+            {!! Form::number('profit_ratio',0,['class'=>'form-control','id'=>'profitRatio', 'step'=>'0.01']) !!}
         </div>
     </div>
+
+    <div class="col-md-3">
+        <div class="form-group">
+            {!! Form::label('quoted_price','Quoted Price',['class' => 'control-label']) !!}
+            {!! Form::number('quoted_price',0,['class'=>'form-control','id'=>'quotedPrice', 'step'=>'0.01']) !!}
+        </div>
+    </div>
+
+
 </div>
 <!-- /.box-body -->
 

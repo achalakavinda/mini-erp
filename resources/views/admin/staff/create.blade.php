@@ -11,6 +11,7 @@
             <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
             <a href="{{ url('/staff') }}" class="btn btn-success">Staff</a>
             <a href="{{ url('/staff/create') }}" class="btn btn-success">New</a>
+            <button id="ShowAdvance" type="button" class=" btn btn-light">Show All Fields <i class="fa fa-list"></i></button>
         </div>
         <!-- /.box-body -->
     </div>
@@ -62,4 +63,10 @@
     </script>
 
     @include('error.swal')
+    <script>
+        $('#ShowAdvance').on('click',function () {
+            $('#AdvanceForm').fadeIn('slow');
+            $('#ShowAdvance').hide();
+        })
+    </script>
 @endsection
