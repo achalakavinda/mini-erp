@@ -165,31 +165,31 @@
         <div class="col-md-6">
             <div class="form-group">
                 {!! Form::label('epf_cost','EPF Cost',['class' => 'control-label']) !!}
-                {!! Form::text('epf_cost',null,['class'=>'form-control','id'=>'epfCost' , 'placeholder'=>'']) !!}
+                {!! Form::number('epf_cost',null,['class'=>'form-control','id'=>'epfCost' , 'placeholder'=>'', 'step'=>'0.01']) !!}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 {!! Form::label('etf_cost','ETF Cost',['class' => 'control-label']) !!}
-                {!! Form::text('etf_cost',null,['class'=>'form-control','id'=>'etfCost' , 'placeholder'=>'']) !!}
+                {!! Form::number('etf_cost',null,['class'=>'form-control','id'=>'etfCost' , 'placeholder'=>'', 'step'=>'0.01']) !!}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 {!! Form::label('allowance_cost','Allowance Cost',['class' => 'control-label']) !!}
-                {!! Form::text('allowance_cost',null,['class'=>'form-control','id'=>'allowanceCost' , 'placeholder'=>'']) !!}
+                {!! Form::number('allowance_cost',null,['class'=>'form-control','id'=>'allowanceCost' , 'placeholder'=>'', 'step'=>'0.01']) !!}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 {!! Form::label('gratuity_cost','Gratuity Cost',['class' => 'control-label']) !!}
-                {!! Form::text('gratuity_cost',null,['class'=>'form-control','id'=>'gratuityCost' , 'placeholder'=>'']) !!}
+                {!! Form::number('gratuity_cost',null,['class'=>'form-control','id'=>'gratuityCost' , 'placeholder'=>'', 'step'=>'0.01']) !!}
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 {!! Form::label('other_cost','Other Cost',['class' => 'control-label']) !!}
-                {!! Form::text('other_cost',null,['class'=>'form-control','id'=>'otherCost' , 'placeholder'=>'']) !!}
+                {!! Form::number('other_cost',null,['class'=>'form-control','id'=>'otherCost' , 'placeholder'=>'', 'step'=>'0.01']) !!}
             </div>
         </div>
 
@@ -199,25 +199,31 @@
     <div class="col-md-3">
         <div class="form-group">
             {!! Form::label('basic_sal','*Basic Salary',['class' => 'control-label']) !!}
-            {!! Form::text('basic_sal',null,['class'=>'form-control','id'=>'basicSalary', 'placeholder'=>'']) !!}
+            {!! Form::number('basic_sal',null,['class'=>'form-control','id'=>'basicSalary', 'placeholder'=>'', 'step'=>'0.01']) !!}
         </div>
     </div>
     <div class="col-md-3">
         <div class="form-group">
             {!! Form::label('cost','*Cost',['class' => 'control-label']) !!}
-            {!! Form::text('cost',null,['class'=>'form-control','id'=>'cost' , 'placeholder'=>'']) !!}
+            {!! Form::number('cost',null,['class'=>'form-control','id'=>'cost' , 'placeholder'=>'', 'step'=>'0.01']) !!}
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="form-group">
             {!! Form::label('hr_rates','*Hourly Rate',['class' => 'control-label']) !!}
-            {!! Form::text('hr_rates',null,['class'=>'form-control','id'=>'hourlyRate' , 'placeholder'=>'']) !!}
+            {!! Form::number('hr_rates',null,['class'=>'form-control','id'=>'hourlyRate' , 'placeholder'=>'', 'step'=>'0.01']) !!}
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-2">
         <div class="form-group">
             {!! Form::label('hr_billing_rates','Hourly Billing Rate',['class' => 'control-label']) !!}
-            {!! Form::text('hr_billing_rates',null,['class'=>'form-control','id'=>'hrBillingRates' , 'placeholder'=>'']) !!}
+            {!! Form::number('hr_billing_rates',null,['class'=>'form-control','id'=>'hrBillingRates' , 'placeholder'=>'', 'step'=>'0.01']) !!}
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="form-group">
+            {!! Form::label('cost_generate',null,['class' => 'control-label']) !!}
+            {!! Form::button('Generate',['class'=>'form-control btn btn-primary','id'=>'GenerateBtn']) !!}
         </div>
     </div>
 </div>
