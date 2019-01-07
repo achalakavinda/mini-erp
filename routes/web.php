@@ -42,6 +42,8 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('project/{id}/estimation','ProjectController@estimation');
 
+        Route::get('project/{id}/actual-cost','ProjectController@actualCost');
+
         Route::post('project/finalized','ProjectController@finalized');
 
     });

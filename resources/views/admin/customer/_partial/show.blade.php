@@ -160,20 +160,6 @@ $Sector = \App\Models\CustomerSector::all()->pluck('name','id');
         </div>
     </div>
 
-    <div class="col-md-6">
-        <div class="form-group">
-            {!! Form::label('service_id','Service',['class' => 'control-label']) !!}
-            {!! Form::select('service_id',$Service,null,['class'=>'form-control','id'=>'service']) !!}
-        </div>
-    </div>
-
-    <div class="col-md-6">
-        <div class="form-group">
-            {!! Form::label('sector_id','Sector',['class' => 'control-label']) !!}
-            {!! Form::select('sector_id',$Sector,null,['class'=>'form-control','id'=>'sector']) !!}
-        </div>
-    </div>
-
     <div class="col-md-12">
         <div class="form-group">
             {!! Form::label('location','Location',['class' => 'control-label']) !!}

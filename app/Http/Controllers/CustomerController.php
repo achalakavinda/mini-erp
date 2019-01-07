@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CusSector;
+use App\Models\CusService;
 use App\Models\Customer;
 use Illuminate\Http\Request;
 
@@ -42,7 +44,8 @@ class CustomerController extends Controller
         ]);
 
         try{
-            Customer::create([
+
+            $Customer = Customer::create([
                 'name'=>$request->name,
                 'code'=>$request->code,
                 'contact'=>$request->contact,
@@ -63,13 +66,28 @@ class CustomerController extends Controller
                 'cfo_contact'=>$request->cfo_contact,
                 'cfo_email'=>$request->cfo_email,
                 'website'=>$request->website,
-                'service_id'=>$request->service_id,
-                'sector_id'=>$request->sector_id,
                 'location'=>$request->location,
                 'description'=>$request->description,
                 'created_by'=>\Auth::id(),
                 'updated_by'=>\Auth::id()
             ]);
+
+            if($request->service_id){
+                foreach ($request->service_id as $item){
+                    CusService::create([
+                        'customer_id'=> $Customer->id,
+                        'service_id'=>$item
+                    ]);
+                }
+            }
+
+            if($request->sector_id){
+                foreach ($request->sector_id as $item){
+                CusSector::create([
+                    'customer_id'=> $Customer->id,
+                    'sector_id'=>$item
+                ]);
+            }}
 
         }catch (\Exception $exception){
             return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);

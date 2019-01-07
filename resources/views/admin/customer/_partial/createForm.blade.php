@@ -163,14 +163,14 @@
       <div class="col-md-6">
           <div class="form-group">
               {!! Form::label('service_id','Service',['class' => 'control-label']) !!}
-              {!! Form::select('service_id',$Service,null,['class'=>'form-control','id'=>'service']) !!}
+              {!! Form::select('service_id[]',$Service,null,['class'=>'form-control','id'=>'service','multiple'=>'multiple']) !!}
           </div>
       </div>
 
       <div class="col-md-6">
           <div class="form-group">
               {!! Form::label('sector_id','Sector',['class' => 'control-label']) !!}
-              {!! Form::select('sector_id',$Sector,null,['class'=>'form-control','id'=>'sector']) !!}
+              {!! Form::select('sector_id[]',$Sector,null,['class'=>'form-control','id'=>'sector','multiple'=>'multiple']) !!}
           </div>
       </div>
 

@@ -18,6 +18,8 @@
             <a href="{{ url('/project') }}" class="btn btn-success">Project</a>
             <a href="{{ url('/project/create') }}" class="btn btn-success">New</a>
             <a href="{!! url('/project') !!}/{!! $Project->id !!}/estimation" class="btn btn-danger">Budget <i class="fa fa-plus-square"></i></a>
+            <a href="{{ url('/project') }}/{!! $Project->id !!}/actual-cost" class="btn btn-danger">Actual Cost <i class="fa fa-money"></i></a>
+
         </div>
         <!-- /.box-body -->
     </div>

@@ -34,6 +34,24 @@ class CreateProjectOverheadsTable extends Migration
             $table->double('cost')->default(0);
             $table->text('remarks')->nullable();
 
+            $table->timestamps();
+            $table->unsignedInteger('created_by_id');
+            $table->unsignedInteger('updated_by_id');
+
+            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
+            $table->foreign('created_by_id')->references('id')->on('users');
+            $table->foreign('updated_by_id')->references('id')->on('users');
+        });
+
+        Schema::create('project_overheads_actual', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('project_id');
+
+            $table->unsignedInteger('project_cost_type_id')->nullable();
+            $table->string('project_cost_type');
+            $table->boolean('project_cost_default')->default(true);
+            $table->double('cost')->default(0);
+            $table->text('remarks')->nullable();
 
             $table->timestamps();
             $table->unsignedInteger('created_by_id');
@@ -53,6 +71,7 @@ class CreateProjectOverheadsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('project_overheads');
+        Schema::dropIfExists('project_overheads_actual');
         Schema::dropIfExists('project_cost_types');
     }
 }

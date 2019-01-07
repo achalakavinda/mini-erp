@@ -7,6 +7,11 @@
         <div class="box-header with-border">
             <h3 class="box-title">Project Estimations | {!! $Project->code !!}</h3>
         </div>
+        <div class="box-body">
+            <a href="{{ url('/project') }}/{!! $Project->id !!}" class="btn btn-success">Go Back</a>
+            <a href="{{ url('/project') }}" class="btn btn-success">Project</a>
+            <a href="{{ url('/project') }}/{!! $Project->id !!}/actual-cost" class="btn btn-danger">Actual Cost <i class="fa fa-money"></i></a>
+        </div>
         <!-- /.box-body -->
     </div>
     <!-- /.box -->

@@ -20,7 +20,7 @@ class CreateProjectDesignationsTable extends Migration
         Schema::create('project_designations', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('project_id');
-            $table->unsignedInteger('project_designation_id')->nullable();
+            $table->unsignedInteger('project_designation_id');
             $table->double('hr')->default(0);
             $table->double('hr_rates')->default(0);
             $table->double('total')->default(0);

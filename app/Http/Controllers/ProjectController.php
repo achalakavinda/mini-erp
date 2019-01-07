@@ -24,7 +24,6 @@ class ProjectController extends Controller
     public function index()
     {
         $Rows = Project::all();
-
         return view('admin.project.index',compact('Rows'));
     }
 
@@ -115,11 +114,9 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         if(isset($request->set_delete)){
             $Project = Project::find($id)->delete();
         }
-
         return redirect('project');
     }
 
@@ -140,19 +137,30 @@ class ProjectController extends Controller
         return view('admin.project.estimation',compact('Project'));
     }
 
+    public function actualCost($id)
+    {
+        $Project = Project::findOrFail($id);
+        return view('admin.project.actual_cost',compact('Project'));
+    }
+
+
+    /**
+     *Project Budget estimation are save in here
+     */
     public function finalized(Request $request)
     {
+        $HOURS = 0;
+        $Project = null;
 
         $request->validate([
             'number_of_hrs' => 'required',
             'budget_cost' => 'required',
-            'qouted_price' => 'required',
+            'quoted_price' => 'required',
             ]);
 
         $Project = Project::findOrFail($request->project_id);
 
         if(isset($request->cost_row)){
-
             foreach ($request->cost_row as $item){
                 ProjectOverhead::create([
                     'project_id'=>$Project->id,
@@ -166,8 +174,6 @@ class ProjectController extends Controller
             }
         }
 
-        $HOURS = 0;
-
         if(isset($request->designation_row)){
             foreach ($request->designation_row as $item) {
                 ProjectDesignation::create([
@@ -179,20 +185,23 @@ class ProjectController extends Controller
                     'created_by_id'=>\Auth::id(),
                     'updated_by_id'=>\Auth::id(),
                 ]);
-                $HOURS = $HOURS+$item['hrs'];
+                $HOURS = $HOURS + $item['hrs'];
             }
         }
 
-
         $Project->budget_cost = $request->budget_cost;
-        $Project->quoted_price = $request->qouted_price;
+        $Project->quoted_price = $request->quoted_price;
         $Project->budget_number_of_hrs = $HOURS;
-        $Project->budget_revenue = $request->qouted_price;
+        $Project->budget_revenue = $request->quoted_price;
         $Project->profit_ratio = $request->profit_margin;
 
+        if($Project->actual_revenue==0){
+            $Project->actual_revenue = $request->quoted_price;
+        }
 
         $Project->updated_by_id = \Auth::id();
         $Project->save();
+
         return redirect('project/'.$Project->id)->with('created',true);
     }
 }

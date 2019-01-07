@@ -46,7 +46,7 @@
             <td>{!! $Project->actual_revenue  !!}</td>
             <td>{!! $Project->cost_variance  !!}</td>
             <td>{!! $Project->recovery_ratio  !!}</td>
-            <td>{!! $Project->close  !!}</td>
+            <td><b>@if($Project->close)Close @else Open @endif</b></td>
         </tr>
         </tbody>
     </table>
@@ -79,8 +79,8 @@
 
     <div class="col-md-3">
         <div class="form-group">
-            {!! Form::label('qouted_price','Quoted Price',['class' => 'control-label']) !!}
-            {!! Form::number('qouted_price',0,['class'=>'form-control','id'=>'QuotedPrice','placeholder'=>'Qouted Price','readonly', 'step'=>'0.01']) !!}
+            {!! Form::label('quoted_price','Quoted Price',['class' => 'control-label']) !!}
+            {!! Form::number('quoted_price',0,['class'=>'form-control','id'=>'QuotedPrice','placeholder'=>'Quoted Price','readonly', 'step'=>'0.01']) !!}
         </div>
     </div>
 
@@ -94,48 +94,6 @@
 </div>
 <!-- /.box-body -->
 
-<!-- Cost assignment-->
-<div class="box-header with-border">
-
-    <h4 class="box-title">Cost Estimation <b id="COSTESTIMATIONVALUE"></b> <i id="COSTESTIMATIONVALUEREFRESH" style="font-size: 70%; color: green; cursor: pointer" class="fa fa-refresh"></i></h4>
-
-    <div class="box-body">
-        <div class="col-md-12">
-            <table id="CostTable" class="table table-responsive table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th>Cost Type</th>
-                        <th>Cost</th>
-                        <th>Remark</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="col-md-6">
-            <div class="col-md-8">
-                <div class="form-group">
-                    {!! Form::select('cost_type_id',\App\Models\ProjectCostType::get()->pluck('name','id'),null,['class'=>'form-control','id'=>'CostTypeId','placeholder'=>'Other Cost']) !!}
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <button class="form-control" type="button" id="addNewCost">Add</button>
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <button class="form-control" type="button" id="calculateNewCost">Calculate</button>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</div>
-<!-- /Cost assignment-->
-
 <!-- staff allocation estimations -->
 <div class="box-header with-border">
     <h4 class="box-title">Staff Allocation Estimation  <b id="DESIGNATIONCOSTESTIMATIONVALUE"></b> <i id="DESIGNATIONCOSTESTIMATIONVALUEREFRESH" style="font-size: 70%; color: green; cursor: pointer" class="fa fa-refresh"></i></h4>
@@ -144,14 +102,25 @@
     <div class="col-md-12">
         <table id="DesignationTable" class="table table-responsive table-bordered table-striped">
             <thead>
-                <tr>
-                    <th>Designation</th>
-                    <th>Hour Rate</th>
-                    <th>Work Hours</th>
-                    <th>Cost</th>
-                </tr>
+            <tr>
+                <th>Designation</th>
+                <th>Hour Rate</th>
+                <th>Work Hours</th>
+                <th>Cost</th>
+            </tr>
             </thead>
             <tbody>
+            <?php $DesiginationHrs = 0; $DesignationCost = 0;?>
+                @foreach(\App\Models\ProjectDesignation::where('project_id',$Project->id)->get() as $item)
+                    <tr>
+                        <td><?php $Designation = \App\Models\Designation::find($item->project_designation_id);if($Designation)echo $Designation->designationType;?></td>
+                        <td>{!! $item->hr_rates !!}</td>
+                        <td>{!! $item->hr !!}</td>
+                        <td>{!! $item->total !!}</td>
+                        <td><a href="#"><i class="fa fa-close"></i></a></td>
+                    </tr>
+                    <?php $DesiginationHrs = $DesiginationHrs+$item->hr; $DesignationCost = $DesignationCost+$item->total;?>
+                @endforeach
             </tbody>
         </table>
     </div>
@@ -174,14 +143,69 @@
         </div>
     </div>
 
-    <div class="col-md-12">
-        <div class="col-md-2">
-            <button type="submit" class="btn btn-success">Update</button>
-        </div>
-    </div>
-
 </div>
 <!-- /Employee assignment -->
+
+
+<!-- Cost assignment-->
+<div class="box-header with-border">
+
+    <h4 class="box-title">Cost Estimation <b id="COSTESTIMATIONVALUE"></b> <i id="COSTESTIMATIONVALUEREFRESH" style="font-size: 70%; color: green; cursor: pointer" class="fa fa-refresh"></i></h4>
+
+    <div class="box-body">
+        <div class="col-md-12">
+            <table id="CostTable" class="table table-responsive table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Cost Type</th>
+                        <th>Cost</th>
+                        <th>Remark</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php $CostSum = 0;?>
+                    @foreach(\App\Models\ProjectOverhead::where('project_id',$Project->id)->get() as $item)
+                        <tr>
+                            <td>{!! $item->project_cost_type !!}</td>
+                            <td>{!! $item->cost !!}</td>
+                            <td>{!! $item->remark !!}</td>
+                            <td><a href="#"><i class="fa fa-close"></i></a></td>
+                        </tr>
+                        <?php $CostSum = $CostSum+$item->cost;?>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-md-6">
+            <div class="col-md-8">
+                <div class="form-group">
+                    {!! Form::select('cost_type_id',\App\Models\ProjectCostType::get()->pluck('name','id'),null,['class'=>'form-control','id'=>'CostTypeId','placeholder'=>'Other Cost']) !!}
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <button class="form-control" type="button" id="addNewCost">Add</button>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <button class="form-control" type="button" id="calculateNewCost">Calculate</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-success">Update</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- /Cost assignment-->
+
+
 
 @section('js')
     <script>
@@ -233,15 +257,13 @@
                 calculateCostDesignationTypes(designation_count);
                 var bugetTol = parseFloat(CostTypeSum)+parseFloat(DesignationCostSum)+parseFloat(BugetCost);
                 var margin = parseFloat($('#ProfitMargin').val())
-
                 $('#QuotedPrice').val(bugetTol+(bugetTol*margin));
-
             });
 
         });
 
         function calculateCostForTypes(count) {
-            CostTypeSum =0;
+            CostTypeSum = parseFloat(<?php echo $CostSum?>);
             for (var i=0;i<count;i++){
                 var costField = $("#CostRow"+i).val();
                 if(parseFloat(costField)>0){
@@ -253,7 +275,7 @@
         }
 
         function calculateCostDesignationTypes(count) {
-            DesignationCostSum =0;
+            DesignationCostSum =parseFloat(<?php echo $DesignationCost;?>);
             for (var i=0;i<count;i++){
                 var costField = $("#total"+i).val();
                 if(parseFloat(costField)>0){
