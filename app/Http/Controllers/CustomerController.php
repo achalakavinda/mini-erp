@@ -43,6 +43,8 @@ class CustomerController extends Controller
            'code'=>'required'
         ]);
 
+        $Customer = null;
+
         try{
 
             $Customer = Customer::create([
@@ -74,6 +76,7 @@ class CustomerController extends Controller
 
             if($request->service_id){
                 foreach ($request->service_id as $item){
+
                     CusService::create([
                         'customer_id'=> $Customer->id,
                         'service_id'=>$item

@@ -16,7 +16,7 @@ class CreateCustomersTable extends Migration
         Schema::create('customer_secretaries', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
 
@@ -101,6 +101,5 @@ class CreateCustomersTable extends Migration
         Schema::dropIfExists('customer_secretaries');
         Schema::dropIfExists('customer_services');
         Schema::dropIfExists('customer_sectors');
-
     }
 }

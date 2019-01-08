@@ -1,0 +1,41 @@
+@extends('layouts.admin')
+
+<!-- main header section -->
+@section('main-content-header')
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Project Actual Cost | {!! $Project->code !!}</h3>
+        </div>
+        <div class="box-body">
+            <a href="{{ url('/project') }}/{!! $Project->id !!}" class="btn btn-success">Go Back</a>
+            <a href="{{ url('/project') }}/{!! $Project->id !!}/estimation" class="btn btn-danger">Budget <i class="fa fa-plus-square"></i></a>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+@endsection
+<!-- /main header section -->
+
+<!-- main section -->
+@section('main-content')
+    <div class="row">
+        <div class="col-md-12">
+            <!-- general form elements -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Project</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                {!! Form::open(['action'=>'ProjectController@finalized','class'=>'form-horizontal','id'=>'Form']) !!}
+                @include('error.error')
+                @include('admin.project._partials.actualCostForm')
+                {!! Form::close() !!}
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+    <!-- /.row -->
+@endsection
+<!-- /main section -->

@@ -71,74 +71,99 @@
 <!-- main section -->
 @section('main-content')
     <div class="row">
-        <div class="col-xs-12">
-            <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Projects</h3>
+
+        <div class="col-md-12">
+            <!-- BAR CHART -->
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Distribution</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
                 </div>
-                <!-- /.box-header -->
-                <div style="overflow: auto" class="box-body">
-                    <table id="table" class="table table-responsive table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th>#ID</th>
-                            <th>Code</th>
-                            <th>Customer</th>
-                            <th style="background-color: #0b93d5">Budget Hrs</th>
-                            <th style="background-color: #0b93d5">Budget Cost</th>
-                            <th style="background-color: #0b93d5">Budget Revenue</th>
-                            <th style="background-color: #00a157">Actual Hrs</th>
-                            <th style="background-color: #00a157">Actual Cost</th>
-                            <th style="background-color: #00a157">Actual Revenue</th>
-                            <th>Cost Variance</th>
-                            <th>Recovery Ratio</th>
-                            <th>status</th>
-                            <th></th>
-                        </tr>
-                        </thead>
+                <div class="box-body chart-responsive">
+                    <div class="chart" id="bar-chart" style="height: 300px;"></div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
 
-                        <tbody>
+        <div class="col-md-6">
+            <!-- DONUT CHART -->
+            <div class="box box-success">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Industry Category</h3>
 
-                        <?php $Rows = \App\Models\Project::all();?>
-
-                        @foreach($Rows as $row)
-                            <?php
-                            $Customer="";
-                            $CM = \App\Models\Customer::find($row->customer_id );
-                            if(!empty($CM)){
-                                $Customer = $CM->name;
-                            }
-                            ?>
-
-                            <tr>
-                                <td>{{ $row->id }}</td>
-                                <td>{{ $row->code }}</td>
-                                <td>{{ $Customer }}</td>
-                                <td>{{ $row->budget_number_of_hrs }}</td>
-                                <td>{{ $row->budget_cost }}</td>
-                                <td>{{ $row->budget_revenue }}</td>
-                                <td>{{ $row->actual_number_of_hrs }}</td>
-                                <td>{{ $row->actual_cost }}</td>
-                                <td>{{ $row->actual_revenue }}</td>
-                                <td>{{ $row->cost_variance }}</td>
-                                <td>{{ $row->recovery_ratio }}</td>
-                                <td>{{ $row->close }}</td>
-                                <td>
-                                    <a class="btn btn-danger btn-sm" href="{{ url('/project') }}/{{ $row->id }}">view</a>
-                                </td>
-                            </tr>
-                        @endforeach
-
-                        </tbody>
-                    </table>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="box-body chart-responsive">
+                    <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
                 </div>
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->
         </div>
         <!-- /.col -->
+
+
+
     </div>
     <!-- /.row -->
 
 @endsection
 <!-- /main section -->
+
+@section('style')
+    {!! Html::style('admin/bower_components/morris.js/morris.css') !!}
+@endsection
+
+@section('js')
+    {!! Html::script('admin/bower_components/raphael/raphael.min.js') !!}
+    {!! Html::script('admin/bower_components/morris.js/morris.min.js') !!}
+    <script>
+        $(document).ready(function () {
+            //DONUT CHART
+            var donut = new Morris.Donut({
+                element: 'sales-chart',
+                resize: true,
+                data: [
+                    {label: "Finance, Insurance & Real", value: 1},
+                    {label: "Agriculture, Fishing & Forestry", value: 30},
+                    {label: "Construction", value: 24},
+                    {label: "Manufacturing", value: 16},
+                    {label: "Transportation & Communication", value: 12},
+                    {label: "Wholesale", value: 4},
+                    {label: "Estate Retail", value: 13},
+                ],
+                hideHover: 'auto'
+            });
+
+            //BAR CHART
+            var bar = new Morris.Bar({
+                element: 'bar-chart',
+                resize: true,
+                data: [
+                    {y: 'External Audit', a: 1172246, b: 1053782},
+                    {y: 'Tax Compliance', a: 849425, b: 802471},
+                    {y: 'BPO', a: 526788, b: 409788},
+                    {y: 'Company Secretarial', a: 463052, b: 378198},
+                    {y: 'Internal Audit', a: 17053, b: 1179436},
+                    {y: 'Winidng Up', a: 142548, b: 168268},
+                    {y: 'Advisory', a: 533568, b: 313203},
+                    {y: 'Others', a: 42305, b: 33818},
+                    {y: 'Feasibility', a: 23684, b: 184061},
+                ],
+                barColors: ['#00a65a', '#f56954'],
+                xkey: 'y',
+                ykeys: ['a', 'b'],
+                labels: ['Actual', 'Budget'],
+                hideHover: 'auto'
+            });
+        })
+    </script>
+@endsection
