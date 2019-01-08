@@ -38,11 +38,13 @@ class DesignationController extends Controller
     {
         $request->validate([
             'designationType' => 'required | min:3',
+            'avg_hr_rate' => 'required',
         ]);
 
         try{
             Designation::create([
                 'designationType'=>$request->designationType,
+                'avg_hr_rate'=>$request->avg_hr_rate,
                 'description'=>$request->description
             ]);
 
@@ -88,6 +90,7 @@ class DesignationController extends Controller
     {
         $request->validate([
             'designationType' => 'required | min:3',
+            'avg_hr_rate' => 'required',
         ]);
 
         try {
@@ -95,6 +98,7 @@ class DesignationController extends Controller
             if (!empty($DESIGNATION)) {
                 $DESIGNATION->designationType = $request->designationType;
                 $DESIGNATION->description = $request->description;
+                $DESIGNATION->avg_hr_rate = $request->avg_hr_rate;
                 $DESIGNATION->save();
             }else{
                 return redirect()->back()->with(['created'=>'error','message'=>'Designation type cannot be empty!']);

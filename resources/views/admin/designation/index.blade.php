@@ -57,6 +57,7 @@
                         <tr>
                             <th>#ID</th>
                             <th>Type</th>
+                            <th>Avg Hr Rate</th>
                             <th>Description</th>
                             <th>Options</th>
                         </tr>
@@ -67,6 +68,7 @@
                                 <tr>
                                     <td>{{ $row->id }}</td>
                                     <td>{{ $row->designationType }}</td>
+                                    <td>{{ $row->avg_hr_rate }}</td>
                                     <td>{{ $row->description }}</td>
                                     <td>
                                         <a href="{{ url('designation') }}/{{ $row->id }}" class="btn btn-danger btn-sm">view</a>
