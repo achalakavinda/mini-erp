@@ -70,7 +70,13 @@ class ApiController extends Controller
                     if($row->project_id == null){
                         $PJTNAME = WorkCodes::find($row->work_code_id)->name;
                     }else{
-                        $PJTNAME = Project::find($row->project_id)->code;
+
+                        $PJTNAME = Project::find($row->project_id);
+                        if($PJTNAME==null){
+                            $PJTNAME = 'Project Deleted';
+                        }else{
+                            $PJTNAME = $PJTNAME->code;
+                        }
                     }
 
                     $arr = [
