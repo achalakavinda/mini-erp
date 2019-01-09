@@ -1,4 +1,16 @@
 @extends('layouts.admin')
+<?php
+    $PROJECTOVERHEAD = \App\Models\ProjectOverheadsActual::where('project_id',$Project->id)->get();
+    $ShowCreateForm = false;
+
+    if($PROJECTOVERHEAD->isEmpty()){
+        $PROJECTOVERHEAD = \App\Models\ProjectOverhead::where('project_id',$Project->id)->get();
+        $ShowCreateForm=true;
+    }
+
+?>
+
+
 
 <!-- main header section -->
 @section('main-content-header')
@@ -23,15 +35,90 @@
         <div class="col-md-12">
             <!-- general form elements -->
             <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Project</h3>
+
+                <div style="overflow: auto" class="box-body">
+                    <table id="table" class="table table-responsive table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>B.Hrs</th>
+                            <th>B.Cost</th>
+                            <th>B.Revenue</th>
+                            <th>A.Hrs</th>
+                            <th>A.Cost By Work</th>
+                            <th>A.Cost By Overheads</th>
+                            <th>SUM(A.Cost)</th>
+                            <th>A.Revenue</th>
+                            <th>Cost Variance</th>
+                            <th>Recovery Ratio</th>
+                            <th>status</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr>
+                            <td>{!! $Project->budget_number_of_hrs  !!}</td>
+                            <td>{!! $Project->budget_cost  !!}</td>
+                            <td>{!! $Project->budget_revenue  !!}</td>
+                            <td>{!! $Project->actual_number_of_hrs  !!}</td>
+                            <td>{!! $Project->actual_cost_by_work  !!}</td>
+                            <td>{!! $Project->actual_cost_by_overhead  !!}</td>
+                            <td>{!! $Project->actual_cost_by_work+$Project->actual_cost_by_overhead  !!}</td>
+                            <td>{!! $Project->actual_revenue  !!}</td>
+                            <td>{!! $Project->cost_variance  !!}</td>
+                            <td>{!! $Project->recovery_ratio  !!}</td>
+                            <td><b>@if($Project->close)Close @else Pending @endif</b></td>
+                        </tr>
+                        </tbody>
+                    </table>
                 </div>
+
                 <!-- /.box-header -->
-                <!-- form start -->
-                {!! Form::open(['action'=>'ProjectController@finalized','class'=>'form-horizontal','id'=>'Form']) !!}
-                @include('error.error')
-                @include('admin.project._partials.actualCostForm')
-                {!! Form::close() !!}
+                @if($ShowCreateForm)
+                    <!-- form start -->
+                        {!! Form::open(['action'=>'ProjectController@actualCostStore','class'=>'form-horizontal','id'=>'Form']) !!}
+                        @include('error.error')
+                        @include('admin.project._partials.actualCostForm')
+                        {!! Form::close() !!}
+                    @else
+
+                    <div class="box-header with-border">
+                            <div class="box-body">
+                                <div class="col-md-12">
+                                    <table id="CostTable" class="table table-responsive table-bordered table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th>Cost Type</th>
+                                            <th>A.Cost</th>
+                                            <th>Remark</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php $count=0; $CostSum = 0;?>
+                                        @foreach($PROJECTOVERHEAD as $item)
+                                            <tr>
+                                                <td>{!! $item->project_cost_type !!}
+                                                    {!! Form::number('items['.$count.'][cost_type_id]',$item->id,['class'=>'form-control','style'=>'display:none']) !!}
+                                                    {!! Form::text('items['.$count.'][cost_type_name]',$item->project_cost_type,['class'=>'form-control','style'=>'display:none']) !!}
+                                                </td>
+                                                <td style="text-align: right">{!! $item->cost !!} /=</td>
+                                                <td style="text-align: right">{!! $item->remarks !!}</td>
+                                                <td style="text-align: center"><a href="#"><i class="fa fa-close"></i></a></td>
+                                            </tr>
+                                            <?php $CostSum = $CostSum+$item->cost; $count++;?>
+                                        @endforeach
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <td><b>Item Count : {!! $count !!}</b></td>
+                                                <td style="text-align: right"><b>{!! $CostSum !!} /=</b></td>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                @endif
             </div>
             <!-- /.box -->
         </div>

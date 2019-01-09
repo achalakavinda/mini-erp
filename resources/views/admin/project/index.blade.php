@@ -67,7 +67,7 @@
                                 <th>Cost Variance</th>
                                 <th>Recovery Ratio</th>
                                 <th>status</th>
-                                <th></th>
+                                <th><i class="fa fa-paper-plane"></i></th>
                             </tr>
                         </thead>
 
@@ -76,29 +76,21 @@
                         <?php $Rows = \App\Models\Project::all();?>
 
                         @foreach($Rows as $row)
-                            <?php
-                            $Customer="";
-                            $CM = \App\Models\Customer::find($row->customer_id );
-                                if(!empty($CM)){
-                                    $Customer = $CM->name;
-                                }
-                            ?>
-
-                            <tr>
+                           <tr>
                                 <td>{{ $row->id }}</td>
                                 <td>{{ $row->code }}</td>
-                                <td>{{ $Customer }}</td>
+                                <td>{{ $row->customer_name }}</td>
                                 <td>{{ $row->budget_number_of_hrs }}</td>
                                 <td>{{ $row->budget_cost }}</td>
                                 <td>{{ $row->budget_revenue }}</td>
                                 <td>{{ $row->actual_number_of_hrs }}</td>
-                                <td>{{ $row->actual_cost }}</td>
+                                <td>{{ $row->actual_cost_by_work+$row->actual_cost_by_overhead }}</td>
                                 <td>{{ $row->actual_revenue }}</td>
                                 <td>{{ $row->cost_variance }}</td>
                                 <td>{{ $row->recovery_ratio }}</td>
-                                <td>{{ $row->close }}</td>
+                                <td><b>@if($row->close)Closed @else Pending @endif</b></td>
                                 <td>
-                                    <a class="btn btn-danger btn-sm" href="{{ url('/project') }}/{{ $row->id }}">view</a>
+                                    <a href="{{ url('/project') }}/{{ $row->id }}"><i class="fa fa-paper-plane"></i></a>
                                 </td>
                             </tr>
                         @endforeach

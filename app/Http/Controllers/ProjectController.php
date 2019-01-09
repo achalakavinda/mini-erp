@@ -10,6 +10,7 @@ use App\Models\ProjectDesignation;
 use App\Models\ProjectEmployee;
 use App\Models\ProjectJobType;
 use App\Models\ProjectOverhead;
+use App\Models\ProjectOverheadsActual;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -45,7 +46,6 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-
         $request->validate([
             'code' => 'required',
             'customer_id' => 'required',
@@ -60,7 +60,8 @@ class ProjectController extends Controller
 
         $Project = Project::create([
             'customer_id'=>$request->customer_id,
-            'code'=>$request->code." - ".$CUSTOMER->code,
+            'customer_name'=>$CUSTOMER->name,
+            'code'=>$CUSTOMER->code."-".$request->code,
             'quoted_price'=>$request->quoted_price,
             'budget_revenue'=>$request->quoted_price,
             'budget_number_of_hrs'=>$request->budget_number_of_hrs,
@@ -137,13 +138,6 @@ class ProjectController extends Controller
         return view('admin.project.estimation',compact('Project'));
     }
 
-    public function actualCost($id)
-    {
-        $Project = Project::findOrFail($id);
-        return view('admin.project.actual_cost',compact('Project'));
-    }
-
-
     /**
      *Project Budget estimation are save in here
      */
@@ -204,4 +198,62 @@ class ProjectController extends Controller
 
         return redirect('project/'.$Project->id)->with('created',true);
     }
+
+    public function actualCost($id)
+    {
+        $Project = Project::findOrFail($id);
+        return view('admin.project.actual_cost',compact('Project'));
+    }
+
+
+    public function actualCostStore(Request $request){
+
+        $actualCost = 0;
+        $actualCostByOverhead = 0;
+
+        $request->validate([
+            'items' => 'required',
+            'project_id' => 'required'
+        ]);
+
+        $Project = Project::findOrFail($request->project_id);
+
+        if($Project){
+            $actualCost =  $actualCost+$Project->actual_cost;
+        }
+
+        foreach ($request->items as $item){
+            if($item['cost'] != null){
+                ProjectOverheadsActual::create([
+                    'project_id'=>$Project->id,
+                    'project_cost_type_id'=>$item['cost_type_id'],
+                    'project_cost_type'=>$item['cost_type_name'],
+                    'cost'=>$item['cost'],
+                    'remarks'=>$item['remark'],
+                    'created_by_id'=>\Auth::id(),
+                    'updated_by_id'=>\Auth::id()
+                ]);
+            }
+        }
+
+        if($Project){
+            $ProjectActualOverHeads = ProjectOverheadsActual::where('project_id',$Project->id)->get();
+            foreach ($ProjectActualOverHeads as $item){
+                $actualCostByOverhead = $actualCostByOverhead+$item->cost;
+            }
+            if($actualCostByOverhead!=0){
+                $Project->actual_cost_by_overhead = $actualCostByOverhead;
+                $Project->save();
+            }
+
+        }
+
+        return redirect('project/'.$Project->id)->with('created',true);
+
+
+
+    }
+
+
+
 }

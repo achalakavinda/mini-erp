@@ -99,6 +99,8 @@ class WorkSheetController extends Controller
                 $PJ = Project::find($request->project_id);
                 if($PJ) {
                     $PJ->actual_cost = $PJ->actual_cost + ($USER->hr_rates*$work_hr);
+                    $PJ->actual_number_of_hrs = $PJ->actual_number_of_hrs + $work_hr;
+                    $PJ->actual_cost_by_work = $PJ->actual_cost_by_work + ($USER->hr_rates*$work_hr);
                     $PJ->save();
                 }
             }else{

@@ -28,10 +28,10 @@
               </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ url('designation') }}">Designation</a></li>
-                            <li><a href="{{ url('job-type') }}">Job Type</a></li>
-                            <li><a href="{{ url('/staff') }}">Registry</a></li>
-                            <li><a href="{{ url('/staff/create') }}">New</a></li>
+                            <li><a href="{{ url('designation') }}"><i class="fa fa-table"></i> Designation</a></li>
+                            <li><a href="{{ url('job-type') }}"><i class="fa fa-table"></i> Job Type</a></li>
+                            <li><a href="{{ url('/staff') }}"><i class="fa fa-table"></i> Registry</a></li>
+                            <li><a href="{{ url('/staff/create') }}"><i class="fa fa-plus-square"></i> New</a></li>
                         </ul>
                     </li>
 
@@ -42,8 +42,8 @@
               </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ url('/customer') }}">Registry</a></li>
-                            <li><a href="{{ url('/customer/create') }}"> New </a></li>
+                            <li><a href="{{ url('/customer') }}"><i class="fa fa-table"></i> Registry</a></li>
+                            <li><a href="{{ url('/customer/create') }}"><i class="fa fa-plus-square"></i>  New </a></li>
                         </ul>
                     </li>
 
@@ -53,7 +53,7 @@
             @endcan
 
             @can('Settings')
-                <li class="treeview">
+                <li style="padding-bottom: 50px;" class="treeview">
                     <a href="{{ url('/settings') }}"><i class="fa fa-cogs"></i> <span>Settings</span>
                         <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>

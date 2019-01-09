@@ -16,6 +16,7 @@ class CreateProjectsTable extends Migration
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('customer_id')->unsigned();
+            $table->string('customer_name');
             $table->string('code');
 
             $table->double('quoted_price')->default(0);// quoted price
@@ -24,12 +25,15 @@ class CreateProjectsTable extends Migration
             $table->double('budget_revenue')->default(0);// revenue
 
             $table->double('actual_number_of_hrs')->default(0);//actual number of hrs
-            $table->double('actual_cost')->default(0);//actual cost generate by the increasing profit margin
+            $table->double('actual_cost_by_work')->default(0);//actual cost by work
+            $table->double('actual_cost_by_overhead')->default(0);//actual cost by cost overhead
+            $table->double('actual_cost')->default(0);//actual cost
             $table->double('actual_revenue')->default(0);//actual revenue
 
             $table->double('cost_variance')->default(0);// cost variance
             $table->double('recovery_ratio')->default('0');// recovery ratio
             $table->double('profit_ratio')->default('0');// profit ratio
+
             $table->boolean('close')->default(0);
 
             $table->timestamps();

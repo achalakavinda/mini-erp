@@ -87,7 +87,7 @@
     <div class="col-md-3">
         <div class="form-group">
             {!! Form::label('refresh_value','Refresh values',['class' => 'control-label']) !!}
-            <button class="form-control" type="button" id="CalculateBtn">Calculate</button>
+            <button class="form-control" type="button" id="CalculateBtn">Calculate <i class="fa fa-calculator"></i></button>
         </div>
     </div>
 
@@ -125,20 +125,20 @@
         </table>
     </div>
 
-    <div class="col-md-6">
-        <div class="col-md-8">
+    <div class="col-md-8">
+        <div class="col-md-6">
             <div class="form-group">
                 {!! Form::select('designation_type_id',\App\Models\Designation::get()->pluck('designationType','id'),null,['class'=>'form-control','id'=>'DesignationTypeId']) !!}
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group">
-                <button class="form-control" type="button" id="addNewDesignation">Add</button>
+                <button class="form-control" type="button" id="addNewDesignation">Add <i class="fa fa-plus"></i></button>
             </div>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <div class="form-group">
-                <button class="form-control" type="button" id="addNewDesignationCalculation">Calculate</button>
+                <button class="form-control" type="button" id="addNewDesignationCalculation">Calculate <i class="fa fa-calculator"></i></button>
             </div>
         </div>
     </div>
@@ -177,34 +177,30 @@
             </table>
         </div>
 
-        <div class="col-md-6">
-            <div class="col-md-8">
+        <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="form-group">
                     {!! Form::select('cost_type_id',\App\Models\ProjectCostType::get()->pluck('name','id'),null,['class'=>'form-control','id'=>'CostTypeId','placeholder'=>'Other Cost']) !!}
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="form-group">
-                    <button class="form-control" type="button" id="addNewCost">Add</button>
+                    <button class="form-control" type="button" id="addNewCost">Add <i class="fa fa-plus"></i></button>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-md-3">
                 <div class="form-group">
-                    <button class="form-control" type="button" id="calculateNewCost">Calculate</button>
+                    <button class="form-control" type="button" id="calculateNewCost">Calculate <i class="fa fa-calculator"></i></button>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-12">
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-success">Update</button>
-            </div>
-        </div>
-
     </div>
 </div>
 <!-- /Cost assignment-->
 
+<div class="box-footer">
+    <button type="submit" class="btn btn-success pull-right">Update <i class="fa fa-save"></i></button>
+</div>
 
 
 @section('js')

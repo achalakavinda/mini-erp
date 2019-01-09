@@ -1,52 +1,5 @@
-<?php
-    $PROJECTOVERHEAD = \App\Models\ProjectOverhead::where('project_id',$Project->id)->get();
-    $PROJECTJOBTYPE = \App\Models\ProjectJobType::where('project_id',$Project->id)->get();
-?>
-
-<div style="overflow: auto" class="box-body">
-    <table id="table" class="table table-responsive table-bordered table-striped">
-        <thead>
-        <tr>
-            <th>Code</th>
-            <th>Customer</th>
-            <th>Job</th>
-            <th>B.Hrs</th>
-            <th>B.Cost</th>
-            <th>B.Revenue</th>
-            <th>A.Hrs</th>
-            <th>A.Cost</th>
-            <th>A.Revenue</th>
-            <th>Cost Variance</th>
-            <th>Recovery Ratio</th>
-            <th>status</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        <tr>
-            <td>{!! $Project->code !!}</td>
-            <td>{!! \App\Models\Customer::where('id',$Project->customer_id)->first()->name !!}</td>
-            <td>
-                <?php
-                foreach ($PROJECTJOBTYPE as $val){
-                    $JBTYPE =  \App\Models\JobType::find($val->jop_type_id);
-                    echo $JBTYPE->jobType;
-                }
-                ?>
-            </td>
-            <td>{!! $Project->budget_number_of_hrs  !!}</td>
-            <td>{!! $Project->budget_cost  !!}</td>
-            <td>{!! $Project->budget_revenue  !!}</td>
-            <td>{!! $Project->actual_number_of_hrs  !!}</td>
-            <td>{!! $Project->actual_cost  !!}</td>
-            <td>{!! $Project->actual_revenue  !!}</td>
-            <td>{!! $Project->cost_variance  !!}</td>
-            <td>{!! $Project->recovery_ratio  !!}</td>
-            <td><b>@if($Project->close)Close @else Open @endif</b></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
+<input name="project_id" type="number" style="display: none" value="{!! $Project->id !!}">
+<input name="project_code" type="text" style="display: none" value="{!! $Project->code !!}">
 
 <!-- Cost assignment-->
 <div class="box-header with-border">
@@ -63,16 +16,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php $CostSum = 0;?>
+                <?php $count=0; $CostSum = 0;?>
                     @foreach($PROJECTOVERHEAD as $item)
                         <tr>
-                            <td>{!! $item->project_cost_type !!}</td>
+                            <td>{!! $item->project_cost_type !!}
+                                {!! Form::number('items['.$count.'][cost_type_id]',$item->id,['class'=>'form-control','style'=>'display:none']) !!}
+                                {!! Form::text('items['.$count.'][cost_type_name]',$item->project_cost_type,['class'=>'form-control','style'=>'display:none']) !!}
+                            </td>
                             <td>{!! $item->cost !!}</td>
-                            <td>{!! Form::number('cost[]',$item->cost,['class'=>'form-control']) !!}</td>
-                            <td>{!! $item->remark !!}</td>
+                            <td>{!! Form::number('items['.$count.'][cost]',$item->cost,['class'=>'form-control']) !!}</td>
+                            <td>{!! Form::text('items['.$count.'][remark]',null,['class'=>'form-control']) !!}</td>
                             <td><a href="#"><i class="fa fa-close"></i></a></td>
                         </tr>
-                        <?php $CostSum = $CostSum+$item->cost;?>
+                        <?php $CostSum = $CostSum+$item->cost; $count++;?>
                     @endforeach
                 </tbody>
             </table>
@@ -86,25 +42,22 @@
             </div>
             <div class="col-md-2">
                 <div class="form-group">
-                    <button class="form-control" type="button" id="addNewCost">Add</button>
+                    <button class="form-control" type="button" id="addNewCost">Add <i class="fa fa-plus"></i></button>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <button class="form-control" type="button" id="calculateNewCost">Calculate</button>
+                    <button class="form-control" type="button" id="calculateNewCost">Calculate <i class="fa fa-calculator"></i></button>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-12">
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-success">Update</button>
-            </div>
-        </div>
-
     </div>
 </div>
 <!-- /Cost assignment-->
+
+<div class="box-footer">
+    <button type="submit" class="btn btn-success pull-right">Update <i class="fa fa-save"></i></button>
+</div>
 
 
 @section('js')
