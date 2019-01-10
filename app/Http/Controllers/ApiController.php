@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Designation;
 use App\Models\JobType;
 use App\Models\Project;
 use App\Models\WorkCodes;
@@ -115,6 +116,28 @@ class ApiController extends Controller
         }
 
         return $Arr;
+    }
+
+    public function GetDesignation($id){
+        $arr = [];
+
+        try{
+            $designation = Designation::findOrFail($id);
+            $arr = [
+                'status'=>"ok",
+                'designation'=>$designation
+            ];
+
+        }catch (\Exception $e){
+
+            $arr = [
+                'status'=>"ok",
+                'designation'=>[]
+            ];
+
+        }
+
+        return $arr;
     }
 
 }

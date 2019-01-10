@@ -319,27 +319,96 @@
             var SelectDesignationTypeId = $('#DesignationTypeId').val();
             var SelectDesignationTypeName = $('#DesignationTypeId option:selected').text();
 
-            designationTable.append('<tr class="tr_designation_'+designation_count+'">\n' +
-                '                        <td>\n' +
-                '                            <input style="display:none" type="number" value="'+SelectDesignationTypeId+'" name="designation_row['+designation_count+'][designation_id]" class="form-control">\n' +
-                '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control">\n' +
-                '                        </td>\n' +
-                '                        <td>\n' +
-                '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" value="" class="form-control">\n' +
-                '                        </td>\n' +
-                '                        <td>\n' +
-                '                            <input  type="text" name="designation_row['+designation_count+'][hrs]"  value="" class="form-control">\n' +
-                '                        </td>\n' +
-                '                        <td>\n' +
-                '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
-                '                        </td>\n' +
-                '                        <td>\n' +
-                '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_designation_'+designation_count+'\')"><i class="fa fa-remove"></i></a>\n' +
-                '                        </td>\n' +
-                '                    <tr/>');
-            designation_count++;
-            designation_RawCount++;
-            calculateCostDesignationTypes(designation_count);
+
+            try {
+
+                var url = '{!! url('api/designation/') !!}/'+SelectDesignationTypeId;
+
+                $.ajax({
+                    url: url,
+                    success: function (data) {
+                        if(data.status.length>0 && data.status =='ok'){
+                            console.log(data);
+                            designationTable.append('<tr class="tr_designation_'+designation_count+'">\n' +
+                                '                        <td>\n' +
+                                '                            <input style="display:none" type="number" value="'+SelectDesignationTypeId+'" name="designation_row['+designation_count+'][designation_id]" class="form-control">\n' +
+                                '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" value="'+data.designation.avg_hr_rate+'" class="form-control">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input  type="text" name="designation_row['+designation_count+'][hrs]"  value="" class="form-control">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_designation_'+designation_count+'\')"><i class="fa fa-remove"></i></a>\n' +
+                                '                        </td>\n' +
+                                '                    <tr/>');
+
+                            designation_count++;
+                            designation_RawCount++;
+                            calculateCostDesignationTypes(designation_count);
+
+                        }else {
+                            designationTable.append('<tr class="tr_designation_'+designation_count+'">\n' +
+                                '                        <td>\n' +
+                                '                            <input style="display:none" type="number" value="'+SelectDesignationTypeId+'" name="designation_row['+designation_count+'][designation_id]" class="form-control">\n' +
+                                '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" value="" class="form-control">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input  type="text" name="designation_row['+designation_count+'][hrs]"  value="" class="form-control">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_designation_'+designation_count+'\')"><i class="fa fa-remove"></i></a>\n' +
+                                '                        </td>\n' +
+                                '                    <tr/>');
+
+                            designation_count++;
+                            designation_RawCount++;
+                            calculateCostDesignationTypes(designation_count);
+                        }
+                    },
+                    statusCode: {
+                        404: function() {
+                            alert( "Error Request" );
+                        }
+                    }
+                });
+
+            }catch (e) {
+
+                designationTable.append('<tr class="tr_designation_'+designation_count+'">\n' +
+                    '                        <td>\n' +
+                    '                            <input style="display:none" type="number" value="'+SelectDesignationTypeId+'" name="designation_row['+designation_count+'][designation_id]" class="form-control">\n' +
+                    '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control">\n' +
+                    '                        </td>\n' +
+                    '                        <td>\n' +
+                    '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" value="" class="form-control">\n' +
+                    '                        </td>\n' +
+                    '                        <td>\n' +
+                    '                            <input  type="text" name="designation_row['+designation_count+'][hrs]"  value="" class="form-control">\n' +
+                    '                        </td>\n' +
+                    '                        <td>\n' +
+                    '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
+                    '                        </td>\n' +
+                    '                        <td>\n' +
+                    '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_designation_'+designation_count+'\')"><i class="fa fa-remove"></i></a>\n' +
+                    '                        </td>\n' +
+                    '                    <tr/>');
+
+                designation_count++;
+                designation_RawCount++;
+                calculateCostDesignationTypes(designation_count);
+            }
         }
 
         //remove selected row
@@ -348,6 +417,8 @@
             calculateCostDesignationTypes(designation_count);
             calculateCostForTypes(count);
         }
+
+
     </script>
 
 @endsection

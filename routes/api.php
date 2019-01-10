@@ -18,3 +18,6 @@ Route::get('project/{id}/job-types','ApiController@GetProjectJobTypeById');
 
 ///to get project all details
 Route::get('project/{id}/user/{user_id}','ApiController@GetProjectDetailsByID');
+
+//to get designation details [ use in budgeting]
+Route::get('designation/{id}','ApiController@GetDesignation');
