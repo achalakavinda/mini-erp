@@ -76,6 +76,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         @include('layouts.components.main-footer')
     <!-- /Main Footer -->
 
+    @yield('model')
 
 </div>
 <!-- ./wrapper -->

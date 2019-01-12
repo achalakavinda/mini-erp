@@ -1,15 +1,16 @@
-<div class="box-header with-border">
-    <h6 class="box-title">Employees work report</h6>
-</div>
-<div class="box-body">
-        <table class="table table-responsive table-bordered table-striped">
+<div class="box">
+    <!-- /.box-header -->
+    <div style="overflow: auto" class="box-body">
+<table id="tableEmployee" class="table table-responsive table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Hour Rate</th>
+                    <th>Work Hours</th>
+                    <th>Cost</th>
+                </tr>
+            </thead>
             <tbody>
-            <tr>
-                <th>Name</th>
-                <th>Hour Rate</th>
-                <th>Work Hours</th>
-                <th>Cost</th>
-            </tr>
             <?php
                     $TOLHR=0;
                     $TOLWH=0;
@@ -34,15 +35,8 @@
             <tfoot>
             <?php echo '<tr><th>Total</th><th>'.$TOLHR.'</th><th>'.$TOLWH.'</th><th>'.$TOLCOST.'</th></tr>';?>
             </tfoot>
-        </table>
-</div>
+</table>
 <!-- /.box-body -->
 
-<div class="box-body">
-    <div class="pull-right">
-        {!! Form::model($Project, ['method' => 'PATCH', 'action' => ['ProjectController@update', $Project->id],'class'=>'form-horizontal']) !!}
-        {!! Form::text('set_delete',"value",['style'=>'display:none']) !!}
-            <button type="submit" class="btn btn-sm btn-danger">Delete <i class="fa fa-trash"></i></button>
-        {!! Form::close() !!}
     </div>
 </div>

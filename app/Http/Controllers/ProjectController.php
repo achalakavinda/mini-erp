@@ -220,6 +220,8 @@ class ProjectController extends Controller
         return redirect('project/'.$Project->id.'/estimation')->with('created',true);
     }
 
+
+
     public function actualCost($id)
     {
         $Project = Project::findOrFail($id);
@@ -269,7 +271,7 @@ class ProjectController extends Controller
 
         }
 
-        return redirect('project/'.$Project->id)->with('created',true);
+        return redirect('project/'.$Project->id.'/actual-cost')->with('created',true);
 
 
 

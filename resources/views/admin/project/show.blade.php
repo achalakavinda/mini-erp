@@ -6,6 +6,9 @@
 ?>
 
 @extends('layouts.admin')
+@section('style')
+    {!! Html::style('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') !!}
+@endsection
 <!-- main header section -->
 @section('main-content-header')
     <!-- Default box -->
@@ -14,11 +17,10 @@
             <h3 class="box-title">Project | {!! $Project->code !!}</h3>
         </div>
         <div class="box-body">
-            <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/project') }}" class="btn btn-success">Project</a>
-            <a href="{{ url('/project/create') }}" class="btn btn-success">New</a>
+            <a href="{{ url('/project') }}" class="btn btn-success">Go Back</a>
             <a href="{!! url('/project') !!}/{!! $Project->id !!}/estimation" class="btn btn-danger">Budget <i class="fa fa-plus-square"></i></a>
             <a href="{{ url('/project') }}/{!! $Project->id !!}/actual-cost" class="btn btn-danger">Actual Cost <i class="fa fa-money"></i></a>
+
         </div>
         <!-- /.box-body -->
     </div>
@@ -51,6 +53,14 @@
                                 {!! Form::text('created_by',ucwords($User->name),['class'=>'form-control','id'=>'code','placeholder'=>'Code','disabled']) !!}
                             </div>
                         @endif
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            {!! Form::label('work_report','Employee Work Record',['class' => 'control-label']) !!}
+                            <button type="button" class="form-control" data-toggle="modal" data-target="#modal-default">
+                                Work Report <i class="fa fa-table"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <!-- /.box-header -->
@@ -132,7 +142,15 @@
                     <!-- /.row -->
                 </div>
 
-                 @include('admin.project._partials.showForm')
+
+                <div class="box-body">
+                    <div class="pull-right">
+                        {!! Form::model($Project, ['method' => 'PATCH', 'action' => ['ProjectController@update', $Project->id],'class'=>'form-horizontal']) !!}
+                        {!! Form::text('set_delete',"value",['style'=>'display:none']) !!}
+                        <button type="submit" class="btn btn-sm btn-danger">Delete <i class="fa fa-trash"></i></button>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
             </div>
             <!-- /.box -->
         </div>
@@ -140,6 +158,31 @@
     <!-- /.row -->
 @endsection
 <!-- /main section -->
+
+@section('model')
+
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Employees work report</h4>
+                </div>
+                <div class="modal-body">
+                    @include('admin.project._partials.showForm')
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+@endsection
 
 @section('style')
     {!! Html::style('admin/bower_components/morris.js/morris.css') !!}
@@ -151,6 +194,8 @@
 @endsection
 
 @section('js')
+    {!! Html::script('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') !!}
+    {!! Html::script('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') !!}
     {!! Html::script('admin/bower_components/raphael/raphael.min.js') !!}
     {!! Html::script('admin/bower_components/morris.js/morris.min.js') !!}
     <script>
@@ -180,6 +225,12 @@
                 labels: ['Budget', 'Actual'],
                 hideHover: 'auto'
             });
+
+            $(function () {
+                $('#tableEmployee').DataTable({
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+                })
+            })
         })
     </script>
 @endsection

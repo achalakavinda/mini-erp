@@ -16,74 +16,114 @@
             <th>status</th>
         </tr>
         </thead>
-
         <tbody>
-        <tr>
-            <td>{!! $Project->code !!}</td>
-            <td>{!! \App\Models\Customer::where('id',$Project->customer_id)->first()->name !!}</td>
-            <td>
-                <?php
-                foreach ($PROJECTJOBTYPE as $val){
-                    $JBTYPE =  \App\Models\JobType::find($val->jop_type_id);
-                    echo $JBTYPE->jobType;
-                }
-                ?>
-            </td>
-            <td>{!! $Project->budget_number_of_hrs  !!}</td>
-            <td>{!! $Project->budget_cost  !!}</td>
-            <td>{!! $Project->budget_revenue  !!}</td>
-            <td>{!! $Project->actual_number_of_hrs  !!}</td>
-            <td>{!! $Project->actual_cost  !!}</td>
-            <td>{!! $Project->actual_revenue  !!}</td>
-            <td>{!! $Project->cost_variance  !!}</td>
-            <td>{!! $Project->recovery_ratio  !!}</td>
-            <td><b>@if($Project->close)Close @else Open @endif</b></td>
-        </tr>
+            <tr>
+                <td>{!! $Project->code !!}</td>
+                <td>{!! \App\Models\Customer::where('id',$Project->customer_id)->first()->name !!}</td>
+                <td>
+                    <?php
+                    foreach ($PROJECTJOBTYPE as $val){
+                        $JBTYPE =  \App\Models\JobType::find($val->jop_type_id);
+                        echo $JBTYPE->jobType;
+                    }
+                    ?>
+                </td>
+                <td>{!! $Project->budget_number_of_hrs  !!}</td>
+                <td>{!! $Project->budget_cost  !!}</td>
+                <td>{!! $Project->budget_revenue  !!}</td>
+                <td>{!! $Project->actual_number_of_hrs  !!}</td>
+                <td>{!! $Project->actual_cost  !!}</td>
+                <td>{!! $Project->actual_revenue  !!}</td>
+                <td>{!! $Project->cost_variance  !!}</td>
+                <td>{!! $Project->recovery_ratio  !!}</td>
+                <td><b>@if($Project->close)Close @else Open @endif</b></td>
+            </tr>
         </tbody>
     </table>
 </div>
 
+    @if($showUpdate)
+        <div class="box-body">
 
-<div class="box-body">
+            <div class="col-md-2">
+                <div class="form-group">
+                    {!! Form::label('number_of_hrs','Number of Hrs',['class' => 'control-label']) !!}
+                    {!! Form::text('number_of_hrs',$Project->budget_number_of_hrs,['class'=>'form-control','id'=>'numberOfHrs','placeholder'=>'Number of Hrs','readonly']) !!}
+                </div>
+            </div>
 
-    <div class="col-md-2">
-        <div class="form-group">
-            {!! Form::label('number_of_hrs','Number of Hrs',['class' => 'control-label']) !!}
-            {!! Form::text('number_of_hrs',$Project->budget_number_of_hrs,['class'=>'form-control','id'=>'numberOfHrs','placeholder'=>'Number of Hrs','readonly']) !!}
+            <div class="col-md-2">
+                <div class="form-group">
+                    {!! Form::label('budget_cost','Budget Cost',['class' => 'control-label']) !!}
+                    {!! Form::number('budget_cost',0,['class'=>'form-control','id'=>'BudgetCost','placeholder'=>'Budget Cost','readonly', 'step'=>'0.01']) !!}
+                    {!! Form::number('project_id',$Project->id,['class'=>'form-control','id'=>'ProjectId','style'=>'display:none']) !!}
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    {!! Form::label('profit_margin','Profit Margin',['class' => 'control-label']) !!}
+                    {!! Form::number('profit_margin',0,['class'=>'form-control','id'=>'ProfitMargin','placeholder'=>'Profit Margin in Decimal', 'step'=>'0.01']) !!}
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    {!! Form::label('quoted_price','Quoted Price',['class' => 'control-label']) !!}
+                    {!! Form::number('quoted_price',0,['class'=>'form-control','id'=>'QuotedPrice','placeholder'=>'Quoted Price','readonly', 'step'=>'0.01']) !!}
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    {!! Form::label('refresh_value','Refresh values',['class' => 'control-label']) !!}
+                    <button class="form-control" type="button" id="CalculateBtn">Calculate <i class="fa fa-calculator"></i></button>
+                </div>
+            </div>
+
         </div>
-    </div>
+        <!-- /.box-body -->
+        @else
+        <div class="box-body">
 
-    <div class="col-md-2">
-        <div class="form-group">
-            {!! Form::label('budget_cost','Budget Cost',['class' => 'control-label']) !!}
-            {!! Form::number('budget_cost',0,['class'=>'form-control','id'=>'BudgetCost','placeholder'=>'Budget Cost','readonly', 'step'=>'0.01']) !!}
-            {!! Form::number('project_id',$Project->id,['class'=>'form-control','id'=>'ProjectId','style'=>'display:none']) !!}
+            <div class="col-md-2">
+                <div class="form-group">
+                    {!! Form::label('number_of_hrs','Number of Hrs',['class' => 'control-label']) !!}
+                    {!! Form::text('number_of_hrs',$Project->budget_number_of_hrs,['class'=>'form-control','id'=>'numberOfHrs','placeholder'=>'Number of Hrs','disabled']) !!}
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    {!! Form::label('budget_cost','Budget Cost',['class' => 'control-label']) !!}
+                    {!! Form::number('budget_cost',$Project->budget_cost,['class'=>'form-control','id'=>'BudgetCost','placeholder'=>'Budget Cost','disabled', 'step'=>'0.01']) !!}
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    {!! Form::label('profit_margin','Profit Margin',['class' => 'control-label']) !!}
+                    {!! Form::number('profit_margin',$Project->profit_ratio,['class'=>'form-control','id'=>'ProfitMargin','placeholder'=>'Profit Margin in Decimal', 'step'=>'0.01']) !!}
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    {!! Form::label('quoted_price','Quoted Price',['class' => 'control-label']) !!}
+                    {!! Form::number('quoted_price',$Project->budget_revenue,['class'=>'form-control','id'=>'QuotedPrice','placeholder'=>'Quoted Price','disabled', 'step'=>'0.01']) !!}
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="form-group">
+                    {!! Form::label('refresh_value','Refresh values',['class' => 'control-label']) !!}
+                    <button class="form-control" type="button" id="CalculateBtn">Calculate <i class="fa fa-calculator"></i></button>
+                </div>
+            </div>
+
         </div>
-    </div>
-
-    <div class="col-md-2">
-        <div class="form-group">
-            {!! Form::label('profit_margin','Profit Margin',['class' => 'control-label']) !!}
-            {!! Form::number('profit_margin',0,['class'=>'form-control','id'=>'ProfitMargin','placeholder'=>'Profit Margin in Decimal', 'step'=>'0.01']) !!}
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="form-group">
-            {!! Form::label('quoted_price','Quoted Price',['class' => 'control-label']) !!}
-            {!! Form::number('quoted_price',0,['class'=>'form-control','id'=>'QuotedPrice','placeholder'=>'Quoted Price','readonly', 'step'=>'0.01']) !!}
-        </div>
-    </div>
-
-    <div class="col-md-3">
-        <div class="form-group">
-            {!! Form::label('refresh_value','Refresh values',['class' => 'control-label']) !!}
-            <button class="form-control" type="button" id="CalculateBtn">Calculate <i class="fa fa-calculator"></i></button>
-        </div>
-    </div>
-
-</div>
-<!-- /.box-body -->
+        <!-- /.box-body -->
+    @endif
 
 <!-- staff allocation estimations -->
 <div class="box-header with-border">
@@ -101,7 +141,7 @@
             </tr>
             </thead>
             <tbody>
-            <?php $DesiginationHrs = 0; $DesignationCost = 0;?>
+                <?php $DesiginationHrs = 0; $DesignationCost = 0;?>
                 @foreach($ProjectDesignation as $item)
                     <tr>
                         <td><?php $Designation = \App\Models\Designation::find($item->project_designation_id);if($Designation)echo $Designation->designationType;?></td>
