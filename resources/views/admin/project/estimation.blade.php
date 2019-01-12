@@ -1,5 +1,18 @@
 @extends('layouts.admin')
 
+<?php
+    $ShowEstimationForm = false;
+    $showUpdate = false;
+
+    $PROJECTJOBTYPE = \App\Models\ProjectJobType::where('project_id',$Project->id)->get();
+    $ProjectDesignation = \App\Models\ProjectDesignation::where('project_id',$Project->id)->get();
+
+    if($ProjectDesignation->isEmpty()){
+        $ShowEstimationForm = true;
+        $showUpdate = true;
+    }
+?>
+
 <!-- main header section -->
 @section('main-content-header')
     <!-- Default box -->
@@ -29,11 +42,15 @@
                     <h3 class="box-title">Project</h3>
                 </div>
                 <!-- /.box-header -->
+                @if($showUpdate)
                 <!-- form start -->
                 {!! Form::open(['action'=>'ProjectController@finalized','class'=>'form-horizontal','id'=>'Form']) !!}
-                @include('error.error')
-                @include('admin.project._partials.estimateForm')
+                        @include('error.error')
+                        @include('admin.project._partials.estimateForm')
                 {!! Form::close() !!}
+                @else
+                        @include('admin.project._partials.estimateForm')
+                @endif
             </div>
             <!-- /.box -->
         </div>

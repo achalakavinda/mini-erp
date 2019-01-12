@@ -1,12 +1,3 @@
-<?php
-    $Customers = \App\Models\Customer::all()->pluck('name','id');
-    $JobTypes = \App\Models\JobType::all()->pluck('jobType','id');
-    $Employess = \App\Models\User::where('designation_id','!=',-999)->pluck('name','id');
-    $PROJECTJOBTYPE = \App\Models\ProjectJobType::where('project_id',$Project->id)->get();
-    $PROJECTEMPLOYEES = \App\Models\ProjectEmployee::where('project_id',$Project->id)->get();
-    $WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,sum(work_hrs) as hrs,sum(hr_rate) as rate, user_id'))->where('project_id',$Project->id)->groupBy('user_id')->get();
-?>
-
 <div style="overflow: auto" class="box-body">
     <table id="table" class="table table-responsive table-bordered table-striped">
         <thead>
@@ -111,13 +102,12 @@
             </thead>
             <tbody>
             <?php $DesiginationHrs = 0; $DesignationCost = 0;?>
-                @foreach(\App\Models\ProjectDesignation::where('project_id',$Project->id)->get() as $item)
+                @foreach($ProjectDesignation as $item)
                     <tr>
                         <td><?php $Designation = \App\Models\Designation::find($item->project_designation_id);if($Designation)echo $Designation->designationType;?></td>
                         <td>{!! $item->hr_rates !!}</td>
                         <td>{!! $item->hr !!}</td>
                         <td>{!! $item->total !!}</td>
-                        <td><a href="#"><i class="fa fa-close"></i></a></td>
                     </tr>
                     <?php $DesiginationHrs = $DesiginationHrs+$item->hr; $DesignationCost = $DesignationCost+$item->total;?>
                 @endforeach
@@ -125,6 +115,7 @@
         </table>
     </div>
 
+    @if($showUpdate)
     <div class="col-md-8">
         <div class="col-md-6">
             <div class="form-group">
@@ -142,6 +133,7 @@
             </div>
         </div>
     </div>
+    @endif
 
 </div>
 <!-- /Employee assignment -->
@@ -169,7 +161,6 @@
                             <td>{!! $item->project_cost_type !!}</td>
                             <td>{!! $item->cost !!}</td>
                             <td>{!! $item->remark !!}</td>
-                            <td><a href="#"><i class="fa fa-close"></i></a></td>
                         </tr>
                         <?php $CostSum = $CostSum+$item->cost;?>
                     @endforeach
@@ -177,6 +168,7 @@
             </table>
         </div>
 
+        @if($showUpdate)
         <div class="col-md-8">
             <div class="col-md-6">
                 <div class="form-group">
@@ -194,12 +186,17 @@
                 </div>
             </div>
         </div>
+        @endif
+
+
     </div>
 </div>
 <!-- /Cost assignment-->
 
 <div class="box-footer">
+    @if($showUpdate)
     <button type="submit" class="btn btn-success pull-right">Update <i class="fa fa-save"></i></button>
+    @endif
 </div>
 
 
@@ -225,29 +222,21 @@
             $('#COSTESTIMATIONVALUEREFRESH').click(function() {
                 calculateCostForTypes(count);
             });
-
             $('#DESIGNATIONCOSTESTIMATIONVALUEREFRESH').click(function() {
                 calculateCostDesignationTypes(designation_count);
             });
-
             $('#addNewDesignation').click(function() {
                 addNewDesignationCost();
             });
-
             $('#addNewCost').click(function() {
                 addNewCostTypes();
             });
-
             $('#calculateNewCost').click(function() {
                 calculateCostForTypes(count);
             });
-
             $('#addNewDesignationCalculation').click(function() {
                 calculateCostDesignationTypes(designation_count);
             });
-
-
-
             $('#CalculateBtn').click(function () {
                 calculateCostForTypes(count);
                 calculateCostDesignationTypes(designation_count);
@@ -255,7 +244,6 @@
                 var margin = parseFloat($('#ProfitMargin').val())
                 $('#QuotedPrice').val(bugetTol+(bugetTol*margin));
             });
-
         });
 
         function calculateCostForTypes(count) {

@@ -102,7 +102,6 @@
                                                 </td>
                                                 <td style="text-align: right">{!! $item->cost !!} /=</td>
                                                 <td style="text-align: right">{!! $item->remarks !!}</td>
-                                                <td style="text-align: center"><a href="#"><i class="fa fa-close"></i></a></td>
                                             </tr>
                                             <?php $CostSum = $CostSum+$item->cost; $count++;?>
                                         @endforeach
@@ -111,6 +110,7 @@
                                             <tr>
                                                 <td><b>Item Count : {!! $count !!}</b></td>
                                                 <td style="text-align: right"><b>{!! $CostSum !!} /=</b></td>
+                                                <td></td>
                                             </tr>
                                         </tfoot>
                                     </table>

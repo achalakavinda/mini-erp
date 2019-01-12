@@ -143,8 +143,12 @@ class ProjectController extends Controller
      */
     public function finalized(Request $request)
     {
-        $HOURS = 0;
         $Project = null;
+
+        $Project_Budgeted_Work_Cost = 0;
+        $Project_Budgeted_Work_Hours = 0;
+        $Project_Budgeted_OverHead_Cost = 0;
+        $Project_Budgeted_Profit_Margin = 0;
 
         $request->validate([
             'number_of_hrs' => 'required',
@@ -154,49 +158,66 @@ class ProjectController extends Controller
 
         $Project = Project::findOrFail($request->project_id);
 
+
         if(isset($request->cost_row)){
             foreach ($request->cost_row as $item){
-                ProjectOverhead::create([
-                    'project_id'=>$Project->id,
-                    'project_cost_type_id'=>$item['cost_type_id'],
-                    'project_cost_type'=>$item['cost_type_name'],
-                    'cost'=>$item['cost'],
-                    'remarks'=>$item['remark'],
-                    'created_by_id'=>\Auth::id(),
-                    'updated_by_id'=>\Auth::id()
-                ]);
+
+                if($item['cost']!=null && $item['cost']!=0){
+                    ProjectOverhead::create([
+                        'project_id'=>$Project->id,
+                        'project_cost_type_id'=>$item['cost_type_id'],
+                        'project_cost_type'=>$item['cost_type_name'],
+                        'cost'=>$item['cost'],
+                        'remarks'=>$item['remark'],
+                        'created_by_id'=>\Auth::id(),
+                        'updated_by_id'=>\Auth::id()
+                    ]);
+                    $Project_Budgeted_OverHead_Cost = $Project_Budgeted_OverHead_Cost+$item['cost'];
+                }
             }
         }
 
         if(isset($request->designation_row)){
             foreach ($request->designation_row as $item) {
-                ProjectDesignation::create([
-                    'project_id'=>$Project->id,
-                    'project_designation_id'=>$item['designation_id'],
-                    'hr'=>$item['hrs'],
-                    'hr_rates'=>$item['hr_rate'],
-                    'total'=>$item['hrs']*$item['hr_rate'],
-                    'created_by_id'=>\Auth::id(),
-                    'updated_by_id'=>\Auth::id(),
-                ]);
-                $HOURS = $HOURS + $item['hrs'];
+                if($item['hrs']!= null && $item['hrs']>0 && $item['hr_rate']!=null && $item['hr_rate']>0){
+                    ProjectDesignation::create([
+                        'project_id'=>$Project->id,
+                        'project_designation_id'=>$item['designation_id'],
+                        'hr'=>$item['hrs'],
+                        'hr_rates'=>$item['hr_rate'],
+                        'total'=>$item['hrs']*$item['hr_rate'],
+                        'created_by_id'=>\Auth::id(),
+                        'updated_by_id'=>\Auth::id(),
+                    ]);
+                    $Project_Budgeted_Work_Hours = $Project_Budgeted_Work_Hours + $item['hrs'];
+                    $Project_Budgeted_Work_Cost = $Project_Budgeted_Work_Cost+($item['hrs']*$item['hr_rate']);
+                }
             }
         }
 
-        $Project->budget_cost = $request->budget_cost;
-        $Project->quoted_price = $request->quoted_price;
-        $Project->budget_number_of_hrs = $HOURS;
-        $Project->budget_revenue = $request->quoted_price;
+        //budget and quoted price calculation
+        $BudgetSum = $Project_Budgeted_Work_Cost+$Project_Budgeted_OverHead_Cost;
+        $QuotedSum = 0;
+        if($request->profit_margin!=null && $request->profit_margin>0){
+            $QuotedSum = $BudgetSum + ($BudgetSum*$request->profit_margin);
+        }else{
+            $QuotedSum = $BudgetSum;
+        }
+
+        $Project->budget_cost = $BudgetSum;
+        $Project->quoted_price = $QuotedSum;
+        $Project->budget_number_of_hrs = $Project_Budgeted_Work_Hours;
+        $Project->budget_revenue = $QuotedSum;
         $Project->profit_ratio = $request->profit_margin;
 
         if($Project->actual_revenue==0){
-            $Project->actual_revenue = $request->quoted_price;
+            $Project->actual_revenue = $QuotedSum;
         }
 
         $Project->updated_by_id = \Auth::id();
         $Project->save();
 
-        return redirect('project/'.$Project->id)->with('created',true);
+        return redirect('project/'.$Project->id.'/estimation')->with('created',true);
     }
 
     public function actualCost($id)
