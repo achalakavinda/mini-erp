@@ -10,7 +10,6 @@
         <div class="box-body">
             <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
             <a href="{{ url('/customer') }}" class="btn btn-success">Customer</a>
-            <a href="{{ url('/customer/create') }}" class="btn btn-success">New</a>
         </div>
         <!-- /.box-body -->
     </div>
@@ -24,37 +23,32 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Customer</h3>
+                    <a href="{{ url('/customer/create') }}" class="btn btn-sm btn-danger">New <i class="fa fa-plus-square"></i></a>
                 </div>
                 <!-- /.box-header -->
                 <div style="overflow: auto" class="box-body">
                     <table id="example1" class="table table-responsive table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>#ID</th>
                             <th>Code</th>
                             <th>Name</th>
                             <th>Contact</th>
                             <th>Email</th>
-                            <th>Option</th>
+                            <th>View <i class="fa fa-paper-plane"></i></th>
                         </tr>
                         </thead>
                         <tbody>
-
-                        @foreach($Customers as $customer)
-                            <tr>
-                                <td>{!! $customer->id !!}</td>
-                                <td>{!! $customer->code !!}</td>
-                                <td>{!! $customer->name !!}</td>
-                                <td>{!! $customer->contact !!}</td>
-                                <td>{!! $customer->email !!}</td>
-                                <td>
-                                    <a href="{!! url('/customer/') !!}/{!! $customer->id !!}" class="btn btn-sm btn-danger">view</a>
-                                </td>
-                            </tr>
-                        @endforeach
-
-
+                            @foreach($Customers as $customer)
+                                <tr>
+                                    <td>{!! $customer->code !!}</td>
+                                    <td>{!! $customer->name !!}</td>
+                                    <td>{!! $customer->contact !!}</td>
+                                    <td>{!! $customer->email !!}</td>
+                                    <td>
+                                        <a href="{!! url('/customer/') !!}/{!! $customer->id !!}"><i class="fa fa-paper-plane"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

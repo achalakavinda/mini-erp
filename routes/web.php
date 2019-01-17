@@ -41,6 +41,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('project','ProjectController');
 
         Route::get('project/{id}/estimation','ProjectController@estimation');
+        Route::get('project/{id}/estimation/edit/staff-allocation-estimation','ProjectController@editStaffAllocationEstimation');
+        Route::get('project/{id}/estimation/edit/cost-type','ProjectController@editCostType');
 
         Route::get('project/{id}/actual-cost','ProjectController@actualCost');
 

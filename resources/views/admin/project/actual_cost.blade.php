@@ -65,8 +65,29 @@
                             <td>{!! $Project->actual_cost_by_overhead  !!}</td>
                             <td>{!! $Project->actual_cost_by_work+$Project->actual_cost_by_overhead  !!}</td>
                             <td>{!! $Project->actual_revenue  !!}</td>
-                            <td>{!! $Project->cost_variance  !!}</td>
-                            <td>{!! $Project->recovery_ratio  !!}</td>
+                            {{--<td>{!! $Project->cost_variance  !!}</td>--}}
+                            {{--<td>{!! $Project->recovery_ratio  !!}</td>--}}
+
+                            <?php
+                            $revnue = $Project->actual_revenue;
+                            $cost = $Project->budget_cost;
+                            $recovery_ratio = 0;
+                            if($revnue>0 && $cost>0){
+                                $recovery_ratio = $revnue / $cost;
+                            }
+
+                            $CV = $Project->budget_cost - ($Project->actual_cost_by_work+$Project->actual_cost_by_overhead);
+                            ?>
+
+                            <td><?php
+                                if($CV>0){
+                                    echo '<span style="color: green">'.$CV.' <i class="fa fa-arrow-up"></i></span>';
+                                }else{
+                                    echo '<span style="color: red">'.$CV.' <i class="fa fa-arrow-down"></i></span>';
+                                }
+                                ?></td>
+                            <td>{{ $recovery_ratio }}</td>
+
                             <td><b>@if($Project->close)Close @else Pending @endif</b></td>
                         </tr>
                         </tbody>
@@ -109,8 +130,8 @@
                                         </tbody>
                                         <tfoot>
                                             <tr>
-                                                <td><b>Item Count : {!! $count !!}</b></td>
-                                                <td style="text-align: right"><b>{!! $CostSum !!} /=</b></td>
+                                                <td><b>Item Count : <span>{!! $count !!}</span></b></td>
+                                                <td style="text-align: right"><b><span>{!! $CostSum !!}</span> /=</b></td>
                                                 <td></td>
                                             </tr>
                                         </tfoot>

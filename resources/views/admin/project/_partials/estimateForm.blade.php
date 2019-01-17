@@ -19,7 +19,7 @@
         <tbody>
             <tr>
                 <td>{!! $Project->code !!}</td>
-                <td>{!! \App\Models\Customer::where('id',$Project->customer_id)->first()->name !!}</td>
+                <td>{!! $Project->customer_name !!}</td>
                 <td>
                     <?php
                     foreach ($PROJECTJOBTYPE as $val){
@@ -34,8 +34,29 @@
                 <td>{!! $Project->actual_number_of_hrs  !!}</td>
                 <td>{!! $Project->actual_cost  !!}</td>
                 <td>{!! $Project->actual_revenue  !!}</td>
-                <td>{!! $Project->cost_variance  !!}</td>
-                <td>{!! $Project->recovery_ratio  !!}</td>
+                {{--<td>{!! $Project->cost_variance  !!}</td>--}}
+                {{--<td>{!! $Project->recovery_ratio  !!}</td>--}}
+
+                <?php
+                $revnue = $Project->actual_revenue;
+                $cost = $Project->budget_cost;
+                $recovery_ratio = 0;
+                if($revnue>0 && $cost>0){
+                    $recovery_ratio = $revnue / $cost;
+                }
+
+                $CV = $Project->budget_cost - ($Project->actual_cost_by_work+$Project->actual_cost_by_overhead);
+                ?>
+
+                <td><?php
+                    if($CV>0){
+                        echo '<span style="color: green">'.$CV.' <i class="fa fa-arrow-up"></i></span>';
+                    }else{
+                        echo '<span style="color: red">'.$CV.' <i class="fa fa-arrow-down"></i></span>';
+                    }
+                    ?></td>
+                <td>{{ $recovery_ratio }}</td>
+
                 <td><b>@if($Project->close)Close @else Open @endif</b></td>
             </tr>
         </tbody>
@@ -44,7 +65,6 @@
 
     @if($showUpdate)
         <div class="box-body">
-
             <div class="col-md-2">
                 <div class="form-group">
                     {!! Form::label('number_of_hrs','Number of Hrs',['class' => 'control-label']) !!}
@@ -114,12 +134,14 @@
                 </div>
             </div>
 
+            @if($showUpdate)
             <div class="col-md-3">
                 <div class="form-group">
                     {!! Form::label('refresh_value','Refresh values',['class' => 'control-label']) !!}
                     <button class="form-control" type="button" id="CalculateBtn">Calculate <i class="fa fa-calculator"></i></button>
                 </div>
             </div>
+            @endif
 
         </div>
         <!-- /.box-body -->
@@ -127,7 +149,7 @@
 
 <!-- staff allocation estimations -->
 <div class="box-header with-border">
-    <h4 class="box-title">Staff Allocation Estimation  <b id="DESIGNATIONCOSTESTIMATIONVALUE"></b> <i id="DESIGNATIONCOSTESTIMATIONVALUEREFRESH" style="font-size: 70%; color: green; cursor: pointer" class="fa fa-refresh"></i></h4>
+    <h4 class="box-title">Budget - Staff Cost<b id="DESIGNATIONCOSTESTIMATIONVALUE"></b> <i id="DESIGNATIONCOSTESTIMATIONVALUEREFRESH" style="font-size: 70%; color: green; cursor: pointer" class="fa fa-refresh"></i></h4>
 </div>
 <div class="box-body">
     <div class="col-md-12">
@@ -173,6 +195,12 @@
             </div>
         </div>
     </div>
+        @else
+           <div class="col-md-12">
+               <div class="form-group">
+                    <a class="pull-right btn btn-sm btn-success" href="{!! url('project') !!}/{!! $Project->id !!}/estimation/edit/staff-allocation-estimation">Change</a>
+               </div>
+           </div>
     @endif
 
 </div>
@@ -180,10 +208,9 @@
 
 
 <!-- Cost assignment-->
-<div class="box-header with-border">
-
-    <h4 class="box-title">Cost Estimation <b id="COSTESTIMATIONVALUE"></b> <i id="COSTESTIMATIONVALUEREFRESH" style="font-size: 70%; color: green; cursor: pointer" class="fa fa-refresh"></i></h4>
-
+    <div class="box-header with-border">
+        <h4 class="box-title">Indirect Cost <b id="COSTESTIMATIONVALUE"></b> <i id="COSTESTIMATIONVALUEREFRESH" style="font-size: 70%; color: green; cursor: pointer" class="fa fa-refresh"></i></h4>
+    </div>
     <div class="box-body">
         <div class="col-md-12">
             <table id="CostTable" class="table table-responsive table-bordered table-striped">
@@ -196,7 +223,7 @@
                 </thead>
                 <tbody>
                 <?php $CostSum = 0;?>
-                    @foreach(\App\Models\ProjectOverhead::where('project_id',$Project->id)->get() as $item)
+                    @foreach($ProjectOverHeads as $item)
                         <tr>
                             <td>{!! $item->project_cost_type !!}</td>
                             <td>{!! $item->cost !!}</td>
@@ -226,11 +253,16 @@
                 </div>
             </div>
         </div>
+        @else
+            <div class="col-md-12">
+                <div class="form-group">
+                    <a class="pull-right btn btn-sm btn-success" href="{!! url('project') !!}/{!! $Project->id !!}/estimation/edit/cost-type">Change</a>
+                </div>
+            </div>
         @endif
 
 
     </div>
-</div>
 <!-- /Cost assignment-->
 
 <div class="box-footer">
@@ -240,6 +272,7 @@
 </div>
 
 
+@if($showUpdate)
 @section('js')
     <script>
         'use strict'
@@ -450,3 +483,4 @@
     </script>
 
 @endsection
+@endif

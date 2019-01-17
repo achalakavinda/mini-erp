@@ -86,8 +86,25 @@
                                 <td>{{ $row->actual_number_of_hrs }}</td>
                                 <td>{{ $row->actual_cost_by_work+$row->actual_cost_by_overhead }}</td>
                                 <td>{{ $row->actual_revenue }}</td>
-                                <td>{{ $row->cost_variance }}</td>
-                                <td>{{ $row->recovery_ratio }}</td>
+
+                               <?php
+                                    $revnue = $row->actual_revenue;
+                                    $cost = $row->budget_cost;
+                                    $recovery_ratio = 0;
+                                    if($revnue>0 && $cost>0){
+                                        $recovery_ratio = $revnue / $cost;
+                                    }
+
+                                    $CV = $row->budget_cost - ($row->actual_cost_by_work+$row->actual_cost_by_overhead);
+                               ?>
+                                <td><?php
+                                        if($CV>0){
+                                            echo '<span style="color: green">'.$CV.' <i class="fa fa-arrow-up"></i></span>';
+                                        }else{
+                                            echo '<span style="color: red">'.$CV.' <i class="fa fa-arrow-down"></i></span>';
+                                        }
+                                    ?></td>
+                                <td>{{ $recovery_ratio }}</td>
                                 <td><b>@if($row->close)Closed @else Pending @endif</b></td>
                                 <td>
                                     <a href="{{ url('/project') }}/{{ $row->id }}"><i class="fa fa-paper-plane"></i></a>

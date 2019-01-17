@@ -18,7 +18,7 @@
                 <tbody>
                 <?php $count=0; $CostSum = 0;?>
                     @foreach($PROJECTOVERHEAD as $item)
-                        <tr>
+                        <tr class="tr_<?php echo $count;?>">
                             <td>{!! $item->project_cost_type !!}
                                 {!! Form::number('items['.$count.'][cost_type_id]',$item->id,['class'=>'form-control','style'=>'display:none']) !!}
                                 {!! Form::text('items['.$count.'][cost_type_name]',$item->project_cost_type,['class'=>'form-control','style'=>'display:none']) !!}
@@ -26,7 +26,7 @@
                             <td>{!! $item->cost !!}</td>
                             <td>{!! Form::number('items['.$count.'][cost]',$item->cost,['class'=>'form-control']) !!}</td>
                             <td>{!! Form::text('items['.$count.'][remark]',null,['class'=>'form-control']) !!}</td>
-                            <td><a href="#"><i class="fa fa-close"></i></a></td>
+                            <td><a style="cursor: pointer" type="button" onclick="rowRemoves('.tr_<?php echo $count;?>')"><i class="fa fa-close"></i></a></td>
                         </tr>
                         <?php $CostSum = $CostSum+$item->cost; $count++;?>
                     @endforeach
@@ -61,5 +61,58 @@
 
 
 @section('js')
+    <script>
+        'use strict'
+
+        var BugetCost = 0;
+
+        var costTable = $('#CostTable');
+
+        var count = parseFloat(<?php echo $count;?>);
+        var RawCount = 1;
+
+        $( document ).ready(function() {
+
+            $('#addNewCost').click(function() {
+                alert('');
+                addNewCostTypes()
+            });
+        });
+
+
+
+        //add new cost type rows
+        function addNewCostTypes() {
+
+            var SelectCostTypeId = $('#CostTypeId').val();
+            var SelectCostTypeName = $('#CostTypeId option:selected').text();
+
+            costTable.append('<tr class="tr_'+count+'">\n' +
+                '                        <td>\n' +
+                '                            <input style="display:none" type="number" value="'+SelectCostTypeId+'" name="cost_row['+count+'][cost_type_id]" class="form-control">\n' +
+                '                            <input type="text" name="cost_row['+count+'][cost_type_name]" value="'+SelectCostTypeName+'" class="form-control">\n' +
+                '                        </td>\n' +
+                '                        <td>\n' +
+                '                        </td>\n' +
+                '                        <td>\n' +
+                '                            <input  type="number" name="cost_row['+count+'][cost]" id="CostRow'+count+'" value="" class="form-control">\n' +
+                '                        </td>\n' +
+                '                        <td>\n' +
+                '                            <input  type="text" name="cost_row['+count+'][remark]"  value="" class="form-control">\n' +
+                '                        </td>\n' +
+                '                        <td>\n' +
+                '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_'+count+'\')"><i class="fa fa-remove"></i></a>\n' +
+                '                        </td>\n' +
+                '                    <tr/>');
+            count++;
+            RawCount++;
+        }
+
+        //remove selected row
+        function rowRemoves(value) {
+            $(value).remove();
+        }
+
+    </script>
 
 @endsection

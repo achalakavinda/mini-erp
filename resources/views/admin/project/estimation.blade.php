@@ -1,16 +1,21 @@
 @extends('layouts.admin')
 
 <?php
-    $ShowEstimationForm = false;
     $showUpdate = false;
 
     $PROJECTJOBTYPE = \App\Models\ProjectJobType::where('project_id',$Project->id)->get();
     $ProjectDesignation = \App\Models\ProjectDesignation::where('project_id',$Project->id)->get();
+    $ProjectOverHeads = \App\Models\ProjectOverhead::where('project_id',$Project->id)->get();
 
-    if($ProjectDesignation->isEmpty()){
-        $ShowEstimationForm = true;
+
+
+    if($ProjectDesignation->isEmpty() && $ProjectOverHeads->isEmpty()){
         $showUpdate = true;
+    }else{
+        $showUpdate = false;
     }
+
+
 ?>
 
 <!-- main header section -->
@@ -38,10 +43,7 @@
         <div class="col-md-12">
             <!-- general form elements -->
             <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Project</h3>
-                </div>
-                <!-- /.box-header -->
+
                 @if($showUpdate)
                 <!-- form start -->
                 {!! Form::open(['action'=>'ProjectController@finalized','class'=>'form-horizontal','id'=>'Form']) !!}

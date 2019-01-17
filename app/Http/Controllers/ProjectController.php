@@ -143,8 +143,8 @@ class ProjectController extends Controller
      */
     public function finalized(Request $request)
     {
-        $Project = null;
-
+        //budget cost variances
+        $Project = Project::findOrFail($request->project_id);
         $Project_Budgeted_Work_Cost = 0;
         $Project_Budgeted_Work_Hours = 0;
         $Project_Budgeted_OverHead_Cost = 0;
@@ -156,12 +156,18 @@ class ProjectController extends Controller
             'quoted_price' => 'required',
             ]);
 
-        $Project = Project::findOrFail($request->project_id);
 
+        if($Project!=null)
+        {
+            $Project_Budgeted_OverHead_Cost = $Project->budget_cost_by_overhead;
+        }
+        if($Project!=null)
+        {
+            $Project_Budgeted_Work_Cost = $Project->budget_cost_by_work;
+        }
 
         if(isset($request->cost_row)){
             foreach ($request->cost_row as $item){
-
                 if($item['cost']!=null && $item['cost']!=0){
                     ProjectOverhead::create([
                         'project_id'=>$Project->id,
@@ -204,10 +210,13 @@ class ProjectController extends Controller
             $QuotedSum = $BudgetSum;
         }
 
-        $Project->budget_cost = $BudgetSum;
-        $Project->quoted_price = $QuotedSum;
         $Project->budget_number_of_hrs = $Project_Budgeted_Work_Hours;
+        $Project->budget_cost_by_work = $Project_Budgeted_Work_Cost;
+        $Project->budget_cost_by_overhead = $Project_Budgeted_OverHead_Cost;
+        $Project->budget_cost = $BudgetSum;
+
         $Project->budget_revenue = $QuotedSum;
+        $Project->quoted_price = $QuotedSum;
         $Project->profit_ratio = $request->profit_margin;
 
         if($Project->actual_revenue==0){
@@ -229,15 +238,19 @@ class ProjectController extends Controller
     }
 
 
-    public function actualCostStore(Request $request){
-
+    public function actualCostStore(Request $request)
+    {
         $actualCost = 0;
         $actualCostByOverhead = 0;
+
+        dd($request->all());
 
         $request->validate([
             'items' => 'required',
             'project_id' => 'required'
         ]);
+
+        dd($request->all());
 
         $Project = Project::findOrFail($request->project_id);
 
@@ -272,11 +285,17 @@ class ProjectController extends Controller
         }
 
         return redirect('project/'.$Project->id.'/actual-cost')->with('created',true);
-
-
-
     }
 
 
+    public function editStaffAllocationEstimation($id)
+    {
+
+    }
+
+    public function editCostType($id)
+    {
+
+    }
 
 }

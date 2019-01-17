@@ -284,13 +284,13 @@ class Important extends Seeder
         //Job Type Important seeds
         DB::table('job_types')->insert([
             [
-                'JobType'=>"External Auditor",
+                'JobType'=>"External Audit",
                 "description"=>"des",
                 "created_at"=> \Carbon\Carbon::now(),
                 "updated_at"=> \Carbon\Carbon::now()
             ],
             [
-                'JobType'=>"Internal Auditor",
+                'JobType'=>"Internal Audit",
                 "description"=>"desc",
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()

@@ -21,6 +21,8 @@ class CreateProjectsTable extends Migration
 
             $table->double('quoted_price')->default(0);// quoted price
             $table->double('budget_number_of_hrs')->default(0);// number of hrs
+            $table->double('budget_cost_by_work')->default(0);//budget cost by work
+            $table->double('budget_cost_by_overhead')->default(0);//budget cost by cost overhead
             $table->double('budget_cost')->default(0);// budget cost
             $table->double('budget_revenue')->default(0);// revenue
 
