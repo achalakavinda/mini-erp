@@ -21,6 +21,7 @@ class CreateProjectDesignationsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('project_id');
             $table->unsignedInteger('project_designation_id');
+            $table->unsignedInteger('user_id')->nullable();
             $table->double('hr')->default(0);
             $table->double('hr_rates')->default(0);
             $table->double('total')->default(0);
@@ -30,6 +31,7 @@ class CreateProjectDesignationsTable extends Migration
 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
             $table->foreign('project_designation_id')->references('id')->on('designations')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('created_by_id')->references('id')->on('users');
             $table->foreign('updated_by_id')->references('id')->on('users');
         });

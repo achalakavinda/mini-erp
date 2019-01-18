@@ -34,28 +34,12 @@
                 <td>{!! $Project->actual_number_of_hrs  !!}</td>
                 <td>{!! $Project->actual_cost  !!}</td>
                 <td>{!! $Project->actual_revenue  !!}</td>
-                {{--<td>{!! $Project->cost_variance  !!}</td>--}}
-                {{--<td>{!! $Project->recovery_ratio  !!}</td>--}}
-
-                <?php
-                $revnue = $Project->actual_revenue;
-                $cost = $Project->budget_cost;
-                $recovery_ratio = 0;
-                if($revnue>0 && $cost>0){
-                    $recovery_ratio = $revnue / $cost;
-                }
-
-                $CV = $Project->budget_cost - ($Project->actual_cost_by_work+$Project->actual_cost_by_overhead);
-                ?>
-
-                <td><?php
-                    if($CV>0){
-                        echo '<span style="color: green">'.$CV.' <i class="fa fa-arrow-up"></i></span>';
-                    }else{
-                        echo '<span style="color: red">'.$CV.' <i class="fa fa-arrow-down"></i></span>';
-                    }
-                    ?></td>
-                <td>{{ $recovery_ratio }}</td>
+                @if($Project->close)
+                    <td>{!! $Project->cost_variance  !!}</td>
+                    <td>{!! $Project->recovery_ratio  !!}</td>
+                @else
+                    @include('admin.project.table.td')
+                @endif
 
                 <td><b>@if($Project->close)Close @else Open @endif</b></td>
             </tr>
@@ -263,13 +247,14 @@
 
 
     </div>
-<!-- /Cost assignment-->
 
-<div class="box-footer">
-    @if($showUpdate)
-    <button type="submit" class="btn btn-success pull-right">Update <i class="fa fa-save"></i></button>
-    @endif
-</div>
+
+<!-- /Cost assignment-->
+@if($showUpdate)
+    <div class="box-footer">
+        <button type="submit" class="btn btn-success pull-right">Update <i class="fa fa-save"></i></button>
+    </div>
+@endif
 
 
 @if($showUpdate)
@@ -278,14 +263,11 @@
         'use strict'
 
         var BugetCost = 0;
-
         var costTable = $('#CostTable');
         var designationTable = $('#DesignationTable');
-
         var count = 0;
         var RawCount = 1;
         var CostTypeSum = 0;
-
         var designation_count = 0;
         var designation_RawCount = 1;
         var DesignationCostSum = 0;
@@ -319,7 +301,8 @@
             });
         });
 
-        function calculateCostForTypes(count) {
+        function calculateCostForTypes(count)
+        {
             CostTypeSum = parseFloat(<?php echo $CostSum?>);
             for (var i=0;i<count;i++){
                 var costField = $("#CostRow"+i).val();
@@ -331,9 +314,15 @@
             budgetCost();
         }
 
-        function calculateCostDesignationTypes(count) {
+        function calculateCostDesignationTypes(count)
+        {
             DesignationCostSum =parseFloat(<?php echo $DesignationCost;?>);
             for (var i=0;i<count;i++){
+                var ElementValueHrs =$("#hrs"+i).val();
+                var ElementValueHrRates =$("#hrRate"+i).val();
+                if(parseFloat(ElementValueHrs)>0 && parseFloat(ElementValueHrRates)>0){
+                    $("#total"+i).val(parseFloat(ElementValueHrs)*parseFloat(ElementValueHrRates));
+                }
                 var costField = $("#total"+i).val();
                 if(parseFloat(costField)>0){
                     DesignationCostSum = DesignationCostSum + parseFloat(costField);
@@ -343,14 +332,16 @@
             budgetCost();
         }
 
-        function budgetCost() {
+        //budget cost total calculation
+        function budgetCost()
+        {
             var bugetTol = parseFloat(CostTypeSum)+parseFloat(DesignationCostSum)+parseFloat(BugetCost);
             $('#BudgetCost').val(bugetTol);
         }
 
         //add new cost type rows
-        function addNewCostTypes() {
-
+        function addNewCostTypes()
+        {
             var SelectCostTypeId = $('#CostTypeId').val();
             var SelectCostTypeName = $('#CostTypeId option:selected').text();
 
@@ -375,31 +366,28 @@
         }
 
         //add designation cost type rows
-        function addNewDesignationCost(){
-
+        function addNewDesignationCost()
+        {
             var SelectDesignationTypeId = $('#DesignationTypeId').val();
             var SelectDesignationTypeName = $('#DesignationTypeId option:selected').text();
-
-
             try {
-
                 var url = '{!! url('api/designation/') !!}/'+SelectDesignationTypeId;
 
                 $.ajax({
                     url: url,
                     success: function (data) {
                         if(data.status.length>0 && data.status =='ok'){
-                            console.log(data);
+
                             designationTable.append('<tr class="tr_designation_'+designation_count+'">\n' +
                                 '                        <td>\n' +
                                 '                            <input style="display:none" type="number" value="'+SelectDesignationTypeId+'" name="designation_row['+designation_count+'][designation_id]" class="form-control">\n' +
                                 '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" value="'+data.designation.avg_hr_rate+'" class="form-control">\n' +
+                                '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" id="hrRate'+designation_count+'" value="'+data.designation.avg_hr_rate+'" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input  type="text" name="designation_row['+designation_count+'][hrs]"  value="" class="form-control">\n' +
+                                '                            <input  type="text" name="designation_row['+designation_count+'][hrs]" id="hrs'+designation_count+'"  value="" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
@@ -420,10 +408,10 @@
                                 '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" value="" class="form-control">\n' +
+                                '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" id="hrRate'+designation_count+'" value="" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input  type="text" name="designation_row['+designation_count+'][hrs]"  value="" class="form-control">\n' +
+                                '                            <input  type="text" name="designation_row['+designation_count+'][hrs]" id="hrs'+designation_count+'"   value="" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
@@ -453,10 +441,10 @@
                     '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control">\n' +
                     '                        </td>\n' +
                     '                        <td>\n' +
-                    '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" value="" class="form-control">\n' +
+                    '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" id="hrRate'+designation_count+'" value="" class="form-control">\n' +
                     '                        </td>\n' +
                     '                        <td>\n' +
-                    '                            <input  type="text" name="designation_row['+designation_count+'][hrs]"  value="" class="form-control">\n' +
+                    '                            <input  type="text" name="designation_row['+designation_count+'][hrs]" id="hrs'+designation_count+'"  value="" class="form-control">\n' +
                     '                        </td>\n' +
                     '                        <td>\n' +
                     '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
@@ -465,7 +453,6 @@
                     '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_designation_'+designation_count+'\')"><i class="fa fa-remove"></i></a>\n' +
                     '                        </td>\n' +
                     '                    <tr/>');
-
                 designation_count++;
                 designation_RawCount++;
                 calculateCostDesignationTypes(designation_count);
@@ -473,12 +460,12 @@
         }
 
         //remove selected row
-        function rowRemoves(value) {
+        function rowRemoves(value)
+        {
             $(value).remove();
             calculateCostDesignationTypes(designation_count);
             calculateCostForTypes(count);
         }
-
 
     </script>
 

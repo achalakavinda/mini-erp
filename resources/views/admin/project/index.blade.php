@@ -4,26 +4,6 @@
     {!! Html::style('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') !!}
 @endsection
 
-@section('js')
-    {!! Html::script('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') !!}
-    {!! Html::script('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') !!}
-
-    <script type="text/javascript">
-
-        $(function () {
-            $('#table').DataTable({
-                'paging'      : true,
-                'lengthChange': false,
-                'searching'   : true,
-                'ordering'    : true,
-                'info'        : true,
-                'autoWidth'   : true
-            })
-        })
-    </script>
-
-@endsection
-
 <!-- main header section -->
 @section('main-content-header')
     <!-- Default box -->
@@ -67,51 +47,38 @@
                                 <th>Cost Variance</th>
                                 <th>Recovery Ratio</th>
                                 <th>status</th>
-                                <th><i class="fa fa-paper-plane"></i></th>
+                                <th>View <i class="fa fa-paper-plane"></i></th>
                             </tr>
                         </thead>
 
                         <tbody>
 
-                        <?php $Rows = \App\Models\Project::all();?>
+                        <?php $Projects = \App\Models\Project::all();?>
 
-                        @foreach($Rows as $row)
+                        @foreach($Projects as $Project)
                            <tr>
-                                <td>{{ $row->id }}</td>
-                                <td>{{ $row->code }}</td>
-                                <td>{{ $row->customer_name }}</td>
-                                <td>{{ $row->budget_number_of_hrs }}</td>
-                                <td>{{ $row->budget_cost }}</td>
-                                <td>{{ $row->budget_revenue }}</td>
-                                <td>{{ $row->actual_number_of_hrs }}</td>
-                                <td>{{ $row->actual_cost_by_work+$row->actual_cost_by_overhead }}</td>
-                                <td>{{ $row->actual_revenue }}</td>
+                                <td>{{ $Project->id }}</td>
+                                <td>{{ $Project->code }}</td>
+                                <td>{{ $Project->customer_name }}</td>
+                                <td>{{ $Project->budget_number_of_hrs }}</td>
+                                <td>{{ $Project->budget_cost }}</td>
+                                <td>{{ $Project->budget_revenue }}</td>
+                                <td>{{ $Project->actual_number_of_hrs }}</td>
+                                <td>{{ $Project->actual_cost_by_work+$Project->actual_cost_by_overhead }}</td>
+                                <td>{{ $Project->actual_revenue }}</td>
+                               @if($Project->close)
+                                   <td>{!! $Project->cost_variance  !!}</td>
+                                   <td>{!! $Project->recovery_ratio  !!}</td>
+                               @else
+                                   @include('admin.project.table.td')
+                               @endif
 
-                               <?php
-                                    $revnue = $row->actual_revenue;
-                                    $cost = $row->budget_cost;
-                                    $recovery_ratio = 0;
-                                    if($revnue>0 && $cost>0){
-                                        $recovery_ratio = $revnue / $cost;
-                                    }
-
-                                    $CV = $row->budget_cost - ($row->actual_cost_by_work+$row->actual_cost_by_overhead);
-                               ?>
-                                <td><?php
-                                        if($CV>0){
-                                            echo '<span style="color: green">'.$CV.' <i class="fa fa-arrow-up"></i></span>';
-                                        }else{
-                                            echo '<span style="color: red">'.$CV.' <i class="fa fa-arrow-down"></i></span>';
-                                        }
-                                    ?></td>
-                                <td>{{ $recovery_ratio }}</td>
-                                <td><b>@if($row->close)Closed @else Pending @endif</b></td>
+                                <td><b>@if($Project->close)Closed @else Pending @endif</b></td>
                                 <td>
-                                    <a href="{{ url('/project') }}/{{ $row->id }}"><i class="fa fa-paper-plane"></i></a>
+                                    <a href="{{ url('/project') }}/{{ $Project->id }}"><i class="fa fa-paper-plane"></i></a>
                                 </td>
                             </tr>
                         @endforeach
-
                         </tbody>
                     </table>
                 </div>
@@ -122,6 +89,25 @@
         <!-- /.col -->
     </div>
     <!-- /.row -->
-
 @endsection
 <!-- /main section -->
+
+@section('js')
+    {!! Html::script('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') !!}
+    {!! Html::script('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') !!}
+
+    <script type="text/javascript">
+
+        $(function () {
+            $('#table').DataTable({
+                'paging'      : true,
+                'lengthChange': false,
+                'searching'   : true,
+                'ordering'    : true,
+                'info'        : true,
+                'autoWidth'   : true
+            })
+        })
+    </script>
+
+@endsection
