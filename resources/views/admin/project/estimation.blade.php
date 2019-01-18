@@ -44,6 +44,10 @@
             <!-- general form elements -->
             <div class="box box-primary">
 
+                {{--summery table--}}
+                @include('admin.project.table.project_cost_summary_table')
+                {{--/summery table--}}
+
                 @if($showUpdate)
                 <!-- form start -->
                 {!! Form::open(['action'=>'ProjectController@finalized','class'=>'form-horizontal','id'=>'Form']) !!}

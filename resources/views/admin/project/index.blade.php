@@ -27,15 +27,11 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Projects</h3>
-                </div>
                 <!-- /.box-header -->
                 <div style="overflow: auto" class="box-body">
                     <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th>#ID</th>
                                 <th>Code</th>
                                 <th>Customer</th>
                                 <th style="background-color: #0b93d5">Budget Hrs</th>
@@ -57,22 +53,20 @@
 
                         @foreach($Projects as $Project)
                            <tr>
-                                <td>{{ $Project->id }}</td>
                                 <td>{{ $Project->code }}</td>
                                 <td>{{ $Project->customer_name }}</td>
-                                <td>{{ $Project->budget_number_of_hrs }}</td>
-                                <td>{{ $Project->budget_cost }}</td>
-                                <td>{{ $Project->budget_revenue }}</td>
-                                <td>{{ $Project->actual_number_of_hrs }}</td>
-                                <td>{{ $Project->actual_cost_by_work+$Project->actual_cost_by_overhead }}</td>
-                                <td>{{ $Project->actual_revenue }}</td>
+                                <td>{{ number_format($Project->budget_number_of_hrs) }}</td>
+                                <td>{{ number_format($Project->budget_cost) }}</td>
+                                <td>{{ number_format($Project->budget_revenue) }}</td>
+                                <td>{{ number_format($Project->actual_number_of_hrs) }}</td>
+                                <td>{{ number_format($Project->actual_cost_by_work+$Project->actual_cost_by_overhead) }}</td>
+                                <td>{{ number_format($Project->actual_revenue) }}</td>
                                @if($Project->close)
-                                   <td>{!! $Project->cost_variance  !!}</td>
-                                   <td>{!! $Project->recovery_ratio  !!}</td>
+                                   <td>{!! number_format($Project->cost_variance)  !!}</td>
+                                   <td>{!! number_format($Project->recovery_ratio)  !!}</td>
                                @else
                                    @include('admin.project.table.td')
                                @endif
-
                                 <td><b>@if($Project->close)Closed @else Pending @endif</b></td>
                                 <td>
                                     <a href="{{ url('/project') }}/{{ $Project->id }}"><i class="fa fa-paper-plane"></i></a>

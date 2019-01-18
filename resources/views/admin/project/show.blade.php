@@ -64,46 +64,10 @@
                     </div>
                 </div>
                 <!-- /.box-header -->
-                <div style="overflow: auto" class="box-body">
-                    <table id="table" class="table table-responsive table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            <th>B.Hrs</th>
-                            <th>B.Cost</th>
-                            <th>B.Revenue</th>
-                            <th>A.Hrs</th>
-                            <th>A.Cost By Work</th>
-                            <th>A.Cost By Overheads</th>
-                            <th>SUM(A.Cost)</th>
-                            <th>A.Revenue</th>
-                            <th>Cost Variance</th>
-                            <th>Recovery Ratio</th>
-                            <th>status</th>
-                        </tr>
-                        </thead>
 
-                        <tbody>
-                        <tr>
-                            <td>{!! $Project->budget_number_of_hrs  !!}</td>
-                            <td>{!! $Project->budget_cost  !!}</td>
-                            <td>{!! $Project->budget_revenue  !!}</td>
-                            <td>{!! $Project->actual_number_of_hrs  !!}</td>
-                            <td>{!! $Project->actual_cost_by_work  !!}</td>
-                            <td>{!! $Project->actual_cost_by_overhead  !!}</td>
-                            <td>{!! $Project->actual_cost_by_work+$Project->actual_cost_by_overhead  !!}</td>
-                            <td>{!! $Project->actual_revenue  !!}</td>
-                            @if($Project->close)
-                                <td>{!! $Project->cost_variance  !!}</td>
-                                <td>{!! $Project->recovery_ratio  !!}</td>
-                            @else
-                                @include('admin.project.table.td')
-                            @endif
-
-                            <td><b>@if($Project->close)Close @else Pending @endif</b></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+                {{--summery table--}}
+                @include('admin.project.table.project_cost_summary_table')
+                {{--/summery table--}}
 
                 <div class="box-body">
                     <div class="row">

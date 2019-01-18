@@ -12,12 +12,12 @@ $CV = $Project->budget_cost - ($Project->actual_cost_by_work+$Project->actual_co
 
 <td><?php
     if($CV>0){
-        echo '<span style="color: green">'.$CV.' <i class="fa fa-arrow-up"></i></span>';
+        echo '<span style="color: green">'.number_format($CV,2).' <i class="fa fa-arrow-up"></i></span>';
     }
     else if($CV>-1){
-        echo $CV;
+        echo number_format($CV,2);
     }else{
-        echo '<span style="color: red">'.$CV.' <i class="fa fa-arrow-down"></i></span>';
+        echo '<span style="color: red">'.number_format($CV,2).' <i class="fa fa-arrow-down"></i></span>';
     }
     ?></td>
-<td>{{ $recovery_ratio }}</td>
+<td>{{ number_format($recovery_ratio,2) }}</td>
