@@ -32,11 +32,16 @@ class CreateProjectsTable extends Migration
             $table->double('actual_cost')->default(0);//actual cost
             $table->double('actual_revenue')->default(0);//actual revenue
 
+
+            $table->double('invoicing_amount')->default(0);//invoicing amount
+            $table->double('receipt_amount')->default(0);//receipt amount
+
             $table->double('cost_variance')->default(0);// cost variance
             $table->double('recovery_ratio')->default('0');// recovery ratio
             $table->double('profit_ratio')->default('0');// profit ratio
 
             $table->boolean('close')->default(0);
+            $table->boolean('invoiced')->default(0);
 
             $table->timestamps();
             $table->unsignedInteger('created_by_id');

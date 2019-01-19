@@ -72,10 +72,10 @@
                                 <td>{!! $Staff_name !!}</td>
                                 <td>{!! $Project_name !!}</td>
                                 <td>{!! $Customer_name !!}</td>
-                                <td>{!! $row->from !!}</td>
-                                <td>{!! $row->to !!}</td>
-                                <td><?php if($row->work_hrs<0){echo "<i style='color:red'>Leave</i>";}else{echo $row->work_hrs;}?></td>
-                                <td>{!! $row->hr_cost !!}</td>
+                                <td>{!! \Carbon\Carbon::parse($row->from)->format('h:i a') !!}</td>
+                                <td>{!! \Carbon\Carbon::parse($row->to)->format('h:i a') !!}</td>
+                                <td><?php if($row->work_hrs<0){echo "<i style='color:red'>Leave</i>";}else{echo number_format($row->work_hrs,2);}?></td>
+                                <td>{!! number_format($row->hr_cost,2) !!}</td>
                                 <td></td>
                             </tr>
                         @endforeach

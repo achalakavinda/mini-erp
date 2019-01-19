@@ -51,6 +51,7 @@
 <!-- /main section -->
 
 @section('js')
+
     <script type="text/javascript">
 
         var projectSelector = $( "#project" );
@@ -129,8 +130,35 @@
         }
 
         function tableRowAdd(item){
-            $('#worksheetTable').append('<tr class="removeRW"><td>'+item.from+' ----- '+item.to+'</td><td>Report</td><td>'+item.company+'</td><td>'+item.project_value+' - '+item.job_type_name+'</td><td>'+item.remark+'</td><td>' +
+            var company = '';
+            var jobType = '';
+            var remark = '';
+
+            if(item.company!=null){
+                company = item.company;
+            }
+            if(item.job_type_name!=null){
+                jobType = ' - '+item.job_type_name
+            }
+            if(item.remark!=null){
+                remark = item.remark
+            }
+
+
+            $('#worksheetTable').append('<tr class="removeRW"><td>'+tConvert(item.from)+' -- '+tConvert(item.to)+'</td><td>Report</td><td>'+company+'</td><td>'+item.project_value+jobType+'</td><td>'+remark+'</td><td>' +
                 '<a style="color: red" href="#" onclick="deleteRecord('+item.id+')">DEL</a> </td></tr>');
+        }
+
+        function tConvert (time) {
+            // Check correct time format and split into components
+            time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+            if (time.length > 1) { // If time format correct
+                time = time.slice (1);  // Remove full string match value
+                time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
+                time[0] = +time[0] % 12 || 12; // Adjust hours
+            }
+            return time.join (''); // return adjusted time or original string
         }
         
         function deleteRecord(x) {

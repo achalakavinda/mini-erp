@@ -2,7 +2,6 @@
     $User = \App\Models\User::find($Project->created_by_id);
     $Customers = \App\Models\Customer::where('id',$Project->customer_id)->pluck('name','id');
     $PROJECTJOBTYPE = \App\Models\ProjectJobType::where('project_id',$Project->id)->get();
-    $WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,sum(work_hrs) as hrs,sum(hr_rate) as rate, user_id'))->where('project_id',$Project->id)->groupBy('user_id')->get();
 ?>
 
 @extends('layouts.admin')

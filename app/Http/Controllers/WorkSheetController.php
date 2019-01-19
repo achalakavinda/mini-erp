@@ -63,17 +63,67 @@ class WorkSheetController extends Controller
             $work_hr = $this->convertToHoursMins($diffInMin);
             $actual_work_hr = $work_hr;
 
-            if($work_hr>8){$work_hr = 8;}//set the working hr to 8
+            $startTime = Carbon::parse($row['from']);
+            $finishTime = Carbon::parse($row['to']);
 
+            //this is true if the start time is greater than end time
+            if($startTime->greaterThan($finishTime)){
+                return redirect()->back()->withErrors(['Submit start time is greater than finish time']);
+            }
+
+            //get the submit user information
             $USER = User::findOrFail($request->user_id);
-            //Recode check
-            $Tuple_Checker = \DB::table('work_sheets')->where(['user_id'=>$request->user_id,'date'=>$DATE_VAR])
-                                    ->whereBetween('from',[$row['from'],$row['to']])
-                                    ->get();
+            //Worksheet get min from to max To
+            $minFromTime = null;
+            $maxToTime = null;
+            $WorkSheetTuples = WorkSheet::where(['user_id'=>$request->user_id,'date'=>$DATE_VAR])->get();
 
-                if (!$Tuple_Checker->isEmpty()){
-                    dd($Tuple_Checker->isEmpty());
+            foreach ($WorkSheetTuples as $tuple){
+                $from = $tuple->from;
+                $to = $tuple->to;
+                if($minFromTime == null)
+                {
+                    $minFromTime=$from;
+                }else{
+                    if($minFromTime>$from){
+                        $minFromTime = $from;
+                    }
                 }
+                if($maxToTime == null)
+                {
+                    $maxToTime=$to;
+                }else{
+                    if($maxToTime<$to){
+                        $maxToTime = $to;
+                    }
+                }
+            }
+
+            if(!$WorkSheetTuples->isEmpty()){
+                //Recode check
+
+                $from = Carbon::parse($minFromTime);
+                $to = Carbon::parse($maxToTime);
+                $postFrom = Carbon::parse($row['from']);
+                $postTo = Carbon::parse($row['to']);
+
+                ///sequence new time must greater than previous submit value
+                if($postFrom->lessThan($to) || $postFrom->eq($to)){
+                    return redirect()->back()->withErrors(['Time sequence overlap']);
+                }
+
+//                $Tuple_Checker = \DB::table('work_sheets')->where(['user_id'=>$request->user_id,'date'=>$DATE_VAR])
+//                    ->whereBetween('from',[$minFromTime,$maxToTime])
+//                    ->get();
+//
+//                dd($Tuple_Checker);
+//
+//                if (!$Tuple_Checker->isEmpty()){
+//                    return redirect()->back()->withErrors(['time report over lap']);
+//                }
+            }
+
+            if($work_hr>8){$work_hr = 8;}//set the working hr to 8
 
             //check the work state
             if($Worked){

@@ -1,3 +1,6 @@
+<?php
+$WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,sum(work_hrs) as hrs,sum(actual_work_hrs) as actual_hrs, user_id'))->where('project_id',$Project->id)->groupBy('user_id')->get();
+?>
 <div class="box">
     <!-- /.box-header -->
     <div style="overflow: auto" class="box-body">
@@ -7,6 +10,7 @@
                     <th>Name</th>
                     <th>Hour Rate</th>
                     <th>Work Hours</th>
+                    <th>Extra Work Hours</th>
                     <th>Cost</th>
                 </tr>
             </thead>
@@ -18,17 +22,20 @@
 
             foreach ($WORKSHEETS as $worksheet){
                 $USERNAME = \App\Models\User::find($worksheet->user_id);
+                if(!$USERNAME){
+                    return;
+                }
                 echo '<tr>
                         <td>'.$USERNAME->name.'</td>
-                        <td>'.$worksheet->rate.'</td>
+                        <td>'.$USERNAME->hr_rates.'</td>
                         <td>'.$worksheet->hrs.'</td>
+                        <td>'.$worksheet->actual_hrs.'</td>
                         <td>'.$worksheet->cost.'</td>
                      </tr>';
 
                 $TOLCOST = $TOLCOST+$worksheet->cost;
                 $TOLWH   = $TOLWH+$worksheet->hrs;
-                $TOLHR = $TOLHR+$worksheet->rate;
-
+                $TOLHR = $TOLHR+$USERNAME->hr_rates;
             }
             ?>
             </tbody>
