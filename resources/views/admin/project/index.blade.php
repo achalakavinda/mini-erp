@@ -55,15 +55,15 @@
                            <tr>
                                 <td>{{ $Project->code }}</td>
                                 <td>{{ $Project->customer_name }}</td>
-                                <td>{{ number_format($Project->budget_number_of_hrs) }}</td>
-                                <td>{{ number_format($Project->budget_cost) }}</td>
-                                <td>{{ number_format($Project->budget_revenue) }}</td>
-                                <td>{{ number_format($Project->actual_number_of_hrs) }}</td>
-                                <td>{{ number_format($Project->actual_cost_by_work+$Project->actual_cost_by_overhead) }}</td>
-                                <td>{{ number_format($Project->actual_revenue) }}</td>
+                                <td>{{ number_format($Project->budget_number_of_hrs,2) }}</td>
+                                <td>{{ number_format($Project->budget_cost,2) }}</td>
+                                <td>{{ number_format($Project->budget_revenue,2) }}</td>
+                                <td>{{ number_format($Project->actual_number_of_hrs,2) }}</td>
+                                <td>{{ number_format($Project->actual_cost_by_work+$Project->actual_cost_by_overhead,2) }}</td>
+                                <td>{{ number_format($Project->actual_revenue,2) }}</td>
                                @if($Project->close)
-                                   <td>{!! number_format($Project->cost_variance)  !!}</td>
-                                   <td>{!! number_format($Project->recovery_ratio)  !!}</td>
+                                   <td>{!! number_format($Project->cost_variance,2)  !!}</td>
+                                   <td>{!! number_format($Project->recovery_ratio,2)  !!}</td>
                                @else
                                    @include('admin.project.table.td')
                                @endif

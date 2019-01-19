@@ -17,7 +17,7 @@ class CreateProjectsTable extends Migration
             $table->increments('id');
             $table->integer('customer_id')->unsigned();
             $table->string('customer_name');
-            $table->string('code');
+            $table->string('code')->unique();
 
             $table->double('quoted_price')->default(0);// quoted price
             $table->double('budget_number_of_hrs')->default(0);// number of hrs

@@ -47,7 +47,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'code' => 'required',
+            'code' => 'required | unique:projects',
             'customer_id' => 'required',
             'job_types' => 'required',
             'budget_number_of_hrs' => 'required',
@@ -56,12 +56,18 @@ class ProjectController extends Controller
             'quoted_price' => 'required'
         ]);
 
-        $CUSTOMER = Customer::find($request->customer_id);
+        $CUSTOMER = Customer::findOrFail($request->customer_id);
+        $code = $CUSTOMER->code."-".$request->code;
+
+        $CheckCode = Project::where('code',$code)->first();
+        if($CheckCode){
+            return    \redirect()->back()->withErrors('*Code must be unique');
+        }
 
         $Project = Project::create([
             'customer_id'=>$request->customer_id,
             'customer_name'=>$CUSTOMER->name,
-            'code'=>$CUSTOMER->code."-".$request->code,
+            'code'=>$code,
             'quoted_price'=>$request->quoted_price,
             'budget_revenue'=>$request->quoted_price,
             'budget_number_of_hrs'=>$request->budget_number_of_hrs,
