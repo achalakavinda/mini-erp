@@ -308,7 +308,7 @@
                 '                            <input  type="text" name="cost_row['+count+'][remark]"  value="" class="form-control">\n' +
                 '                        </td>\n' +
                 '                        <td>\n' +
-                '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_'+count+'\')"><i class="fa fa-remove"></i></a>\n' +
+                '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_'+count+'\')"><i class="fa fa-2x fa-remove"></i></a>\n' +
                 '                        </td>\n' +
                 '                    <tr/>');
             count++;
@@ -344,7 +344,8 @@
                                 '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_designation_'+designation_count+'\')"><i class="fa fa-remove"></i></a>\n' +
+                                '                            <a style="cursor: pointer" type="button" onclick="openEmployeeTable('+SelectDesignationTypeId+')"><i class="fa fa-2x fa-table"></i></a>\n' +
+                                '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_designation_'+designation_count+'\')"><i class="fa fa-2x fa-remove"></i></a>\n' +
                                 '                        </td>\n' +
                                 '                    <tr/>');
 
@@ -368,7 +369,8 @@
                                 '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_designation_'+designation_count+'\')"><i class="fa fa-remove"></i></a>\n' +
+                                '                            <a style="cursor: pointer" type="button" onclick="openEmployeeTable('+SelectDesignationTypeId+')"><i class="fa fa-2x fa-remove"></i></a>\n' +
+                                '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_designation_'+designation_count+'\')"><i class="fa fa-2x fa-remove"></i></a>\n' +
                                 '                        </td>\n' +
                                 '                    <tr/>');
 
@@ -401,6 +403,7 @@
                     '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
                     '                        </td>\n' +
                     '                        <td>\n' +
+                    '                            <a style="cursor: pointer" type="button" onclick="openEmployeeTable('+SelectDesignationTypeId+')"><i class="fa fa-2x fa-remove"></i></a>\n' +
                     '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_designation_'+designation_count+'\')"><i class="fa fa-remove"></i></a>\n' +
                     '                        </td>\n' +
                     '                    <tr/>');
@@ -418,7 +421,66 @@
             calculateCostForTypes(count);
         }
 
+        function openEmployeeTable(count) {
+            $('#staffRatesModel').modal('show')
+
+            try {
+                var url = '{!! url('api/staff/designation') !!}/'+count;
+
+            }catch (e) {
+
+            }
+        }
+
     </script>
 
 @endsection
+
+@section('model')
+
+    <div class="modal fade" id="staffRatesModel">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Staff Rates</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="box">
+                        <!-- /.box-header -->
+                        <div style="overflow: auto" class="box-body">
+                            <table id="tableEmployee" class="table table-responsive table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Hour Rate</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(\App\Models\User::all() as $row)
+                                        <td>{!! $row->name !!}</td>
+                                        <td>{!! $row->hr_rates !!}</td>
+                                    @endforeach
+                                </tbody>
+                                <tfoot>
+                                </tfoot>
+                            </table>
+                            <!-- /.box-body -->
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+@endsection
+
 @endif

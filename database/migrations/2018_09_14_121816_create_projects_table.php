@@ -17,6 +17,8 @@ class CreateProjectsTable extends Migration
             $table->increments('id');
             $table->integer('customer_id')->unsigned();
             $table->string('customer_name');
+            $table->unsignedInteger('sector_id')->nullable();
+            $table->string('sector')->nullable();
             $table->string('code')->unique();
 
             $table->double('quoted_price')->default(0);// quoted price
@@ -46,8 +48,8 @@ class CreateProjectsTable extends Migration
             $table->timestamps();
             $table->unsignedInteger('created_by_id');
             $table->unsignedInteger('updated_by_id')->nullable();
-
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelte('cascade');
+            $table->foreign('sector_id')->references('id')->on('customer_sectors');
+            $table->foreign('customer_id')->references('id')->on('customers');
             $table->foreign('created_by_id')->references('id')->on('users');
             $table->foreign('updated_by_id')->references('id')->on('users');
         });

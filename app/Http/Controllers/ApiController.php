@@ -6,6 +6,7 @@ use App\Models\Customer;
 use App\Models\Designation;
 use App\Models\JobType;
 use App\Models\Project;
+use App\Models\User;
 use App\Models\WorkCodes;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -133,6 +134,29 @@ class ApiController extends Controller
             $arr = [
                 'status'=>"ok",
                 'designation'=>[]
+            ];
+
+        }
+
+        return $arr;
+    }
+
+    //        api/staff/designation
+    public function getStaffByDesignation($id){
+        $arr = [];
+        try{
+            $staff = User::where('designation_id',$id)->select(['id','name','hr_rates']);
+            $arr = [
+                'status'=>"ok",
+                'designation'=>$staff
+            ];
+
+        }catch (\Exception $e){
+
+            $arr = [
+                'status'=>"ok",
+                'designation'=>[],
+                'msg'=>$e->getMessage()
             ];
 
         }

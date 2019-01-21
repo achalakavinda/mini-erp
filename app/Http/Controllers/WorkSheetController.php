@@ -51,6 +51,7 @@ class WorkSheetController extends Controller
         $ROWS = $request->row;
 
         //check for the working states
+        //also helpful to calculate employee leave hours
         $WorkCode = WorkCodes::findOrFail($request->work_code_id);
         $Worked = $WorkCode->worked;
         //date time convert to sql format
@@ -77,6 +78,8 @@ class WorkSheetController extends Controller
             $minFromTime = null;
             $maxToTime = null;
             $WorkSheetTuples = WorkSheet::where(['user_id'=>$request->user_id,'date'=>$DATE_VAR])->get();
+            //check current work hrs
+            $CurrentNoOfWork = 0;
 
             foreach ($WorkSheetTuples as $tuple){
                 $from = $tuple->from;
@@ -97,6 +100,10 @@ class WorkSheetController extends Controller
                         $maxToTime = $to;
                     }
                 }
+
+                //actual work hrs related to number of work hrs
+                $CurrentNoOfWork = $CurrentNoOfWork +$tuple->actual_work_hrs;
+
             }
 
             if(!$WorkSheetTuples->isEmpty()){
@@ -108,22 +115,19 @@ class WorkSheetController extends Controller
                 $postTo = Carbon::parse($row['to']);
 
                 ///sequence new time must greater than previous submit value
-                if($postFrom->lessThan($to) || $postFrom->eq($to)){
+                if($postFrom->lessThan($to)){
                     return redirect()->back()->withErrors(['Time sequence overlap']);
                 }
 
-//                $Tuple_Checker = \DB::table('work_sheets')->where(['user_id'=>$request->user_id,'date'=>$DATE_VAR])
-//                    ->whereBetween('from',[$minFromTime,$maxToTime])
-//                    ->get();
-//
-//                dd($Tuple_Checker);
-//
-//                if (!$Tuple_Checker->isEmpty()){
-//                    return redirect()->back()->withErrors(['time report over lap']);
-//                }
             }
 
-            if($work_hr>8){$work_hr = 8;}//set the working hr to 8
+
+            if($work_hr>8 || $CurrentNoOfWork>8){
+                $work_hr = 8;
+                if($CurrentNoOfWork>8){
+                    $work_hr = 0;
+                }
+            }//set the working hr to 8
 
             //check the work state
             if($Worked){
@@ -134,24 +138,29 @@ class WorkSheetController extends Controller
                     'project_id'=>$request->project_id,
                     'job_type_id'=>$row['job_type_id'],
                     'work_code_id'=>$WorkCode->id,
+                    'work_code'=>$WorkCode->name,
                     'worked'=>$Worked,
                     'from'=>$row['from'],
                     'to'=>$row['to'],
                     'work_hrs'=>$work_hr,
-                    'actual_work_hrs'=>$actual_work_hr,
+                    'leave_hrs'=>0,
                     'hr_rate'=>$USER->hr_rates,
                     'hr_cost'=>$USER->hr_rates*$work_hr,
+                    'actual_work_hrs'=>$actual_work_hr,//this value is directly take into number of work hrs validation
                     'actual_hr_cost'=>$USER->hr_rates*$actual_work_hr,
+                    'extra_work_hrs'=>$actual_work_hr - $work_hr,
                     'remark'=>$row['remark']
                 ]);
 
-                //update the time report project
-                $PJ = Project::find($request->project_id);
-                if($PJ) {
-                    $PJ->actual_cost = $PJ->actual_cost + ($USER->hr_rates*$work_hr);
-                    $PJ->actual_number_of_hrs = $PJ->actual_number_of_hrs + $work_hr;
-                    $PJ->actual_cost_by_work = $PJ->actual_cost_by_work + ($USER->hr_rates*$work_hr);
-                    $PJ->save();
+                if($CurrentNoOfWork<=8){
+                    //update the time report project
+                    $PJ = Project::find($request->project_id);
+                    if($PJ) {
+                        $PJ->actual_cost = $PJ->actual_cost + ($USER->hr_rates*$work_hr);
+                        $PJ->actual_number_of_hrs = $PJ->actual_number_of_hrs + $work_hr;
+                        $PJ->actual_cost_by_work = $PJ->actual_cost_by_work + ($USER->hr_rates*$work_hr);
+                        $PJ->save();
+                    }
                 }
             }else{
                 WorkSheet::create([
@@ -161,14 +170,17 @@ class WorkSheetController extends Controller
                     'project_id'=>null,
                     'job_type_id'=>null,
                     'work_code_id'=>$WorkCode->id,
+                    'work_code'=>$WorkCode->name,
                     'worked'=>$Worked,
                     'from'=>$row['from'],
                     'to'=>$row['to'],
-                    'work_hrs'=>0-$work_hr,
-                    'actual_work_hrs'=>0-$actual_work_hr,
-                    'hr_rate'=>$USER->hr_rates,
-                    'hr_cost'=>$USER->hr_rates*$work_hr,
-                    'actual_hr_cost'=>0-$USER->hr_rates*$actual_work_hr,
+                    'work_hrs'=>0,
+                    'leave_hrs'=>$work_hr,
+                    'actual_work_hrs'=>0,//this value is directly take into number of work hrs validation
+                    'hr_rate'=>0,
+                    'hr_cost'=>0,
+                    'actual_hr_cost'=>0,
+                    'extra_work_hrs'=>0,
                     'remark'=>$row['remark']
                 ]);
             }
