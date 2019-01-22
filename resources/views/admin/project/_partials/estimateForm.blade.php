@@ -102,9 +102,9 @@
                 @foreach($ProjectDesignation as $item)
                     <tr>
                         <td><?php $Designation = \App\Models\Designation::find($item->project_designation_id);if($Designation)echo $Designation->designationType;?></td>
-                        <td>{!! $item->hr_rates !!}</td>
+                        <td>{!! number_format($item->hr_rates,2) !!}</td>
                         <td>{!! $item->hr !!}</td>
-                        <td>{!! $item->total !!}</td>
+                        <td>{!! number_format($item->total,2) !!}</td>
                     </tr>
                     <?php $DesiginationHrs = $DesiginationHrs+$item->hr; $DesignationCost = $DesignationCost+$item->total;?>
                 @endforeach
@@ -161,12 +161,18 @@
                     @foreach($ProjectOverHeads as $item)
                         <tr>
                             <td>{!! $item->project_cost_type !!}</td>
-                            <td>{!! $item->cost !!}</td>
+                            <td>{!! number_format($item->cost,2) !!}</td>
                             <td>{!! $item->remark !!}</td>
                         </tr>
                         <?php $CostSum = $CostSum+$item->cost;?>
                     @endforeach
                 </tbody>
+                <tfoot>
+                <tr>
+                    <td></td>
+                    <td>{!! number_format($CostSum,2) !!} /=</td>
+                </tr>
+                </tfoot>
             </table>
         </div>
 

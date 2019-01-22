@@ -274,14 +274,9 @@ class ProjectController extends Controller
         $actualCost = 0;
         $actualCostByOverhead = 0;
 
-        dd($request->all());
-
         $request->validate([
-            'items' => 'required',
             'project_id' => 'required'
         ]);
-
-        dd($request->all());
 
         $Project = Project::findOrFail($request->project_id);
 
@@ -290,6 +285,20 @@ class ProjectController extends Controller
         }
 
         foreach ($request->items as $item){
+            if($item['cost'] != null){
+                ProjectOverheadsActual::create([
+                    'project_id'=>$Project->id,
+                    'project_cost_type_id'=>$item['cost_type_id'],
+                    'project_cost_type'=>$item['cost_type_name'],
+                    'cost'=>$item['cost'],
+                    'remarks'=>$item['remark'],
+                    'created_by_id'=>\Auth::id(),
+                    'updated_by_id'=>\Auth::id()
+                ]);
+            }
+        }
+
+        foreach ($request->cost_row as $item){
             if($item['cost'] != null){
                 ProjectOverheadsActual::create([
                     'project_id'=>$Project->id,

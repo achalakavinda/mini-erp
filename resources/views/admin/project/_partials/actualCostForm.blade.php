@@ -68,7 +68,7 @@
 
         var costTable = $('#CostTable');
 
-        var count = parseFloat(<?php echo $count;?>);
+        var count = 0;
         var RawCount = 1;
 
         $( document ).ready(function() {
