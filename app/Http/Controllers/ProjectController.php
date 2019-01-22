@@ -149,6 +149,13 @@ class ProjectController extends Controller
      */
     public function finalized(Request $request)
     {
+        $CalculateAdministrativeOverheads = isset($request->check_administrative_overhead);
+        $AdministrativeOverheadsPercentage = 1;
+
+        if($request->administrative_overhead_percentage){
+            $AdministrativeOverheadsPercentage = $request->administrative_overhead_percentage;
+        }
+
         //budget cost variances
         $Project = Project::findOrFail($request->project_id);
         $Project_Budgeted_Work_Cost = 0;
@@ -209,6 +216,24 @@ class ProjectController extends Controller
 
         //budget and quoted price calculation
         $BudgetSum = $Project_Budgeted_Work_Cost+$Project_Budgeted_OverHead_Cost;
+
+        if($CalculateAdministrativeOverheads){
+
+            $val = ($Project_Budgeted_Work_Cost*$AdministrativeOverheadsPercentage);
+            $Project_Budgeted_OverHead_Cost = $Project_Budgeted_OverHead_Cost+($Project_Budgeted_Work_Cost*$AdministrativeOverheadsPercentage);
+
+            $BudgetSum = $Project_Budgeted_Work_Cost+$Project_Budgeted_OverHead_Cost;
+
+            ProjectOverhead::create([
+                'project_id'=>$Project->id,
+                'project_cost_type'=>"Administrative Overheads",
+                'cost'=>$val,
+                'remarks'=>'Overhead calculated by Staff cost * overhead percentage',
+                'created_by_id'=>\Auth::id(),
+                'updated_by_id'=>\Auth::id()
+            ]);
+        }
+
         $QuotedSum = 0;
         if($request->profit_margin!=null && $request->profit_margin>0){
             $QuotedSum = $BudgetSum + ($BudgetSum*$request->profit_margin);

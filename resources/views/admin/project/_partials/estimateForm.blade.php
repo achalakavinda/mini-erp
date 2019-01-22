@@ -202,6 +202,19 @@
 
 <!-- /Cost assignment-->
 @if($showUpdate)
+    <div class="box-header with-border">
+        <h4 class="box-title">Calculate with Administrative Overheads</h4>
+    </div>
+    <div class="box-body">
+        <div class="col-md-3">
+            <div class="input-group">
+                        <span class="input-group-addon">
+                          <input name="check_administrative_overhead" type="checkbox">
+                        </span>
+                        <input name="administrative_overhead_percentage" placeholder="Administrative Overhead %"  type="number" class="form-control">
+            </div>
+        </div>
+    </div>
     <div class="box-footer">
         <button type="submit" class="btn btn-success pull-right">Update <i class="fa fa-save"></i></button>
     </div>
@@ -240,7 +253,6 @@
                                 </tfoot>
                             </table>
                             <!-- /.box-body -->
-
                         </div>
                     </div>
                 </div>
@@ -308,7 +320,9 @@
 
             $('#tableEmployee tbody').on( 'click', 'tr', function () {
                 var d = EmployeeTable.row( this ).data();
-                updateHourRate(ClickRow,d[2]);
+                if (typeof d != "undefined") {
+                    updateHourRate(ClickRow,d[2]);
+                }
                 $('#staffRatesModel').modal('hide');
             } );
 
