@@ -145,7 +145,7 @@ class ApiController extends Controller
     public function getStaffByDesignation($id){
         $arr = [];
         try{
-            $staff = User::where('designation_id',$id)->select(['id','name','hr_rates']);
+            $staff = User::where('designation_id',$id)->select(['id','name','hr_rates','designation_id'])->get();
             $arr = [
                 'status'=>"ok",
                 'designation'=>$staff
