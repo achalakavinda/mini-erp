@@ -55,15 +55,16 @@ class ProjectController extends Controller
             'profit_ratio' => 'required',
             'quoted_price' => 'required'
         ]);
-
+        //fetch customer information
         $CUSTOMER = Customer::findOrFail($request->customer_id);
+        //Project Code
         $code = $CUSTOMER->code."-".$request->code;
-
+        //Check code for unique project code validations
         $CheckCode = Project::where('code',$code)->first();
         if($CheckCode){
             return    \redirect()->back()->withErrors('*Code must be unique');
         }
-
+        //create project
         $Project = Project::create([
             'customer_id'=>$request->customer_id,
             'customer_name'=>$CUSTOMER->name,
@@ -149,10 +150,18 @@ class ProjectController extends Controller
      */
     public function finalized(Request $request)
     {
-        $CalculateAdministrativeOverheads = isset($request->check_administrative_overhead);
-        $AdministrativeOverheadsPercentage = 1;
+        $request->validate([
+            'number_of_hrs' => 'required',
+            'budget_cost' => 'required',
+            'quoted_price' => 'required',
+        ]);
 
-        if($request->administrative_overhead_percentage){
+        //check administrative overheads requirements
+        $CalculateAdministrativeOverheads = isset($request->check_administrative_overhead);
+        $AdministrativeOverheadsPercentage = 100;
+        //check for preset administrative overheads
+        if($request->administrative_overhead_percentage)
+        {
             $AdministrativeOverheadsPercentage = $request->administrative_overhead_percentage;
         }
 
@@ -163,25 +172,19 @@ class ProjectController extends Controller
         $Project_Budgeted_OverHead_Cost = 0;
         $Project_Budgeted_Profit_Margin = 0;
 
-        $request->validate([
-            'number_of_hrs' => 'required',
-            'budget_cost' => 'required',
-            'quoted_price' => 'required',
-            ]);
-
-
+        //fetch existing project values for calculations
         if($Project!=null)
         {
             $Project_Budgeted_OverHead_Cost = $Project->budget_cost_by_overhead;
-        }
-        if($Project!=null)
-        {
             $Project_Budgeted_Work_Cost = $Project->budget_cost_by_work;
         }
 
-        if(isset($request->cost_row)){
-            foreach ($request->cost_row as $item){
-                if($item['cost']!=null && $item['cost']!=0){
+        if(isset($request->cost_row))
+        {
+            foreach ($request->cost_row as $item)
+            {
+                if($item['cost']!=null && $item['cost']!=0)
+                {
                     ProjectOverhead::create([
                         'project_id'=>$Project->id,
                         'project_cost_type_id'=>$item['cost_type_id'],
@@ -191,14 +194,18 @@ class ProjectController extends Controller
                         'created_by_id'=>\Auth::id(),
                         'updated_by_id'=>\Auth::id()
                     ]);
-                    $Project_Budgeted_OverHead_Cost = $Project_Budgeted_OverHead_Cost+$item['cost'];
+                    //variable hold the total overhead cost
+                    $Project_Budgeted_OverHead_Cost = $Project_Budgeted_OverHead_Cost + $item['cost'];
                 }
             }
         }
 
-        if(isset($request->designation_row)){
-            foreach ($request->designation_row as $item) {
-                if($item['hrs']!= null && $item['hrs']>0 && $item['hr_rate']!=null && $item['hr_rate']>0){
+        if(isset($request->designation_row))
+        {
+            foreach ($request->designation_row as $item)
+            {
+                if($item['hrs']!= null && $item['hrs']>0 && $item['hr_rate']!=null && $item['hr_rate']>0)
+                {
                     ProjectDesignation::create([
                         'project_id'=>$Project->id,
                         'project_designation_id'=>$item['designation_id'],
@@ -209,54 +216,57 @@ class ProjectController extends Controller
                         'updated_by_id'=>\Auth::id(),
                     ]);
                     $Project_Budgeted_Work_Hours = $Project_Budgeted_Work_Hours + $item['hrs'];
-                    $Project_Budgeted_Work_Cost = $Project_Budgeted_Work_Cost+($item['hrs']*$item['hr_rate']);
+                    $Project_Budgeted_Work_Cost = $Project_Budgeted_Work_Cost + ($item['hrs']*$item['hr_rate']);
                 }
             }
         }
 
         //budget and quoted price calculation
-        $BudgetSum = $Project_Budgeted_Work_Cost+$Project_Budgeted_OverHead_Cost;
+        $BudgetSum = $Project_Budgeted_Work_Cost + $Project_Budgeted_OverHead_Cost;
 
-        if($CalculateAdministrativeOverheads){
-
+        if($CalculateAdministrativeOverheads)
+        {
             $val = ($Project_Budgeted_Work_Cost*$AdministrativeOverheadsPercentage);
-            $Project_Budgeted_OverHead_Cost = $Project_Budgeted_OverHead_Cost+($Project_Budgeted_Work_Cost*$AdministrativeOverheadsPercentage);
-
+            $Project_Budgeted_OverHead_Cost = $Project_Budgeted_OverHead_Cost + ($Project_Budgeted_Work_Cost*$AdministrativeOverheadsPercentage);
             $BudgetSum = $Project_Budgeted_Work_Cost+$Project_Budgeted_OverHead_Cost;
 
             ProjectOverhead::create([
                 'project_id'=>$Project->id,
                 'project_cost_type'=>"Administrative Overheads",
                 'cost'=>$val,
-                'remarks'=>'Overhead calculated by Staff cost * overhead percentage',
+                'remarks'=>'Overhead calculated by Staff cost * Overhead %',
                 'created_by_id'=>\Auth::id(),
                 'updated_by_id'=>\Auth::id()
             ]);
         }
 
         $QuotedSum = 0;
-        if($request->profit_margin!=null && $request->profit_margin>0){
+        if($request->profit_margin!=null && $request->profit_margin>0)
+        {
             $QuotedSum = $BudgetSum + ($BudgetSum*$request->profit_margin);
-        }else{
+        }else
+            {
             $QuotedSum = $BudgetSum;
         }
 
-        $Project->budget_number_of_hrs = $Project_Budgeted_Work_Hours;
-        $Project->budget_cost_by_work = $Project_Budgeted_Work_Cost;
-        $Project->budget_cost_by_overhead = $Project_Budgeted_OverHead_Cost;
-        $Project->budget_cost = $BudgetSum;
+        //update existing project values
+        $Project->budget_number_of_hrs = $Project_Budgeted_Work_Hours;//budgeted number of working hours
+        $Project->budget_cost_by_work = $Project_Budgeted_Work_Cost;//budgeted staff cost by work
+        $Project->budget_cost_by_overhead = $Project_Budgeted_OverHead_Cost;//budgeted project overhead cost
+        $Project->budget_cost = $BudgetSum;//sum of budgeted cost
 
-        $Project->budget_revenue = $QuotedSum;
-        $Project->quoted_price = $QuotedSum;
-        $Project->profit_ratio = $request->profit_margin;
+        $Project->budget_revenue = $QuotedSum;//budget revenue and the quoted price is equal
+        $Project->quoted_price = $QuotedSum;//budget revenue and the quoted price is equal
+        $Project->profit_ratio = $request->profit_margin;//expected profit ratio
 
-        if($Project->actual_revenue==0){
+        if($Project->actual_revenue==0)
+        {
             $Project->actual_revenue = $QuotedSum;
         }
 
-        $Project->updated_by_id = \Auth::id();
-        $Project->save();
-
+        $Project->updated_by_id = \Auth::id();//set updated by parameter
+        $Project->save();//save the updated values
+        //redirect to project estimation page back after submit data
         return redirect('project/'.$Project->id.'/estimation')->with('created',true);
     }
 
@@ -271,21 +281,24 @@ class ProjectController extends Controller
 
     public function actualCostStore(Request $request)
     {
-        $actualCost = 0;
-        $actualCostByOverhead = 0;
-
         $request->validate([
             'project_id' => 'required'
         ]);
 
+        $actualCost = 0;
+        $actualCostByOverhead = 0;
+
         $Project = Project::findOrFail($request->project_id);
 
-        if($Project){
+        if($Project)
+        {
             $actualCost =  $actualCost+$Project->actual_cost;
         }
 
-        foreach ($request->items as $item){
-            if($item['cost'] != null){
+        foreach ($request->items as $item)
+        {
+            if($item['cost'] != null)
+            {
                 ProjectOverheadsActual::create([
                     'project_id'=>$Project->id,
                     'project_cost_type_id'=>$item['cost_type_id'],
@@ -298,8 +311,10 @@ class ProjectController extends Controller
             }
         }
 
-        foreach ($request->cost_row as $item){
-            if($item['cost'] != null){
+        foreach ($request->cost_row as $item)
+        {
+            if($item['cost'] != null)
+            {
                 ProjectOverheadsActual::create([
                     'project_id'=>$Project->id,
                     'project_cost_type_id'=>$item['cost_type_id'],
@@ -312,12 +327,15 @@ class ProjectController extends Controller
             }
         }
 
-        if($Project){
+        if($Project)
+        {
             $ProjectActualOverHeads = ProjectOverheadsActual::where('project_id',$Project->id)->get();
-            foreach ($ProjectActualOverHeads as $item){
+            foreach ($ProjectActualOverHeads as $item)
+            {
                 $actualCostByOverhead = $actualCostByOverhead+$item->cost;
             }
-            if($actualCostByOverhead!=0){
+            if($actualCostByOverhead!=0)
+            {
                 $Project->actual_cost_by_overhead = $actualCostByOverhead;
                 $Project->save();
             }
