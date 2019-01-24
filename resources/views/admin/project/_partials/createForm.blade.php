@@ -1,6 +1,7 @@
 <?php
     $Customers = \App\Models\Customer::all()->pluck('name','id');
     $JobTypes = \App\Models\JobType::all()->pluck('jobType','id');
+    $CustomerSector = \App\Models\CustomerSector::all()->pluck('name','id');
 ?>
 
 <div class="box-body">
@@ -55,10 +56,16 @@
 </div>
 
 <div class="box-body">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="form-group">
             {!! Form::label('job_types','Jobs',['class' => 'control-label']) !!}
             {!! Form::select('job_types',$JobTypes,null,['class'=>'form-control','id'=>'job_types','name'=>'job_types[]']) !!}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label('sector_id','Sectors',['class' => 'control-label']) !!}
+            {!! Form::select('sector_id',$CustomerSector,null,['class'=>'form-control','id'=>'sectorId']) !!}
         </div>
     </div>
 </div>

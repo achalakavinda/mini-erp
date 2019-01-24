@@ -30,13 +30,7 @@
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
-                <?php
-                    if(isset($PageController)){
-                        echo Form::open(['action'=>'PageController@workSheetStore','class'=>'form-horizontal','id'=>'Form']);
-                    }else{
-                        echo Form::open(['action'=>'WorkSheetController@store','class'=>'form-horizontal','id'=>'Form']);
-                    }
-                ?>
+                {!! Form::open(['action'=>'WorkSheetController@store','class'=>'form-horizontal','id'=>'Form']) !!}
                 @include('error.error')
                 @include('admin.work_sheet._partials.createForm')
                 {!! Form::close() !!}
@@ -54,9 +48,13 @@
 
     <script type="text/javascript">
 
+        'use strict'
+
         var projectSelector = $( "#project" );
         var userSelector = $( "#userid" );
         var workCodeSelector = $( "#workcodeid" );
+
+        var maxToTime;
 
         $(function() {
 
@@ -70,7 +68,27 @@
                 ajax(projectSelector.val(),userSelector.val());
             });
 
+            $('#Hrs').change(function () {
+                changeTimeByHour();
+            });
+
         });
+
+        function changeTimeByHour() {
+            var Hrs = parseFloat($('#Hrs').val());
+
+            var time = $('#From').val();
+            time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+            if (time.length > 1) { // If time format correct
+                time = time.slice (1);  // Remove full string match value
+                time[0] = parseFloat(time[0]) + Math.trunc( Hrs ) ; //
+                if(Hrs<=8 && Hrs>0){
+                    $('#To').val(time.join(''));
+                    console.log(time.join(''));
+                }
+            }
+        }
         
         function ajax(id,user_id) {
             if(id === 'undefine' || id === null || id ===''){
@@ -120,9 +138,15 @@
                 })
 
                 $('.removeRW').remove();
+                var runValue = false;
                 data.worksheet.forEach(function (item) {
                     tableRowAdd(item);
+                    runValue = true;
                 })
+                if(runValue){
+                    $('#From').val(maxToTime);
+                    $('#To').val(maxToTime);
+                }
 
             }else{
                 $( "#jobtypeid" ).find('option').remove().end();
@@ -147,6 +171,8 @@
 
             $('#worksheetTable').append('<tr class="removeRW"><td>'+tConvert(item.from)+' -- '+tConvert(item.to)+'</td><td>Report</td><td>'+company+'</td><td>'+item.project_value+jobType+'</td><td>'+remark+'</td><td>' +
                 '<a style="color: red" href="#" onclick="deleteRecord('+item.id+')">DEL</a> </td></tr>');
+
+            maxToTime = item.to;
         }
 
         function tConvert (time) {

@@ -13,6 +13,13 @@ class CreateProjectsTable extends Migration
      */
     public function up()
     {
+        Schema::create('project_status', function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('unique_id')->unique();
+            $table->string('name');
+            $table->timestamps();
+        });
+
         Schema::create('projects', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('customer_id')->unsigned();
@@ -25,13 +32,13 @@ class CreateProjectsTable extends Migration
             $table->double('budget_number_of_hrs')->default(0);// number of hrs
             $table->double('budget_cost_by_work')->default(0);//budget cost by work
             $table->double('budget_cost_by_overhead')->default(0);//budget cost by cost overhead
-            $table->double('budget_cost')->default(0);// budget cost
+            //budget cost (cost by work + cost by overhead)
             $table->double('budget_revenue')->default(0);// revenue
 
             $table->double('actual_number_of_hrs')->default(0);//actual number of hrs
             $table->double('actual_cost_by_work')->default(0);//actual cost by work
             $table->double('actual_cost_by_overhead')->default(0);//actual cost by cost overhead
-            $table->double('actual_cost')->default(0);//actual cost
+            //actual cost (actual cost by work + actual cost by overhead)
             $table->double('actual_revenue')->default(0);//actual revenue
 
 
@@ -44,6 +51,7 @@ class CreateProjectsTable extends Migration
 
             $table->boolean('close')->default(0);
             $table->boolean('invoiced')->default(0);
+            $table->unsignedInteger('status_id');
 
             $table->timestamps();
             $table->unsignedInteger('created_by_id');
@@ -52,6 +60,7 @@ class CreateProjectsTable extends Migration
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->foreign('created_by_id')->references('id')->on('users');
             $table->foreign('updated_by_id')->references('id')->on('users');
+            $table->foreign('status_id')->references('id')->on('project_status');
         });
     }
 
@@ -63,5 +72,6 @@ class CreateProjectsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('projects');
+        Schema::dropIfExists('project_status');
     }
 }

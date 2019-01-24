@@ -38,6 +38,7 @@
         <thead>
         <tr>
             <th>Time</th>
+            <th>Hrs</th>
             <th>Report</th>
             <th>Customer</th>
             <th>Job Type</th>
@@ -47,7 +48,11 @@
         <tbody>
 
         <tr>
-            <td> <input name="row[0][from]" type="time" value="08:30:00"> - <input name="row[0][to]" type="time" value="17:30:00"></td>
+            <td> <input name="row[0][from]" type="time" value="08:30:00" id="From"> - <input name="row[0][to]" type="time" value="17:30:00" id="To"></td>
+            <td>
+                {!! Form::number('row[0][hrs]',null,["class"=>"form-control","id"=>"Hrs"]) !!}
+            </td>
+
             <td>
                 <input checked type="checkbox">
             </td>

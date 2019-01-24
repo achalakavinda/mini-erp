@@ -303,6 +303,31 @@ class Important extends Seeder
             ]
         ]);
 
+        DB::table('project_status')->insert([
+            [
+                'id'=>1,
+                'unique_id'=>1,
+                'name'=>'Open',
+                "created_at"=>\Carbon\Carbon::now(),
+                "updated_at"=>\Carbon\Carbon::now()
+            ],
+            [
+                'id'=>2,
+                'unique_id'=>2,
+                'name'=>'Verified',
+                "created_at"=>\Carbon\Carbon::now(),
+                "updated_at"=>\Carbon\Carbon::now()
+            ],
+            [
+                'id'=>3,
+                'unique_id'=>3,
+                'name'=>'Close',
+                "created_at"=>\Carbon\Carbon::now(),
+                "updated_at"=>\Carbon\Carbon::now()
+            ],
+
+            ]);
+
         //Project cost important seeds
         DB::table('project_cost_types')->insert([
             [

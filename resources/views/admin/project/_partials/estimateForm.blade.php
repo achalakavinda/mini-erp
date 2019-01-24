@@ -39,46 +39,46 @@
         </div>
         <!-- /.box-body -->
         @else
-        <div class="box-body">
+        {{--<div class="box-body">--}}
 
-            <div class="col-md-2">
-                <div class="form-group">
-                    {!! Form::label('number_of_hrs','Number of Hrs',['class' => 'control-label']) !!}
-                    {!! Form::text('number_of_hrs',$Project->budget_number_of_hrs,['class'=>'form-control','id'=>'numberOfHrs','placeholder'=>'Number of Hrs','disabled']) !!}
-                </div>
-            </div>
+            {{--<div class="col-md-2">--}}
+                {{--<div class="form-group">--}}
+                    {{--{!! Form::label('number_of_hrs','Number of Hrs',['class' => 'control-label']) !!}--}}
+                    {{--{!! Form::text('number_of_hrs',$Project->budget_number_of_hrs,['class'=>'form-control','id'=>'numberOfHrs','placeholder'=>'Number of Hrs','disabled']) !!}--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
-            <div class="col-md-2">
-                <div class="form-group">
-                    {!! Form::label('budget_cost','Budget Cost',['class' => 'control-label']) !!}
-                    {!! Form::number('budget_cost',$Project->budget_cost,['class'=>'form-control','id'=>'BudgetCost','placeholder'=>'Budget Cost','disabled', 'step'=>'0.01']) !!}
-                </div>
-            </div>
+            {{--<div class="col-md-2">--}}
+                {{--<div class="form-group">--}}
+                    {{--{!! Form::label('budget_cost','Budget Cost',['class' => 'control-label']) !!}--}}
+                    {{--{!! Form::number('budget_cost',$Project->budget_cost,['class'=>'form-control','id'=>'BudgetCost','placeholder'=>'Budget Cost','disabled', 'step'=>'0.01']) !!}--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
-            <div class="col-md-2">
-                <div class="form-group">
-                    {!! Form::label('profit_margin','Profit Margin',['class' => 'control-label']) !!}
-                    {!! Form::number('profit_margin',$Project->profit_ratio,['class'=>'form-control','id'=>'ProfitMargin','placeholder'=>'Profit Margin in Decimal', 'step'=>'0.01']) !!}
-                </div>
-            </div>
+            {{--<div class="col-md-2">--}}
+                {{--<div class="form-group">--}}
+                    {{--{!! Form::label('profit_margin','Profit Margin',['class' => 'control-label']) !!}--}}
+                    {{--{!! Form::number('profit_margin',$Project->profit_ratio,['class'=>'form-control','id'=>'ProfitMargin','placeholder'=>'Profit Margin in Decimal', 'step'=>'0.01']) !!}--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
-            <div class="col-md-3">
-                <div class="form-group">
-                    {!! Form::label('quoted_price','Quoted Price',['class' => 'control-label']) !!}
-                    {!! Form::number('quoted_price',$Project->budget_revenue,['class'=>'form-control','id'=>'QuotedPrice','placeholder'=>'Quoted Price','disabled', 'step'=>'0.01']) !!}
-                </div>
-            </div>
+            {{--<div class="col-md-3">--}}
+                {{--<div class="form-group">--}}
+                    {{--{!! Form::label('quoted_price','Quoted Price',['class' => 'control-label']) !!}--}}
+                    {{--{!! Form::number('quoted_price',$Project->budget_revenue,['class'=>'form-control','id'=>'QuotedPrice','placeholder'=>'Quoted Price','disabled', 'step'=>'0.01']) !!}--}}
+                {{--</div>--}}
+            {{--</div>--}}
 
-            @if($showUpdate)
-            <div class="col-md-3">
-                <div class="form-group">
-                    {!! Form::label('refresh_value','Refresh values',['class' => 'control-label']) !!}
-                    <button class="form-control" type="button" id="CalculateBtn">Calculate <i class="fa fa-calculator"></i></button>
-                </div>
-            </div>
-            @endif
+            {{--@if($showUpdate)--}}
+            {{--<div class="col-md-3">--}}
+                {{--<div class="form-group">--}}
+                    {{--{!! Form::label('refresh_value','Refresh values',['class' => 'control-label']) !!}--}}
+                    {{--<button class="form-control" type="button" id="CalculateBtn">Calculate <i class="fa fa-calculator"></i></button>--}}
+                {{--</div>--}}
+            {{--</div>--}}
+            {{--@endif--}}
 
-        </div>
+        {{--</div>--}}
         <!-- /.box-body -->
     @endif
 

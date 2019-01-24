@@ -122,12 +122,21 @@ class WorkSheetController extends Controller
             }
 
 
-            if($work_hr>8 || $CurrentNoOfWork>8){
+            if($work_hr>8 || $CurrentNoOfWork>8){//set the working hr to 8
                 $work_hr = 8;
                 if($CurrentNoOfWork>8){
                     $work_hr = 0;
                 }
-            }//set the working hr to 8
+            }else{
+                //this value must be check with combination
+                $CombinationHrTotal = ($CurrentNoOfWork+$actual_work_hr);
+                if($CombinationHrTotal>8){
+                    $work_hr = 8-$CurrentNoOfWork;
+                }
+            }
+
+
+
 
             //check the work state
             if($Worked){
@@ -156,7 +165,6 @@ class WorkSheetController extends Controller
                     //update the time report project
                     $PJ = Project::find($request->project_id);
                     if($PJ) {
-                        $PJ->actual_cost = $PJ->actual_cost + ($USER->hr_rates*$work_hr);
                         $PJ->actual_number_of_hrs = $PJ->actual_number_of_hrs + $work_hr;
                         $PJ->actual_cost_by_work = $PJ->actual_cost_by_work + ($USER->hr_rates*$work_hr);
                         $PJ->save();
