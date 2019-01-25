@@ -56,7 +56,7 @@
                                 <td>{{ $Project->code }}</td>
                                 <td>{{ $Project->customer_name }}</td>
                                 <td>{{ number_format($Project->budget_number_of_hrs,2) }}</td>
-                                <td>{{ number_format($Project->budget_cost,2) }}</td>
+                                <td>{{ number_format($Project->budget_cost+$Project->budget_cost_by_overhead,2) }}</td>
                                 <td>{{ number_format($Project->budget_revenue,2) }}</td>
                                 <td>{{ number_format($Project->actual_number_of_hrs,2) }}</td>
                                 <td>{{ number_format($Project->actual_cost_by_work+$Project->actual_cost_by_overhead,2) }}</td>

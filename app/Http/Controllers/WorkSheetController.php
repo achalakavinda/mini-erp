@@ -56,13 +56,17 @@ class WorkSheetController extends Controller
         $Worked = $WorkCode->worked;
         //date time convert to sql format
         $DATE_VAR = date_format(date_create($request->date),"Y-m-d");
-
         //loop the row array and insert row into worksheet table
         foreach ($ROWS as $row)
         {
             $diffInMin = $this->timeDiff($row['from'],$row['to']);
             $work_hr = $this->convertToHoursMins($diffInMin);
             $actual_work_hr = $work_hr;
+
+            if($actual_work_hr == null){
+                return redirect()->back()->withErrors('Please Correct time format and re submit');
+            }
+
 
             $startTime = Carbon::parse($row['from']);
             $finishTime = Carbon::parse($row['to']);
@@ -122,30 +126,50 @@ class WorkSheetController extends Controller
             }
 
 
-            if($work_hr>8 || $CurrentNoOfWork>8){//set the working hr to 8
-                $work_hr = 8;
-                if($CurrentNoOfWork>8){
+            if($work_hr>=7.5 || $CurrentNoOfWork>=7.5){//set the working hr to 8
+                $work_hr = 7.5;
+                if($CurrentNoOfWork>=7.5){
                     $work_hr = 0;
                 }
             }else{
                 //this value must be check with combination
                 $CombinationHrTotal = ($CurrentNoOfWork+$actual_work_hr);
-                if($CombinationHrTotal>8){
-                    $work_hr = 8-$CurrentNoOfWork;
+                if($CombinationHrTotal>=7.5){
+                    $work_hr = 7.5-$CurrentNoOfWork;
                 }
             }
 
 
-
-
+            $INSERT_COMPANYID = null;
+            $INSERT_JOBTYPEID = null;
+            $INSERT_Remarks = null;
             //check the work state
             if($Worked){
+                if ((isset($row['company'])))
+                {
+                    $INSERT_COMPANYID = $row['company'];
+                }else{
+                    return redirect()->back()->withErrors('Please select a project');
+                }
+
+                if ((isset($row['job_type_id'])))
+                {
+                    $INSERT_JOBTYPEID = $row['job_type_id'];
+                }else{
+                    return redirect()->back()->withErrors('Please select a project');
+                }
+
+                if ((isset($row['remark'])))
+                {
+                    $INSERT_Remarks = $row['remark'];
+                }
+
                 WorkSheet::create([
                     'date'=>$request->date,
-                    'customer_id'=>$row['company'],
+                    'customer_id'=>$INSERT_COMPANYID,
                     'user_id'=>$request->user_id,
                     'project_id'=>$request->project_id,
-                    'job_type_id'=>$row['job_type_id'],
+                    'job_type_id'=>$INSERT_JOBTYPEID,
                     'work_code_id'=>$WorkCode->id,
                     'work_code'=>$WorkCode->name,
                     'worked'=>$Worked,
@@ -158,7 +182,7 @@ class WorkSheetController extends Controller
                     'actual_work_hrs'=>$actual_work_hr,//this value is directly take into number of work hrs validation
                     'actual_hr_cost'=>$USER->hr_rates*$actual_work_hr,
                     'extra_work_hrs'=>$actual_work_hr - $work_hr,
-                    'remark'=>$row['remark']
+                    'remark'=>$INSERT_Remarks
                 ]);
 
                 if($CurrentNoOfWork<=8){
@@ -171,6 +195,10 @@ class WorkSheetController extends Controller
                     }
                 }
             }else{
+                if ((isset($row['remark'])))
+                {
+                    $INSERT_Remarks = $row['remark'];
+                }
                 WorkSheet::create([
                     'date'=>$request->date,
                     'customer_id'=>null,
@@ -189,7 +217,7 @@ class WorkSheetController extends Controller
                     'hr_cost'=>0,
                     'actual_hr_cost'=>0,
                     'extra_work_hrs'=>0,
-                    'remark'=>$row['remark']
+                    'remark'=>$INSERT_Remarks
                 ]);
             }
         }

@@ -22,10 +22,28 @@ $Sector = \App\Models\CustomerSector::all()->pluck('name','id');
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-3">
         <div class="form-group">
             {!! Form::label('contact','Contact',['class' => 'control-label']) !!}
-            {!! Form::text('contact',null,['class'=>'form-control','id'=>'contact','placeholder'=>'Contact Code']) !!}
+            {!! Form::text('contact',null,['class'=>'form-control','id'=>'contact']) !!}
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            {!! Form::label('contact_1','Other Contact 1',['class' => 'control-label']) !!}
+            {!! Form::text('contact_1',null,['class'=>'form-control']) !!}
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            {!! Form::label('contact_2','Other Contact 2',['class' => 'control-label']) !!}
+            {!! Form::text('contact_2',null,['class'=>'form-control']) !!}
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            {!! Form::label('contact_3','Other Contact 3',['class' => 'control-label']) !!}
+            {!! Form::text('contact_3',null,['class'=>'form-control']) !!}
         </div>
     </div>
 

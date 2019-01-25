@@ -40,7 +40,7 @@ class CustomerController extends Controller
     {
         $request->validate([
            'name'=>'required',
-           'code'=>'required'
+           'file_no'=>'required'
         ]);
 
         $Customer = null;
@@ -51,6 +51,9 @@ class CustomerController extends Controller
                 'name'=>$request->name,
                 'code'=>$request->code,
                 'contact'=>$request->contact,
+                'contact_1'=>$request->contact_1,
+                'contact_2'=>$request->contact_2,
+                'contact_3'=>$request->contact_3,
                 'email'=>$request->email,
                 'file_no'=>$request->file_no,
                 'address_1'=>$request->address_1,

@@ -102,13 +102,21 @@
                 @foreach($ProjectDesignation as $item)
                     <tr>
                         <td><?php $Designation = \App\Models\Designation::find($item->project_designation_id);if($Designation)echo $Designation->designationType;?></td>
-                        <td>{!! number_format($item->hr_rates,2) !!}</td>
-                        <td>{!! $item->hr !!}</td>
-                        <td>{!! number_format($item->total,2) !!}</td>
+                        <td style="text-align: right">{!! number_format($item->hr_rates,2) !!}</td>
+                        <td style="text-align: right">{!! number_format($item->hr,2) !!}</td>
+                        <td style="text-align: right">{!! number_format($item->total,2) !!}</td>
                     </tr>
                     <?php $DesiginationHrs = $DesiginationHrs+$item->hr; $DesignationCost = $DesignationCost+$item->total;?>
                 @endforeach
             </tbody>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th style="text-align: right">{!! number_format($DesiginationHrs,2)  !!}</th>
+                    <th style="text-align: right">{!! number_format($DesignationCost,2)  !!}</th>
+                </tr>
+            </tfoot>
         </table>
     </div>
 
@@ -161,7 +169,7 @@
                     @foreach($ProjectOverHeads as $item)
                         <tr>
                             <td>{!! $item->project_cost_type !!}</td>
-                            <td>{!! number_format($item->cost,2) !!}</td>
+                            <td style="text-align: right">{!! number_format($item->cost,2) !!}</td>
                             <td>{!! $item->remark !!}</td>
                         </tr>
                         <?php $CostSum = $CostSum+$item->cost;?>
@@ -169,8 +177,9 @@
                 </tbody>
                 <tfoot>
                 <tr>
-                    <td></td>
-                    <td>{!! number_format($CostSum,2) !!} /=</td>
+                    <th>Total Indirect Cost</th>
+                    <th style="text-align: right">{!! number_format($CostSum,2) !!}</th>
+                    <th></th>
                 </tr>
                 </tfoot>
             </table>
@@ -319,7 +328,7 @@
                 calculateCostDesignationTypes(designation_count);
                 var bugetTol = parseFloat(CostTypeSum)+parseFloat(DesignationCostSum)+parseFloat(BugetCost);
                 var margin = parseFloat($('#ProfitMargin').val())
-                $('#QuotedPrice').val(bugetTol+(bugetTol*margin));
+                $('#QuotedPrice').val(bugetTol+(bugetTol*(margin/100)));
             });
 
             EmployeeTable = $('#tableEmployee').DataTable();

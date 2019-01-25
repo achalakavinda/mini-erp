@@ -76,7 +76,7 @@
             budget_cost = parseFloat(budget_cost);
             profile_ratio = parseFloat(profile_ratio);
 
-            $('#quotedPrice').val(budget_cost+(budget_cost*profile_ratio));
+            $('#quotedPrice').val(budget_cost+(budget_cost*(profile_ratio/100)));
         }
 
     </script>

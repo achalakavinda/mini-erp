@@ -30,7 +30,7 @@
                     <table id="example1" class="table table-responsive table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>Code</th>
+                            <th>Firm File No :</th>
                             <th>Name</th>
                             <th>Contact</th>
                             <th>Email</th>
@@ -40,7 +40,7 @@
                         <tbody>
                             @foreach($Customers as $customer)
                                 <tr>
-                                    <td>{!! $customer->code !!}</td>
+                                    <td>{!! $customer->file_no !!}</td>
                                     <td>{!! $customer->name !!}</td>
                                     <td>{!! $customer->contact !!}</td>
                                     <td>{!! $customer->email !!}</td>

@@ -35,8 +35,8 @@
 
     <div class="col-md-3">
         <div class="form-group">
-            {!! Form::label('profit_ratio','Profit Ratio',['class' => 'control-label']) !!}
-            {!! Form::number('profit_ratio',0,['class'=>'form-control','id'=>'profitRatio', 'step'=>'0.01']) !!}
+            {!! Form::label('profit_ratio','Profit Mark Up',['class' => 'control-label']) !!}
+            {!! Form::number('profit_ratio',10,['class'=>'form-control','id'=>'profitRatio', 'step'=>'0.01']) !!}
         </div>
     </div>
 

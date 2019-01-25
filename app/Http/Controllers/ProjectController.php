@@ -60,7 +60,7 @@ class ProjectController extends Controller
         //fetch customer information
         $CUSTOMER = Customer::findOrFail($request->customer_id);
         //Project Code
-        $code = $CUSTOMER->code."-".$request->code;
+        $code = $CUSTOMER->name."-".$request->code;
         //Check code for unique project code validations
         $CheckCode = Project::where('code',$code)->first();
 
@@ -69,15 +69,22 @@ class ProjectController extends Controller
             return    \redirect()->back()->withErrors('*Code must be unique');
         }
 
+        if($request->profit_ratio<10){
+            return    \redirect()->back()->withErrors('Minimum mark up 10%');
+        }
+
+        $quoted_price = $request->budget_cost +($request->budget_cost*($request->profit_ratio/100));
+
         //create project
         $Project = Project::create([
             'customer_id'=>$request->customer_id,
             'customer_name'=>$CUSTOMER->name,
             'code'=>$code,
             'sector_id'=>$request->sector_id,
-            'quoted_price'=>$request->quoted_price,
-            'budget_revenue'=>$request->quoted_price,
+            'quoted_price'=>$quoted_price,
+            'budget_revenue'=>$quoted_price,
             'budget_number_of_hrs'=>$request->budget_number_of_hrs,
+            'budget_cost_by_overhead'=>$request->budget_cost,
             'profit_ratio'=>$request->profit_ratio,
             'status_id'=>1,
             'created_by_id'=>\Auth::id(),
@@ -179,13 +186,6 @@ class ProjectController extends Controller
         $Project_Budgeted_OverHead_Cost = 0;
         $Project_Budgeted_Profit_Margin = 0;
 
-        //fetch existing project values for calculations
-        if($Project!=null)
-        {
-            $Project_Budgeted_OverHead_Cost = $Project->budget_cost_by_overhead;
-            $Project_Budgeted_Work_Cost = $Project->budget_cost_by_work;
-        }
-
         if(isset($request->cost_row))
         {
             foreach ($request->cost_row as $item)
@@ -245,9 +245,9 @@ class ProjectController extends Controller
 
         if($CalculateAdministrativeOverheads)
         {
-            $val = ($Project_Budgeted_Work_Cost*$AdministrativeOverheadsPercentage);
+            $val = ($Project_Budgeted_Work_Cost*($AdministrativeOverheadsPercentage/100));
 
-            $Project_Budgeted_OverHead_Cost = $Project_Budgeted_OverHead_Cost + ($Project_Budgeted_Work_Cost*$AdministrativeOverheadsPercentage);
+            $Project_Budgeted_OverHead_Cost = $Project_Budgeted_OverHead_Cost + ($Project_Budgeted_Work_Cost*($AdministrativeOverheadsPercentage/100));
             $BudgetSum = $Project_Budgeted_Work_Cost+$Project_Budgeted_OverHead_Cost;
 
             ProjectOverhead::create([
@@ -263,8 +263,8 @@ class ProjectController extends Controller
         $QuotedSum = 0;
 
         if($request->profit_margin!=null && $request->profit_margin>0)
-        {
-            $QuotedSum = $BudgetSum + ($BudgetSum*$request->profit_margin);
+        {// this zero validation must be remove if u remove minimum profit margin to 0
+            $QuotedSum = $BudgetSum + ($BudgetSum*($request->profit_margin/100));
         }else
             {
             $QuotedSum = $BudgetSum;

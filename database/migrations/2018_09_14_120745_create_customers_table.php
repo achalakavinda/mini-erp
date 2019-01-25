@@ -38,10 +38,13 @@ class CreateCustomersTable extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('code');
+            $table->string('code')->nullable();
             $table->string('contact')->nullable();
+            $table->string('contact_1')->nullable();
+            $table->string('contact_2')->nullable();
+            $table->string('contact_3')->nullable();
             $table->string('email')->nullable();
-            $table->text('file_no')->nullable();
+            $table->string('file_no')->unique();
             $table->text('address_1')->nullable();
             $table->text('address_2')->nullable();
             $table->text('address_3')->nullable();
