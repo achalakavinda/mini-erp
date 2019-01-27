@@ -45,9 +45,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('project/{id}/estimation/edit/cost-type','ProjectController@editCostType');
 
         Route::get('project/{id}/actual-cost','ProjectController@actualCost');
+        Route::get('project/{id}/settings','ProjectController@settings');
 
         Route::post('project/finalized','ProjectController@finalized');
         Route::post('project/actual-cost','ProjectController@actualCostStore');
+
 
     });
 

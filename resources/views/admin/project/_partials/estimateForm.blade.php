@@ -110,35 +110,27 @@
                 @endforeach
             </tbody>
             <tfoot>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th style="text-align: right">{!! number_format($DesiginationHrs,2)  !!}</th>
-                    <th style="text-align: right">{!! number_format($DesignationCost,2)  !!}</th>
-                </tr>
+                @if($showUpdate)
+                    <th style="max-width: 100px">
+                        {!! Form::select('designation_type_id',\App\Models\Designation::get()->pluck('designationType','id'),null,['class'=>'form-control','id'=>'DesignationTypeId']) !!}
+                    </th>
+                    <th colspan="3"></th>
+                    <th>
+                        <a id="addNewDesignation" class="fa fa-2x fa-plus-square"></a>
+                        <a id="addNewDesignationCalculation" class="fa fa-2x fa-calculator"></a>
+                    </th>
+                @else
+                    <tr>
+                        <th colspan="2">Total : </th>
+                        <th style="text-align: right">{!! number_format($DesiginationHrs,2)  !!}</th>
+                        <th style="text-align: right">{!! number_format($DesignationCost,2)  !!}</th>
+                    </tr>
+            @endif
             </tfoot>
         </table>
     </div>
 
-    @if($showUpdate)
-    <div class="col-md-8">
-        <div class="col-md-6">
-            <div class="form-group">
-                {!! Form::select('designation_type_id',\App\Models\Designation::get()->pluck('designationType','id'),null,['class'=>'form-control','id'=>'DesignationTypeId']) !!}
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <button class="form-control" type="button" id="addNewDesignation">Add <i class="fa fa-plus"></i></button>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="form-group">
-                <button class="form-control" type="button" id="addNewDesignationCalculation">Calculate <i class="fa fa-calculator"></i></button>
-            </div>
-        </div>
-    </div>
-        @else
+    @if(!$showUpdate)
            <div class="col-md-12">
                <div class="form-group">
                     <a class="pull-right btn btn-sm btn-success" href="{!! url('project') !!}/{!! $Project->id !!}/estimation/edit/staff-allocation-estimation">Change</a>
@@ -176,42 +168,34 @@
                     @endforeach
                 </tbody>
                 <tfoot>
-                <tr>
-                    <th>Total Indirect Cost</th>
-                    <th style="text-align: right">{!! number_format($CostSum,2) !!}</th>
-                    <th></th>
-                </tr>
+
+                @if($showUpdate)
+                    <th style="max-width: 100px">
+                        {!! Form::select('cost_type_id',\App\Models\ProjectCostType::get()->pluck('name','id'),null,['class'=>'form-control','id'=>'CostTypeId','placeholder'=>'Other Cost']) !!}
+                    </th>
+                    <th colspan="2"></th>
+                    <th>
+                        <a id="addNewCost" class="fa fa-2x fa-plus-square"></a>
+                        <a id="calculateNewCost" class="fa fa-2x fa-calculator"></a>
+                    </th>
+                @else
+                    <tr>
+                        <th>Total Indirect Cost</th>
+                        <th style="text-align: right">{!! number_format($CostSum,2) !!}</th>
+                        <th></th>
+                    </tr>
+                @endif
                 </tfoot>
             </table>
         </div>
 
-        @if($showUpdate)
-        <div class="col-md-8">
-            <div class="col-md-6">
-                <div class="form-group">
-                    {!! Form::select('cost_type_id',\App\Models\ProjectCostType::get()->pluck('name','id'),null,['class'=>'form-control','id'=>'CostTypeId','placeholder'=>'Other Cost']) !!}
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <button class="form-control" type="button" id="addNewCost">Add <i class="fa fa-plus"></i></button>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <button class="form-control" type="button" id="calculateNewCost">Calculate <i class="fa fa-calculator"></i></button>
-                </div>
-            </div>
-        </div>
-        @else
+        @if(!$showUpdate)
             <div class="col-md-12">
                 <div class="form-group">
                     <a class="pull-right btn btn-sm btn-success" href="{!! url('project') !!}/{!! $Project->id !!}/estimation/edit/cost-type">Change</a>
                 </div>
             </div>
         @endif
-
-
     </div>
 
 

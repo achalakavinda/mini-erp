@@ -30,98 +30,121 @@
 <!-- main section -->
 @section('main-content')
     <div class="row">
+
         <div class="col-md-12">
+
             <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h4 class="box-title">Project Details</h4>
+                </div>
                 <div class="box-body">
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            {!! Form::label('code','Code',['class' => 'control-label']) !!}
-                            {!! Form::text('code',$Project->code,['class'=>'form-control','id'=>'code','placeholder'=>'Code','disabled']) !!}
-                        </div>
+
+                    <div class="col-md-12" style="overflow: auto">
+                        <table id="table" class="table table-responsive table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th >Code</th>
+                                <th>Company</th>
+                                <th>Sector</th>
+                                <th>Status</th>
+                                <th>Created By</th>
+                            </tr>
+                            </thead>
+                            <?php
+                                $Sector = null;
+                                $Status = null;
+                                if($Project->sector_id){
+                                    $sector_model = \App\Models\CustomerSector::find($Project->sector_id);
+                                    if($sector_model){
+                                        $Sector = $sector_model->name;
+                                    }
+                                }
+
+                                $status_model = \App\Models\ProjectStatus::find($Project->status_id);
+                                if($status_model){
+                                    $Status = $status_model->name;
+                                }
+
+                            ?>
+                            <tbody>
+                            <tr>
+                                <th>{!! $Project->code !!}</th>
+                                <td>{!! $Project->customer_name  !!}</td>
+                                <td>{!! $Sector !!}</td>
+                                <td><b>{!! $Status !!}</b></td>
+                                <td> @if($User){!! ucwords($User->name)  !!}@endif</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
+
                     <div class="col-md-3">
                         <div class="form-group">
-                            {!! Form::label('customer','Customer',['class' => 'control-label']) !!}
-                            {!! Form::text('customer',$Project->customer_name,['class'=>'form-control','id'=>'code','placeholder'=>'Code','disabled']) !!}
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        @if($User)
-                            <div class="form-group">
-                                {!! Form::label('created_by','Created By',['class' => 'control-label']) !!}
-                                {!! Form::text('created_by',ucwords($User->name),['class'=>'form-control','id'=>'code','placeholder'=>'Code','disabled']) !!}
-                            </div>
-                        @endif
-                    </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            {!! Form::label('work_report','Employee Work Record',['class' => 'control-label']) !!}
                             <button type="button" class="form-control" data-toggle="modal" data-target="#modal-default">
                                 Work Report <i class="fa fa-table"></i>
                             </button>
                         </div>
                     </div>
-                </div>
-                <!-- /.box-header -->
-
-                {{--summery table--}}
-                @include('admin.project.table.project_cost_summary_table')
-                {{--/summery table--}}
-
-                <div class="box-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <!-- BAR CHART -->
-                            <div class="box box-success">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title">Cost & Revenue Comparison</h3>
-                                    <div class="box-tools pull-right">
-                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="box-body chart-responsive">
-                                    <div class="chart" id="bar-chart" style="height: 300px;"></div>
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                            <!-- /.box -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <a type="button" style="text-align: center; cursor: pointer" class="form-control"  href="{{ url('/project') }}/{!! $Project->id !!}/settings">
+                                Project Settings <i class="fa fa-cogs"></i>
+                            </a>
                         </div>
-                        <div class="col-md-6">
-                            <!-- DONUT CHART -->
-                            <div class="box box-success">
-                                <div class="box-header with-border">
-                                    <h3 class="box-title">Hours Comparison</h3>
-
-                                    <div class="box-tools pull-right">
-                                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="box-body chart-responsive">
-                                    <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
-                                </div>
-                                <!-- /.box-body -->
-                            </div>
-                            <!-- /.box -->
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-
-
-                <div class="box-body">
-                    <div class="pull-right">
-                        {!! Form::model($Project, ['method' => 'PATCH', 'action' => ['ProjectController@update', $Project->id],'class'=>'form-horizontal']) !!}
-                        {!! Form::text('set_delete',"value",['style'=>'display:none']) !!}
-                        <button type="submit" class="btn btn-sm btn-danger">Delete <i class="fa fa-trash"></i></button>
-                        {!! Form::close() !!}
                     </div>
                 </div>
             </div>
+
+            <div class="box box-primary">
+                {{--summery table--}}
+                @include('admin.project.table.project_cost_summary_table')
+                {{--/summery table--}}
+            </div>
+
+                {{--<div class="box-body">--}}
+                    {{--<div class="pull-right">--}}
+                        {{--{!! Form::model($Project, ['method' => 'PATCH', 'action' => ['ProjectController@update', $Project->id],'class'=>'form-horizontal']) !!}--}}
+                        {{--{!! Form::text('set_delete',"value",['style'=>'display:none']) !!}--}}
+                        {{--<button type="submit" class="btn btn-sm btn-danger">Delete <i class="fa fa-trash"></i></button>--}}
+                        {{--{!! Form::close() !!}--}}
+                    {{--</div>--}}
+                {{--</div>--}}
             <!-- /.box -->
         </div>
+
+        <!-- BAR CHART -->
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Cost & Revenue Comparison</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body chart-responsive">
+                    <div class="chart" id="bar-chart" style="height: 300px;"></div>
+                 </div>
+                 <!-- /.box-body -->
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <!-- DONUT CHART -->
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Hours Comparison</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    </div>
+                </div>
+                <div class="box-body chart-responsive">
+                    <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+
     </div>
     <!-- /.row -->
 @endsection

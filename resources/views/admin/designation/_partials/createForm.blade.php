@@ -3,7 +3,7 @@
     <div class="col-md-6">
         <div class="form-group">
             {!! Form::label('designationType','*Designation Type',['class' => 'control-label']) !!}
-            {!! Form::text('designationType',null,['class'=>'form-control','id'=>'designationType','placeholder'=>'Designation Type']) !!}
+            {!! Form::text('designationType',null,['class'=>'form-control','id'=>'designationType']) !!}
         </div>
     </div>
 
@@ -17,7 +17,7 @@
     <div class="col-md-12">
         <div class="form-group">
             {!! Form::label('description','Description',['class' => 'control-label']) !!}
-            {!! Form::textarea('description',null,['class'=>'form-control','id'=>'description','placeholder'=>'Description']) !!}
+            {!! Form::textarea('description',null,['class'=>'form-control','id'=>'description']) !!}
         </div>
     </div>
 
