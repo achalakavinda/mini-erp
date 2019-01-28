@@ -27,7 +27,7 @@
         </div>
         <div class="box-body">
             <a href="{{ url('/project') }}/{!! $Project->id !!}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/project') }}/{!! $Project->id !!}/estimation" class="btn btn-danger">Budget <i class="fa fa-plus-square"></i></a>
+            <a href="{{ url('/project') }}/{!! $Project->id !!}/budget-cost" class="btn btn-danger">Budget <i class="fa fa-plus-square"></i></a>
             <a href="{{ url('/project') }}/{!! $Project->id !!}/actual-cost" class="btn btn-danger">Actual Cost <i class="fa fa-money"></i></a>
         </div>
         <!-- /.box-body -->
@@ -43,14 +43,16 @@
         <div class="col-md-12">
             <!-- general form elements -->
             <div class="box box-primary">
-
                 {{--summery table--}}
                 @include('admin.project.table.project_cost_summary_table')
                 {{--/summery table--}}
+            </div><!-- /general form elements -->
 
-                @if($showUpdate)
+
+            <div class="box box-primary">
+            @if($showUpdate)
                 <!-- form start -->
-                {!! Form::open(['action'=>'ProjectController@finalized','class'=>'form-horizontal','id'=>'Form']) !!}
+                {!! Form::open(['action'=>'ProjectController@budgetCostStore','class'=>'form-horizontal','id'=>'Form']) !!}
                         @include('error.error')
                         @include('admin.project._partials.estimateForm')
                 {!! Form::close() !!}

@@ -29,25 +29,21 @@ Route::group(['middleware' => ['auth']], function () {
     Route::group(['middleware' => ['permission:Default']], function () {
 
         Route::resource('work-sheet', 'WorkSheetController');
-
         Route::resource('/customer', 'CustomerController');
-
         Route::resource('/staff', 'StaffController');
-
         Route::resource('job-type', 'JobTypeController');
-
         Route::resource('designation','DesignationController');
-
         Route::resource('project','ProjectController');
 
-        Route::get('project/{id}/estimation','ProjectController@estimation');
+        Route::get('project/{id}/actual-cost','ProjectController@actualCost');
+        Route::get('project/{id}/budget-cost','ProjectController@budgetCost');
         Route::get('project/{id}/estimation/edit/staff-allocation-estimation','ProjectController@editStaffAllocationEstimation');
         Route::get('project/{id}/estimation/edit/cost-type','ProjectController@editCostType');
 
-        Route::get('project/{id}/actual-cost','ProjectController@actualCost');
+
         Route::get('project/{id}/settings','ProjectController@settings');
 
-        Route::post('project/finalized','ProjectController@finalized');
+        Route::post('project/budget-cost','ProjectController@budgetCostStore');
         Route::post('project/actual-cost','ProjectController@actualCostStore');
 
 

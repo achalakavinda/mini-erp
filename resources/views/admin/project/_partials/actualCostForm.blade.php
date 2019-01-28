@@ -31,26 +31,22 @@
                         <?php $CostSum = $CostSum+$item->cost; $count++;?>
                     @endforeach
                 </tbody>
+                <tfoot>
+                    <tr>
+                        <th style="max-width: 100px">
+                            {!! Form::select('cost_type_id',\App\Models\ProjectCostType::get()->pluck('name','id'),null,['class'=>'form-control','id'=>'CostTypeId','placeholder'=>'Other Cost']) !!}
+                        </th>
+                        <th colspan="3"></th>
+                        <th>
+                            <a id="addNewCost" class="fa fa-2x fa-plus-square"></a>
+                            <a id="calculateNewCost" class="fa fa-2x fa-calculator"></a>
+                        </th>
+                    </tr>
+                </tfoot>
             </table>
+
         </div>
 
-        <div class="col-md-8">
-            <div class="col-md-6">
-                <div class="form-group">
-                    {!! Form::select('cost_type_id',\App\Models\ProjectCostType::get()->pluck('name','id'),null,['class'=>'form-control','id'=>'CostTypeId','placeholder'=>'Other Cost']) !!}
-                </div>
-            </div>
-            <div class="col-md-2">
-                <div class="form-group">
-                    <button class="form-control" type="button" id="addNewCost">Add <i class="fa fa-plus"></i></button>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
-                    <button class="form-control" type="button" id="calculateNewCost">Calculate <i class="fa fa-calculator"></i></button>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <!-- /Cost assignment-->
@@ -74,7 +70,6 @@
         $( document ).ready(function() {
 
             $('#addNewCost').click(function() {
-                alert('');
                 addNewCostTypes()
             });
         });

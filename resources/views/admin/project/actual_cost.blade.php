@@ -21,7 +21,7 @@
         </div>
         <div class="box-body">
             <a href="{{ url('/project') }}/{!! $Project->id !!}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/project') }}/{!! $Project->id !!}/estimation" class="btn btn-danger">Budget <i class="fa fa-plus-square"></i></a>
+            <a href="{{ url('/project') }}/{!! $Project->id !!}/budget-cost" class="btn btn-danger">Budget <i class="fa fa-plus-square"></i></a>
             <a href="{{ url('/project') }}/{!! $Project->id !!}/actual-cost" class="btn btn-danger">Actual Cost <i class="fa fa-money"></i></a>
         </div>
         <!-- /.box-body -->
@@ -36,11 +36,12 @@
         <div class="col-md-12">
             <!-- general form elements -->
             <div class="box box-primary">
-
                 {{--summery table--}}
                 @include('admin.project.table.project_cost_summary_table')
                 {{--/summery table--}}
+            </div> <!-- general form elements -->
 
+            <div class="box box-primary">
                 <!-- /.box-header -->
                 @if($ShowCreateForm)
                     <!-- form start -->
@@ -69,7 +70,7 @@
                                                     {!! Form::number('items['.$count.'][cost_type_id]',$item->id,['class'=>'form-control','style'=>'display:none']) !!}
                                                     {!! Form::text('items['.$count.'][cost_type_name]',$item->project_cost_type,['class'=>'form-control','style'=>'display:none']) !!}
                                                 </td>
-                                                <td style="text-align: right">{!! $item->cost !!} /=</td>
+                                                <td style="text-align: right">{!! number_format($item->cost,2) !!} /=</td>
                                                 <td style="text-align: right">{!! $item->remarks !!}</td>
                                             </tr>
                                             <?php $CostSum = $CostSum+$item->cost; $count++;?>
@@ -78,7 +79,7 @@
                                         <tfoot>
                                             <tr>
                                                 <td><b>Item Count : <span>{!! $count !!}</span></b></td>
-                                                <td style="text-align: right"><b><span>{!! $CostSum !!}</span> /=</b></td>
+                                                <td style="text-align: right"><b><span>{!! number_format($CostSum,2) !!}</span> /=</b></td>
                                                 <td></td>
                                             </tr>
                                         </tfoot>

@@ -153,16 +153,25 @@ class ProjectController extends Controller
         //
     }
 
-    public function estimation($id)
+    /**
+     *Project Budget estimation are save in here
+     */
+    public function budgetCost($id)
     {
         $Project = Project::findOrFail($id);
-        return view('admin.project.estimation',compact('Project'));
+        return view('admin.project.budget_cost',compact('Project'));
+    }
+
+    public function actualCost($id)
+    {
+        $Project = Project::findOrFail($id);
+        return view('admin.project.actual_cost',compact('Project'));
     }
 
     /**
      *Project Budget estimation are save in here
      */
-    public function finalized(Request $request)
+    public function budgetCostStore(Request $request)
     {
         $request->validate([
             'number_of_hrs' => 'required',
@@ -289,17 +298,8 @@ class ProjectController extends Controller
         $Project->updated_by_id = \Auth::id();//set updated by parameter
         $Project->save();//save the updated values
         //redirect to project estimation page back after submit data
-        return redirect('project/'.$Project->id.'/estimation')->with('created',true);
+        return redirect()->back()->with('created',true);
     }
-
-
-
-    public function actualCost($id)
-    {
-        $Project = Project::findOrFail($id);
-        return view('admin.project.actual_cost',compact('Project'));
-    }
-
 
     public function actualCostStore(Request $request)
     {
@@ -376,19 +376,18 @@ class ProjectController extends Controller
         return redirect('project/'.$Project->id.'/actual-cost')->with('created',true);
     }
 
-
     public function editStaffAllocationEstimation($id)
     {
-
+        return view('admin.project.edit_budget_cost');
     }
 
     public function editCostType($id)
     {
-
+        return view('admin.project.edit_budget_cost');
     }
 
     public function settings($id){
-
+        return view('admin.project.settings');
     }
 
 }
