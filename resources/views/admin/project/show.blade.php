@@ -207,7 +207,7 @@
                 element: 'bar-chart',
                 resize: true,
                 data: [
-                    {y: 'Cost', a: parseFloat({!! $Project->budget_cost !!}), b: parseFloat({!! $Project->actual_cost_by_work+$Project->actual_cost_by_overhead !!})},
+                    {y: 'Cost', a: parseFloat({!! $Project->budget_cost_by_work+$Project->budget_cost_by_work+$Project->budget_cost_by_overhead !!}), b: parseFloat({!! $Project->actual_cost_by_work+$Project->actual_cost_by_work+$Project->actual_cost_by_overhead !!})},
                     {y: 'Revenue', a: parseFloat({!! $Project->budget_revenue !!}), b: parseFloat({!! $Project->actual_revenue !!})},
                 ],
                 barColors: ['#00a65a', '#f56954'],

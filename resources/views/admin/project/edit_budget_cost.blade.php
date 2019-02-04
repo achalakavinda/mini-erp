@@ -149,9 +149,9 @@
                                         <input name="selected_row_id" id="selectedRowId" style="display: none;">
                                         <input name="selected_project_id" value="{!! $Project->id !!}" style="display: none;">
                                         {!! Form::select('selected_designation_type_id',\App\Models\Designation::get()->pluck('designationType','id'),null,['class'=>'form-control','id'=>'selectedDesignationTypeId']) !!}</td>
-                                    <td>{!! Form::number('selected_hr_rates',null,['class'=>'form-control','id'=>'selectedHrRates']) !!}</td>
-                                    <td>{!! Form::number('selected_work_hrs',null,['class'=>'form-control','id'=>'selectedWorkHrs']) !!}</td>
-                                    <td>{!! Form::number('selected_total',null,['class'=>'form-control','id'=>'selectedTotal']) !!}</td>
+                                    <td>{!! Form::number('selected_hr_rates',null,['class'=>'form-control','id'=>'selectedHrRates','step'=>'0.01']) !!}</td>
+                                    <td>{!! Form::number('selected_work_hrs',null,['class'=>'form-control','id'=>'selectedWorkHrs','step'=>'0.01']) !!}</td>
+                                    <td>{!! Form::number('selected_total',null,['class'=>'form-control','id'=>'selectedTotal','step'=>'0.01']) !!}</td>
                                     <td>{!! Form::checkbox('selected_row_delete',null,['checked'=>false,'class'=>'form-control','id'=>'selectedRowDelete']) !!}</td>
                                 </tbody>
                             </table>

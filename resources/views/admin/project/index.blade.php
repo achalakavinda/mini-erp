@@ -34,15 +34,23 @@
                             <tr>
                                 <th>Code</th>
                                 <th>Customer</th>
-                                <th>Budget Hrs</th>
-                                <th>Budget Cost</th>
-                                <th>Budget Revenue</th>
-                                <th>Actual Hrs</th>
-                                <th>Actual Cost</th>
-                                <th>Actual Revenue</th>
+                                {{--<th>B.Work Hrs</th>--}}
+                                {{--<th>B.Work Cost</th>--}}
+                                {{--<th>B.AOH</th>--}}
+                                {{--<th>B.Other Cost</th>--}}
+                                <th>B.Total Cost</th>
+                                <th>B.Revenue</th>
+
+                                {{--<th>A.Work Hrs</th>--}}
+                                {{--<th>A.Work Cost</th>--}}
+                                {{--<th>A.AOH</th>--}}
+                                {{--<th>A.Other Cost</th>--}}
+                                <th>A.Total Cost</th>
+                                <th>A.Revenue</th>
+
                                 <th>Cost Variance</th>
                                 <th>Recovery Ratio</th>
-                                <th>status</th>
+                                <th>Status</th>
                                 <th>View <i class="fa fa-paper-plane"></i></th>
                             </tr>
                         </thead>
@@ -55,12 +63,21 @@
                            <tr>
                                 <td>{{ $Project->code }}</td>
                                 <td>{{ $Project->customer_name }}</td>
-                                <td>{{ number_format($Project->budget_number_of_hrs,2) }}</td>
-                                <td>{{ number_format($Project->budget_cost+$Project->budget_cost_by_overhead,2) }}</td>
-                                <td>{{ number_format($Project->budget_revenue,2) }}</td>
-                                <td>{{ number_format($Project->actual_number_of_hrs,2) }}</td>
-                                <td>{{ number_format($Project->actual_cost_by_work+$Project->actual_cost_by_overhead,2) }}</td>
-                                <td>{{ number_format($Project->actual_revenue,2) }}</td>
+
+                                {{--<td>{{ number_format($Project->budget_number_of_hrs,2) }}</td>--}}
+                                {{--<td>{{ number_format($Project->budget_cost_by_work,2) }}</td>--}}
+                                {{--<td>{{ number_format($Project->budget_cost_by_work,2) }}</td>--}}
+                                {{--<td>{{ number_format($Project->budget_cost_by_overhead,2) }}</td>--}}
+                                <td>{{ number_format($Project->budget_cost_by_work+$Project->budget_cost_by_work+$Project->budget_cost_by_overhead,2) }}</td>
+                               <td>{{ number_format($Project->budget_revenue,2) }}</td>
+
+                               {{--<td>{{ number_format($Project->actual_number_of_hrs,2) }}</td>--}}
+                               {{--<td>{{ number_format($Project->actual_cost_by_work,2) }}</td>--}}
+                               {{--<td>{{ number_format($Project->actual_cost_by_work,2) }}</td>--}}
+                               {{--<td>{{ number_format($Project->actual_cost_by_overhead,2) }}</td>--}}
+                               <td>{{ number_format($Project->actual_cost_by_work+$Project->actual_cost_by_work+$Project->actual_cost_by_overhead,2) }}</td>
+                               <td>{{ number_format($Project->actual_revenue,2) }}</td>
+
                                @if($Project->close)
                                    <td>{!! number_format($Project->cost_variance,2)  !!}</td>
                                    <td>{!! number_format($Project->recovery_ratio,2)  !!}</td>

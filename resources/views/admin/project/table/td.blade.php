@@ -1,13 +1,13 @@
 {{--calculate actual cv ratios--}}
 <?php
 $revnue = $Project->actual_revenue;
-$cost = $Project->budget_cost_by_work+$Project->budget_cost_by_overhead;
+$cost = $Project->budget_cost_by_work+$Project->budget_cost_by_work+$Project->budget_cost_by_overhead;
 $recovery_ratio = 0;
 if($revnue>0 && $cost>0){
     $recovery_ratio = $revnue / $cost;
 }
 
-$CV = $cost - ($Project->actual_cost_by_work+$Project->actual_cost_by_overhead);
+$CV = $cost - ($Project->actual_cost_by_work+$Project->actual_cost_by_work+$Project->actual_cost_by_overhead);
 ?>
 
 <td><?php

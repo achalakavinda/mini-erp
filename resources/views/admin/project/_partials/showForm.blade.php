@@ -1,5 +1,5 @@
 <?php
-$WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,sum(work_hrs) as hrs,sum(actual_work_hrs) as actual_hrs, user_id'))->where('project_id',$Project->id)->groupBy('user_id')->get();
+$WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,sum(work_hrs) as hrs,sum(extra_work_hrs) as actual_hrs, user_id'))->where('project_id',$Project->id)->groupBy('user_id')->get();
 ?>
 <div class="box">
     <!-- /.box-header -->
