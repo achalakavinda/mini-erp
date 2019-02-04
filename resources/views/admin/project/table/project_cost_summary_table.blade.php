@@ -24,24 +24,37 @@
                 <th>Staff Cost</th>
                 <td style="text-align: right">{!! number_format($Project->budget_cost_by_work,2)  !!}</td>
                 <td style="text-align: right">{!! number_format($Project->actual_cost_by_work,2)  !!}</td>
+                <td style="text-align: right">{!! number_format($Project->budget_cost_by_work-$Project->actual_cost_by_work,2)  !!}</td>
+            </tr>
+
+            <tr>
+                <th>Admin OHs</th>
+
+                <td style="text-align: right">{!! number_format($Project->budget_cost_by_work,2)  !!}</td>
+                <td style="text-align: right">{!! number_format($Project->actual_cost_by_work,2)  !!}</td>
+                <td style="text-align: right">{!! number_format($Project->budget_cost_by_work-$Project->actual_cost_by_work,2)  !!}</td>
+
             </tr>
 
             <tr>
                 <th>Other Cost</th>
                 <td style="text-align: right">{!! number_format($Project->budget_cost_by_overhead,2)  !!}</td>
                 <td style="text-align: right">{!! number_format($Project->actual_cost_by_overhead,2)  !!}</td>
+                <td style="text-align: right">{!! number_format(($Project->budget_cost_by_overhead)-($Project->actual_cost_by_overhead),2)  !!}</td>
             </tr>
 
             <tr>
                 <th>Total Cost</th>
-                <td style="text-align: right">{!! number_format($Project->budget_cost_by_work+$Project->budget_cost_by_overhead,2)  !!}</td>
-                <td style="text-align: right">{!! number_format($Project->actual_cost_by_work+$Project->actual_cost_by_overhead,2)  !!}</td>
+                <td style="text-align: right">{!! number_format($Project->budget_cost_by_work+$Project->budget_cost_by_work+$Project->budget_cost_by_overhead,2)  !!}</td>
+                <td style="text-align: right">{!! number_format($Project->actual_cost_by_work+$Project->actual_cost_by_work+$Project->actual_cost_by_overhead,2)  !!}</td>
+                <td style="text-align: right">{!! number_format(($Project->budget_cost_by_work+$Project->budget_cost_by_work+$Project->budget_cost_by_overhead)-($Project->actual_cost_by_work+$Project->actual_cost_by_work+$Project->actual_cost_by_overhead),2)  !!}</td>
             </tr>
 
             <tr>
                 <th>Total Revenue</th>
                 <td style="text-align: right">{!! number_format($Project->budget_revenue,2)  !!}</td>
                 <td style="text-align: right">{!! number_format($Project->actual_revenue,2)  !!}</td>
+                <td style="text-align: right">{!! number_format($Project->budget_revenue-$Project->actual_revenue,2)  !!}</td>
             </tr>
 
             <tr>
@@ -64,6 +77,7 @@
                 ?>
                 <td style="text-align: right">{!! number_format($rrBudget,2) !!}</td>
                 <td style="text-align: right">{!! number_format($rrActual,2)  !!}</td>
+                <td style="text-align: right">{!! number_format($rrBudget-$rrActual,2) !!}</td>
             </tr>
 
         </tbody>

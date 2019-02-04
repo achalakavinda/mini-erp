@@ -350,14 +350,7 @@ class Important extends Seeder
                 'remarks'=>'remarks',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
-            ],
-            [
-                'id'=>4,
-                'name'=>'Administration Overheads',
-                'remarks'=>'remarks',
-                "created_at"=>\Carbon\Carbon::now(),
-                "updated_at"=>\Carbon\Carbon::now()
-            ],
+            ]
         ]);
 
         //staff important seeds

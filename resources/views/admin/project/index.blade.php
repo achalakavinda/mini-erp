@@ -34,12 +34,12 @@
                             <tr>
                                 <th>Code</th>
                                 <th>Customer</th>
-                                <th style="background-color: #0b93d5">Budget Hrs</th>
-                                <th style="background-color: #0b93d5">Budget Cost</th>
-                                <th style="background-color: #0b93d5">Budget Revenue</th>
-                                <th style="background-color: #00a157">Actual Hrs</th>
-                                <th style="background-color: #00a157">Actual Cost</th>
-                                <th style="background-color: #00a157">Actual Revenue</th>
+                                <th>Budget Hrs</th>
+                                <th>Budget Cost</th>
+                                <th>Budget Revenue</th>
+                                <th>Actual Hrs</th>
+                                <th>Actual Cost</th>
+                                <th>Actual Revenue</th>
                                 <th>Cost Variance</th>
                                 <th>Recovery Ratio</th>
                                 <th>status</th>

@@ -207,10 +207,7 @@
     <div class="box-body">
         <div class="col-md-3">
             <div class="input-group">
-                        <span class="input-group-addon">
-                          <input name="check_administrative_overhead" type="checkbox">
-                        </span>
-                        <input name="administrative_overhead_percentage" placeholder="Administrative Overhead %"  type="number" class="form-control">
+                Add administrative Overhead <input checked name="check_administrative_overhead" type="checkbox">
             </div>
         </div>
     </div>

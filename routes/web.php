@@ -46,6 +46,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('project/budget-cost','ProjectController@budgetCostStore');
         Route::post('project/actual-cost','ProjectController@actualCostStore');
 
+        Route::post('project/edit-budget-designation-cost','ProjectController@editBudgetDesignationCost');
+        Route::post('project/store-new-budget-designation-cost','ProjectController@StoreNewBudgetDesignationCost');
+
 
     });
 
