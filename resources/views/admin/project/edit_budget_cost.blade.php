@@ -152,7 +152,9 @@
                                     <td>{!! Form::number('selected_hr_rates',null,['class'=>'form-control','id'=>'selectedHrRates','step'=>'0.01']) !!}</td>
                                     <td>{!! Form::number('selected_work_hrs',null,['class'=>'form-control','id'=>'selectedWorkHrs','step'=>'0.01']) !!}</td>
                                     <td>{!! Form::number('selected_total',null,['class'=>'form-control','id'=>'selectedTotal','step'=>'0.01']) !!}</td>
-                                    <td>{!! Form::checkbox('selected_row_delete',null,['checked'=>false,'class'=>'form-control','id'=>'selectedRowDelete']) !!}</td>
+                                    <td>
+                                        <input type="checkbox" name="selected_row_delete" id="selectedRowDelete">
+                                    </td>
                                 </tbody>
                             </table>
                             <div class="box-footer">

@@ -353,7 +353,7 @@ class ProjectController extends Controller
     public function editCostType($id)
     {
         $Project = Project::findOrFail($id);
-        return view('admin.project.edit_budget_cost',compact('Project'));
+        return view('admin.project.edit_cost_type',compact('Project'));
     }
 
 
@@ -519,6 +519,103 @@ class ProjectController extends Controller
         $Project->save();//save the updated values
         //redirect to project estimation page back after submit data
         return redirect()->back()->with('created',true);
+    }
+
+    function editBudgetCostType(Request $request){
+
+        //Validator for update row
+        $Validated = false;
+        $Delete = false;
+
+        $request->validate([
+            'selected_row_id' => 'required',
+            'selected_project_id' => 'required',
+            'selected_cost_type' => 'required',
+            'selected_cost' => 'required'
+        ]);
+
+        if(isset($request->selected_row_delete)){
+            $Delete = isset($request->selected_row_delete);
+        }
+
+        $ProjectCostType = ProjectOverhead::findOrFail($request->selected_row_id);
+        $Project = Project::findorFail($request->selected_project_id);
+
+        if($ProjectCostType)
+        {
+            if($request->selected_project_id = $ProjectCostType->project_id && $request->selected_row_id = $ProjectCostType->id)
+            {
+                $Validated = true;
+            }else{
+                return \redirect()->back()->withErrors('Error project validation, Please try again!');
+            }
+        }else{
+            return \redirect()->back()->withErrors('Error project designation record not found, Please try again!');
+        }
+
+        $RUN = false;
+
+        if($Validated && $Delete){
+            //record deleted
+            $ProjectCostType->delete();
+            $RUN = true;
+        }else if($Validated){
+
+            $ProjectCostType->project_cost_type = $request->selected_cost_type;
+            $ProjectCostType->cost = $request->selected_cost;
+            $ProjectCostType->remarks = $request->selected_remark;
+            $ProjectCostType->updated_by_id = \Auth::id();
+            $ProjectCostType->save();
+            $RUN = true;
+
+        }
+
+
+        if($RUN){
+            $Project_Budgeted_Work_Hours = 0;
+            $Project_Budgeted_Work_Cost = 0;
+            $Project_Budgeted_OverHead_Cost = 0;
+
+            //project designation
+            $Items = ProjectDesignation::where('project_id',$Project->id)->get();
+
+            foreach ($Items as $item)
+            {
+                //variable hold the total overhead cost
+                $Project_Budgeted_Work_Hours = $Project_Budgeted_Work_Hours + $item->hr;
+                $Project_Budgeted_Work_Cost = $Project_Budgeted_Work_Cost + ($item->hr*$item->hr_rates);
+            }
+
+            $Items = ProjectOverhead::where('project_id',$Project->id)->get();
+
+            foreach ($Items as $item)
+            {
+                //variable hold the total overhead cost
+                $Project_Budgeted_OverHead_Cost = $Project_Budgeted_OverHead_Cost + $item->cost;
+            }
+
+            $BudgetSum = $Project_Budgeted_Work_Cost + $Project_Budgeted_OverHead_Cost;
+
+            $QuotedSum = $BudgetSum + ($BudgetSum*($Project->profit_ratio/100));
+
+            //update existing project values
+            $Project->budget_number_of_hrs = $Project_Budgeted_Work_Hours;//budgeted number of working hours
+            $Project->budget_cost_by_work = $Project_Budgeted_Work_Cost;//budgeted staff cost by work
+            $Project->budget_cost_by_overhead = $Project_Budgeted_OverHead_Cost;//budgeted project overhead cost
+
+            $Project->budget_revenue = $QuotedSum;//budget revenue and the quoted price is equal
+            $Project->quoted_price = $QuotedSum;//budget revenue and the quoted price is equal
+
+            $Project->updated_by_id = \Auth::id();//set updated by parameter
+            $Project->save();//save the updated values
+        }
+
+        return \redirect()->back();
+
+    }
+
+    function StoreNewBudgetCostType(Request $request){
+        dd($request->all());
     }
 
     public function settings($id){

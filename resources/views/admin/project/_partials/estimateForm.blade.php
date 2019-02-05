@@ -144,7 +144,7 @@
 
 <!-- Cost assignment-->
     <div class="box-header with-border">
-        <h4 class="box-title">Indirect Cost <b id="COSTESTIMATIONVALUE"></b> <i id="COSTESTIMATIONVALUEREFRESH" style="font-size: 70%; color: green; cursor: pointer" class="fa fa-refresh"></i></h4>
+        <h4 class="box-title">Other Cost <b id="COSTESTIMATIONVALUE"></b> <i id="COSTESTIMATIONVALUEREFRESH" style="font-size: 70%; color: green; cursor: pointer" class="fa fa-refresh"></i></h4>
     </div>
     <div class="box-body">
         <div class="col-md-12">
@@ -180,7 +180,7 @@
                     </th>
                 @else
                     <tr>
-                        <th>Total Indirect Cost</th>
+                        <th>Total Other Cost</th>
                         <th style="text-align: right">{!! number_format($CostSum,2) !!}</th>
                         <th></th>
                     </tr>
