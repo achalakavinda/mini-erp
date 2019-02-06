@@ -342,8 +342,6 @@ class ProjectController extends Controller
         return redirect('project/'.$Project->id.'/actual-cost')->with('created',true);
     }
 
-
-
     public function editStaffAllocationEstimation($id)
     {
         $Project = Project::findOrFail($id);
@@ -355,8 +353,6 @@ class ProjectController extends Controller
         $Project = Project::findOrFail($id);
         return view('admin.project.edit_cost_type',compact('Project'));
     }
-
-
 
     function editBudgetDesignationCost(Request $request)
     {
@@ -412,42 +408,7 @@ class ProjectController extends Controller
         }
 
         if($RUN){
-            $Project_Budgeted_Work_Hours = 0;
-            $Project_Budgeted_Work_Cost = 0;
-            $Project_Budgeted_OverHead_Cost = 0;
-
-            //project designation
-            $Items = ProjectDesignation::where('project_id',$Project->id)->get();
-
-            foreach ($Items as $item)
-            {
-                //variable hold the total overhead cost
-                $Project_Budgeted_Work_Hours = $Project_Budgeted_Work_Hours + $item->hr;
-                $Project_Budgeted_Work_Cost = $Project_Budgeted_Work_Cost + ($item->hr*$item->hr_rates);
-            }
-
-            $Items = ProjectOverhead::where('project_id',$Project->id)->get();
-
-            foreach ($Items as $item)
-            {
-                //variable hold the total overhead cost
-                $Project_Budgeted_OverHead_Cost = $Project_Budgeted_OverHead_Cost + $item->cost;
-            }
-
-            $BudgetSum = $Project_Budgeted_Work_Cost + $Project_Budgeted_OverHead_Cost;
-
-            $QuotedSum = $BudgetSum + ($BudgetSum*($Project->profit_ratio/100));
-
-            //update existing project values
-            $Project->budget_number_of_hrs = $Project_Budgeted_Work_Hours;//budgeted number of working hours
-            $Project->budget_cost_by_work = $Project_Budgeted_Work_Cost;//budgeted staff cost by work
-            $Project->budget_cost_by_overhead = $Project_Budgeted_OverHead_Cost;//budgeted project overhead cost
-
-            $Project->budget_revenue = $QuotedSum;//budget revenue and the quoted price is equal
-            $Project->quoted_price = $QuotedSum;//budget revenue and the quoted price is equal
-
-            $Project->updated_by_id = \Auth::id();//set updated by parameter
-            $Project->save();//save the updated values
+            $this->reCalculateProject($Project);
         }
 
         return \redirect()->back();
@@ -459,10 +420,6 @@ class ProjectController extends Controller
             'designation_row' => 'required',
             'project_id' => 'required'
         ]);
-
-        $Project_Budgeted_Work_Hours = 0;
-        $Project_Budgeted_Work_Cost = 0;
-        $Project_Budgeted_OverHead_Cost = 0;
 
         $Project = Project::findOrFail($request->project_id);
         $Row = $request->designation_row;
@@ -483,47 +440,14 @@ class ProjectController extends Controller
             }
         }
 
-        //project designation
-        $Items = ProjectDesignation::where('project_id',$Project->id)->get();
-
-        foreach ($Items as $item)
-        {
-            //variable hold the total overhead cost
-            $Project_Budgeted_Work_Hours = $Project_Budgeted_Work_Hours + $item->hr;
-            $Project_Budgeted_Work_Cost = $Project_Budgeted_Work_Cost + ($item->hr*$item->hr_rates);
-        }
-
-        $Items = ProjectOverhead::where('project_id',$Project->id)->get();
-
-        foreach ($Items as $item)
-        {
-            //variable hold the total overhead cost
-            $Project_Budgeted_OverHead_Cost = $Project_Budgeted_OverHead_Cost + $item->cost;
-        }
+        $this->reCalculateProject($Project);
 
 
-        $BudgetSum = $Project_Budgeted_Work_Cost + $Project_Budgeted_OverHead_Cost;
-
-
-        $QuotedSum = $BudgetSum + ($BudgetSum*($Project->profit_ratio/100));
-
-        //update existing project values
-        $Project->budget_number_of_hrs = $Project_Budgeted_Work_Hours;//budgeted number of working hours
-        $Project->budget_cost_by_work = $Project_Budgeted_Work_Cost;//budgeted staff cost by work
-        $Project->budget_cost_by_overhead = $Project_Budgeted_OverHead_Cost;//budgeted project overhead cost
-
-        $Project->budget_revenue = $QuotedSum;//budget revenue and the quoted price is equal
-        $Project->quoted_price = $QuotedSum;//budget revenue and the quoted price is equal
-
-        $Project->updated_by_id = \Auth::id();//set updated by parameter
-        $Project->save();//save the updated values
         //redirect to project estimation page back after submit data
         return redirect()->back()->with('created',true);
     }
 
     function editBudgetCostType(Request $request){
-
-        //Validator for update row
         $Validated = false;
         $Delete = false;
 
@@ -572,42 +496,7 @@ class ProjectController extends Controller
 
 
         if($RUN){
-            $Project_Budgeted_Work_Hours = 0;
-            $Project_Budgeted_Work_Cost = 0;
-            $Project_Budgeted_OverHead_Cost = 0;
-
-            //project designation
-            $Items = ProjectDesignation::where('project_id',$Project->id)->get();
-
-            foreach ($Items as $item)
-            {
-                //variable hold the total overhead cost
-                $Project_Budgeted_Work_Hours = $Project_Budgeted_Work_Hours + $item->hr;
-                $Project_Budgeted_Work_Cost = $Project_Budgeted_Work_Cost + ($item->hr*$item->hr_rates);
-            }
-
-            $Items = ProjectOverhead::where('project_id',$Project->id)->get();
-
-            foreach ($Items as $item)
-            {
-                //variable hold the total overhead cost
-                $Project_Budgeted_OverHead_Cost = $Project_Budgeted_OverHead_Cost + $item->cost;
-            }
-
-            $BudgetSum = $Project_Budgeted_Work_Cost + $Project_Budgeted_OverHead_Cost;
-
-            $QuotedSum = $BudgetSum + ($BudgetSum*($Project->profit_ratio/100));
-
-            //update existing project values
-            $Project->budget_number_of_hrs = $Project_Budgeted_Work_Hours;//budgeted number of working hours
-            $Project->budget_cost_by_work = $Project_Budgeted_Work_Cost;//budgeted staff cost by work
-            $Project->budget_cost_by_overhead = $Project_Budgeted_OverHead_Cost;//budgeted project overhead cost
-
-            $Project->budget_revenue = $QuotedSum;//budget revenue and the quoted price is equal
-            $Project->quoted_price = $QuotedSum;//budget revenue and the quoted price is equal
-
-            $Project->updated_by_id = \Auth::id();//set updated by parameter
-            $Project->save();//save the updated values
+            $this->reCalculateProject($Project);
         }
 
         return \redirect()->back();
@@ -615,7 +504,74 @@ class ProjectController extends Controller
     }
 
     function StoreNewBudgetCostType(Request $request){
-        dd($request->all());
+        $request->validate([
+            'project_id' => 'required',
+            'cost_row' => 'required'
+        ]);
+
+        $Project = Project::findOrFail($request->project_id);
+        $Row = $request->cost_row;
+
+        $RUN = false;
+
+        foreach ($Row as $item)
+        {
+            if($item['cost_type_name']!= null && $item['cost']!= null && $item['cost']>-1){
+
+                ProjectOverhead::create([
+                    'project_id'=>$Project->id,
+                    'project_cost_type_id'=>$item['cost_type_id'],
+                    'project_cost_type'=>$item['cost_type_name'],
+                    'cost'=>$item['cost'],
+                    'remarks'=>$item['remark'],
+                    'created_by_id'=>\Auth::id(),
+                    'updated_by_id'=>\Auth::id()
+                ]);
+            }
+            $RUN = true;
+        }
+
+        if($RUN){
+            $this->reCalculateProject($Project);
+        }
+
+        return \redirect()->back();
+    }
+
+    public function reCalculateProject(Project $Project){
+        $Project_Budgeted_Work_Hours = 0;
+        $Project_Budgeted_Work_Cost = 0;
+        $Project_Budgeted_OverHead_Cost = 0;
+
+        //project designation
+        $Items = ProjectDesignation::where('project_id',$Project->id)->get();
+
+        foreach ($Items as $item)
+        {
+            //variable hold the total overhead cost
+            $Project_Budgeted_Work_Hours = $Project_Budgeted_Work_Hours + $item->hr;
+            $Project_Budgeted_Work_Cost = $Project_Budgeted_Work_Cost + ($item->hr*$item->hr_rates);
+        }
+
+        $Items = ProjectOverhead::where('project_id',$Project->id)->get();
+
+        foreach ($Items as $item)
+        {
+            //variable hold the total overhead cost
+            $Project_Budgeted_OverHead_Cost = $Project_Budgeted_OverHead_Cost + $item->cost;
+        }
+
+        $BudgetSum = $Project_Budgeted_Work_Cost + $Project_Budgeted_OverHead_Cost;
+        $QuotedSum = $BudgetSum + ($BudgetSum*($Project->profit_ratio/100));
+
+        //update existing project values
+        $Project->budget_number_of_hrs = $Project_Budgeted_Work_Hours;//budgeted number of working hours
+        $Project->budget_cost_by_work = $Project_Budgeted_Work_Cost;//budgeted staff cost by work
+        $Project->budget_cost_by_overhead = $Project_Budgeted_OverHead_Cost;//budgeted project overhead cost
+        $Project->budget_revenue = $QuotedSum;//budget revenue and the quoted price is equal
+        $Project->quoted_price = $QuotedSum;//budget revenue and the quoted price is equal
+        $Project->updated_by_id = \Auth::id();//set updated by parameter
+        $Project->save();//save the updated values
     }
 
     public function settings($id){
