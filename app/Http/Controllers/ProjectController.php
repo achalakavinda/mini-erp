@@ -527,8 +527,9 @@ class ProjectController extends Controller
                     'created_by_id'=>\Auth::id(),
                     'updated_by_id'=>\Auth::id()
                 ]);
+                $RUN = true;
             }
-            $RUN = true;
+
         }
 
         if($RUN){
@@ -539,11 +540,95 @@ class ProjectController extends Controller
     }
 
     public function editActualCostType(Request $request){
-        dd($request->all());
+        $Validated = false;
+        $Delete = false;
+
+        $request->validate([
+            'selected_row_id' => 'required',
+            'selected_project_id' => 'required',
+            'selected_cost_type' => 'required',
+            'selected_cost' => 'required'
+        ]);
+
+        if(isset($request->selected_row_delete)){
+            $Delete = isset($request->selected_row_delete);
+        }
+
+        $Project = Project::findOrFail($request->selected_project_id);
+        $ProjectActualCostType = ProjectOverheadsActual::findOrFail($request->selected_row_id);
+
+        $RUN = false;
+        $Validated = true;
+
+        if($Validated && $Delete){
+            //record deleted
+            $ProjectActualCostType->delete();
+            $RUN = true;
+        }else if($Validated){
+
+            $ProjectActualCostType->project_cost_type = $request->selected_cost_type;
+            $ProjectActualCostType->cost = $request->selected_cost;
+            $ProjectActualCostType->remarks = $request->selected_remark;
+            $ProjectActualCostType->updated_by_id = \Auth::id();
+            $ProjectActualCostType->save();
+            $RUN = true;
+        }
+
+        if($RUN){
+
+            $ProjectActualOverHeads = ProjectOverheadsActual::where('project_id',$Project->id)->get();
+            $ActualCostByWork = 0;
+
+            foreach ($ProjectActualOverHeads as $item){
+                $ActualCostByWork = $ActualCostByWork+ $item['cost'];
+            }
+            $Project->actual_cost_by_overhead = $ActualCostByWork;
+            $Project->save();
+        }
+
+        return \redirect()->back();
     }
 
     public function StoreNewActualCostType(Request $request){
-        dd($request->all());
+        $request->validate([
+            'project_id' => 'required',
+            'cost_row' => 'required'
+        ]);
+        $Run = false;
+
+        $Project = Project::findOrFail($request->project_id);
+        $Row = $request->cost_row;
+
+        foreach ($Row as $item){
+            if($item['cost_type_name']!= null && $item['cost']!= null && $item['cost']>-1){
+
+                ProjectOverheadsActual::create([
+                    'project_id'=>$Project->id,
+                    'project_cost_type_id'=>$item['cost_type_id'],
+                    'project_cost_type'=>$item['cost_type_name'],
+                    'cost'=>$item['cost'],
+                    'remarks'=>$item['remark'],
+                    'created_by_id'=>\Auth::id(),
+                    'updated_by_id'=>\Auth::id()
+                ]);
+                $Run = true;
+            }
+        }
+
+        if($Run){
+
+            $ProjectActualOverHeads = ProjectOverheadsActual::where('project_id',$Project->id)->get();
+            $ActualCostByWork = 0;
+
+            foreach ($ProjectActualOverHeads as $item){
+                $ActualCostByWork = $ActualCostByWork+ $item['cost'];
+            }
+            $Project->actual_cost_by_overhead = $ActualCostByWork;
+            $Project->save();
+        }
+
+        return \redirect()->back();
+
     }
 
     public function reCalculateProject(Project $Project){
