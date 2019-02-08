@@ -538,6 +538,14 @@ class ProjectController extends Controller
         return \redirect()->back();
     }
 
+    public function editActualCostType(Request $request){
+        dd($request->all());
+    }
+
+    public function StoreNewActualCostType(Request $request){
+        dd($request->all());
+    }
+
     public function reCalculateProject(Project $Project){
         $Project_Budgeted_Work_Hours = 0;
         $Project_Budgeted_Work_Cost = 0;
