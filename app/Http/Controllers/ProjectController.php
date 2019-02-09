@@ -30,7 +30,6 @@ class ProjectController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
      * @return \Illuminate\Http\Response
      */
     public function create()
@@ -40,7 +39,6 @@ class ProjectController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -105,7 +103,6 @@ class ProjectController extends Controller
 
     /**
      * Display the specified resource.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -116,8 +113,7 @@ class ProjectController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
+     * Show the form for editing the specified resource
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -128,7 +124,6 @@ class ProjectController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -144,7 +139,6 @@ class ProjectController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -162,6 +156,11 @@ class ProjectController extends Controller
         return view('admin.project.budget_cost',compact('Project'));
     }
 
+    /**
+     * Actual Cost view
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function actualCost($id)
     {
         $Project = Project::findOrFail($id);
@@ -169,7 +168,9 @@ class ProjectController extends Controller
     }
 
     /**
-     *Project Budget estimation are save in here
+     * Store Budget Cost
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function budgetCostStore(Request $request)
     {
@@ -266,6 +267,11 @@ class ProjectController extends Controller
         return redirect()->back()->with('created',true);
     }
 
+    /**
+     * Store Cost Store
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function actualCostStore(Request $request)
     {
         $request->validate([
@@ -342,18 +348,33 @@ class ProjectController extends Controller
         return redirect('project/'.$Project->id.'/actual-cost')->with('created',true);
     }
 
+    /**
+     * Staff Designation Allocation view
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function editStaffAllocationEstimation($id)
     {
         $Project = Project::findOrFail($id);
         return view('admin.project.edit_budget_cost',compact('Project'));
     }
 
+    /**
+     * Edit Cost Type View
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function editCostType($id)
     {
         $Project = Project::findOrFail($id);
         return view('admin.project.edit_cost_type',compact('Project'));
     }
 
+    /**
+     * Budget Designation Cost Update
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     function editBudgetDesignationCost(Request $request)
     {
         //Validator for update row
@@ -408,12 +429,17 @@ class ProjectController extends Controller
         }
 
         if($RUN){
-            $this->reCalculateProject($Project);
+            $this->reCalculateProjectBudget($Project);
         }
 
         return \redirect()->back();
     }
 
+    /**
+     * Store Budget Designation Cost
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     function StoreNewBudgetDesignationCost(Request $request){
         //validate post request
         $request->validate([
@@ -440,13 +466,18 @@ class ProjectController extends Controller
             }
         }
 
-        $this->reCalculateProject($Project);
+        $this->reCalculateProjectBudget($Project);
 
 
         //redirect to project estimation page back after submit data
         return redirect()->back()->with('created',true);
     }
 
+    /**
+     * Project Budget Cost Overhead Update
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     function editBudgetCostType(Request $request){
         $Validated = false;
         $Delete = false;
@@ -496,13 +527,18 @@ class ProjectController extends Controller
 
 
         if($RUN){
-            $this->reCalculateProject($Project);
+            $this->reCalculateProjectBudget($Project);
         }
 
         return \redirect()->back();
 
     }
 
+    /**
+     * Store new Budget Overhead Cost
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     function StoreNewBudgetCostType(Request $request){
         $request->validate([
             'project_id' => 'required',
@@ -533,12 +569,17 @@ class ProjectController extends Controller
         }
 
         if($RUN){
-            $this->reCalculateProject($Project);
+            $this->reCalculateProjectBudget($Project);
         }
 
         return \redirect()->back();
     }
 
+    /**
+     * Project Actual Cost Overhead Update
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function editActualCostType(Request $request){
         $Validated = false;
         $Delete = false;
@@ -589,6 +630,11 @@ class ProjectController extends Controller
         return \redirect()->back();
     }
 
+    /**
+     * Store new Actual Cost Overhead and recalculate Project Budget
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function StoreNewActualCostType(Request $request){
         $request->validate([
             'project_id' => 'required',
@@ -631,7 +677,20 @@ class ProjectController extends Controller
 
     }
 
-    public function reCalculateProject(Project $Project){
+    /**
+     * Project Setting view
+     * @param $id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function settings($id){
+        return view('admin.project.settings');
+    }
+
+    /**
+     * Project budget recalculation logic
+     * @param Project $Project
+     */
+    public function reCalculateProjectBudget(Project $Project){
         $Project_Budgeted_Work_Hours = 0;
         $Project_Budgeted_Work_Cost = 0;
         $Project_Budgeted_OverHead_Cost = 0;
@@ -666,9 +725,4 @@ class ProjectController extends Controller
         $Project->updated_by_id = \Auth::id();//set updated by parameter
         $Project->save();//save the updated values
     }
-
-    public function settings($id){
-        return view('admin.project.settings');
-    }
-
 }
