@@ -683,7 +683,8 @@ class ProjectController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function settings($id){
-        return view('admin.project.settings');
+        $Project = Project::findOrFail($id);
+        return view('admin.project.settings',compact('Project'));
     }
 
     /**
