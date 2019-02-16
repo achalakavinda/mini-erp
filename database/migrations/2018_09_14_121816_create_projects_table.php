@@ -52,6 +52,7 @@ class CreateProjectsTable extends Migration
             $table->boolean('close')->default(0);
             $table->boolean('invoiced')->default(0);
             $table->unsignedInteger('status_id');
+            $table->text('remarks')->nullable();
 
             $table->timestamps();
             $table->unsignedInteger('created_by_id');

@@ -15,7 +15,6 @@ class PermissionsController extends Controller
     public function index()
     {
         $permissions = Permission::all();
-
         return view('admin.acl.permissions.index', compact('permissions'));
     }
 

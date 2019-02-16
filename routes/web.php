@@ -19,57 +19,60 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
 
-    Route::get('/dashboard', 'DashboardController@index');
-
-    Route::get('/staff/profile/{id}', 'StaffController@profile');
-
-    Route::get('/staff/work-sheet', 'PageController@workSheet');
-    Route::post('/staff/work-sheet/store', 'PageController@workSheetStore');
-
-    Route::group(['middleware' => ['permission:Default']], function () {
-
+    Route::group(['middleware' => ['permission:Minor Staff|Dashboard']], function () {
+        Route::get('/dashboard', 'DashboardController@index');
+        Route::get('/staff/profile/{id}', 'StaffController@profile');
+        Route::get('/staff/work-sheet', 'PageController@workSheet');
+        Route::post('/staff/work-sheet/store', 'PageController@workSheetStore');
         Route::resource('work-sheet', 'WorkSheetController');
-        Route::resource('/customer', 'CustomerController');
-        Route::resource('/staff', 'StaffController');
-        Route::resource('job-type', 'JobTypeController');
-        Route::resource('designation','DesignationController');
-        Route::resource('project','ProjectController');
-
-        Route::get('project/{id}/actual-cost','ProjectController@actualCost');
-        Route::get('project/{id}/budget-cost','ProjectController@budgetCost');
-        Route::get('project/{id}/estimation/edit/staff-allocation-estimation','ProjectController@editStaffAllocationEstimation');
-        Route::get('project/{id}/estimation/edit/cost-type','ProjectController@editCostType');
-
-
-        Route::get('project/{id}/settings','ProjectController@settings');
-
-        Route::post('project/budget-cost','ProjectController@budgetCostStore');
-        Route::post('project/actual-cost','ProjectController@actualCostStore');
-
-        Route::post('project/edit-budget-designation-cost','ProjectController@editBudgetDesignationCost');
-        Route::post('project/store-new-budget-designation-cost','ProjectController@StoreNewBudgetDesignationCost');
-
-        Route::post('project/edit-budget-cost-type','ProjectController@editBudgetCostType');
-        Route::post('project/store-new-budget-cost-type','ProjectController@StoreNewBudgetCostType');
-
-        Route::post('project/edit-actual-cost-type','ProjectController@editActualCostType');
-        Route::post('project/store-new-actual-cost-type','ProjectController@StoreNewActualCostType');
-
-
     });
 
+    Route::group(['middleware' => ['permission:Customer']], function () {
+        Route::resource('/customer', 'CustomerController');
+    });
+
+    Route::group(['middleware' => ['permission:Staff']], function () {
+        Route::resource('/staff', 'StaffController');
+    });
+
+    Route::group(['middleware' => ['permission:Job Type']], function () {
+        Route::resource('job-type', 'JobTypeController');
+    });
+
+    Route::group(['middleware' => ['permission:Designation']], function () {
+        Route::resource('designation','DesignationController');
+    });
+
+    Route::group(['middleware' => ['permission:Project']], function () {
+        Route::prefix('project')->group(function ()
+        {
+            Route::resource('/','ProjectController');
+            Route::get('/{id}/actual-cost','ProjectController@actualCost');
+            Route::get('/{id}/budget-cost','ProjectController@budgetCost');
+            Route::get('/{id}/estimation/edit/staff-allocation-estimation','ProjectController@editStaffAllocationEstimation');
+            Route::get('/{id}/estimation/edit/cost-type','ProjectController@editCostType');
+            Route::get('/{id}/settings','ProjectController@settings');
+            Route::post('/status','ProjectController@projectStatusStore');
+            Route::post('/variable-update','ProjectController@projectVariableUpdate');
+            Route::post('/budget-cost','ProjectController@budgetCostStore');
+            Route::post('/actual-cost','ProjectController@actualCostStore');
+            Route::post('/edit-budget-designation-cost','ProjectController@editBudgetDesignationCost');
+            Route::post('/store-new-budget-designation-cost','ProjectController@StoreNewBudgetDesignationCost');
+            Route::post('/edit-budget-cost-type','ProjectController@editBudgetCostType');
+            Route::post('/store-new-budget-cost-type','ProjectController@StoreNewBudgetCostType');
+            Route::post('/edit-actual-cost-type','ProjectController@editActualCostType');
+            Route::post('/store-new-actual-cost-type','ProjectController@StoreNewActualCostType');
+        });
+    });
+
+
     Route::group(['middleware' => ['permission:Settings']], function () {
-
         Route::get('settings','SettingController@index');
-
         Route::prefix('settings')->group(function () {
-
             Route::get('/','SettingController@index');
-            Route::get('/access-control','AccessControlController@index');
-            Route::Resource('/access-control/permissions','PermissionsController');
+            Route::get('/access-control/permissions','PermissionsController@index');
             Route::Resource('/access-control/roles','RolesController');
             Route::Resource('/access-control/user-management','UserManagementController');
-
         });
 
     });

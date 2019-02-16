@@ -68,8 +68,6 @@
 
                             <th>#ID</th>
                             <th>Name</th>
-                            <th><i class="fa fa-cogs"></i></th>
-
                         </tr>
                         </thead>
 
@@ -79,17 +77,8 @@
                             <tr data-entry-id="{{ $permission->id }}">
                                 <td>{{ $permission->id }}</td>
                                 <td>{{ $permission->name }}</td>
-                                <td>
-                                    <a href="{!! url('/settings/access-control/permissions') !!}/{{ $permission->id }}/edit">Edit <i class="fa fa-paper-plane"></i></a>
-                                </td>
-                                    {{--{!! Form::model($permission, ['method' => 'PATCH', 'action' => ['PermissionsController@update', $permission->id],'class'=>'form-horizontal']) !!}--}}
-                                    {{--{!! Form::text('set_delete',"value",['style'=>'display:none']) !!}--}}
-                                        {{--<a style="position:relative;display: block" type="submit" ><i class="fa fa-trash"></i></a>--}}
-                                    {{--{!! Form::close() !!}--}}
                             </tr>
                         @endforeach
-
-
                         </tbody>
                     </table>
                 </div>

@@ -219,41 +219,80 @@
 
 
         <div class="col-md-6">
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Cost & Revenue Comparison</h3>
 
-                </div>
-                <div class="box-body">
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Project Status</h3>
+                    </div>
+                    {!! Form::open(['action'=>'ProjectController@projectStatusStore','class'=>'form-horizontal','id'=>'Form']) !!}
 
+                    <div class="box-body">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {!! Form::label('project_status','Project Status',['class' => 'control-label']) !!}
+                                {!! Form::select('project_status',\App\Models\ProjectStatus::get()->pluck('name','id'),$Project->status_id,['class'=>'form-control']) !!}
+                                <input name="project_id" type="number" style="display: none" value="{!! $Project->id !!}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        {!! Form::submit('Apply',['class'=>'btn btn-primary pull-right']) !!}
+                    </div>
+                    {!! Form::close() !!}
                 </div>
-                <!-- /.box-body -->
             </div>
+
+            <div class="col-md-12">
+                <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Project Variables</h3>
+                    </div>
+                    {!! Form::open(['action'=>'ProjectController@projectVariableUpdate','class'=>'form-horizontal','id'=>'Form']) !!}
+
+                    <div class="box-body">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                {!! Form::label('profit_ratio','Profit Mark Up',['class' => 'control-label']) !!}
+                                {!! Form::number('profit_ratio',$Project->profit_ratio*100,['class'=>'form-control']) !!}
+                                <input name="project_id" type="number" style="display: none" value="{!! $Project->id !!}">
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer">
+                        {!! Form::submit('Update',['class'=>'btn btn-primary pull-right']) !!}
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+
         </div>
 
-    </div>
+</div>
 @endsection
 <!-- /main section -->
 
 @section('model')
-    <div class="modal fade" id="modal-default">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Employees work report</h4>
-                </div>
-                <div class="modal-body">
-                    @include('admin.project._partials.showForm')
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-            <!-- /.modal-content -->
-        </div>
-        <!-- /.modal-dialog -->
+<div class="modal fade" id="modal-default">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Employees work report</h4>
     </div>
-    <!-- /.modal -->
+    <div class="modal-body">
+        @include('admin.project._partials.showForm')
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+    </div>
+</div>
+<!-- /.modal-content -->
+</div>
+<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 @endsection

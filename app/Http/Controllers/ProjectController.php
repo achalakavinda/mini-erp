@@ -83,7 +83,7 @@ class ProjectController extends Controller
             'budget_revenue'=>$quoted_price,
             'budget_number_of_hrs'=>$request->budget_number_of_hrs,
             'budget_cost_by_overhead'=>$request->budget_cost,
-            'profit_ratio'=>$request->profit_ratio,
+            'profit_ratio'=>$request->profit_ratio/100,
             'status_id'=>1,
             'created_by_id'=>\Auth::id(),
             'updated_by_id'=>\Auth::id(),
@@ -99,6 +99,66 @@ class ProjectController extends Controller
         }
 
         return \redirect('project/'.$Project->id);
+    }
+
+    public function projectStatusStore(Request $request){
+
+        $request->validate([
+            'project_status' => 'required',
+            'project_id' => 'required'
+        ]);
+        $Project = Project::findOrFail($request->project_id);
+        $Project->status_id = $request->project_status;
+        $Project->save();
+
+        return Redirect::back();
+    }
+
+    public function projectVariableUpdate(Request $request)
+    {
+        $request->validate([
+            'profit_ratio' => 'required',
+            'project_id' => 'required'
+        ]);
+
+        $Project = Project::findOrFail($request->project_id);
+
+        if($request->profit_ratio < 10 && $Project->profit_ratio != $request->profit_ratio/100 ){
+            return \redirect()->back();
+        }
+
+        $Project->profit_ratio = $request->profit_ratio/100;
+        $Project->save();
+
+        $Project_Budgeted_Work_Cost = 0;
+        $Project_Budgeted_OverHead_Cost = 0;
+
+        //project designation
+        $Items = ProjectDesignation::where('project_id',$Project->id)->get();
+        foreach ($Items as $item)
+        {
+            //variable hold the total overhead cost
+            $Project_Budgeted_Work_Cost = $Project_Budgeted_Work_Cost + ($item->hr*$item->hr_rates);
+        }
+
+        $Items = ProjectOverhead::where('project_id',$Project->id)->get();
+        foreach ($Items as $item)
+        {
+            //variable hold the total overhead cost
+            $Project_Budgeted_OverHead_Cost = $Project_Budgeted_OverHead_Cost + $item->cost;
+        }
+
+
+        //budget and quoted price calculation
+        $BudgetSum = $Project_Budgeted_Work_Cost +$Project_Budgeted_Work_Cost + $Project_Budgeted_OverHead_Cost;
+        $QuotedSum = $BudgetSum + ($BudgetSum*$Project->profit_ratio);
+        $Project = Project::findOrFail($request->project_id);
+        $Project->budget_revenue = $QuotedSum;//budget revenue and the quoted price is equal
+        $Project->quoted_price = $QuotedSum;//budget revenue and the quoted price is equal
+        $Project->updated_by_id = \Auth::id();//set updated by parameter
+        $Project->save();//save the updated values
+
+        return Redirect::back();
     }
 
     /**
@@ -241,11 +301,11 @@ class ProjectController extends Controller
         }
 
         //budget and quoted price calculation
-        $BudgetSum = $Project_Budgeted_Work_Cost + $Project_Budgeted_OverHead_Cost;
+        $BudgetSum = $Project_Budgeted_Work_Cost + $Project_Budgeted_Work_Cost + $Project_Budgeted_OverHead_Cost;
 
         $QuotedSum = 0;
 
-        if($request->profit_margin!=null && $request->profit_margin>0)
+        if($request->profit_margin !=null && $request->profit_margin>0)
         {// this zero validation must be remove if u remove minimum profit margin to 0
             $QuotedSum = $BudgetSum + ($BudgetSum*($request->profit_margin/100));
         }else{
@@ -259,7 +319,7 @@ class ProjectController extends Controller
 
         $Project->budget_revenue = $QuotedSum;//budget revenue and the quoted price is equal
         $Project->quoted_price = $QuotedSum;//budget revenue and the quoted price is equal
-        $Project->profit_ratio = $request->profit_margin;//expected profit ratio
+        $Project->profit_ratio = $request->profit_margin/100;//expected profit ratio
 
         $Project->updated_by_id = \Auth::id();//set updated by parameter
         $Project->save();//save the updated values
@@ -714,8 +774,8 @@ class ProjectController extends Controller
             $Project_Budgeted_OverHead_Cost = $Project_Budgeted_OverHead_Cost + $item->cost;
         }
 
-        $BudgetSum = $Project_Budgeted_Work_Cost + $Project_Budgeted_OverHead_Cost;
-        $QuotedSum = $BudgetSum + ($BudgetSum*($Project->profit_ratio/100));
+        $BudgetSum = $Project_Budgeted_Work_Cost + $Project_Budgeted_Work_Cost + $Project_Budgeted_OverHead_Cost;
+        $QuotedSum = $BudgetSum + ($BudgetSum*$Project->profit_ratio);
 
         //update existing project values
         $Project->budget_number_of_hrs = $Project_Budgeted_Work_Hours;//budgeted number of working hours
