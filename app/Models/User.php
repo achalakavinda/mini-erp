@@ -32,4 +32,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class, 'role_user');
     }
+
+    public static function CheckPermission($arr){
+        $permission = \Auth::user()->hasAnyPermission($arr);
+        if(!$permission){
+            abort(403);
+        }
+    }
 }

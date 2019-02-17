@@ -36,6 +36,28 @@
                     @include('error.error')
                     @include('admin.acl.user_management._partials.editForm')
                 {!! Form::close() !!}
+
+
+                <div style="overflow: auto" class="box-body">
+                    <table id="table" class="table table-responsive table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Permission</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($Premissions as $row)
+
+                            <tr>
+                                <td>{{ $row->id }}</td>
+                                <td>{{ $row->name }}</td>
+                            </tr>
+                        @endforeach
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
             <!-- /.box -->
         </div>

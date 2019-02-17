@@ -5,10 +5,16 @@ namespace App\Http\Controllers;
 use App\Models\CusSector;
 use App\Models\CusService;
 use App\Models\Customer;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:Customer']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,6 +22,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
+        User::CheckPermission(['Customer','Customer | Registry']);
         $Customers = Customer::all();
         return view('admin.customer.index',compact('Customers'));
     }
@@ -27,6 +34,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
+        User::CheckPermission(['Customer | Creation']);
         return view('admin.customer.create');
     }
 
@@ -38,6 +46,8 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
+        User::CheckPermission(['Customer | Creation']);
+
         $request->validate([
            'name'=>'required',
            'file_no'=>'required'
@@ -109,6 +119,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
+        User::CheckPermission(['Customer | Registry']);
         $Customer = Customer::find($id);
         return view('admin.customer.show',compact('Customer'));
     }
@@ -133,6 +144,7 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
+        User::CheckPermission(['Customer | Update']);
 
         $request->validate([
             'name'=>'required',

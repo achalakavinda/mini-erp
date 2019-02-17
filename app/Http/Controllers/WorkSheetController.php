@@ -11,6 +11,11 @@ use Illuminate\Http\Request;
 
 class WorkSheetController extends Controller
 {
+    public function __construct()
+    {
+
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -18,6 +23,7 @@ class WorkSheetController extends Controller
      */
     public function index()
     {
+        User::CheckPermission(['Work Sheet']);
         $WorkSheet = WorkSheet::all();
         return view('admin.work_sheet.index',compact('WorkSheet'));
     }
@@ -29,7 +35,7 @@ class WorkSheetController extends Controller
      */
     public function create()
     {
-
+        User::CheckPermission(['Work Sheet','Minor Staff | Work Report']);
         return view('admin.work_sheet.create');
     }
 
@@ -41,6 +47,7 @@ class WorkSheetController extends Controller
      */
     public function store(Request $request)
     {
+        User::CheckPermission(['Work Sheet','Minor Staff | Work Report','Minor Staff']);
         //validate the post request body
         $request->validate([
             'work_code_id'=> 'required',

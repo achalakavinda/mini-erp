@@ -15,99 +15,91 @@ class RolesAndPermissionsSeeder extends Seeder
     {
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $role_admin = Role::create(['name' => 'Admin']);
-        $role_partner = Role::create(['name' => 'Partner']);
-        $role_manager = Role::create(['name' => 'Manager']);
-        $role_associate_manager = Role::create(['name' => 'Associate Manager']);
-        $role_hr = Role::create(['name' => 'HR']);
-        $role_staff = Role::create(['name' => 'Staff']);
+        $role_admin = Role::create(['name' => config('constant.ROLE_SUPER_ADMIN') ]);
 
         //permission default
-        $permission = Permission::create(['name' => 'Dashboard']);
+        $permission = Permission::create(['name' => config('constant.Permission_Dashboard')]);
         $role_admin->givePermissionTo($permission);
 
-        $permission = Permission::create(['name' => 'Project']);
+        $permission = Permission::create(['name' => config('constant.Permission_Project')]);
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Project | Registry']);
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Registry')]);
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Project | Creation']);
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Creation')]);
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Project | Budget']);
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Budget')]);
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Project | Budget | Creation']);
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Budget_Creation')]);
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Project | Budget | Update']);
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Budget_Update')]);
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Project | Actual']);
+        $permission = Permission::create(['name' => config('constant.Permission_Actual')]);
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Project | Actual | Creation']);
+        $permission = Permission::create(['name' => config('constant.Permission_Actual_Creation')]);
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Project | Actual | Update']);
+        $permission = Permission::create(['name' => config('constant.Permission_Actual_Update')]);
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Project | Setting']);
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Setting')]);
         $role_admin->givePermissionTo($permission);
 
         //work sheet
-        $permission = Permission::create(['name' => 'Work Sheet']);
+        $permission = Permission::create(['name' => config('constant.Permission_Work_Sheet')]);
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Work Sheet | Update']);
-        $role_admin->givePermissionTo($permission);
-
-        $permission = Permission::create(['name' => 'Work Report']);
-        $role_admin->givePermissionTo($permission);
-        $role_staff->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Work Report | Update']);
-        $role_admin->givePermissionTo($permission);
-        $role_staff->givePermissionTo($permission);
-
-        $permission = Permission::create(['name' => 'Minor Staff']);
-        $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Staff']);
-        $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Staff | Registry']);
-        $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Staff | Creation']);
-        $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Staff | Update']);
+        $permission = Permission::create(['name' => config('constant.Permission_Work_Sheet_Update')]);
         $role_admin->givePermissionTo($permission);
 
-        $permission = Permission::create(['name' => 'Designation']);
+        $permission = Permission::create(['name' => config('constant.Permission_Minor_Staff_Work_Sheet') ]);
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Designation | Registry']);
+        $permission = Permission::create(['name' => config('constant.Permission_Minor_Staff_Work_Sheet_Update') ]);
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Designation | Creation']);
+        $permission = Permission::create(['name' => config('constant.Permission_Minor_Staff') ]);
+
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Designation | Update']);
+        $permission = Permission::create(['name' => config('constant.Permission_Staff') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Staff_Registry') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Staff_Creation') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Staff_Update') ]);
         $role_admin->givePermissionTo($permission);
 
-        $permission = Permission::create(['name' => 'Job Type']);
+        $permission = Permission::create(['name' =>  config('constant.Permission_Designation') ]);
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Job Type | Registry']);
+        $permission = Permission::create(['name' =>  config('constant.Permission_Designation_Registry') ]);
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Job Type | Creation']);
+        $permission = Permission::create(['name' =>  config('constant.Permission_Designation_Creation') ]);
         $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Job Type | Update']);
-        $role_admin->givePermissionTo($permission);
-
-        $permission = Permission::create(['name' => 'Customer']);
-        $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Customer | Registry']);
-        $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Customer | Creation']);
-        $role_admin->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Customer | Update']);
+        $permission = Permission::create(['name' =>  config('constant.Permission_Designation_Update') ]);
         $role_admin->givePermissionTo($permission);
 
-        $permission = Permission::create(['name' => 'Profile']);
+        $permission = Permission::create(['name' => config('constant.Permission_Job_Type') ]);
         $role_admin->givePermissionTo($permission);
-        $role_staff->givePermissionTo($permission);
-        $permission = Permission::create(['name' => 'Profile | Update']);
+        $permission = Permission::create(['name' => config('constant.Permission_Job_Type_Registry') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Job_Type_Creation') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Job_Type_Update') ]);
         $role_admin->givePermissionTo($permission);
 
-        $permission = Permission::create(['name' => 'Settings']);
+        $permission = Permission::create(['name' => config('constant.Permission_Customer') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Customer_Registry') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Customer_Creation') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Customer_Update') ]);
+        $role_admin->givePermissionTo($permission);
+
+        $permission = Permission::create(['name' => config('constant.Permission_Profile') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Profile_Update') ]);
+        $role_admin->givePermissionTo($permission);
+
+        $permission = Permission::create(['name' => config('constant.Permission_Setting') ]);
         $role_admin->givePermissionTo($permission);
 
         $user = \App\Models\User::where('email','admin@test.com')->first();
-        $user->assignRole('Admin');
+        $user->assignRole( config('constant.ROLE_SUPER_ADMIN') );
     }
 }

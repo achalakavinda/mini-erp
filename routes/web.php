@@ -19,13 +19,19 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
 
+    Route::get('/dashboard', 'DashboardController@index');
+
     Route::group(['middleware' => ['permission:Minor Staff|Dashboard']], function () {
-        Route::get('/dashboard', 'DashboardController@index');
-        Route::get('/staff/profile/{id}', 'StaffController@profile');
+        Route::get('/staff/profile/{id}', function ($id){
+            $User = \App\Models\User::findOrFail($id);
+            return view('admin.staff.profile.profile',compact('User'));
+        });
         Route::get('/staff/work-sheet', 'PageController@workSheet');
         Route::post('/staff/work-sheet/store', 'PageController@workSheetStore');
-        Route::resource('work-sheet', 'WorkSheetController');
     });
+
+
+    Route::resource('work-sheet', 'WorkSheetController');
 
     Route::group(['middleware' => ['permission:Customer']], function () {
         Route::resource('/customer', 'CustomerController');
@@ -44,9 +50,9 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
     Route::group(['middleware' => ['permission:Project']], function () {
+        Route::resource('project','ProjectController');
         Route::prefix('project')->group(function ()
         {
-            Route::resource('/','ProjectController');
             Route::get('/{id}/actual-cost','ProjectController@actualCost');
             Route::get('/{id}/budget-cost','ProjectController@budgetCost');
             Route::get('/{id}/estimation/edit/staff-allocation-estimation','ProjectController@editStaffAllocationEstimation');

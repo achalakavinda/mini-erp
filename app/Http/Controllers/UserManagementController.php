@@ -27,7 +27,6 @@ class UserManagementController extends Controller
     public function create()
     {
         $Roles = Role::get()->pluck('name', 'name');
-
         return view('admin.acl.user_management.create', compact('Roles'));
     }
 
@@ -63,8 +62,8 @@ class UserManagementController extends Controller
     {
         $Roles = Role::get()->pluck('name', 'name');
         $User = User::findOrFail($id);
-
-        return view('admin.acl.user_management.edit', compact(['Roles','User']));
+        $Premissions = $User->getAllPermissions();
+        return view('admin.acl.user_management.edit', compact(['Roles','User','Premissions']));
     }
 
     /**

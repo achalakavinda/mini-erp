@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Designation;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DesignationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:Designation']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,6 +20,7 @@ class DesignationController extends Controller
      */
     public function index()
     {
+        User::CheckPermission(['Designation | Registry']);
         $Rows = Designation::all();
         return view('admin.designation.index',compact('Rows'));
     }
@@ -25,6 +32,7 @@ class DesignationController extends Controller
      */
     public function create()
     {
+        User::CheckPermission(['Designation | Creation']);
         return view('admin.designation.create');
     }
 
@@ -36,11 +44,11 @@ class DesignationController extends Controller
      */
     public function store(Request $request)
     {
+        User::CheckPermission(['Designation | Creation']);
         $request->validate([
             'designationType' => 'required | min:3',
             'avg_hr_rate' => 'required',
         ]);
-
         try{
             Designation::create([
                 'designationType'=>$request->designationType,
@@ -52,7 +60,6 @@ class DesignationController extends Controller
             return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
         }
         return redirect()->back()->with(['created'=>'success','message'=>'Successfully created!']);
-
     }
 
     /**
@@ -63,6 +70,7 @@ class DesignationController extends Controller
      */
     public function show($id)
     {
+        User::CheckPermission(['Designation | Registry']);
         $Designation = Designation::findOrFail($id);
         return view('admin.designation.edit',compact('Designation'));
     }
@@ -75,6 +83,7 @@ class DesignationController extends Controller
      */
     public function edit($id)
     {
+        User::CheckPermission(['Designation | Update']);
         $Designation = Designation::findOrFail($id);
         return view('admin.designation.edit',compact('Designation'));
     }
@@ -88,11 +97,11 @@ class DesignationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        User::CheckPermission(['Designation | Update']);
         $request->validate([
             'designationType' => 'required | min:3',
             'avg_hr_rate' => 'required',
         ]);
-
         try {
             $DESIGNATION = Designation::findOrFail($id);
             if (!empty($DESIGNATION)) {
@@ -107,8 +116,6 @@ class DesignationController extends Controller
             return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
         }
         return redirect()->back()->with(['created'=>'success','message'=>'Successfully updated!']);
-
-
     }
 
     /**

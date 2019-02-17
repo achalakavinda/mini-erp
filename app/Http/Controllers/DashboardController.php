@@ -10,7 +10,7 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $user_permission = auth()->user()->hasAnyPermission('Dashboard');
+        $user_permission = auth()->user()->hasAnyPermission('Project');
         if($user_permission){
             return view('dashboard');
         }else{

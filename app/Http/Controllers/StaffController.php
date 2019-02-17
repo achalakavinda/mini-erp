@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class StaffController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:Staff']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +19,7 @@ class StaffController extends Controller
      */
     public function index()
     {
+        User::CheckPermission(['Staff | Registry']);
         $Rows = User::all();
         return view('admin.staff.index',compact('Rows'));
     }
@@ -26,6 +31,7 @@ class StaffController extends Controller
      */
     public function create()
     {
+        User::CheckPermission(['Staff | Creation']);
         $Designation = Designation::all()->pluck('designationType','id');
         return view('admin.staff.create',compact('Designation'));
     }
@@ -38,7 +44,7 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-
+        User::CheckPermission(['Staff | Creation']);
         $request->validate([
             'name'=>'required',
             'nic'=>'required',
@@ -81,14 +87,10 @@ class StaffController extends Controller
                 'hr_billing_rates'=>$request->hr_billing_rates,
                 'password'=> bcrypt('password')
             ]);
-
-           $user->assignRole('Staff');
-
         }catch (\Exception $exception){
             return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
         }
         return redirect()->back()->with(['created'=>'success','message'=>'Successfully created!']);
-
     }
 
     /**
@@ -107,8 +109,9 @@ class StaffController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function profile($id){
-
+    public function profile($id)
+    {
+        User::CheckPermission(['Staff']);
         $User = User::findOrFail($id);
         return view('admin.staff.profile.profile',compact('User'));
     }
@@ -133,6 +136,7 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
+        User::CheckPermission(['Staff | Update']);
         return redirect()->back()->with('created',true);
     }
 

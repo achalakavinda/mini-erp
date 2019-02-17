@@ -11,11 +11,17 @@ use App\Models\ProjectEmployee;
 use App\Models\ProjectJobType;
 use App\Models\ProjectOverhead;
 use App\Models\ProjectOverheadsActual;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
 class ProjectController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['permission:Project']);
+    }
 
     /**
      * Display a listing of the resource.
@@ -24,6 +30,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
+        User::CheckPermission(['Project | Registry']);
         $Rows = Project::all();
         return view('admin.project.index',compact('Rows'));
     }
@@ -34,6 +41,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
+        User::CheckPermission(['Project | Creation']);
         return view('admin.project.create');
     }
 
@@ -44,6 +52,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        User::CheckPermission(['Project | Creation']);
         $request->validate([
             'code' => 'required | unique:projects',
             'customer_id' => 'required',
@@ -102,7 +111,7 @@ class ProjectController extends Controller
     }
 
     public function projectStatusStore(Request $request){
-
+        User::CheckPermission(['Project | Setting']);
         $request->validate([
             'project_status' => 'required',
             'project_id' => 'required'
@@ -116,6 +125,7 @@ class ProjectController extends Controller
 
     public function projectVariableUpdate(Request $request)
     {
+        User::CheckPermission(['Project | Setting']);
         $request->validate([
             'profit_ratio' => 'required',
             'project_id' => 'required'
@@ -168,6 +178,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
+//        User::CheckPermission(['Project | Registry']);
         $Project = Project::findOrFail($id);
         return view('admin.project.show',compact('Project'));
     }
@@ -190,6 +201,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
+        User::CheckPermission(['Project | Setting']);
         if(isset($request->set_delete))
         {
             $Project = Project::find($id)->delete();
@@ -212,6 +224,7 @@ class ProjectController extends Controller
      */
     public function budgetCost($id)
     {
+        User::CheckPermission(['Project | Budget']);
         $Project = Project::findOrFail($id);
         return view('admin.project.budget_cost',compact('Project'));
     }
@@ -223,6 +236,7 @@ class ProjectController extends Controller
      */
     public function actualCost($id)
     {
+        User::CheckPermission(['Project | Actual']);
         $Project = Project::findOrFail($id);
         return view('admin.project.actual_cost',compact('Project'));
     }
@@ -234,6 +248,7 @@ class ProjectController extends Controller
      */
     public function budgetCostStore(Request $request)
     {
+        User::CheckPermission(['Project | Budget | Creation']);
         $request->validate([
             'number_of_hrs' => 'required',
             'budget_cost' => 'required',
@@ -334,6 +349,7 @@ class ProjectController extends Controller
      */
     public function actualCostStore(Request $request)
     {
+        User::CheckPermission(['Project | Actual | Creation']);
         $request->validate([
             'project_id' => 'required'
         ]);
@@ -415,6 +431,7 @@ class ProjectController extends Controller
      */
     public function editStaffAllocationEstimation($id)
     {
+        User::CheckPermission(['Project | Budget | Update']);
         $Project = Project::findOrFail($id);
         return view('admin.project.edit_budget_cost',compact('Project'));
     }
@@ -426,6 +443,7 @@ class ProjectController extends Controller
      */
     public function editCostType($id)
     {
+        User::CheckPermission(['Project | Budget | Update']);
         $Project = Project::findOrFail($id);
         return view('admin.project.edit_cost_type',compact('Project'));
     }
@@ -437,6 +455,7 @@ class ProjectController extends Controller
      */
     function editBudgetDesignationCost(Request $request)
     {
+        User::CheckPermission(['Project | Budget | Update']);
         //Validator for update row
         $Validated = false;
         $Delete = false;
@@ -501,6 +520,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     function StoreNewBudgetDesignationCost(Request $request){
+        User::CheckPermission(['Project | Budget | Update']);
         //validate post request
         $request->validate([
             'designation_row' => 'required',
@@ -539,6 +559,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     function editBudgetCostType(Request $request){
+        User::CheckPermission(['Project | Budget | Update']);
         $Validated = false;
         $Delete = false;
 
@@ -600,6 +621,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     function StoreNewBudgetCostType(Request $request){
+        User::CheckPermission(['Project | Budget | Creation']);
         $request->validate([
             'project_id' => 'required',
             'cost_row' => 'required'
@@ -641,6 +663,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function editActualCostType(Request $request){
+        User::CheckPermission(['Project | Actual | Update']);
         $Validated = false;
         $Delete = false;
 
@@ -696,6 +719,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function StoreNewActualCostType(Request $request){
+        User::CheckPermission(['Project | Actual | Update']);
         $request->validate([
             'project_id' => 'required',
             'cost_row' => 'required'
@@ -743,6 +767,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function settings($id){
+        User::CheckPermission(['Project | Setting']);
         $Project = Project::findOrFail($id);
         return view('admin.project.settings',compact('Project'));
     }
