@@ -4,6 +4,7 @@ return [
 
     //Roles
     'ROLE_SUPER_ADMIN'=>'Super-Admin',
+    'ROLE_SUPER_STAFF'=>'Staff',
 
     //Permission
     'Permission_Dashboard'=>'Dashboard',
@@ -21,9 +22,11 @@ return [
 
     'Permission_Work_Sheet'=>'Work Sheet',
     'Permission_Work_Sheet_Update'=>'Work Sheet | Update',
+
+    'Permission_Minor_Staff'=>'Minor Staff',
     'Permission_Minor_Staff_Work_Sheet'=>'Minor Staff | Work Report',
     'Permission_Minor_Staff_Work_Sheet_Update'=>'Minor Staff | Work Report | Update',
-    'Permission_Minor_Staff'=>'Minor Staff',
+
 
     'Permission_Staff'=>'Staff',
     'Permission_Staff_Registry'=>'Staff | Registry',

@@ -10,7 +10,7 @@ class StaffController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['permission:Staff']);
+        $this->middleware(['permission:'.config('constant.Permission_Staff') ]);
     }
     /**
      * Display a listing of the resource.
@@ -19,7 +19,7 @@ class StaffController extends Controller
      */
     public function index()
     {
-        User::CheckPermission(['Staff | Registry']);
+        User::CheckPermission([ config('constant.Permission_Staff_Registry') ]);
         $Rows = User::all();
         return view('admin.staff.index',compact('Rows'));
     }
@@ -31,7 +31,7 @@ class StaffController extends Controller
      */
     public function create()
     {
-        User::CheckPermission(['Staff | Creation']);
+        User::CheckPermission([ config('constant.Permission_Staff_Creation') ]);
         $Designation = Designation::all()->pluck('designationType','id');
         return view('admin.staff.create',compact('Designation'));
     }
@@ -44,7 +44,7 @@ class StaffController extends Controller
      */
     public function store(Request $request)
     {
-        User::CheckPermission(['Staff | Creation']);
+        User::CheckPermission([ config('constant.Permission_Staff_Creation') ]);
         $request->validate([
             'name'=>'required',
             'nic'=>'required',
@@ -87,6 +87,7 @@ class StaffController extends Controller
                 'hr_billing_rates'=>$request->hr_billing_rates,
                 'password'=> bcrypt('password')
             ]);
+           $user->assignRole( config('constant.ROLE_SUPER_STAFF') );
         }catch (\Exception $exception){
             return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
         }
@@ -111,7 +112,7 @@ class StaffController extends Controller
      */
     public function profile($id)
     {
-        User::CheckPermission(['Staff']);
+        User::CheckPermission([ config('constant.Permission_Profile') ]);
         $User = User::findOrFail($id);
         return view('admin.staff.profile.profile',compact('User'));
     }
@@ -136,7 +137,7 @@ class StaffController extends Controller
      */
     public function update(Request $request, $id)
     {
-        User::CheckPermission(['Staff | Update']);
+        User::CheckPermission([ config('constant.Permission_Staff_Update') ]);
         return redirect()->back()->with('created',true);
     }
 

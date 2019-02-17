@@ -20,7 +20,7 @@ class ProjectController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['permission:Project']);
+        $this->middleware(['permission:'.config('constant.Permission_Project')]);
     }
 
     /**
@@ -30,7 +30,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        User::CheckPermission(['Project | Registry']);
+        User::CheckPermission([config('constant.Permission_Project_Registry')]);
         $Rows = Project::all();
         return view('admin.project.index',compact('Rows'));
     }
@@ -41,7 +41,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        User::CheckPermission(['Project | Creation']);
+        User::CheckPermission([config('constant.Permission_Project_Creation')]);
         return view('admin.project.create');
     }
 
@@ -52,7 +52,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        User::CheckPermission(['Project | Creation']);
+        User::CheckPermission([config('constant.Permission_Project_Creation')]);
         $request->validate([
             'code' => 'required | unique:projects',
             'customer_id' => 'required',
@@ -110,12 +110,15 @@ class ProjectController extends Controller
         return \redirect('project/'.$Project->id);
     }
 
-    public function projectStatusStore(Request $request){
-        User::CheckPermission(['Project | Setting']);
+    public function projectStatusStore(Request $request)
+    {
+        User::CheckPermission([config('constant.Permission_Project_Setting')]);
+
         $request->validate([
             'project_status' => 'required',
             'project_id' => 'required'
         ]);
+
         $Project = Project::findOrFail($request->project_id);
         $Project->status_id = $request->project_status;
         $Project->save();
@@ -125,7 +128,8 @@ class ProjectController extends Controller
 
     public function projectVariableUpdate(Request $request)
     {
-        User::CheckPermission(['Project | Setting']);
+        User::CheckPermission([config('constant.Permission_Project_Setting')]);
+
         $request->validate([
             'profit_ratio' => 'required',
             'project_id' => 'required'
@@ -178,7 +182,7 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-//        User::CheckPermission(['Project | Registry']);
+        User::CheckPermission([config('constant.Permission_Project_Registry')]);
         $Project = Project::findOrFail($id);
         return view('admin.project.show',compact('Project'));
     }
@@ -201,7 +205,7 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        User::CheckPermission(['Project | Setting']);
+        User::CheckPermission([config('constant.Permission_Project_Setting')]);
         if(isset($request->set_delete))
         {
             $Project = Project::find($id)->delete();
@@ -224,7 +228,7 @@ class ProjectController extends Controller
      */
     public function budgetCost($id)
     {
-        User::CheckPermission(['Project | Budget']);
+        User::CheckPermission([config('constant.Permission_Project_Budget')]);
         $Project = Project::findOrFail($id);
         return view('admin.project.budget_cost',compact('Project'));
     }
@@ -236,7 +240,7 @@ class ProjectController extends Controller
      */
     public function actualCost($id)
     {
-        User::CheckPermission(['Project | Actual']);
+        User::CheckPermission([config('constant.Permission_Actual')]);
         $Project = Project::findOrFail($id);
         return view('admin.project.actual_cost',compact('Project'));
     }
@@ -248,7 +252,7 @@ class ProjectController extends Controller
      */
     public function budgetCostStore(Request $request)
     {
-        User::CheckPermission(['Project | Budget | Creation']);
+        User::CheckPermission([config('constant.Permission_Project_Budget_Creation')]);
         $request->validate([
             'number_of_hrs' => 'required',
             'budget_cost' => 'required',
@@ -349,7 +353,7 @@ class ProjectController extends Controller
      */
     public function actualCostStore(Request $request)
     {
-        User::CheckPermission(['Project | Actual | Creation']);
+        User::CheckPermission([config('constant.Permission_Actual_Creation')]);
         $request->validate([
             'project_id' => 'required'
         ]);
@@ -431,7 +435,7 @@ class ProjectController extends Controller
      */
     public function editStaffAllocationEstimation($id)
     {
-        User::CheckPermission(['Project | Budget | Update']);
+        User::CheckPermission([config('constant.Permission_Project_Budget_Update')]);
         $Project = Project::findOrFail($id);
         return view('admin.project.edit_budget_cost',compact('Project'));
     }
@@ -443,7 +447,7 @@ class ProjectController extends Controller
      */
     public function editCostType($id)
     {
-        User::CheckPermission(['Project | Budget | Update']);
+        User::CheckPermission([config('constant.Permission_Project_Budget_Update')]);
         $Project = Project::findOrFail($id);
         return view('admin.project.edit_cost_type',compact('Project'));
     }
@@ -455,7 +459,7 @@ class ProjectController extends Controller
      */
     function editBudgetDesignationCost(Request $request)
     {
-        User::CheckPermission(['Project | Budget | Update']);
+        User::CheckPermission([config('constant.Permission_Project_Budget_Update')]);
         //Validator for update row
         $Validated = false;
         $Delete = false;
@@ -520,7 +524,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     function StoreNewBudgetDesignationCost(Request $request){
-        User::CheckPermission(['Project | Budget | Update']);
+        User::CheckPermission([config('constant.Permission_Project_Budget_Update')]);
         //validate post request
         $request->validate([
             'designation_row' => 'required',
@@ -559,7 +563,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     function editBudgetCostType(Request $request){
-        User::CheckPermission(['Project | Budget | Update']);
+        User::CheckPermission([config('constant.Permission_Project_Budget_Update')]);
         $Validated = false;
         $Delete = false;
 
@@ -621,7 +625,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     function StoreNewBudgetCostType(Request $request){
-        User::CheckPermission(['Project | Budget | Creation']);
+        User::CheckPermission([config('constant.Permission_Project_Budget_Update')]);
         $request->validate([
             'project_id' => 'required',
             'cost_row' => 'required'
@@ -663,7 +667,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function editActualCostType(Request $request){
-        User::CheckPermission(['Project | Actual | Update']);
+        User::CheckPermission([config('constant.Permission_Actual_Update')]);
         $Validated = false;
         $Delete = false;
 
@@ -719,7 +723,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function StoreNewActualCostType(Request $request){
-        User::CheckPermission(['Project | Actual | Update']);
+        User::CheckPermission([config('constant.Permission_Actual_Update')]);
         $request->validate([
             'project_id' => 'required',
             'cost_row' => 'required'
@@ -767,7 +771,7 @@ class ProjectController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function settings($id){
-        User::CheckPermission(['Project | Setting']);
+        User::CheckPermission([config('constant.Permission_Project_Setting')]);
         $Project = Project::findOrFail($id);
         return view('admin.project.settings',compact('Project'));
     }

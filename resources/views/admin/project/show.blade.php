@@ -100,16 +100,6 @@
                 @include('admin.project.table.project_cost_summary_table')
                 {{--/summery table--}}
             </div>
-
-                {{--<div class="box-body">--}}
-                    {{--<div class="pull-right">--}}
-                        {{--{!! Form::model($Project, ['method' => 'PATCH', 'action' => ['ProjectController@update', $Project->id],'class'=>'form-horizontal']) !!}--}}
-                        {{--{!! Form::text('set_delete',"value",['style'=>'display:none']) !!}--}}
-                        {{--<button type="submit" class="btn btn-sm btn-danger">Delete <i class="fa fa-trash"></i></button>--}}
-                        {{--{!! Form::close() !!}--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            <!-- /.box -->
         </div>
 
         <!-- BAR CHART -->

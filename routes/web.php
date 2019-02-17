@@ -21,36 +21,27 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/dashboard', 'DashboardController@index');
 
-    Route::group(['middleware' => ['permission:Minor Staff|Dashboard']], function () {
-        Route::get('/staff/profile/{id}', function ($id){
+    Route::get('/staff/profile/{id}', function ($id){
             $User = \App\Models\User::findOrFail($id);
             return view('admin.staff.profile.profile',compact('User'));
         });
-        Route::get('/staff/work-sheet', 'PageController@workSheet');
-        Route::post('/staff/work-sheet/store', 'PageController@workSheetStore');
-    });
+
+    Route::get('/staff/work-sheet', 'PageController@workSheet');
+    Route::post('/staff/work-sheet/store', 'PageController@workSheetStore');
 
 
     Route::resource('work-sheet', 'WorkSheetController');
 
-    Route::group(['middleware' => ['permission:Customer']], function () {
-        Route::resource('/customer', 'CustomerController');
-    });
+    Route::resource('/customer', 'CustomerController');
 
-    Route::group(['middleware' => ['permission:Staff']], function () {
-        Route::resource('/staff', 'StaffController');
-    });
+    Route::resource('/staff', 'StaffController');
 
-    Route::group(['middleware' => ['permission:Job Type']], function () {
-        Route::resource('job-type', 'JobTypeController');
-    });
+    Route::resource('/job-type', 'JobTypeController');
 
-    Route::group(['middleware' => ['permission:Designation']], function () {
-        Route::resource('designation','DesignationController');
-    });
+    Route::resource('designation','DesignationController');
 
-    Route::group(['middleware' => ['permission:Project']], function () {
-        Route::resource('project','ProjectController');
+    Route::resource('project','ProjectController');
+
         Route::prefix('project')->group(function ()
         {
             Route::get('/{id}/actual-cost','ProjectController@actualCost');
@@ -69,7 +60,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/edit-actual-cost-type','ProjectController@editActualCostType');
             Route::post('/store-new-actual-cost-type','ProjectController@StoreNewActualCostType');
         });
-    });
 
 
     Route::group(['middleware' => ['permission:Settings']], function () {

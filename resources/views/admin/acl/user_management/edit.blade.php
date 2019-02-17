@@ -36,9 +36,30 @@
                     @include('error.error')
                     @include('admin.acl.user_management._partials.editForm')
                 {!! Form::close() !!}
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
+    <!-- /.row -->
 
+@endsection
+<!-- /main section -->
 
-                <div style="overflow: auto" class="box-body">
+@section('js')
+    @include('error.swal')
+@endsection
+
+@section('model')
+
+    <div class="modal fade" id="modal-default">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Employees work report</h4>
+                </div>
+                <div class="modal-body">
                     <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>
                         <tr>
@@ -58,15 +79,14 @@
                         </tbody>
                     </table>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>
+                </div>
             </div>
-            <!-- /.box -->
+            <!-- /.modal-content -->
         </div>
+        <!-- /.modal-dialog -->
     </div>
-    <!-- /.row -->
+    <!-- /.modal -->
 
-@endsection
-<!-- /main section -->
-
-@section('js')
-    @include('error.swal')
 @endsection

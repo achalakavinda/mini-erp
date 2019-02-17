@@ -23,7 +23,7 @@ class WorkSheetController extends Controller
      */
     public function index()
     {
-        User::CheckPermission(['Work Sheet']);
+        User::CheckPermission([config('constant.Permission_Work_Sheet')]);
         $WorkSheet = WorkSheet::all();
         return view('admin.work_sheet.index',compact('WorkSheet'));
     }
@@ -35,7 +35,7 @@ class WorkSheetController extends Controller
      */
     public function create()
     {
-        User::CheckPermission(['Work Sheet','Minor Staff | Work Report']);
+        User::CheckPermission([config('constant.Permission_Work_Sheet_Update')]);
         return view('admin.work_sheet.create');
     }
 
@@ -47,7 +47,7 @@ class WorkSheetController extends Controller
      */
     public function store(Request $request)
     {
-        User::CheckPermission(['Work Sheet','Minor Staff | Work Report','Minor Staff']);
+        User::CheckPermission([config('constant.Permission_Work_Sheet_Update'),config('constant.Permission_Minor_Staff_Work_Sheet')]);
         //validate the post request body
         $request->validate([
             'work_code_id'=> 'required',

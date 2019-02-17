@@ -16,6 +16,7 @@ class RolesAndPermissionsSeeder extends Seeder
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
         $role_admin = Role::create(['name' => config('constant.ROLE_SUPER_ADMIN') ]);
+        $role_staff = Role::create(['name' => config('constant.ROLE_SUPER_STAFF') ]);
 
         //permission default
         $permission = Permission::create(['name' => config('constant.Permission_Dashboard')]);
@@ -50,11 +51,14 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $permission = Permission::create(['name' => config('constant.Permission_Minor_Staff_Work_Sheet') ]);
         $role_admin->givePermissionTo($permission);
+        $role_staff->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Minor_Staff_Work_Sheet_Update') ]);
         $role_admin->givePermissionTo($permission);
+        $role_staff->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Minor_Staff') ]);
-
         $role_admin->givePermissionTo($permission);
+        $role_staff->givePermissionTo($permission);
+
         $permission = Permission::create(['name' => config('constant.Permission_Staff') ]);
         $role_admin->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Staff_Registry') ]);
@@ -93,6 +97,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $permission = Permission::create(['name' => config('constant.Permission_Profile') ]);
         $role_admin->givePermissionTo($permission);
+        $role_staff->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Profile_Update') ]);
         $role_admin->givePermissionTo($permission);
 

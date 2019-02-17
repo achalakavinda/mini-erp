@@ -12,7 +12,7 @@ class CustomerController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['permission:Customer']);
+        $this->middleware(['permission:'.config('constant.Permission_Customer')]);
     }
 
     /**
@@ -22,7 +22,7 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        User::CheckPermission(['Customer','Customer | Registry']);
+        User::CheckPermission([config('constant.Permission_Customer_Registry')]);
         $Customers = Customer::all();
         return view('admin.customer.index',compact('Customers'));
     }
@@ -34,7 +34,7 @@ class CustomerController extends Controller
      */
     public function create()
     {
-        User::CheckPermission(['Customer | Creation']);
+        User::CheckPermission([config('constant.Permission_Customer_Creation')]);
         return view('admin.customer.create');
     }
 
@@ -46,8 +46,7 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        User::CheckPermission(['Customer | Creation']);
-
+        User::CheckPermission([config('constant.Permission_Customer_Creation')]);
         $request->validate([
            'name'=>'required',
            'file_no'=>'required'
@@ -119,7 +118,7 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        User::CheckPermission(['Customer | Registry']);
+        User::CheckPermission([config('constant.Permission_Customer_Registry')]);
         $Customer = Customer::find($id);
         return view('admin.customer.show',compact('Customer'));
     }
@@ -144,7 +143,7 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        User::CheckPermission(['Customer | Update']);
+        User::CheckPermission([config('constant.Permission_Customer_Update')]);
 
         $request->validate([
             'name'=>'required',

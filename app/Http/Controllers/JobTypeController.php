@@ -11,7 +11,7 @@ class JobTypeController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['permission:Job Type']);
+        $this->middleware(['permission:'.config('constant.Permission_Job_Type')]);
     }
     /**
      * Display a listing of the resource.
@@ -20,7 +20,7 @@ class JobTypeController extends Controller
      */
     public function index()
     {
-        User::CheckPermission(['Job Type | Registry']);
+        User::CheckPermission([ config('constant.Permission_Job_Type_Registry') ]);
         $Rows = JobType::all();
         return view('admin.job_type.index',compact('Rows'));
     }
@@ -32,7 +32,7 @@ class JobTypeController extends Controller
      */
     public function create()
     {
-        User::CheckPermission(['Job Type | Creation']);
+        User::CheckPermission([ config('constant.Permission_Job_Type_Creation') ]);
         return view('admin.job_type.create');
     }
 
@@ -44,7 +44,7 @@ class JobTypeController extends Controller
      */
     public function store(Request $request)
     {
-        User::CheckPermission(['Job Type | Creation']);
+        User::CheckPermission([ config('constant.Permission_Job_Type_Creation') ]);
         $request->validate([
             'jobType' => 'required | min:3',
         ]);
@@ -67,7 +67,7 @@ class JobTypeController extends Controller
      */
     public function show($id)
     {
-        User::CheckPermission(['Job Type | Registry']);
+        User::CheckPermission([ config('constant.Permission_Job_Type_Registry') ]);
         $JobType = JobType::findOrFail($id);
         return view('admin.job_type.edit',compact('JobType'));
     }
@@ -92,7 +92,7 @@ class JobTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        User::CheckPermission(['Job Type | Update']);
+        User::CheckPermission([ config('constant.Permission_Job_Type_Update') ]);
         $request->validate([
             'jobType' => 'required | min:3',
         ]);

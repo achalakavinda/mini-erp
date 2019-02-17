@@ -10,7 +10,7 @@ class DesignationController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['permission:Designation']);
+        $this->middleware(['permission:'.config('constant.Permission_Designation')]);
     }
 
     /**
@@ -20,7 +20,7 @@ class DesignationController extends Controller
      */
     public function index()
     {
-        User::CheckPermission(['Designation | Registry']);
+        User::CheckPermission([config('constant.Permission_Designation_Registry')]);
         $Rows = Designation::all();
         return view('admin.designation.index',compact('Rows'));
     }
@@ -32,7 +32,7 @@ class DesignationController extends Controller
      */
     public function create()
     {
-        User::CheckPermission(['Designation | Creation']);
+        User::CheckPermission([config('constant.Permission_Designation_Creation')]);
         return view('admin.designation.create');
     }
 
@@ -44,7 +44,7 @@ class DesignationController extends Controller
      */
     public function store(Request $request)
     {
-        User::CheckPermission(['Designation | Creation']);
+        User::CheckPermission([config('constant.Permission_Designation_Creation')]);
         $request->validate([
             'designationType' => 'required | min:3',
             'avg_hr_rate' => 'required',
@@ -70,7 +70,7 @@ class DesignationController extends Controller
      */
     public function show($id)
     {
-        User::CheckPermission(['Designation | Registry']);
+        User::CheckPermission([config('constant.Permission_Designation_Registry')]);
         $Designation = Designation::findOrFail($id);
         return view('admin.designation.edit',compact('Designation'));
     }
@@ -83,7 +83,7 @@ class DesignationController extends Controller
      */
     public function edit($id)
     {
-        User::CheckPermission(['Designation | Update']);
+        User::CheckPermission([config('constant.Permission_Designation_Update')]);
         $Designation = Designation::findOrFail($id);
         return view('admin.designation.edit',compact('Designation'));
     }
@@ -97,7 +97,7 @@ class DesignationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        User::CheckPermission(['Designation | Update']);
+        User::CheckPermission([config('constant.Permission_Designation_Update')]);
         $request->validate([
             'designationType' => 'required | min:3',
             'avg_hr_rate' => 'required',

@@ -21,6 +21,15 @@
         </div>
     </div>
 
+    <div class="col-md-3">
+        <div class="form-group">
+            {!! Form::label('Assign_Permissions', 'Assign Permissions', ['class' => 'control-label']) !!}
+            <button type="button" class="form-control" data-toggle="modal" data-target="#modal-default">
+                Show <i class="fa fa-table"></i>
+            </button>
+        </div>
+    </div>
+
 </div>
 <!-- /.box-body -->
 
