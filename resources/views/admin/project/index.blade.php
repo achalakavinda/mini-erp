@@ -11,11 +11,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Projects</h3>
         </div>
-        <div class="box-body">
-            <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/project') }}" class="btn btn-success">Project</a>
-            <a href="{{ url('/project/create') }}" class="btn btn-success">New</a>
-        </div>
+        @include('admin.header-widgets.dashboard-header')
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
@@ -27,6 +23,9 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
+                <div class="box-header">
+                    <a href="{{ url('/project/create') }}" class="btn btn-sm btn-danger">New <i class="fa fa-plus-square"></i></a>
+                </div>
                 <!-- /.box-header -->
                 <div style="overflow: auto" class="box-body">
                     <table id="table" class="table table-responsive table-bordered table-striped">
@@ -34,17 +33,9 @@
                             <tr>
                                 <th>Code</th>
                                 <th>Customer</th>
-                                {{--<th>B.Work Hrs</th>--}}
-                                {{--<th>B.Work Cost</th>--}}
-                                {{--<th>B.AOH</th>--}}
-                                {{--<th>B.Other Cost</th>--}}
                                 <th>B.Total Cost</th>
                                 <th>B.Revenue</th>
 
-                                {{--<th>A.Work Hrs</th>--}}
-                                {{--<th>A.Work Cost</th>--}}
-                                {{--<th>A.AOH</th>--}}
-                                {{--<th>A.Other Cost</th>--}}
                                 <th>A.Total Cost</th>
                                 <th>A.Revenue</th>
 
@@ -61,20 +52,10 @@
 
                         @foreach($Projects as $Project)
                            <tr>
-                                <td>{{ $Project->code }}</td>
-                                <td>{{ $Project->customer_name }}</td>
-
-                                {{--<td>{{ number_format($Project->budget_number_of_hrs,2) }}</td>--}}
-                                {{--<td>{{ number_format($Project->budget_cost_by_work,2) }}</td>--}}
-                                {{--<td>{{ number_format($Project->budget_cost_by_work,2) }}</td>--}}
-                                {{--<td>{{ number_format($Project->budget_cost_by_overhead,2) }}</td>--}}
-                                <td>{{ number_format($Project->budget_cost_by_work+$Project->budget_cost_by_work+$Project->budget_cost_by_overhead,2) }}</td>
+                               <td>{{ $Project->code }}</td>
+                               <td>{{ $Project->customer_name }}</td>
+                               <td>{{ number_format($Project->budget_cost_by_work+$Project->budget_cost_by_work+$Project->budget_cost_by_overhead,2) }}</td>
                                <td>{{ number_format($Project->budget_revenue,2) }}</td>
-
-                               {{--<td>{{ number_format($Project->actual_number_of_hrs,2) }}</td>--}}
-                               {{--<td>{{ number_format($Project->actual_cost_by_work,2) }}</td>--}}
-                               {{--<td>{{ number_format($Project->actual_cost_by_work,2) }}</td>--}}
-                               {{--<td>{{ number_format($Project->actual_cost_by_overhead,2) }}</td>--}}
                                <td>{{ number_format($Project->actual_cost_by_work+$Project->actual_cost_by_work+$Project->actual_cost_by_overhead,2) }}</td>
                                <td>{{ number_format($Project->actual_revenue,2) }}</td>
 
@@ -111,12 +92,7 @@
 
         $(function () {
             $('#table').DataTable({
-                'paging'      : true,
-                'lengthChange': false,
-                'searching'   : true,
-                'ordering'    : true,
-                'info'        : true,
-                'autoWidth'   : true
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
             })
         })
     </script>

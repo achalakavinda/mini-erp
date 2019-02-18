@@ -10,12 +10,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Staff Board</h3>
         </div>
-        <div class="box-body">
-            <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/staff') }}" class="btn btn-success">Staff</a>
-            <a href="{{ url('/staff/create') }}" class="btn btn-success">New</a>
-        </div>
-        <!-- /.box-body -->
+        @include('admin.header-widgets.dashboard-header')
     </div>
     <!-- /.box -->
 @endsection
@@ -26,6 +21,9 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
+                <div class="box-header">
+                    <a href="{{ url('/staff/create') }}" class="btn btn-sm btn-danger">New <i class="fa fa-plus-square"></i></a>
+                </div>
                 <!-- /.box-header -->
                 <div style="overflow: auto" class="box-body">
                     <table id="table" class="table table-responsive table-bordered table-striped">

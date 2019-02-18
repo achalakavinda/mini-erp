@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('style')
+    {!! Html::style('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') !!}
+@endsection
+
 <!-- main header section -->
 @section('main-content-header')
     <!-- Default box -->
@@ -7,11 +11,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Work Sheet</h3>
         </div>
-        <div class="box-body">
-            <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/work-sheet') }}" class="btn btn-success">Work Sheet</a>
-            <a href="{{ url('/work-sheet/create') }}" class="btn btn-success">New</a>
-        </div>
+        @include('admin.header-widgets.dashboard-header')
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
@@ -24,11 +24,11 @@
         <div class="col-xs-12">
             <div class="box">
                 <div class="box-header">
-                    <h3 class="box-title">Work Sheet</h3>
+                    <a href="{{ url('/work-sheet/create') }}" class="btn btn-sm btn-danger">New <i class="fa fa-plus-square"></i></a>
                 </div>
                 <!-- /.box-header -->
                 <div style="overflow: auto" class="box-body">
-                    <table id="example1" class="table table-responsive table-bordered table-striped">
+                    <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>#ID</th>
@@ -95,3 +95,18 @@
 
 @endsection
 <!-- /main section -->
+
+@section('js')
+    {!! Html::script('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') !!}
+    {!! Html::script('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') !!}
+
+    <script type="text/javascript">
+
+        $(function () {
+            $('#table').DataTable({
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+            })
+        })
+    </script>
+
+@endsection

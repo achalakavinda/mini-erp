@@ -7,9 +7,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Settings </h3>
         </div>
-        <div class="box-body">
-            <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-        </div>
+        @include('admin.header-widgets.dashboard-header')
         <!-- /.box-body -->
     </div>
     <!-- /.box -->

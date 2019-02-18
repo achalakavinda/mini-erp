@@ -11,11 +11,7 @@
         <div class="box-header with-border">
             <h3 class="box-title">Designation Type</h3>
         </div>
-        <div class="box-body">
-            <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/designation') }}" class="btn btn-success">Designation</a>
-            <a href="{{ url('/designation/create') }}" class="btn btn-success">New</a>
-        </div>
+        @include('admin.header-widgets.dashboard-header')
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
@@ -27,6 +23,9 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
+                <div class="box-header">
+                    <a href="{{ url('/designation/create') }}" class="btn btn-sm btn-danger">New <i class="fa fa-plus-square"></i></a>
+                </div>
                 <!-- /.box-header -->
                 <div style="overflow: auto" class="box-body">
                     <table id="table" class="table table-responsive table-bordered table-striped">

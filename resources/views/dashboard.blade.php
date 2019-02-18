@@ -2,68 +2,60 @@
 
 <!-- main header section -->
     @section('main-content-header')
-
-        <!-- Default box -->
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Dashboard</h3>
             </div>
-            <div class="box-body">
-                <a href="{{ url('/staff') }}" class="btn btn-success">Staff Register</a>
-                <a href="{{ url('/customer') }}" class="btn btn-success">Customer</a>
-                <a href="{{ url('/work-sheet') }}" class="btn btn-success">Work Sheet</a>
-            </div>
-            <!-- /.box-body -->
+            @include('admin.header-widgets.dashboard-header')
+        </div>
+            <div class="box">
+                <div style="padding: 10px" class="row">
 
-            <div style="padding: 10px" class="row">
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box bg-aqua">
+                            <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
 
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box bg-aqua">
-                    <span class="info-box-icon"><i class="fa fa-bookmark-o"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Projects</span>
+                                <span class="info-box-number">{!! DB::table('projects')->count() !!}</span>
 
-                    <div class="info-box-content">
-                        <span class="info-box-text">Projects</span>
-                        <span class="info-box-number">{!! DB::table('projects')->count() !!}</span>
-
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 70%"></div>
-                        </div>
-                        <span class="progress-description">
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 70%"></div>
+                                </div>
+                                <span class="progress-description">
                     Number of Project Completed
                   </span>
-                    </div>
-                    <!-- /.info-box-content -->
-                </div>
-                <!-- /.info-box -->
-            </div>
-
-
-            <!-- /.col -->
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box bg-green">
-                    <span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text">Employees</span>
-                        <span class="info-box-number">{!! DB::table('users')->count() !!}</span>
-
-                        <div class="progress">
-                            <div class="progress-bar" style="width: 70%"></div>
+                            </div>
+                            <!-- /.info-box-content -->
                         </div>
-                        <span class="progress-description">
+                        <!-- /.info-box -->
+                    </div>
+
+
+                    <!-- /.col -->
+                    <div class="col-md-3 col-sm-6 col-xs-12">
+                        <div class="info-box bg-green">
+                            <span class="info-box-icon"><i class="fa fa-thumbs-o-up"></i></span>
+
+                            <div class="info-box-content">
+                                <span class="info-box-text">Employees</span>
+                                <span class="info-box-number">{!! DB::table('users')->count() !!}</span>
+
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: 70%"></div>
+                                </div>
+                                <span class="progress-description">
                     Number Of Staff
                   </span>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                        <!-- /.info-box -->
                     </div>
-                    <!-- /.info-box-content -->
+                    <!-- /.col -->
                 </div>
-                <!-- /.info-box -->
+                <!-- /.row -->
             </div>
-            <!-- /.col -->
-        </div>
-            <!-- /.row -->
-
-        </div>
-
         <!-- /.box -->
     @endsection
 <!-- /main header section -->
