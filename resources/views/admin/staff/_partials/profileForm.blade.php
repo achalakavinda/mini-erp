@@ -3,7 +3,8 @@
     $CA_TRAINGINS = \App\Models\CaTraining::all()->pluck('name','id');
     $CM_LOCATION_DISTRICTS = \App\Models\CmbLocationDistrict::all()->pluck('name','id');
     $HOMETOWN_DISTRICTS = \App\Models\HometownDistrict::all()->pluck('name','id');
-    if(Gate::allows('Admin')){
+
+    if(Auth::user()->hasAnyPermission([config('constant.Permission_Profile_Update')])){
         $disabled=null;
     }else{
         $disabled ='disabled';
