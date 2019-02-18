@@ -63,13 +63,13 @@
                     $rrBudget = 0;
                     $rrActual = 0;
 
-                    $BC = $Project->budget_cost_by_work+$Project->budget_cost_by_overhead;
+                    $BC = $Project->budget_cost_by_work+$Project->budget_cost_by_work+$Project->budget_cost_by_overhead;
                     $BR = $Project->budget_revenue;
                     if($BC!=0 && $BR!=0){
                         $rrBudget = $BR/$BC;
                     }
 
-                    $AC = $Project->actual_cost_by_work+$Project->actual_cost_by_overhead;
+                    $AC = $Project->actual_cost_by_work+$Project->actual_cost_by_work+$Project->actual_cost_by_overhead;
                     $AR = $Project->actual_revenue;
                     if($AC!=0 && $AR!=0){
                         $rrActual = $AR/$AC;

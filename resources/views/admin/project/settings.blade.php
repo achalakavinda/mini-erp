@@ -2,10 +2,15 @@
     $User = \App\Models\User::find($Project->created_by_id);
     $Customers = \App\Models\Customer::where('id',$Project->customer_id)->pluck('name','id');
     $PROJECTJOBTYPE = \App\Models\ProjectJobType::where('project_id',$Project->id)->get();
+
+    $pStatus = \App\Models\ProjectStatus::find($Project->status_id);
+    if($pStatus!=null){
+        $pStatus = $pStatus->name;
+    }else{
+        $pStatus='';
+    }
 ?>
-
 @extends('layouts.admin')
-
 <!-- main header section -->
 @section('main-content-header')
     <!-- Default box -->
@@ -17,8 +22,6 @@
             <a href="{{ url('/project') }}" class="btn btn-success">Go Back</a>
         </div>
         <!-- /.box-body -->
-
-
         <div style="padding: 10px" class="row">
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box bg-aqua">
@@ -26,12 +29,14 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">Projects</span>
-                        <span class="info-box-number">Pending</span>
+                        <span class="info-box-number">
+                            {!! $pStatus !!}
+                        </span>
                         <div class="progress">
                             <div class="progress-bar" style="width: 100%"></div>
                         </div>
                         <span class="progress-description">
-                         Project Pending
+                         Project {!! $pStatus !!}
                   </span>
                     </div>
                     <!-- /.info-box-content -->
@@ -65,13 +70,13 @@
 
                     <div class="info-box-content">
                         <span class="info-box-text">Hours</span>
-                        <span class="info-box-number">20</span>
+                        <span class="info-box-number">{!! $Project->actual_number_of_hrs !!}</span>
 
                         <div class="progress">
                             <div class="progress-bar" style="width: 100%"></div>
                         </div>
                         <span class="progress-description">
-                        Work Hours
+                        Actual Work Hours
                   </span>
                     </div>
                     <!-- /.info-box-content -->
