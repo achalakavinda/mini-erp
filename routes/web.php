@@ -29,8 +29,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/staff/work-sheet', 'PageController@workSheet');
     Route::post('/staff/work-sheet/store', 'PageController@workSheetStore');
 
-
     Route::resource('work-sheet', 'WorkSheetController');
+
+    Route::resource('holidays', 'HolidayController');
+
+    Route::resource('attendance', 'AttendanceController');
 
     Route::resource('/customer', 'CustomerController');
 

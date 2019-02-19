@@ -7,5 +7,7 @@
         @can(config('constant.Permission_Designation'))<a href="{{ url('/designation') }}" class="btn btn-success">Designation <span class="fa fa-table"></span></a>@endcan
         @can(config('constant.Permission_Job_Type'))<a href="{{ url('/job-type') }}" class="btn btn-success">Job Type <span class="fa fa-table"></span></a>@endcan
         @can(config('constant.Permission_Customer'))<a href="{{ url('/customer') }}" class="btn btn-success">Customer <span class="fa fa-users"></span></a>@endcan
+        @can(config('constant.Permission_Holidays'))<a href="{{ url('/holidays') }}" class="btn btn-success">Holidays <span class="fa fa-calendar"></span></a>@endcan
+        @can(config('constant.Permission_Attendance'))<a href="{{ url('/attendance') }}" class="btn btn-success">Attendance <span class="fa fa-list"></span></a>@endcan
         @can(config('constant.Permission_Setting'))<a href="{{ url('/settings') }}" class="btn btn-success">Settings <span class="fa fa-cogs"></span></a>@endcan
 </div>

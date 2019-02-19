@@ -27,7 +27,6 @@ return [
     'Permission_Minor_Staff_Work_Sheet'=>'Minor Staff | Work Report',
     'Permission_Minor_Staff_Work_Sheet_Update'=>'Minor Staff | Work Report | Update',
 
-
     'Permission_Staff'=>'Staff',
     'Permission_Staff_Registry'=>'Staff | Registry',
     'Permission_Staff_Creation'=>'Staff | Creation',
@@ -48,9 +47,18 @@ return [
     'Permission_Customer_Creation'=> 'Customer | Creation',
     'Permission_Customer_Update'=> 'Customer | Update',
 
-
     'Permission_Profile'=> 'Profile',
     'Permission_Profile_Update'=> 'Profile | Update',
+
+    'Permission_Holidays'=> 'Holiday',
+    'Permission_Holidays_Registry'=> 'Holiday | Registry',
+    'Permission_Holidays_Creation'=> 'Holiday | Creation',
+    'Permission_Holidays_Update'=> 'Holiday | Update',
+
+    'Permission_Attendance'=> 'Attendance',
+    'Permission_Attendance_Registry'=> 'Attendance | Registry',
+    'Permission_Attendance_Creation'=> 'Attendance | Creation',
+    'Permission_Attendance_Update'=> 'Attendance | Update',
 
     'Permission_Setting'=> 'Settings',
 

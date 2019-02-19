@@ -104,6 +104,24 @@ class RolesAndPermissionsSeeder extends Seeder
         $permission = Permission::create(['name' => config('constant.Permission_Setting') ]);
         $role_admin->givePermissionTo($permission);
 
+        $permission = Permission::create(['name' => config('constant.Permission_Holidays') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Holidays_Registry') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Holidays_Creation') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Holidays_Update') ]);
+        $role_admin->givePermissionTo($permission);
+
+        $permission = Permission::create(['name' => config('constant.Permission_Attendance') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Attendance_Registry') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Attendance_Creation') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Attendance_Update') ]);
+        $role_admin->givePermissionTo($permission);
+
         $user = \App\Models\User::where('email','admin@test.com')->first();
         $user->assignRole( config('constant.ROLE_SUPER_ADMIN') );
     }
