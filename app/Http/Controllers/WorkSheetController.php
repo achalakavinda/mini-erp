@@ -233,6 +233,34 @@ class WorkSheetController extends Controller
 
     }
 
+    public function delete(Request $request){
+
+        User::CheckPermission([config('constant.Permission_Work_Sheet_Update')]);
+
+        $request->validate([
+            'work_sheet_id'=> 'required',
+        ]);
+
+        $workSheet = WorkSheet::findOrFail($request->work_sheet_id);
+
+        if($workSheet->project_id!=null)
+        {
+            $PJ = Project::find($workSheet->project_id);
+            if($PJ) {
+                $PJ->actual_number_of_hrs = $PJ->actual_number_of_hrs - $workSheet->work_hrs;
+                $PJ->actual_cost_by_work = $PJ->actual_cost_by_work - ($workSheet->work_hrs*$workSheet->hr_rate);
+                $PJ->save();
+                $workSheet->delete();
+            }else{
+                $workSheet->delete();
+            }
+
+        }else{
+            $workSheet->delete();
+        }
+        return \Redirect::back();
+    }
+
     /**
      * Display the specified resource.
      *

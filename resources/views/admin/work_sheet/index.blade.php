@@ -41,6 +41,9 @@
                             <th>No of Hrs</th>
                             <th>Cost</th>
                             <th>view</th>
+                            @can(config('constant.Permission_Work_Sheet_Update'))
+                                <th><i class="fa fa-cogs"></i></th>
+                            @endcan
                         </tr>
                         </thead>
                         <tbody>
@@ -77,6 +80,14 @@
                                 <td><?php if($row->work_hrs<0){echo "<i style='color:red'>Leave</i>";}else{echo number_format($row->work_hrs,2);}?></td>
                                 <td>{!! number_format($row->hr_cost,2) !!}</td>
                                 <td></td>
+                                @can(config('constant.Permission_Work_Sheet_Update'))
+                                    <th>
+                                        {!! Form::open(['action'=>'WorkSheetController@delete','class'=>'form-horizontal','id'=>'Form']) !!}
+                                            <input name="work_sheet_id" value="{{ $row->id }}" style="display: none">
+                                            <button type="submit" class="btn btn-danger btn-sm">Delete <i class="fa fa-trash"></i></button>
+                                        {!! Form::close() !!}
+                                    </th>
+                                @endcan
                             </tr>
                         @endforeach
 

@@ -205,6 +205,7 @@
               {!! Form::textarea('description',null,['class'=>'form-control','id'=>'description']) !!}
           </div>
       </div>
+
   </div>
 </div>
 <!-- /.box-body -->

@@ -19,8 +19,6 @@
     <!-- /.box -->
 @endsection
 <!-- /main header section -->
-
-<!-- main section -->
 <!-- main section -->
 @section('main-content')
     <div class="row">

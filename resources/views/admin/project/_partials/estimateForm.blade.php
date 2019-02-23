@@ -1,87 +1,3 @@
-@if($showUpdate)
-        <div class="box-body">
-            <div class="col-md-2">
-                <div class="form-group">
-                    {!! Form::label('number_of_hrs','Number of Hrs',['class' => 'control-label']) !!}
-                    {!! Form::text('number_of_hrs',$Project->budget_number_of_hrs,['class'=>'form-control','id'=>'numberOfHrs','placeholder'=>'Number of Hrs','readonly']) !!}
-                </div>
-            </div>
-
-            <div class="col-md-2">
-                <div class="form-group">
-                    {!! Form::label('budget_cost','Budget Cost',['class' => 'control-label']) !!}
-                    {!! Form::number('budget_cost',0,['class'=>'form-control','id'=>'BudgetCost','placeholder'=>'Budget Cost','readonly', 'step'=>'0.01']) !!}
-                    {!! Form::number('project_id',$Project->id,['class'=>'form-control','id'=>'ProjectId','style'=>'display:none']) !!}
-                </div>
-            </div>
-
-            <div class="col-md-2">
-                <div class="form-group">
-                    {!! Form::label('profit_margin','Profit Margin',['class' => 'control-label']) !!}
-                    {!! Form::number('profit_margin',0,['class'=>'form-control','id'=>'ProfitMargin','placeholder'=>'Profit Margin in Decimal', 'step'=>'0.01']) !!}
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="form-group">
-                    {!! Form::label('quoted_price','Quoted Price',['class' => 'control-label']) !!}
-                    {!! Form::number('quoted_price',0,['class'=>'form-control','id'=>'QuotedPrice','placeholder'=>'Quoted Price','readonly', 'step'=>'0.01']) !!}
-                </div>
-            </div>
-
-            <div class="col-md-3">
-                <div class="form-group">
-                    {!! Form::label('refresh_value','Refresh values',['class' => 'control-label']) !!}
-                    <button class="form-control" type="button" id="CalculateBtn">Calculate <i class="fa fa-calculator"></i></button>
-                </div>
-            </div>
-
-        </div>
-        <!-- /.box-body -->
-        @else
-        {{--<div class="box-body">--}}
-
-            {{--<div class="col-md-2">--}}
-                {{--<div class="form-group">--}}
-                    {{--{!! Form::label('number_of_hrs','Number of Hrs',['class' => 'control-label']) !!}--}}
-                    {{--{!! Form::text('number_of_hrs',$Project->budget_number_of_hrs,['class'=>'form-control','id'=>'numberOfHrs','placeholder'=>'Number of Hrs','disabled']) !!}--}}
-                {{--</div>--}}
-            {{--</div>--}}
-
-            {{--<div class="col-md-2">--}}
-                {{--<div class="form-group">--}}
-                    {{--{!! Form::label('budget_cost','Budget Cost',['class' => 'control-label']) !!}--}}
-                    {{--{!! Form::number('budget_cost',$Project->budget_cost,['class'=>'form-control','id'=>'BudgetCost','placeholder'=>'Budget Cost','disabled', 'step'=>'0.01']) !!}--}}
-                {{--</div>--}}
-            {{--</div>--}}
-
-            {{--<div class="col-md-2">--}}
-                {{--<div class="form-group">--}}
-                    {{--{!! Form::label('profit_margin','Profit Margin',['class' => 'control-label']) !!}--}}
-                    {{--{!! Form::number('profit_margin',$Project->profit_ratio,['class'=>'form-control','id'=>'ProfitMargin','placeholder'=>'Profit Margin in Decimal', 'step'=>'0.01']) !!}--}}
-                {{--</div>--}}
-            {{--</div>--}}
-
-            {{--<div class="col-md-3">--}}
-                {{--<div class="form-group">--}}
-                    {{--{!! Form::label('quoted_price','Quoted Price',['class' => 'control-label']) !!}--}}
-                    {{--{!! Form::number('quoted_price',$Project->budget_revenue,['class'=>'form-control','id'=>'QuotedPrice','placeholder'=>'Quoted Price','disabled', 'step'=>'0.01']) !!}--}}
-                {{--</div>--}}
-            {{--</div>--}}
-
-            {{--@if($showUpdate)--}}
-            {{--<div class="col-md-3">--}}
-                {{--<div class="form-group">--}}
-                    {{--{!! Form::label('refresh_value','Refresh values',['class' => 'control-label']) !!}--}}
-                    {{--<button class="form-control" type="button" id="CalculateBtn">Calculate <i class="fa fa-calculator"></i></button>--}}
-                {{--</div>--}}
-            {{--</div>--}}
-            {{--@endif--}}
-
-        {{--</div>--}}
-        <!-- /.box-body -->
-    @endif
-
 <!-- staff allocation estimations -->
 <div class="box-header with-border">
     <h4 class="box-title">Budget - Staff Cost<b id="DESIGNATIONCOSTESTIMATIONVALUE"></b> <i id="DESIGNATIONCOSTESTIMATIONVALUEREFRESH" style="font-size: 70%; color: green; cursor: pointer" class="fa fa-refresh"></i></h4>
@@ -198,6 +114,49 @@
         @endif
     </div>
 
+@if($showUpdate)
+    <div class="box-body">
+        <div class="col-md-2">
+            <div class="form-group">
+                {!! Form::label('number_of_hrs','Number of Hrs',['class' => 'control-label']) !!}
+                {!! Form::text('number_of_hrs',$Project->budget_number_of_hrs,['class'=>'form-control','id'=>'numberOfHrs','placeholder'=>'Number of Hrs','readonly']) !!}
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                {!! Form::label('budget_cost','Budget Cost',['class' => 'control-label']) !!}
+                {!! Form::number('budget_cost',0,['class'=>'form-control','id'=>'BudgetCost','placeholder'=>'Budget Cost','readonly', 'step'=>'0.01']) !!}
+                {!! Form::number('project_id',$Project->id,['class'=>'form-control','id'=>'ProjectId','style'=>'display:none']) !!}
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="form-group">
+                {!! Form::label('profit_margin','Profit Margin',['class' => 'control-label']) !!}
+                {!! Form::number('profit_margin',0,['class'=>'form-control','id'=>'ProfitMargin','placeholder'=>'Profit Margin in Decimal', 'step'=>'0.01']) !!}
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                {!! Form::label('quoted_price','Quoted Price',['class' => 'control-label']) !!}
+                {!! Form::number('quoted_price',0,['class'=>'form-control','id'=>'QuotedPrice','placeholder'=>'Quoted Price','readonly', 'step'=>'0.01']) !!}
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="form-group">
+                {!! Form::label('refresh_value','Refresh values',['class' => 'control-label']) !!}
+                <button class="form-control" type="button" id="CalculateBtn">Calculate <i class="fa fa-calculator"></i></button>
+            </div>
+        </div>
+
+    </div>
+    <!-- /.box-body -->
+@endif
+
+
 
 <!-- /Cost assignment-->
 @if($showUpdate)
@@ -289,25 +248,31 @@
             $('#COSTESTIMATIONVALUEREFRESH').click(function() {
                 calculateCostForTypes(count);
             });
+
             $('#DESIGNATIONCOSTESTIMATIONVALUEREFRESH').click(function() {
                 calculateCostDesignationTypes(designation_count);
             });
+
             $('#addNewDesignation').click(function() {
                 addNewDesignationCost();
             });
+
             $('#addNewCost').click(function() {
                 addNewCostTypes();
             });
+
             $('#calculateNewCost').click(function() {
                 calculateCostForTypes(count);
             });
+
             $('#addNewDesignationCalculation').click(function() {
                 calculateCostDesignationTypes(designation_count);
             });
+
             $('#CalculateBtn').click(function () {
                 calculateCostForTypes(count);
                 calculateCostDesignationTypes(designation_count);
-                var bugetTol = parseFloat(CostTypeSum)+parseFloat(DesignationCostSum)+parseFloat(BugetCost);
+                var bugetTol = parseFloat(CostTypeSum)+parseFloat(DesignationCostSum)+parseFloat(DesignationCostSum)+parseFloat(BugetCost);
                 var margin = parseFloat($('#ProfitMargin').val())
                 $('#QuotedPrice').val(bugetTol+(bugetTol*(margin/100)));
             });
@@ -337,7 +302,8 @@
             budgetCost();
         }
 
-        function updateHourRate(row,rate) {
+        function updateHourRate(row,rate)
+        {
             $("#hrRate"+row).val(parseFloat(rate));
         }
 
@@ -362,7 +328,7 @@
         //budget cost total calculation
         function budgetCost()
         {
-            var bugetTol = parseFloat(CostTypeSum)+parseFloat(DesignationCostSum)+parseFloat(BugetCost);
+            var bugetTol = parseFloat(CostTypeSum)+parseFloat(DesignationCostSum)+parseFloat(DesignationCostSum)+parseFloat(BugetCost);
             $('#BudgetCost').val(bugetTol);
         }
 
@@ -497,7 +463,8 @@
             calculateCostForTypes(count);
         }
 
-        function openEmployeeTable(id,row) {
+        function openEmployeeTable(id,row)
+        {
 
             $('#staffRatesModel').modal('show');
             try {

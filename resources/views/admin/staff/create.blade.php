@@ -74,8 +74,8 @@
 
         function calculate() {
             var cost =parseFloat($( "#cost" ).val());
-            $("#hourlyRate").val((cost/240).toFixed(2));
-            $('#hrBillingRates').val(((cost/240)*5).toFixed(2));
+            $("#hourlyRate").val((cost/150).toFixed(2));
+            $('#hrBillingRates').val(((cost/150)*5).toFixed(2));
         }
         
         function getCost() {
