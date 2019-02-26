@@ -55,6 +55,7 @@ class WorkSheetController extends Controller
             'date' => 'required',
             'row' => 'required'
         ]);
+
         $ROWS = $request->row;
 
         //check for the working states
@@ -70,16 +71,17 @@ class WorkSheetController extends Controller
             $work_hr = $this->convertToHoursMins($diffInMin);
             $actual_work_hr = $work_hr;
 
-            if($actual_work_hr == null){
+            if($actual_work_hr == null)
+            {
                 return redirect()->back()->withErrors('Please Correct time format and re submit');
             }
-
 
             $startTime = Carbon::parse($row['from']);
             $finishTime = Carbon::parse($row['to']);
 
             //this is true if the start time is greater than end time
-            if($startTime->greaterThan($finishTime)){
+            if($startTime->greaterThan($finishTime))
+            {
                 return redirect()->back()->withErrors(['Submit start time is greater than finish time']);
             }
 
@@ -233,20 +235,19 @@ class WorkSheetController extends Controller
 
     }
 
-    public function delete(Request $request){
-
+    public function delete(Request $request)
+    {
         User::CheckPermission([config('constant.Permission_Work_Sheet_Update')]);
-
         $request->validate([
             'work_sheet_id'=> 'required',
         ]);
 
         $workSheet = WorkSheet::findOrFail($request->work_sheet_id);
-
         if($workSheet->project_id!=null)
         {
             $PJ = Project::find($workSheet->project_id);
-            if($PJ) {
+            if($PJ)
+            {
                 $PJ->actual_number_of_hrs = $PJ->actual_number_of_hrs - $workSheet->work_hrs;
                 $PJ->actual_cost_by_work = $PJ->actual_cost_by_work - ($workSheet->work_hrs*$workSheet->hr_rate);
                 $PJ->save();
@@ -258,7 +259,9 @@ class WorkSheetController extends Controller
         }else{
             $workSheet->delete();
         }
+
         return \Redirect::back();
+
     }
 
     /**
@@ -308,7 +311,6 @@ class WorkSheetController extends Controller
 
     /**
      * calculate the time difference.
-     *
      * @param  int  $from
      * @param  int  $to
      * @return float
@@ -322,7 +324,8 @@ class WorkSheetController extends Controller
 
     function convertToHoursMins($time)
     {
-        if ($time < 1) {
+        if ($time < 1)
+        {
             return;
         }
         $hours = $time / 60;

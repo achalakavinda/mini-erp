@@ -116,6 +116,7 @@
         }
 
         function filler(data) {
+
             if(data.status.length>0 && data.status =='ok'){
 
                 var jobTypes = data.job_types;
@@ -168,7 +169,6 @@
                 remark = item.remark
             }
 
-
             $('#worksheetTable').append('<tr class="removeRW"><td>'+tConvert(item.from)+' -- '+tConvert(item.to)+'</td><td>Report</td><td>'+company+'</td><td>'+item.project_value+jobType+'</td><td>'+remark+'</td><td>' +
                 '<a style="color: red" href="#" onclick="deleteRecord('+item.id+')">DEL</a> </td></tr>');
 
@@ -188,9 +188,23 @@
         }
         
         function deleteRecord(x) {
+
             var Token = "{{ csrf_token() }}";
-            console.log(Token);
-            alert("delete option");
+
+            $.ajax({
+                url: "{{ url('work-sheet/delete') }}",
+                method: 'post',
+                data: {
+                    _token:Token,
+                    work_sheet_id:x
+                },
+                success: function(result){
+                    ajax(projectSelector.val(),userSelector.val());
+                }
+            });
+
+
+
         }
         
     </script>
