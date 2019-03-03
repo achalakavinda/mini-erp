@@ -48,6 +48,7 @@ class WorkSheetController extends Controller
     public function store(Request $request)
     {
         User::CheckPermission([config('constant.Permission_Work_Sheet_Update'),config('constant.Permission_Minor_Staff_Work_Sheet')]);
+
         //validate the post request body
         $request->validate([
             'work_code_id'=> 'required',
@@ -64,6 +65,10 @@ class WorkSheetController extends Controller
         $Worked = $WorkCode->worked;
         //date time convert to sql format
         $DATE_VAR = date_format(date_create($request->date),"Y-m-d");
+
+
+
+
         //loop the row array and insert row into worksheet table
         foreach ($ROWS as $row)
         {
@@ -116,12 +121,10 @@ class WorkSheetController extends Controller
 
                 //actual work hrs related to number of work hrs
                 $CurrentNoOfWork = $CurrentNoOfWork +$tuple->actual_work_hrs;
-
             }
 
             if(!$WorkSheetTuples->isEmpty()){
                 //Recode check
-
                 $from = Carbon::parse($minFromTime);
                 $to = Carbon::parse($maxToTime);
                 $postFrom = Carbon::parse($row['from']);
@@ -152,8 +155,10 @@ class WorkSheetController extends Controller
             $INSERT_COMPANYID = null;
             $INSERT_JOBTYPEID = null;
             $INSERT_Remarks = null;
+
             //check the work state
-            if($Worked){
+            if($Worked)
+            {
                 if ((isset($row['company'])))
                 {
                     $INSERT_COMPANYID = $row['company'];
@@ -167,7 +172,6 @@ class WorkSheetController extends Controller
                 }else{
                     return redirect()->back()->withErrors('Please select a project');
                 }
-
                 if ((isset($row['remark'])))
                 {
                     $INSERT_Remarks = $row['remark'];

@@ -42,7 +42,7 @@
                                 <th>Cost Variance</th>
                                 <th>Recovery Ratio</th>
                                 <th>Status</th>
-                                <th>View <i class="fa fa-paper-plane"></i></th>
+                                <th>View</th>
                             </tr>
                         </thead>
 
@@ -52,8 +52,12 @@
 
                         @foreach($Projects as $Project)
                            <tr>
-                               <td>{{ $Project->code }}</td>
-                               <td>{{ $Project->customer_name }}</td>
+                               <td>
+                                   <a href="{{ url('/project') }}/{{ $Project->id }}">{{ $Project->code }}</a>
+                               </td>
+                               <td>
+                                   <a href="{{ url('/customer') }}/{{ $Project->customer_id }}">{{ $Project->customer_name }}</a>
+                               </td>
                                <td>{{ number_format($Project->budget_cost_by_work+$Project->budget_cost_by_work+$Project->budget_cost_by_overhead,2) }}</td>
                                <td>{{ number_format($Project->budget_revenue,2) }}</td>
                                <td>{{ number_format($Project->actual_cost_by_work+$Project->actual_cost_by_work+$Project->actual_cost_by_overhead,2) }}</td>

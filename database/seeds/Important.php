@@ -193,7 +193,6 @@ class Important extends Seeder
             [
                 'id'=>1,
                 'designationType' => "Partner",
-                'description' => str_random(10),
                 'avg_hr_rate'=>1000,
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
@@ -202,7 +201,6 @@ class Important extends Seeder
                 'id'=>2,
                 'designationType' => "Director",
                 'avg_hr_rate'=>2000,
-                'description' => str_random(10),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
             ],
@@ -210,7 +208,6 @@ class Important extends Seeder
                 'id'=>3,
                 'designationType' => "Senior Manager",
                 'avg_hr_rate'=>900,
-                'description' => str_random(10),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
             ],
@@ -218,7 +215,6 @@ class Important extends Seeder
                 'id'=>4,
                 'designationType' => "Manager",
                 'avg_hr_rate'=>850,
-                'description' => str_random(10),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
             ],
@@ -226,7 +222,6 @@ class Important extends Seeder
                 'id'=>5,
                 'designationType' => "Assistant Manager",
                 'avg_hr_rate'=>840,
-                'description' => str_random(10),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
             ],
@@ -234,7 +229,6 @@ class Important extends Seeder
                 'id'=>6,
                 'designationType' => "Senior Executive",
                 'avg_hr_rate'=>750,
-                'description' => str_random(10),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
             ],
@@ -242,7 +236,6 @@ class Important extends Seeder
                 'id'=>7,
                 'designationType' => "Executive",
                 'avg_hr_rate'=>1750,
-                'description' => str_random(10),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
             ],
@@ -250,7 +243,6 @@ class Important extends Seeder
                 'id'=>8,
                 'designationType' => "Senior Audit Associate",
                 'avg_hr_rate'=>650,
-                'description' => str_random(10),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
             ],
@@ -258,7 +250,6 @@ class Important extends Seeder
                 'id'=>9,
                 'designationType' => "Accounts Associates (BPS)",
                 'avg_hr_rate'=>650,
-                'description' => str_random(10),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
             ],
@@ -266,7 +257,6 @@ class Important extends Seeder
                 'id'=>10,
                 'designationType' => "Audit Associate 1",
                 'avg_hr_rate'=>550,
-                'description' => str_random(10),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
             ],
@@ -274,7 +264,6 @@ class Important extends Seeder
                 'id'=>11,
                 'designationType' => "Audit Associate 2",
                 'avg_hr_rate'=>500,
-                'description' => str_random(10),
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
             ],
@@ -285,47 +274,43 @@ class Important extends Seeder
         DB::table('job_types')->insert([
             [
                 'JobType'=>"External Audit",
-                "description"=>"des",
                 "created_at"=> \Carbon\Carbon::now(),
                 "updated_at"=> \Carbon\Carbon::now()
             ],
             [
                 'JobType'=>"Internal Audit",
-                "description"=>"desc",
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
             [
                 'JobType'=>"Feasibility",
-                "description"=>"desc",
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ]
         ]);
 
         DB::table('project_status')->insert([
-            [
-                'id'=>1,
-                'unique_id'=>1,
-                'name'=>'Open',
-                "created_at"=>\Carbon\Carbon::now(),
-                "updated_at"=>\Carbon\Carbon::now()
-            ],
-            [
-                'id'=>2,
-                'unique_id'=>2,
-                'name'=>'Verified',
-                "created_at"=>\Carbon\Carbon::now(),
-                "updated_at"=>\Carbon\Carbon::now()
-            ],
-            [
-                'id'=>3,
-                'unique_id'=>3,
-                'name'=>'Close',
-                "created_at"=>\Carbon\Carbon::now(),
-                "updated_at"=>\Carbon\Carbon::now()
-            ],
-
+                [
+                    'id'=>1,
+                    'unique_id'=>1,
+                    'name'=>'Open',
+                    "created_at"=>\Carbon\Carbon::now(),
+                    "updated_at"=>\Carbon\Carbon::now()
+                ],
+                [
+                    'id'=>2,
+                    'unique_id'=>2,
+                    'name'=>'Verified',
+                    "created_at"=>\Carbon\Carbon::now(),
+                    "updated_at"=>\Carbon\Carbon::now()
+                ],
+                [
+                    'id'=>3,
+                    'unique_id'=>3,
+                    'name'=>'Close',
+                    "created_at"=>\Carbon\Carbon::now(),
+                    "updated_at"=>\Carbon\Carbon::now()
+                ],
             ]);
 
         //Project cost important seeds

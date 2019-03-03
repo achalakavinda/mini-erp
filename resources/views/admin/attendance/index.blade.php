@@ -51,6 +51,7 @@
                         <thead>
                         <tr>
                             <th>Name</th>
+                            <th>Email</th>
                             <th>Date</th>
                             <th>Work Type</th>
                         </tr>
@@ -63,6 +64,7 @@
                                    ?>
                                    <tr>
                                        <td>{!! $user->name !!}</td>
+                                       <td>{!! $user->email !!}</td>
                                        <td>{!! $dateItem !!}</td>
                                        <td>
                                             @foreach($Works as $work)

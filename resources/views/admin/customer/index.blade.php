@@ -35,7 +35,7 @@
                             <th>Name</th>
                             <th>Contact</th>
                             <th>Email</th>
-                            <th>View <i class="fa fa-paper-plane"></i></th>
+                            <th>View</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -69,7 +69,7 @@
     {!! Html::script('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') !!}
 
     <script type="text/javascript">
-
+        'use strict'
         $(function () {
             $('#table').DataTable({
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]

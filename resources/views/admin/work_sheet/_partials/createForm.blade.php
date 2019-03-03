@@ -11,23 +11,29 @@
 
 <div class="box-body">
 
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="form-group">
-            <label>Employee</label>
-            {!! Form::select('user_id',$Users,null,['class'=>'form-control','id'=>'userid']) !!}
-            <input type="text" style="display: none" name="date" value="{{ new \Carbon\Carbon() }}">
-
+            <label>Date</label>
+            {!! Form::date('date',\Carbon\Carbon::now(),['class'=>'form-control','id'=>'date']) !!}
         </div>
     </div>
 
-    <div class="col-md-4">
+
+    <div class="col-md-3">
+        <div class="form-group">
+            <label>Employee</label>
+            {!! Form::select('user_id',$Users,null,['class'=>'form-control','id'=>'userid']) !!}
+        </div>
+    </div>
+
+    <div class="col-md-3">
         <div class="form-group">
             <label>Work Code</label>
             {!! Form::select('work_code_id',$WorkCodes,null,['class'=>'form-control','id'=>'workcodeid']) !!}
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-3">
         <div class="form-group">
             <label>Project</label>
             {!! Form::select('project_id',$Project,null,['class'=>'form-control','id'=>'project','placeholder'=>'Please Select a project']) !!}

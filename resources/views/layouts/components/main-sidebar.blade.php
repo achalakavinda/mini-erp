@@ -15,28 +15,26 @@
             <li class="header">System</li>
 
             <!-- Optionally, you can add icons to the links -->
-            @can(config('const.Permission_Dashboard'))
+            @can(config('constant.Permission_Dashboard'))
                 <li><a href="{{ url('/dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             @endcan
 
-            @can(config('const.Permission_Project'))
+            @can(config('constant.Permission_Project'))
                 <li><a href="{{ url('/project') }}"><i class="fa fa-print"></i> <span>Project</span></a></li>
             @endcan
 
-            @can(config('const.Permission_Work_Sheet'))
+            @can(config('constant.Permission_Work_Sheet'))
                 <li><a href="{{ url('work-sheet') }}"><i class="fa fa-file"></i> <span>Work Sheet</span></a></li>
             @endcan
 
-            @can(config('const.Permission_Work_Sheet'))
+            @can(config('constant.Permission_Work_Sheet'))
                 <li><a href="{{ url('/work-sheet/create') }}"><i class="fa fa-book"></i> <span>Work Report</span></a></li>
             @endcan
 
-            @can(config('const.Permission_Staff'))
+            @can(config('constant.Permission_Staff'))
                 <li class="treeview">
                     <a href="{{ url('/staff') }}"><i class="fa fa-user"></i> <span>Staff</span>
-                        <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ url('designation') }}"><i class="fa fa-table"></i> Designation</a></li>
@@ -47,12 +45,10 @@
                 </li>
             @endcan
 
-            @can(config('const.Permission_Customer'))
+            @can(config('constant.Permission_Customer'))
                 <li class="treeview">
                     <a href="{{ url('/customer') }}"><i class="fa fa-users"></i> <span>Customer</span>
-                        <span class="pull-right-container">
-                <i class="fa fa-angle-left pull-right"></i>
-              </span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/customer') }}"><i class="fa fa-table"></i> Registry</a></li>
@@ -61,20 +57,20 @@
                 </li>
             @endcan
 
-            @can(config('const.Permission_Minor_Staff'))
+            @can(config('constant.Permission_Minor_Staff'))
                     <li><a href="{{ url('staff/work-sheet') }}"><i class="fa fa-file"></i> <span>Work Sheet</span></a></li>
                     <li><a href="{{ url('/staff/profile/') }}/{!! \Illuminate\Support\Facades\Auth::id() !!}"><i class="fa fa-user"></i> <span>Profile</span></a></li>
             @endcan
 
-            @can(config('const.Permission_Holidays'))
+            @can(config('constant.Permission_Holidays'))
                 <li><a href="{{ url('holidays') }}"><i class="fa fa-calendar"></i> <span>Holidays</span></a></li>
             @endcan
 
-            @can(config('const.Permission_Attendance'))
+            @can(config('constant.Permission_Attendance'))
                 <li><a href="{{ url('attendance') }}"><i class="fa fa-list"></i> <span>Attendance</span></a></li>
             @endcan
 
-            @can(config('const.Permission_Setting'))
+            @can(config('constant.Permission_Setting'))
                 <li style="padding-bottom: 50px;" class="treeview">
                     <a href="{{ url('/settings') }}"><i class="fa fa-cogs"></i> <span>Settings</span>
                         <span class="pull-right-container">

@@ -72,6 +72,10 @@
                 changeTimeByHour();
             });
 
+            $('#date').change(function () {
+                ajax(projectSelector.val(),userSelector.val());
+            });
+
         });
 
         function changeTimeByHour() {
@@ -98,7 +102,7 @@
             }
 
 
-            var url = '{!! url('api/project') !!}/'+id+'/user/'+user_id;
+            var url = '{!! url('api/project') !!}/'+id+'/user/'+user_id+'/date/'+$( "#date" ).val();
             console.log(url);
             $( "#jobtypeid" ).find('option').remove().end();
             $( "#jobtypeid" ).show();
@@ -158,6 +162,7 @@
             var company = '';
             var jobType = '';
             var remark = '';
+            var date = '';
 
             if(item.company!=null){
                 company = item.company;
@@ -168,14 +173,18 @@
             if(item.remark!=null){
                 remark = item.remark
             }
+            if(item.date!=null){
+                date = item.date;
+            }
 
-            $('#worksheetTable').append('<tr class="removeRW"><td>'+tConvert(item.from)+' -- '+tConvert(item.to)+'</td><td>Report</td><td>'+company+'</td><td>'+item.project_value+jobType+'</td><td>'+remark+'</td><td>' +
+            $('#worksheetTable').append('<tr class="removeRW"><td>'+tConvert(item.from)+' -- '+tConvert(item.to)+'</td><td>Report Date : '+date+'</td><td>'+company+'</td><td>'+item.project_value+jobType+'</td><td>'+remark+'</td><td>' +
                 '<a style="color: red" href="#" onclick="deleteRecord('+item.id+')">DEL</a> </td></tr>');
 
             maxToTime = item.to;
         }
 
-        function tConvert (time) {
+        function tConvert (time)
+        {
             // Check correct time format and split into components
             time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
 
@@ -188,9 +197,7 @@
         }
         
         function deleteRecord(x) {
-
             var Token = "{{ csrf_token() }}";
-
             $.ajax({
                 url: "{{ url('work-sheet/delete') }}",
                 method: 'post',
@@ -202,9 +209,6 @@
                     ajax(projectSelector.val(),userSelector.val());
                 }
             });
-
-
-
         }
         
     </script>

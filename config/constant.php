@@ -1,14 +1,11 @@
 <?php
 
 return [
-
     //Roles
     'ROLE_SUPER_ADMIN'=>'Super-Admin',
     'ROLE_SUPER_STAFF'=>'Staff',
-
     //Permission
     'Permission_Dashboard'=>'Dashboard',
-
     'Permission_Project'=>'Project',
     'Permission_Project_Registry'=>'Project | Registry',
     'Permission_Project_Creation'=>'Project | Creation',
@@ -22,6 +19,8 @@ return [
 
     'Permission_Work_Sheet'=>'Work Sheet',
     'Permission_Work_Sheet_Update'=>'Work Sheet | Update',
+    'Permission_Work_Sheet_Update_2_Day_Back'=>'Work Sheet | 2 Days Back| Update',
+    'Permission_Work_Sheet_Update_All_Day_Back'=>'Work Sheet | Full Permission | Update',
 
     'Permission_Minor_Staff'=>'Minor Staff',
     'Permission_Minor_Staff_Work_Sheet'=>'Minor Staff | Work Report',
@@ -61,5 +60,4 @@ return [
     'Permission_Attendance_Update'=> 'Attendance | Update',
 
     'Permission_Setting'=> 'Settings',
-
 ];

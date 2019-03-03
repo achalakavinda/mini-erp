@@ -40,7 +40,7 @@ class ApiController extends Controller
         return $Arr;
     }
 
-    public function GetProjectDetailsByID($id,$user_id){
+    public function GetProjectDetailsByID($id,$user_id,$date){
         try{
             $PJ = \App\Models\Project::find($id);
             $PJT = \App\Models\ProjectJobType::where('project_id',$id)->get();
@@ -52,8 +52,8 @@ class ApiController extends Controller
             foreach ($PJT as $project){
                 $Job_Type [] = \App\Models\JobType::select(['id','jobType'])->find($project->jop_type_id);
             }
-
-            $WORKSHEETRECORD = \App\Models\WorkSheet::where(['date'=>date("Y-m-d"),'user_id'=>$user_id])->get();
+            $DATE_VAR = date_format(date_create($date),"Y-m-d");
+            $WORKSHEETRECORD = \App\Models\WorkSheet::where(['date'=>$DATE_VAR,'user_id'=>$user_id])->get();
 
             $WORKARRAY =[];
 

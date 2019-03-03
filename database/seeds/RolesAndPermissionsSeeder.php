@@ -48,6 +48,11 @@ class RolesAndPermissionsSeeder extends Seeder
         $role_admin->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Work_Sheet_Update')]);
         $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Work_Sheet_Update_2_Day_Back')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Work_Sheet_Update_All_Day_Back')]);
+        $role_admin->givePermissionTo($permission);
+
 
         $permission = Permission::create(['name' => config('constant.Permission_Minor_Staff_Work_Sheet') ]);
         $role_admin->givePermissionTo($permission);

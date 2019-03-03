@@ -31,7 +31,6 @@
                     <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>#ID</th>
                             <th>Date</th>
                             <th>Employee</th>
                             <th>Project</th>
@@ -59,18 +58,17 @@
                                 $user = \App\Models\User::find($row->user_id);
 
                                 if(!empty($customer)){
-                                    $Customer_name = $customer->name;
+                                    $Customer_name = '<a href="'.url('customer').'/'.$row->customer_id.'">'.$customer->name.'</a>';
                                 }
                                 if(!empty($project)){
-                                    $Project_name = $project->code;
+                                    $Project_name = '<a href="'.url('project').'/'.$row->project_id.'">'.$project->code.'</a>';
                                 }
                                 if(!empty($user)){
-                                    $Staff_name = $user->name;
+                                    $Staff_name = '<a href="'.url('staff/profile').'/'.$row->user_id.'">'.$user->name.'</a>';
                                 }
                             ?>
 
                             <tr>
-                                <td>{!! $row->id !!}</td>
                                 <td>{!! $row->date !!}</td>
                                 <td>{!! $Staff_name !!}</td>
                                 <td>{!! $Project_name !!}</td>
@@ -90,9 +88,6 @@
                                 @endcan
                             </tr>
                         @endforeach
-
-
-
                         </tbody>
                     </table>
                 </div>

@@ -71,6 +71,7 @@ class ProjectController extends Controller
         //Check code for unique project code validations
         $CheckCode = Project::where('code',$code)->first();
 
+
         if($CheckCode)
         {
             return    \redirect()->back()->withErrors('*Code must be unique');
