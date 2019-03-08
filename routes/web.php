@@ -35,6 +35,9 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('holidays', 'HolidayController');
 
+    Route::post('send-missing-attendance-email','AttendanceController@sendEmailIndex');
+    Route::post('send-email-to-missing-attendance','AttendanceController@sendEmailToMissingAttendance');
+
     Route::resource('attendance', 'AttendanceController');
 
     Route::resource('customer', 'CustomerController');

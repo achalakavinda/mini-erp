@@ -34,6 +34,18 @@ class AttendanceController extends Controller
         return view('admin.attendance.index',compact(['dateArray','Users']));
     }
 
+    public function sendEmailIndex(Request $request){
+        $request->validate([
+            'row'=>'required'
+        ]);
+        $Rows = $request->row;
+        return view('admin.attendance.sendEmailIndex',compact('Rows'));
+    }
+
+    public function sendEmailToMissingAttendance(Request $request){
+        dd($request->all());
+    }
+
     /**
      * Show the form for creating a new resource.
      *

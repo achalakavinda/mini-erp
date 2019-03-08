@@ -46,6 +46,13 @@
                     </form>
                 </div>
                 <!-- /.box-header -->
+
+                 @include('error.error')
+                <!-- form start -->
+                {!! Form::open(['action'=>'AttendanceController@sendEmailIndex','class'=>'form-horizontal','id'=>'Form']) !!}
+                <div class="box-footer">
+                    {!! Form::submit('Send Report Missing Remind Mail',['class'=>'btn btn-info pull-right']) !!}
+                </div>
                 <div style="overflow: auto" class="box-body">
                     <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>
@@ -57,6 +64,9 @@
                         </tr>
                         </thead>
                         <tbody>
+                        <?php
+                            $Count = 0;
+                        ?>
                             @foreach($dateArray as $dateItem)
                                @foreach($Users as $user)
                                    <?php
@@ -72,6 +82,10 @@
                                            @endforeach
                                            @if($Works->isEmpty())
                                                 <span style="color: red">Missing</span>
+                                               <input style="display: none" type="number" name="row[{!! $Count !!}][user_id]" value="{!! $user->id !!}">
+                                               <input style="display: none" type="text" name="row[{!! $Count !!}][type]" value="Missing">
+                                               <input style="display: none" type="text" name="row[{!! $Count !!}][date]" value="{!! $dateItem !!}">
+                                               <?php $Count++;?>
                                            @endif
                                        </td>
                                    </tr>
@@ -81,6 +95,8 @@
                     </table>
                 </div>
                 <!-- /.box-body -->
+                {!! Form::close() !!}
+
             </div>
             <!-- /.box -->
         </div>
