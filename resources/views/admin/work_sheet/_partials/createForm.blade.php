@@ -84,5 +84,5 @@
 <!-- /.box-body -->
 
 <div class="box-footer">
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary pull-right">Submit</button>
 </div>
