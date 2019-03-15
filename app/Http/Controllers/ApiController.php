@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\Designation;
 use App\Models\JobType;
 use App\Models\Project;
+use App\Models\User;
 use App\Models\WorkCodes;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -38,7 +40,7 @@ class ApiController extends Controller
         return $Arr;
     }
 
-    public function GetProjectDetailsByID($id,$user_id){
+    public function GetProjectDetailsByID($id,$user_id,$date){
         try{
             $PJ = \App\Models\Project::find($id);
             $PJT = \App\Models\ProjectJobType::where('project_id',$id)->get();
@@ -50,8 +52,8 @@ class ApiController extends Controller
             foreach ($PJT as $project){
                 $Job_Type [] = \App\Models\JobType::select(['id','jobType'])->find($project->jop_type_id);
             }
-
-            $WORKSHEETRECORD = \App\Models\WorkSheet::where(['date'=>date("Y-m-d"),'user_id'=>$user_id])->get();
+            $DATE_VAR = date_format(date_create($date),"Y-m-d");
+            $WORKSHEETRECORD = \App\Models\WorkSheet::where(['date'=>$DATE_VAR,'user_id'=>$user_id])->get();
 
             $WORKARRAY =[];
 
@@ -70,7 +72,13 @@ class ApiController extends Controller
                     if($row->project_id == null){
                         $PJTNAME = WorkCodes::find($row->work_code_id)->name;
                     }else{
-                        $PJTNAME = Project::find($row->project_id)->code;
+
+                        $PJTNAME = Project::find($row->project_id);
+                        if($PJTNAME==null){
+                            $PJTNAME = 'Project Deleted';
+                        }else{
+                            $PJTNAME = $PJTNAME->code;
+                        }
                     }
 
                     $arr = [
@@ -83,7 +91,8 @@ class ApiController extends Controller
                         'company'=>$IN_CUM,
                         'job_type_name'=>$IN_JOB,
                         'project_value'=>$PJTNAME,
-                        'remark'=>$row->remark
+                        'remark'=>$row->remark,
+                        'actual_work_hrs'=>$row->actual_work_hrs
                     ];
                     $WORKARRAY[] = $arr;
                 }
@@ -109,6 +118,51 @@ class ApiController extends Controller
         }
 
         return $Arr;
+    }
+
+    public function GetDesignation($id){
+        $arr = [];
+
+        try{
+            $designation = Designation::findOrFail($id);
+            $arr = [
+                'status'=>"ok",
+                'designation'=>$designation
+            ];
+
+        }catch (\Exception $e){
+
+            $arr = [
+                'status'=>"ok",
+                'designation'=>[]
+            ];
+
+        }
+
+        return $arr;
+    }
+
+    //        api/staff/designation
+    public function getStaffByDesignation($id){
+        $arr = [];
+        try{
+            $staff = User::where('designation_id',$id)->select(['id','name','hr_rates','designation_id'])->get();
+            $arr = [
+                'status'=>"ok",
+                'designation'=>$staff
+            ];
+
+        }catch (\Exception $e){
+
+            $arr = [
+                'status'=>"ok",
+                'designation'=>[],
+                'msg'=>$e->getMessage()
+            ];
+
+        }
+
+        return $arr;
     }
 
 }

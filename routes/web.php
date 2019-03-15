@@ -17,21 +17,32 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
-
 Route::group(['middleware' => ['auth']], function () {
-
-    Route::get('/home', 'HomeController@index')->name('home');
 
     Route::get('/dashboard', 'DashboardController@index');
 
-    Route::resource('/customer', 'CustomerController');
+    Route::get('/staff/profile/{id}', function ($id){
+            $User = \App\Models\User::findOrFail($id);
+            return view('admin.staff.profile.profile',compact('User'));
+        });
 
-    Route::resource('/staff', 'StaffController');
+    Route::get('/staff/work-sheet', 'PageController@workSheet');
 
-    Route::get('/staff/profile/{id}', 'StaffController@profile');
+    Route::post('/staff/work-sheet/store', 'PageController@workSheetStore');
 
+    Route::post('work-sheet/delete','WorkSheetController@delete');
     Route::resource('work-sheet', 'WorkSheetController');
+
+    Route::resource('holidays', 'HolidayController');
+
+    Route::post('send-missing-attendance-email','AttendanceController@sendEmailIndex');
+    Route::post('send-email-to-missing-attendance','AttendanceController@sendEmailToMissingAttendance');
+
+    Route::resource('attendance', 'AttendanceController');
+
+    Route::resource('customer', 'CustomerController');
+
+    Route::resource('staff', 'StaffController');
 
     Route::resource('job-type', 'JobTypeController');
 
@@ -39,16 +50,32 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('project','ProjectController');
 
-    Route::get('project/{id}/estimation','ProjectController@estimation');
+     Route::prefix('project')->group(function () {
+            Route::get('/{id}/actual-cost','ProjectController@actualCost');
+            Route::get('/{id}/budget-cost','ProjectController@budgetCost');
+            Route::get('/{id}/estimation/edit/staff-allocation-estimation','ProjectController@editStaffAllocationEstimation');
+            Route::get('/{id}/estimation/edit/cost-type','ProjectController@editCostType');
+            Route::get('/{id}/settings','ProjectController@settings');
+            Route::post('/status','ProjectController@projectStatusStore');
+            Route::post('/variable-update','ProjectController@projectVariableUpdate');
+            Route::post('/budget-cost','ProjectController@budgetCostStore');
+            Route::post('/actual-cost','ProjectController@actualCostStore');
+            Route::post('/edit-budget-designation-cost','ProjectController@editBudgetDesignationCost');
+            Route::post('/store-new-budget-designation-cost','ProjectController@StoreNewBudgetDesignationCost');
+            Route::post('/edit-budget-cost-type','ProjectController@editBudgetCostType');
+            Route::post('/store-new-budget-cost-type','ProjectController@StoreNewBudgetCostType');
+            Route::post('/edit-actual-cost-type','ProjectController@editActualCostType');
+            Route::post('/store-new-actual-cost-type','ProjectController@StoreNewActualCostType');
+     });
 
-    Route::post('project/finalized','ProjectController@finalized');
-
-
-    Route::get('settings','SettingController@index');
-
-    Route::group(['middleware' => ['role:super-admin']], function () {
-        // super-admin is a role in the role table
-        // anything can be changed to anything
+    Route::group(['middleware' => ['permission:Settings']], function () {
+        Route::get('settings','SettingController@index');
+        Route::prefix('settings')->group(function () {
+            Route::get('/','SettingController@index');
+            Route::get('/access-control/permissions','PermissionsController@index');
+            Route::Resource('/access-control/roles','RolesController');
+            Route::Resource('/access-control/user-management','UserManagementController');
+        });
     });
 
 });

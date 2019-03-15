@@ -16,6 +16,7 @@ class CreateDesignationsTable extends Migration
         Schema::create('designations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('designationType');
+            $table->float('avg_hr_rate');
             $table->string('description')->nullable();
             $table->timestamps();
         });

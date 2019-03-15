@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Designation;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DesignationController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:'.config('constant.Permission_Designation')]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,9 +20,9 @@ class DesignationController extends Controller
      */
     public function index()
     {
+        User::CheckPermission([config('constant.Permission_Designation_Registry')]);
         $Rows = Designation::all();
-
-        return view('designation.index',compact('Rows'));
+        return view('admin.designation.index',compact('Rows'));
     }
 
     /**
@@ -26,7 +32,8 @@ class DesignationController extends Controller
      */
     public function create()
     {
-        return view('designation.create');
+        User::CheckPermission([config('constant.Permission_Designation_Creation')]);
+        return view('admin.designation.create');
     }
 
     /**
@@ -37,16 +44,22 @@ class DesignationController extends Controller
      */
     public function store(Request $request)
     {
+        User::CheckPermission([config('constant.Permission_Designation_Creation')]);
         $request->validate([
             'designationType' => 'required | min:3',
+            'avg_hr_rate' => 'required',
         ]);
+        try{
+            Designation::create([
+                'designationType'=>$request->designationType,
+                'avg_hr_rate'=>$request->avg_hr_rate,
+                'description'=>$request->description
+            ]);
 
-        Designation::create([
-            'designationType'=>$request->designationType,
-            'description'=>$request->description
-        ]);
-
-        return redirect('designation/create')->with('created',true);
+        }catch (\Exception $exception){
+            return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
+        }
+        return redirect()->back()->with(['created'=>'success','message'=>'Successfully created!']);
     }
 
     /**
@@ -57,8 +70,9 @@ class DesignationController extends Controller
      */
     public function show($id)
     {
+        User::CheckPermission([config('constant.Permission_Designation_Registry')]);
         $Designation = Designation::findOrFail($id);
-        return view('designation.edit',compact('Designation'));
+        return view('admin.designation.edit',compact('Designation'));
     }
 
     /**
@@ -69,8 +83,9 @@ class DesignationController extends Controller
      */
     public function edit($id)
     {
+        User::CheckPermission([config('constant.Permission_Designation_Update')]);
         $Designation = Designation::findOrFail($id);
-        return view('designation.edit',compact('Designation'));
+        return view('admin.designation.edit',compact('Designation'));
     }
 
     /**
@@ -82,20 +97,25 @@ class DesignationController extends Controller
      */
     public function update(Request $request, $id)
     {
+        User::CheckPermission([config('constant.Permission_Designation_Update')]);
         $request->validate([
             'designationType' => 'required | min:3',
+            'avg_hr_rate' => 'required',
         ]);
-
-        $DESIGNATION = Designation::find($id);
-
-        if(!empty($DESIGNATION)){
-            $DESIGNATION->designationType = $request->designationType;
-            $DESIGNATION->description = $request->description;
-            $DESIGNATION->save();
+        try {
+            $DESIGNATION = Designation::findOrFail($id);
+            if (!empty($DESIGNATION)) {
+                $DESIGNATION->designationType = $request->designationType;
+                $DESIGNATION->description = $request->description;
+                $DESIGNATION->avg_hr_rate = $request->avg_hr_rate;
+                $DESIGNATION->save();
+            }else{
+                return redirect()->back()->with(['created'=>'error','message'=>'Designation type cannot be empty!']);
+            }
+        }catch (\Exception $exception){
+            return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
         }
-
-        return redirect()->back()->with('created',true);
-
+        return redirect()->back()->with(['created'=>'success','message'=>'Successfully updated!']);
     }
 
     /**

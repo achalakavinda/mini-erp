@@ -16,7 +16,7 @@ class CreateCustomersTable extends Migration
         Schema::create('customer_secretaries', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->timestamps();
         });
 
@@ -38,15 +38,18 @@ class CreateCustomersTable extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('code');
+            $table->string('code')->nullable();
             $table->string('contact')->nullable();
+            $table->string('contact_1')->nullable();
+            $table->string('contact_2')->nullable();
+            $table->string('contact_3')->nullable();
             $table->string('email')->nullable();
-            $table->text('file_no')->nullable();
+            $table->string('file_no')->unique();
             $table->text('address_1')->nullable();
             $table->text('address_2')->nullable();
             $table->text('address_3')->nullable();
             $table->text('fax_number')->nullable();
-            $table->unsignedInteger('secretary_id');
+            $table->unsignedInteger('secretary_id')->nullable();
             $table->text('date_of_incorporation')->nullable();
             $table->string('tin_no')->nullable();
             $table->string('vat_no')->nullable();
@@ -57,16 +60,35 @@ class CreateCustomersTable extends Migration
             $table->string('cfo_contact')->nullable();
             $table->string('cfo_email')->nullable();
             $table->string('website')->nullable();
-            $table->unsignedInteger('service_id');
-            $table->unsignedInteger('sector_id');
+            $table->unsignedInteger('service_id')->nullable();
+            $table->unsignedInteger('sector_id')->nullable();
             $table->string('location')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
+            $table->unsignedInteger('created_by')->nullable();
+            $table->unsignedInteger('updated_by')->nullable();
 
             $table->foreign('secretary_id')->references('id')->on('customer_secretaries')->onDelete('cascade');
             $table->foreign('service_id')->references('id')->on('customer_services')->onDelete('cascade');
             $table->foreign('sector_id')->references('id')->on('customer_sectors')->onDelete('cascade');
         });
+
+        Schema::create('cus_services', function (Blueprint $table) {
+            $table->unsignedInteger('customer_id');
+            $table->unsignedInteger('service_id');
+            $table->timestamps();
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->foreign('service_id')->references('id')->on('customer_services')->onDelete('cascade');
+        });
+
+        Schema::create('cus_sectors', function (Blueprint $table) {
+            $table->unsignedInteger('customer_id');
+            $table->unsignedInteger('sector_id');
+            $table->timestamps();
+            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
+            $table->foreign('sector_id')->references('id')->on('customer_sectors')->onDelete('cascade');
+        });
+
     }
 
     /**
@@ -76,10 +98,11 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('cus_services');
+        Schema::dropIfExists('cus_sectors');
         Schema::dropIfExists('customers');
         Schema::dropIfExists('customer_secretaries');
         Schema::dropIfExists('customer_services');
         Schema::dropIfExists('customer_sectors');
-
     }
 }

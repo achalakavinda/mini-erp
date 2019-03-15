@@ -1,0 +1,10 @@
+<?php
+
+
+class CustomizedProjectController extends App\Http\Controllers\ProjectController{
+
+
+}
+
+
+?>

@@ -3,10 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\JobType;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class JobTypeController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware(['permission:'.config('constant.Permission_Job_Type')]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,9 +20,9 @@ class JobTypeController extends Controller
      */
     public function index()
     {
+        User::CheckPermission([ config('constant.Permission_Job_Type_Registry') ]);
         $Rows = JobType::all();
-
-        return view('job_type.index',compact('Rows'));
+        return view('admin.job_type.index',compact('Rows'));
     }
 
     /**
@@ -26,7 +32,8 @@ class JobTypeController extends Controller
      */
     public function create()
     {
-        return view('job_type.create');
+        User::CheckPermission([ config('constant.Permission_Job_Type_Creation') ]);
+        return view('admin.job_type.create');
     }
 
     /**
@@ -37,18 +44,19 @@ class JobTypeController extends Controller
      */
     public function store(Request $request)
     {
-
+        User::CheckPermission([ config('constant.Permission_Job_Type_Creation') ]);
         $request->validate([
             'jobType' => 'required | min:3',
         ]);
-
-        JobType::create([
-            'jobType'=>$request->jobType,
-            'description'=>$request->description
-        ]);
-
-        return redirect('job-type/create')->with('created',true);
-
+        try{
+            JobType::create([
+                'jobType'=>$request->jobType,
+                'description'=>$request->description
+            ]);
+        }catch (\Exception $exception){
+            return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
+        }
+        return redirect()->back()->with(['created'=>'success','message'=>'Successfully created!']);
     }
 
     /**
@@ -59,8 +67,9 @@ class JobTypeController extends Controller
      */
     public function show($id)
     {
+        User::CheckPermission([ config('constant.Permission_Job_Type_Registry') ]);
         $JobType = JobType::findOrFail($id);
-        return view('job_type.edit',compact('JobType'));
+        return view('admin.job_type.edit',compact('JobType'));
     }
 
     /**
@@ -83,19 +92,22 @@ class JobTypeController extends Controller
      */
     public function update(Request $request, $id)
     {
+        User::CheckPermission([ config('constant.Permission_Job_Type_Update') ]);
         $request->validate([
             'jobType' => 'required | min:3',
         ]);
 
-        $JOBTYPE = JobType::find($id);
-
-        if(!empty($JOBTYPE)){
-            $JOBTYPE->jobType = $request->jobType;
-            $JOBTYPE->description = $request->description;
-            $JOBTYPE->save();
+        try{
+            $JOBTYPE = JobType::find($id);
+            if(!empty($JOBTYPE)){
+                $JOBTYPE->jobType = $request->jobType;
+                $JOBTYPE->description = $request->description;
+                $JOBTYPE->save();
+            }
+        }catch (\Exception $exception){
+            return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
         }
-
-        return redirect()->back()->with('created',true);
+        return redirect()->back()->with(['created'=>'success','message'=>'Successfully updated!']);
     }
 
     /**

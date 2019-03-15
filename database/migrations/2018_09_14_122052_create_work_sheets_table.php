@@ -25,14 +25,20 @@ class CreateWorkSheetsTable extends Migration
             $table->string('job_type')->nullable();
             $table->unsignedInteger('work_code_id');
             $table->string('work_code')->nullable();
+
             $table->boolean('worked');
             $table->time('from');
             $table->time('to');
+
             $table->float('work_hrs');
-            $table->float('actual_work_hrs');
-            $table->float('hr_rate');
-            $table->float('hr_cost');
-            $table->float('actual_hr_cost');
+            $table->float('leave_hrs');
+
+            $table->float('hr_rate')->default(0);
+            $table->float('hr_cost')->default(0);
+            $table->float('actual_work_hrs')->default(0);
+            $table->float('actual_hr_cost')->default(0);
+
+            $table->float('extra_work_hrs')->default(0);
             $table->text('remark')->nullable();
             $table->timestamps();
 

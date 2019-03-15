@@ -7,20 +7,25 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Concept - Angles | PMIS</title>
+    <title>Kreston MNS & Co | PMIS</title>
+    <link rel="shortcut icon" href="{!! asset('img/logo.png') !!}" />
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    {!! Html::style('bower_components/bootstrap/dist/css/bootstrap.min.css') !!}
+    {!! Html::style('admin/bower_components/bootstrap/dist/css/bootstrap.min.css') !!}
     <!-- Font Awesome -->
-    {!! Html::style('bower_components/font-awesome/css/font-awesome.min.css') !!}
+    {!! Html::style('admin/bower_components/font-awesome/css/font-awesome.min.css') !!}
     <!-- Ionicons -->
-    {!! Html::style('bower_components/Ionicons/css/ionicons.min.css') !!}
+    {!! Html::style('admin/bower_components/Ionicons/css/ionicons.min.css') !!}
     <!-- Theme style -->
-    {!! Html::style('dist/css/AdminLTE.min.css') !!}
-    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
-          page. However, you can choose any other skin. Make sure you
-          apply the skin class to the body tag so the changes take effect. -->
-    {!! Html::style('dist/css/skins/skin-blue.min.css') !!}
+    {!! Html::style('admin/css/AdminLTE.min.css') !!}
+    {!! Html::style('admin/css/skins/skin-blue.min.css') !!}
+
+    <style>
+        .form-group{
+            padding-left:5px;
+            padding-right: 5px;
+        }
+    </style>
 
     @yield('style')
 
@@ -29,11 +34,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
     <![endif]-->
 
     <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 
@@ -69,6 +76,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
         @include('layouts.components.main-footer')
     <!-- /Main Footer -->
 
+    @yield('model')
 
 </div>
 <!-- ./wrapper -->
@@ -76,11 +84,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- REQUIRED JS SCRIPTS -->
 
 <!-- jQuery 3 -->
-{!! Html::script('bower_components/jquery/dist/jquery.min.js') !!}
+{!! Html::script('admin/bower_components/jquery/dist/jquery.min.js') !!}
 <!-- Bootstrap 3.3.7 -->
-{!! Html::script('bower_components/bootstrap/dist/js/bootstrap.min.js') !!}
+{!! Html::script('admin/bower_components/bootstrap/dist/js/bootstrap.min.js') !!}
 <!-- AdminLTE App -->
-{!! Html::script('dist/js/adminlte.min.js') !!}
+{!! Html::script('admin/js/adminlte.min.js') !!}
+
 
 
 @yield('js')
