@@ -59,5 +59,8 @@ return [
     'Permission_Attendance_Creation'=> 'Attendance | Creation',
     'Permission_Attendance_Update'=> 'Attendance | Update',
 
+    'Permission_Reports'=> 'Reports',
+
+
     'Permission_Setting'=> 'Settings',
 ];

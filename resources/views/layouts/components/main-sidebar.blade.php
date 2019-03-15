@@ -71,6 +71,14 @@
             @endcan
 
             @can(config('constant.Permission_Setting'))
+                <li><a href="{{ url('spread-sheet') }}"><i class="fa fa-table"></i> <span>Spread-Sheet/Import</span></a></li>
+            @endcan
+
+            @can(config('constant.Permission_Setting'))
+                <li><a href="{{ url('reports') }}"><i class="fa fa-cubes"></i> <span>Reports</span></a></li>
+            @endcan
+
+            @can(config('constant.Permission_Setting'))
                 <li style="padding-bottom: 50px;" class="treeview">
                     <a href="{{ url('/settings') }}"><i class="fa fa-cogs"></i> <span>Settings</span>
                         <span class="pull-right-container">

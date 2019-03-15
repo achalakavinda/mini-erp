@@ -68,6 +68,18 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/store-new-actual-cost-type','ProjectController@StoreNewActualCostType');
      });
 
+    Route::prefix('spread-sheet')->group(function () {
+
+        Route::get('/','SpreadSheet\SpreadSheetController@index');
+
+    });
+
+    Route::prefix('reports')->group(function () {
+
+        Route::get('/','Reports\ReportController@index');
+
+    });
+
     Route::group(['middleware' => ['permission:Settings']], function () {
         Route::get('settings','SettingController@index');
         Route::prefix('settings')->group(function () {
