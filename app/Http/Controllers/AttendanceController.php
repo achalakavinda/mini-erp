@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\AttendanceRemindEmail;
 use App\Models\User;
 use App\Models\WorkSheet;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Mail;
 
 class AttendanceController extends Controller
 {
@@ -43,7 +45,22 @@ class AttendanceController extends Controller
     }
 
     public function sendEmailToMissingAttendance(Request $request){
-        dd($request->all());
+
+        foreach ($request->row as $item){
+            if (isset($item['send'])){
+                $User = User::find($item['user_id']);
+                if($User){
+                    $data = [
+                        'name'=>$User->name,
+                        'date'=>$item['date']
+                    ];
+
+                    Mail::to('achalakavinda25r@gmail.com')->send(new  AttendanceRemindEmail($data));
+                }
+            }
+        }
+
+        return redirect('/attendance');
     }
 
     /**

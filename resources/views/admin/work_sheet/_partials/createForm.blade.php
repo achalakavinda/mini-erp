@@ -42,14 +42,17 @@
 
     <table id="worksheetTable" class="table table-responsive table-bordered table-striped">
         <thead>
-        <tr>
-            <th>Time</th>
-            <th>Hrs</th>
-            <th>Report</th>
-            <th>Customer</th>
-            <th>Job Type</th>
-            <th>Remark</th>
-        </tr>
+            <tr>
+                <th>Time</th>
+                <th>Hrs</th>
+                <th class="toggle-hide">Report</th>
+                <th class="toggle-hide">Customer</th>
+                <th class="toggle-hide">Job Type</th>
+                <th class="toggle-hide">Remark</th>
+            </tr>
+            <tr>
+                <td colspan="6"><a id="hideToggleBtn" class="btn-sm btn-danger" onclick="fieldHiddenToggle()">Info <i class="fa fa-file"></i></a></td>
+            </tr>
         </thead>
 
         <tbody>
@@ -59,22 +62,21 @@
                     {!! Form::number('row[0][hrs]',null,["class"=>"form-control","id"=>"Hrs"]) !!}
                 </td>
 
-                <td>
+                <td class="toggle-hide">
                     <input checked type="checkbox">
                 </td>
-                <td>
+                <td class="toggle-hide">
                     <?php $Company =  \App\Models\Customer::all()->pluck('name','id') ?>
                     {!! Form::select('row[0][company]',$Company,null,['class'=>'form-control','id'=>'customerid']) !!}
                 </td>
-                <td>
+                <td class="toggle-hide">
                     {!! Form::select('row[0][job_type_id]',$JobTypes,null,['class'=>'form-control','id'=>'jobtypeid']) !!}
                 </td>
-                <td>
+                <td class="toggle-hide">
                     {!! Form::text('row[0][remark]',null,["class"=>"form-control","id"=>"remark" ,"placeholder"=>"remark"]) !!}
                 </td>
             </tr>
         </tbody>
-
         <tbody id="worksheetTable"></tbody>
     </table>
 

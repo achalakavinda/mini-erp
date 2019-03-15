@@ -1,5 +1,13 @@
 @extends('layouts.admin')
 
+@section('style')
+    <style>
+        .toggle-hide{
+            display: none;
+        }
+    </style>
+@endsection
+
 <!-- main header section -->
 @section('main-content-header')
     <!-- Default box -->
@@ -26,6 +34,9 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
+                    <h3 class="box-title">Hi  {{ ucwords(Auth::user()->name)}} !</h3>
+                    <br/>
+                    <br/>
                     <h3 class="box-title">Work Sheet |  {{ new \Carbon\Carbon() }}</h3>
                 </div>
                 <!-- /.box-header -->
@@ -78,6 +89,10 @@
 
         });
 
+        function fieldHiddenToggle() {
+           $('.toggle-hide').toggle();
+        }
+
         function changeTimeByHour() {
             var Hrs = parseFloat($('#Hrs').val());
 
@@ -100,6 +115,8 @@
                 $( "#customerid" ).find('option').remove().end();
                 id = 0;
             }
+
+            $('.toggle-hide').hide();
 
 
             var url = '{!! url('api/project') !!}/'+id+'/user/'+user_id+'/date/'+$( "#date" ).val();
@@ -168,7 +185,7 @@
                 company = item.company;
             }
             if(item.job_type_name!=null){
-                jobType = ' - '+item.job_type_name
+                jobType = item.job_type_name
             }
             if(item.remark!=null){
                 remark = item.remark
@@ -177,7 +194,9 @@
                 date = item.date;
             }
 
-            $('#worksheetTable').append('<tr class="removeRW"><td>'+tConvert(item.from)+' -- '+tConvert(item.to)+'</td><td>Report Date : '+date+'</td><td>'+company+'</td><td>'+item.project_value+jobType+'</td><td>'+remark+'</td><td>' +
+            console.log(item);
+
+            $('#worksheetTable').append('<tr class="removeRW"><td>'+tConvert(item.from)+' -- '+tConvert(item.to)+'<br/>Report Date : '+date+'</td><td> '+item.actual_work_hrs+' Hours </td><td  class="toggle-hide">'+company+'</td><td  class="toggle-hide">'+item.project_value+'</td><td class="toggle-hide">'+jobType+'</td><td  class="toggle-hide">'+remark+'</td><td>' +
                 '<a style="color: red" href="#" onclick="deleteRecord('+item.id+')">DEL</a> </td></tr>');
 
             maxToTime = item.to;

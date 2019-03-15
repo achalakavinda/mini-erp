@@ -6,16 +6,37 @@
 
 <div class="box-body">
 
-    <div class="col-md-12">
+    <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label('customer_id','Company',['class' => 'control-label']) !!}
+            {!! Form::select('customer_id',$Customers,null,['class'=>'form-control','id'=>'companyId']) !!}
+        </div>
+    </div>
+
+    <div class="col-md-6">
         <div class="form-group">
             {!! Form::label('code','Project Code',['class' => 'control-label']) !!}
             {!! Form::text('code',null,['class'=>'form-control','id'=>'code','placeholder'=>'Code']) !!}
         </div>
     </div>
-    <div class="col-md-12">
+</div>
+<!-- /.box-body -->
+
+<div class="box-header with-border">
+    <h4 class="box-title">Assign Jobs</h4>
+</div>
+
+<div class="box-body">
+    <div class="col-md-6">
         <div class="form-group">
-            {!! Form::label('customer_id','Company',['class' => 'control-label']) !!}
-            {!! Form::select('customer_id',$Customers,null,['class'=>'form-control','id'=>'companyId']) !!}
+            {!! Form::label('job_types','Jobs',['class' => 'control-label']) !!}
+            {!! Form::select('job_types',$JobTypes,null,['class'=>'form-control','id'=>'job_types','name'=>'job_types[]']) !!}
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label('sector_id','Sectors',['class' => 'control-label']) !!}
+            {!! Form::select('sector_id',$CustomerSector,null,['class'=>'form-control','id'=>'sectorId']) !!}
         </div>
     </div>
 
@@ -47,27 +68,6 @@
         </div>
     </div>
 
-
-</div>
-<!-- /.box-body -->
-
-<div class="box-header with-border">
-    <h4 class="box-title">Assign Jobs</h4>
-</div>
-
-<div class="box-body">
-    <div class="col-md-6">
-        <div class="form-group">
-            {!! Form::label('job_types','Jobs',['class' => 'control-label']) !!}
-            {!! Form::select('job_types',$JobTypes,null,['class'=>'form-control','id'=>'job_types','name'=>'job_types[]']) !!}
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            {!! Form::label('sector_id','Sectors',['class' => 'control-label']) !!}
-            {!! Form::select('sector_id',$CustomerSector,null,['class'=>'form-control','id'=>'sectorId']) !!}
-        </div>
-    </div>
 </div>
 <!-- /.box-body -->
 

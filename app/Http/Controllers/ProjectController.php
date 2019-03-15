@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Customer;
+use App\Models\CustomerSector;
 use App\Models\JobType;
 use App\Models\Project;
 use App\Models\ProjectCostType;
@@ -66,11 +67,12 @@ class ProjectController extends Controller
 
         //fetch customer information
         $CUSTOMER = Customer::findOrFail($request->customer_id);
+        $CustomerSector = CustomerSector::findOrFail($request->sector_id);
+
         //Project Code
-        $code = $CUSTOMER->name."-".$request->code;
+        $code = $CUSTOMER->name."-".$request->code."-".$CustomerSector->name;
         //Check code for unique project code validations
         $CheckCode = Project::where('code',$code)->first();
-
 
         if($CheckCode)
         {

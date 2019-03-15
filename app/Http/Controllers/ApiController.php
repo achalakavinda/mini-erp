@@ -91,7 +91,8 @@ class ApiController extends Controller
                         'company'=>$IN_CUM,
                         'job_type_name'=>$IN_JOB,
                         'project_value'=>$PJTNAME,
-                        'remark'=>$row->remark
+                        'remark'=>$row->remark,
+                        'actual_work_hrs'=>$row->actual_work_hrs
                     ];
                     $WORKARRAY[] = $arr;
                 }

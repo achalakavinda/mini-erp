@@ -58,7 +58,7 @@
             @endcan
 
             @can(config('constant.Permission_Minor_Staff'))
-                    <li><a href="{{ url('staff/work-sheet') }}"><i class="fa fa-file"></i> <span>Work Sheet</span></a></li>
+                    <li><a href="{{ url('staff/work-sheet') }}"><i class="fa fa-file"></i> <span>Time Sheet</span></a></li>
                     <li><a href="{{ url('/staff/profile/') }}/{!! \Illuminate\Support\Facades\Auth::id() !!}"><i class="fa fa-user"></i> <span>Profile</span></a></li>
             @endcan
 
