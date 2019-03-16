@@ -48,6 +48,7 @@ class JobTypeController extends Controller
         $request->validate([
             'jobType' => 'required | min:3',
         ]);
+        
         try{
             JobType::create([
                 'jobType'=>$request->jobType,

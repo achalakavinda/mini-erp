@@ -13,14 +13,6 @@
 
     <div class="col-md-3">
         <div class="form-group">
-            <label>Date</label>
-            {!! Form::date('date',\Carbon\Carbon::now(),['class'=>'form-control','id'=>'date']) !!}
-        </div>
-    </div>
-
-
-    <div class="col-md-3">
-        <div class="form-group">
             <label>Employee</label>
             {!! Form::select('user_id',$Users,null,['class'=>'form-control','id'=>'userid']) !!}
         </div>
@@ -33,33 +25,40 @@
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
             <label>Project</label>
             {!! Form::select('project_id',$Project,null,['class'=>'form-control','id'=>'project','placeholder'=>'Please Select a project']) !!}
         </div>
     </div>
 
+    <div class="col-md-1">
+        <div class="form-group">
+            <label>Hrs</label>
+            {!! Form::number('row[0][hrs]',null,["class"=>"form-control","id"=>"Hrs"]) !!}
+        </div>
+    </div>
+
     <table id="worksheetTable" class="table table-responsive table-bordered table-striped">
         <thead>
+
+        <tr>
+            <td colspan="5"><a id="hideToggleBtn" class="btn-sm btn-danger" onclick="fieldHiddenToggle()">Info <i class="fa fa-file"></i></a></td>
+        </tr>
             <tr>
                 <th>Time</th>
-                <th>Hrs</th>
                 <th class="toggle-hide">Report</th>
                 <th class="toggle-hide">Customer</th>
-                <th class="toggle-hide">Job Type</th>
+                <th >Hour</th>
                 <th class="toggle-hide">Remark</th>
-            </tr>
-            <tr>
-                <td colspan="6"><a id="hideToggleBtn" class="btn-sm btn-danger" onclick="fieldHiddenToggle()">Info <i class="fa fa-file"></i></a></td>
             </tr>
         </thead>
 
         <tbody>
             <tr>
-                <td> <input name="row[0][from]" type="time" value="08:30:00" id="From"> - <input name="row[0][to]" type="time" value="17:30:00" id="To"></td>
                 <td>
-                    {!! Form::number('row[0][hrs]',null,["class"=>"form-control","id"=>"Hrs"]) !!}
+                    <input name="row[0][from]" type="time" value="08:30:00" id="From"> - <input name="row[0][to]" type="time" value="17:30:00" id="To">
+
                 </td>
 
                 <td class="toggle-hide">

@@ -1,10 +1,12 @@
 @if(session('created') && session('message'))
     <script>
         $( document ).ready(function() {
-            swal({
-                title: "{!! session('message') !!}",
-                icon: "{!! session('created') !!}",
-                button: "Done!",
+            Swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: '{!! session('message') !!}',
+                showConfirmButton: false,
+                timer: 1500
             });
         });
     </script>

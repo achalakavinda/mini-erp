@@ -11,4 +11,10 @@ class ReportController extends Controller
     public function index(){
         return view('admin.reports.index');
     }
+
+    //worksheet report
+    public function ViewWorkSheetReport(){
+        return view('admin.reports.worksheet_report');
+    }
+
 }

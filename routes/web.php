@@ -77,6 +77,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('reports')->group(function () {
 
         Route::get('/','Reports\ReportController@index');
+        Route::get('/view-work-sheet-report','Reports\ReportController@ViewWorkSheetReport');
 
     });
 

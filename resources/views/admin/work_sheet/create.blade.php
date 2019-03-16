@@ -31,23 +31,26 @@
 @section('main-content')
     <div class="row">
         <div class="col-md-12">
-            <!-- general form elements -->
+        <!-- form start -->
+        {!! Form::open(['action'=>'WorkSheetController@store','class'=>'form-horizontal','id'=>'Form', 'onsubmit'=>'return validateMyForm();']) !!}
+        <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Hi  {{ ucwords(Auth::user()->name)}} !</h3>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <br/>
+                            <label>Hi  {{ ucwords(Auth::user()->name)}} !</label>
+                            {!! Form::date('date',\Carbon\Carbon::now(),['class'=>'form-control','id'=>'date']) !!}
+                        </div>
+                    </div>
                     <br/>
-                    <br/>
-                    <h3 class="box-title">Work Sheet |  {{ new \Carbon\Carbon() }}</h3>
                 </div>
                 <!-- /.box-header -->
-                <!-- form start -->
-                {!! Form::open(['action'=>'WorkSheetController@store','class'=>'form-horizontal','id'=>'Form']) !!}
                 @include('error.error')
                 @include('admin.work_sheet._partials.createForm')
-                {!! Form::close() !!}
-
             </div>
             <!-- /.box -->
+            {!! Form::close() !!}
         </div>
     </div>
     <!-- /.row -->
@@ -82,6 +85,9 @@
             $('#Hrs').change(function () {
                 changeTimeByHour();
             });
+            $('#Hrs').keyup(function () {
+                changeTimeByHour();
+            });
 
             $('#date').change(function () {
                 ajax(projectSelector.val(),userSelector.val());
@@ -93,18 +99,39 @@
            $('.toggle-hide').toggle();
         }
 
-        function changeTimeByHour() {
-            var Hrs = parseFloat($('#Hrs').val());
+        function validateMyForm()
+        {
+            event.preventDefault();
 
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Submit it!'
+            }).then((result) => {
+                if (result.value) {
+                    document.getElementById("Form").submit();
+                }else {
+                    return false;
+                }
+            })
+        }
+
+        function changeTimeByHour() {
+
+            var Hrs = parseFloat($('#Hrs').val());
             var time = $('#From').val();
+
             time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
 
             if (time.length > 1) { // If time format correct
                 time = time.slice (1);  // Remove full string match value
                 time[0] = parseFloat(time[0]) + Math.trunc( Hrs ) ; //
-                if(Hrs<=8 && Hrs>0){
+                if(Hrs>0){
                     $('#To').val(time.join(''));
-                    console.log(time.join(''));
                 }
             }
         }
@@ -196,8 +223,8 @@
 
             console.log(item);
 
-            $('#worksheetTable').append('<tr class="removeRW"><td>'+tConvert(item.from)+' -- '+tConvert(item.to)+'<br/>Report Date : '+date+'</td><td> '+item.actual_work_hrs+' Hours </td><td  class="toggle-hide">'+company+'</td><td  class="toggle-hide">'+item.project_value+'</td><td class="toggle-hide">'+jobType+'</td><td  class="toggle-hide">'+remark+'</td><td>' +
-                '<a style="color: red" href="#" onclick="deleteRecord('+item.id+')">DEL</a> </td></tr>');
+            $('#worksheetTable').append('<tr class="removeRW"><td>'+tConvert(item.from)+' -- '+tConvert(item.to)+'<br/>Report Date : '+date+'<br/>'+item.project_value+'</td><td> '+item.actual_work_hrs+' Hours </td><td  class="toggle-hide">'+company+'</td><td class="toggle-hide">'+jobType+'</td><td  class="toggle-hide">'+remark+'</td><td>' +
+                '<a style="color: red" onclick="deleteRecord('+item.id+')">DEL</a> </td></tr>');
 
             maxToTime = item.to;
         }
