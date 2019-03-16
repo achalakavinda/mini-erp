@@ -91,7 +91,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('settings','SettingController@index');
         Route::prefix('settings')->group(function () {
             Route::get('/','SettingController@index');
-            Route::get('/access-control/permissions','PermissionsController@index');
+            Route::Resource('/access-control/permissions','PermissionsController');
             Route::Resource('/access-control/roles','RolesController');
             Route::Resource('/access-control/user-management','UserManagementController');
         });

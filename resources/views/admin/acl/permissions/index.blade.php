@@ -12,12 +12,8 @@
 
         $(function () {
             $('#table').DataTable({
-                'paging'      : true,
-                'lengthChange': false,
-                'searching'   : true,
-                'ordering'    : true,
-                'info'        : true,
-                'autoWidth'   : true
+                "dom": 'Blfrtip',
+                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],     // page length options
             })
         })
     </script>
@@ -56,7 +52,6 @@
                 <!-- /.box-header -->
 
                 <div class="box-body">
-                    <a href="{{ url('/settings/access-control/permissions/create') }}" class="btn btn-sm btn-danger"><i class="fa fa-plus-square"></i> New</a>
                     <a href="{{ url('/settings/access-control/roles/create') }}" class="btn btn-sm btn-danger"><i class="fa fa-plus-square"></i> Roles</a>
                     <a href="{{ url('/settings/access-control/user-management/create') }}" class="btn btn-sm btn-danger"><i class="fa fa-plus-square"></i> User Controls</a>
                 </div>
@@ -65,14 +60,11 @@
                     <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>
                         <tr>
-
                             <th>#ID</th>
                             <th>Name</th>
                         </tr>
                         </thead>
-
                         <tbody>
-
                         @foreach($permissions as $permission)
                             <tr data-entry-id="{{ $permission->id }}">
                                 <td>{{ $permission->id }}</td>
