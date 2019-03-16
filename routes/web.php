@@ -72,12 +72,18 @@ Route::group(['middleware' => ['auth']], function () {
 
         Route::get('/','SpreadSheet\SpreadSheetController@index');
 
+        Route::get('/view-staff-spread-sheet-import','SpreadSheet\SpreadSheetController@ViewStaffSpreadSheetImport');
+
     });
 
     Route::prefix('reports')->group(function () {
 
         Route::get('/','Reports\ReportController@index');
+
         Route::get('/view-work-sheet-report','Reports\ReportController@ViewWorkSheetReport');
+        Route::get('/view-employee-wise-work-sheet-report','Reports\ReportController@ViewEmployeeWiseWorkSheetReport');
+        Route::get('/view-customer-wise-work-sheet-report','Reports\ReportController@ViewCustomerWiseWorkSheetReport');
+        Route::get('/view-job-type-wise-work-sheet-report','Reports\ReportController@ViewJobTypeWiseWorkSheetReport');
 
     });
 

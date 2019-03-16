@@ -7,6 +7,7 @@
             <h3 class="box-title">Dashboard</h3>
         </div>
         @include('admin.header-widgets.dashboard-header')
+        @include('admin.reports.shortcuts.index')
     </div>
     <div class="box">
         <div style="padding: 10px" class="row">
@@ -31,6 +32,69 @@
                             <!-- /.info-box -->
                         </a>
                     </div><!--/.col -->
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <a href="{!! url('reports/view-employee-wise-work-sheet-report') !!}">
+                    <div class="info-box bg-aqua">
+                        <span class="info-box-icon"><i class="fa fa-cube"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Work Sheet</span>
+                            <span class="info-box-number"></span>
+
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 70%"></div>
+                            </div>
+                            <span class="progress-description">
+                                        Employee wise Work Sheet Reports
+                                    </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </a>
+            </div><!--/.col -->
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <a href="{!! url('reports/view-customer-wise-work-sheet-report') !!}">
+                    <div class="info-box bg-aqua">
+                        <span class="info-box-icon"><i class="fa fa-cube"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Work Sheet</span>
+                            <span class="info-box-number"></span>
+
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 70%"></div>
+                            </div>
+                            <span class="progress-description">
+                                        Customer wise Work Sheet Reports
+                                    </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </a>
+            </div><!--/.col -->
+
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <a href="{!! url('reports/view-job-type-wise-work-sheet-report') !!}">
+                    <div class="info-box bg-aqua">
+                        <span class="info-box-icon"><i class="fa fa-cube"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text">Work Sheet</span>
+                            <span class="info-box-number"></span>
+
+                            <div class="progress">
+                                <div class="progress-bar" style="width: 70%"></div>
+                            </div>
+                            <span class="progress-description">
+                                        Job Type wise Work Sheet Reports
+                                    </span>
+                        </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </a>
+            </div><!--/.col -->
 
 
         </div>

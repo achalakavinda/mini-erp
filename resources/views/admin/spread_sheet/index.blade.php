@@ -11,22 +11,19 @@
     <div class="box">
         <div style="padding: 10px" class="row">
 
-            <?php $testArr = [1,2,3,4,5,6,7,8,9,10] ?>
-
-            @foreach($testArr as $data)
                     <div class="col-md-3 col-sm-6 col-xs-12">
-                        <a href="#">
+                        <a href="{!! url('spread-sheet/view-staff-spread-sheet-import') !!}">
                             <div class="info-box bg-aqua">
                                 <span class="info-box-icon"><i class="fa fa-table"></i></span>
                                 <div class="info-box-content">
-                                    <span class="info-box-text">Import Excel {!! $data !!}</span>
+                                    <span class="info-box-text">Staff Sheet</span>
                                     <span class="info-box-number"></span>
 
                                     <div class="progress">
                                         <div class="progress-bar" style="width: 100%"></div>
                                     </div>
                                     <span class="progress-description">
-                                        Employee Contribution
+                                        Import Staff Registry
                                     </span>
                                 </div>
                                 <!-- /.info-box-content -->
@@ -34,7 +31,6 @@
                             <!-- /.info-box -->
                         </a>
                     </div><!--/.col -->
-            @endforeach
 
 
         </div>
