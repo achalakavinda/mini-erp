@@ -8,9 +8,9 @@
             <thead>
             <tr>
                 <th>Designation</th>
-                <th>Hour Rate</th>
+                <th class="hide">Hour Rate</th>
                 <th>Work Hours</th>
-                <th>Cost</th>
+                <th class="hide">Cost</th>
             </tr>
             </thead>
             <tbody>
@@ -18,9 +18,9 @@
                 @foreach($ProjectDesignation as $item)
                     <tr>
                         <td><?php $Designation = \App\Models\Designation::find($item->project_designation_id);if($Designation)echo $Designation->designationType;?></td>
-                        <td style="text-align: right">{!! number_format($item->hr_rates,2) !!}</td>
+                        <td class="hide" style="text-align: right">{!! number_format($item->hr_rates,2) !!}</td>
                         <td style="text-align: right">{!! number_format($item->hr,2) !!}</td>
-                        <td style="text-align: right">{!! number_format($item->total,2) !!}</td>
+                        <td class="hide" style="text-align: right">{!! number_format($item->total,2) !!}</td>
                     </tr>
                     <?php $DesiginationHrs = $DesiginationHrs+$item->hr; $DesignationCost = $DesignationCost+$item->total;?>
                 @endforeach
@@ -37,7 +37,7 @@
                     </th>
                 @else
                     <tr>
-                        <th colspan="2">Total : </th>
+                        <th>Total : </th>
                         <th style="text-align: right">{!! number_format($DesiginationHrs,2)  !!}</th>
                         <th style="text-align: right">{!! number_format($DesignationCost,2)  !!}</th>
                     </tr>
@@ -277,7 +277,14 @@
                 $('#QuotedPrice').val(bugetTol+(bugetTol*(margin/100)));
             });
 
-            EmployeeTable = $('#tableEmployee').DataTable();
+            EmployeeTable = $('#tableEmployee').DataTable({
+                "columnDefs": [
+                {
+                    "targets": [ 2 ],
+                    "visible": false,
+                    "searchable": false
+                }]
+        });
 
             $('#tableEmployee tbody').on( 'click', 'tr', function () {
                 var d = EmployeeTable.row( this ).data();
@@ -376,13 +383,13 @@
                                 '                            <input style="display:none" type="number" value="'+SelectDesignationTypeId+'" name="designation_row['+designation_count+'][designation_id]" class="form-control">\n' +
                                 '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control">\n' +
                                 '                        </td>\n' +
-                                '                        <td>\n' +
+                                '                        <td class="hide">\n' +
                                 '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" id="hrRate'+designation_count+'" value="'+data.designation.avg_hr_rate+'" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input  type="text" name="designation_row['+designation_count+'][hrs]" id="hrs'+designation_count+'"  value="" class="form-control">\n' +
                                 '                        </td>\n' +
-                                '                        <td>\n' +
+                                '                        <td class="hide">\n' +
                                 '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
@@ -396,28 +403,7 @@
                             calculateCostDesignationTypes(designation_count);
 
                         }else {
-                            designationTable.append('<tr class="tr_designation_'+designation_count+'">\n' +
-                                '                        <td>\n' +
-                                '                            <input style="display:none" type="number" value="'+SelectDesignationTypeId+'" name="designation_row['+designation_count+'][designation_id]" class="form-control">\n' +
-                                '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control">\n' +
-                                '                        </td>\n' +
-                                '                        <td>\n' +
-                                '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" id="hrRate'+designation_count+'" value="" class="form-control">\n' +
-                                '                        </td>\n' +
-                                '                        <td>\n' +
-                                '                            <input  type="text" name="designation_row['+designation_count+'][hrs]" id="hrs'+designation_count+'"   value="" class="form-control">\n' +
-                                '                        </td>\n' +
-                                '                        <td>\n' +
-                                '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
-                                '                        </td>\n' +
-                                '                        <td>\n' +
-                                '                            <a style="cursor: pointer" type="button" onclick="openEmployeeTable('+SelectDesignationTypeId+','+designation_count+')"><i class="fa fa-2x fa-remove"></i></a>\n' +
-                                '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_designation_'+designation_count+'\')"><i class="fa fa-2x fa-remove"></i></a>\n' +
-                                '                        </td>\n' +
-                                '                    <tr/>');
-
-                            designation_count++;
-                            designation_RawCount++;
+                            alert('Designation Values Cannot Fetch...');
                             calculateCostDesignationTypes(designation_count);
                         }
                     },
@@ -429,28 +415,7 @@
                 });
 
             }catch (e) {
-
-                designationTable.append('<tr class="tr_designation_'+designation_count+'">\n' +
-                    '                        <td>\n' +
-                    '                            <input style="display:none" type="number" value="'+SelectDesignationTypeId+'" name="designation_row['+designation_count+'][designation_id]" class="form-control">\n' +
-                    '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control">\n' +
-                    '                        </td>\n' +
-                    '                        <td>\n' +
-                    '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" id="hrRate'+designation_count+'" value="" class="form-control">\n' +
-                    '                        </td>\n' +
-                    '                        <td>\n' +
-                    '                            <input  type="text" name="designation_row['+designation_count+'][hrs]" id="hrs'+designation_count+'"  value="" class="form-control">\n' +
-                    '                        </td>\n' +
-                    '                        <td>\n' +
-                    '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
-                    '                        </td>\n' +
-                    '                        <td>\n' +
-                    '                            <a style="cursor: pointer" type="button" onclick="openEmployeeTable('+SelectDesignationTypeId+','+designation_count+')"><i class="fa fa-2x fa-remove"></i></a>\n' +
-                    '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_designation_'+designation_count+'\')"><i class="fa fa-remove"></i></a>\n' +
-                    '                        </td>\n' +
-                    '                    <tr/>');
-                designation_count++;
-                designation_RawCount++;
+                alert('Designation Values Cannot Fetch...');
                 calculateCostDesignationTypes(designation_count);
             }
         }

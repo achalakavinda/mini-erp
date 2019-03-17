@@ -58,16 +58,12 @@ class WorkSheetController extends Controller
         ]);
 
         $ROWS = $request->row;
-
         //check for the working states
         //also helpful to calculate employee leave hours
         $WorkCode = WorkCodes::findOrFail($request->work_code_id);
         $Worked = $WorkCode->worked;
         //date time convert to sql format
         $DATE_VAR = date_format(date_create($request->date),"Y-m-d");
-
-
-
 
         //loop the row array and insert row into worksheet table
         foreach ($ROWS as $row)
@@ -159,19 +155,14 @@ class WorkSheetController extends Controller
             //check the work state
             if($Worked)
             {
-                if ((isset($row['company'])))
-                {
-                    $INSERT_COMPANYID = $row['company'];
-                }else{
-                    return redirect()->back()->withErrors('Please select a project');
+                //fetch Project
+                $Project = Project::findOrFail($request->project_id);
+
+                if($Project){
+                    $INSERT_COMPANYID = $Project->customer_id;
+                    $INSERT_JOBTYPEID = $Project->job_type_id;
                 }
 
-                if ((isset($row['job_type_id'])))
-                {
-                    $INSERT_JOBTYPEID = $row['job_type_id'];
-                }else{
-                    return redirect()->back()->withErrors('Please select a project');
-                }
                 if ((isset($row['remark'])))
                 {
                     $INSERT_Remarks = $row['remark'];
@@ -208,6 +199,7 @@ class WorkSheetController extends Controller
                     }
                 }
             }else{
+
                 if ((isset($row['remark'])))
                 {
                     $INSERT_Remarks = $row['remark'];

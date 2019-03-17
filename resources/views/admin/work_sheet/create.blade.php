@@ -167,8 +167,6 @@
 
             if(data.status.length>0 && data.status =='ok'){
 
-                var jobTypes = data.job_types;
-
                 $( "#customerid" ).find('option').remove().end();
 
                 $( "#customerid" ).append($('<option>', {
@@ -176,15 +174,14 @@
                     text : data.customer.name
                 }));
 
+                if(data.project != null){
+                    $( "#jobtypeid" ).find('option').remove().end();
 
-                $( "#jobtypeid" ).find('option').remove().end();
-
-                jobTypes.forEach(function (item) {
                     $( "#jobtypeid" ).append($('<option>', {
-                        value: item.id,
-                        text : item.jobType
+                        value: data.project.job_type_id,
+                        text : data.project.job_type_name,
                     }));
-                })
+                }
 
                 $('.removeRW').remove();
                 var runValue = false;
@@ -223,8 +220,15 @@
 
             console.log(item);
 
-            $('#worksheetTable').append('<tr class="removeRW"><td>'+tConvert(item.from)+' -- '+tConvert(item.to)+'<br/>Report Date : '+date+'<br/>'+item.project_value+'</td><td> '+item.actual_work_hrs+' Hours </td><td  class="toggle-hide">'+company+'</td><td class="toggle-hide">'+jobType+'</td><td  class="toggle-hide">'+remark+'</td><td>' +
-                '<a style="color: red" onclick="deleteRecord('+item.id+')">DEL</a> </td></tr>');
+            $('#worksheetTable')
+                .append(
+                    '<tr class="removeRW">' +
+                        '<td>'+tConvert(item.from)+' -- '+tConvert(item.to)+'<br/>Report Date : '+date+'<br/>'+item.project_value+'</td>' +
+                        '<td> '+item.actual_work_hrs+' Hours </td>' +
+                        '<td  class="toggle-hide">'+company+' | '+jobType+'</td>' +
+                        '<td  class="toggle-hide">'+remark+'</td>' +
+                        '<td> <a  style="color: red" onclick="deleteRecord('+item.id+')">DEL</a> </td>' +
+                    '</tr>');
 
             maxToTime = item.to;
         }

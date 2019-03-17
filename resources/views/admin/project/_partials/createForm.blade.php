@@ -30,7 +30,7 @@
     <div class="col-md-6">
         <div class="form-group">
             {!! Form::label('job_types','Jobs',['class' => 'control-label']) !!}
-            {!! Form::select('job_types',$JobTypes,null,['class'=>'form-control','id'=>'job_types','name'=>'job_types[]']) !!}
+            {!! Form::select('job_type',$JobTypes,null,['class'=>'form-control','id'=>'job_types']) !!}
         </div>
     </div>
     <div class="col-md-6">

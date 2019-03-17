@@ -24,9 +24,13 @@ class CreateProjectsTable extends Migration
             $table->increments('id');
             $table->integer('customer_id')->unsigned();
             $table->string('customer_name');
-            $table->unsignedInteger('sector_id')->nullable();
-            $table->string('sector')->nullable();
             $table->string('code')->unique();
+
+            $table->unsignedInteger('sector_id')->nullable();
+            $table->string('sector_name')->nullable();
+            $table->unsignedInteger('job_type_id')->nullable();
+            $table->string('job_type_name')->nullable();
+
 
             $table->double('quoted_price')->default(0);// quoted price
             $table->double('budget_number_of_hrs')->default(0);// number of hrs

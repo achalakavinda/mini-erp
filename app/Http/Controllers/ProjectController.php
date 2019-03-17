@@ -57,7 +57,7 @@ class ProjectController extends Controller
         $request->validate([
             'code' => 'required | unique:projects',
             'customer_id' => 'required',
-            'job_types' => 'required',
+            'job_type' => 'required',
             'budget_number_of_hrs' => 'required',
             'budget_cost' => 'required',
             'profit_ratio' => 'required',
@@ -67,10 +67,11 @@ class ProjectController extends Controller
 
         //fetch customer information
         $CUSTOMER = Customer::findOrFail($request->customer_id);
+        $JobType = JobType::findOrFail($request->job_type);
         $CustomerSector = CustomerSector::findOrFail($request->sector_id);
 
         //Project Code
-        $code = $CUSTOMER->name."-".$request->code."-".$CustomerSector->name;
+        $code = $CUSTOMER->name."-".$request->code."-".$JobType->jobType;
         //Check code for unique project code validations
         $CheckCode = Project::where('code',$code)->first();
 
@@ -91,6 +92,9 @@ class ProjectController extends Controller
             'customer_name'=>$CUSTOMER->name,
             'code'=>$code,
             'sector_id'=>$request->sector_id,
+            'sector_name'=>$CustomerSector->name,
+            'job_type_id'=>$JobType->id,
+            'job_type_name'=>$JobType->jobType,
             'quoted_price'=>$quoted_price,
             'budget_revenue'=>$quoted_price,
             'budget_number_of_hrs'=>$request->budget_number_of_hrs,
@@ -101,14 +105,14 @@ class ProjectController extends Controller
             'updated_by_id'=>\Auth::id(),
         ]);
 
-        //assign jobs to projects
-        foreach ($request->job_types as $item)
-        {
-            ProjectJobType::create([
-                'project_id'=>$Project->id,
-                'jop_type_id'=>$item
-            ]);
-        }
+//         assign jobs to projects
+//        foreach ($request->job_types as $item)
+//        {
+//            ProjectJobType::create([
+//                'project_id'=>$Project->id,
+//                'jop_type_id'=>$item
+//            ]);
+//        }
 
         return \redirect('project/'.$Project->id);
     }
