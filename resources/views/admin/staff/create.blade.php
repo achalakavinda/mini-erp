@@ -29,8 +29,6 @@
                     <h3 class="box-title">Add New Employee</h3>
                 </div>
                 <!-- /.box-header -->
-                <!-- form start -->
-
                 {!! Form::open(['action'=>'StaffController@store','class'=>'form-horizontal','id'=>'Form']) !!}
                     @include('error.error')
                     @include('admin.staff._partials.createForm')

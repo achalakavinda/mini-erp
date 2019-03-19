@@ -274,16 +274,19 @@ class Important extends Seeder
         DB::table('job_types')->insert([
             [
                 'JobType'=>"External Audit",
+                'key'=>'EA',
                 "created_at"=> \Carbon\Carbon::now(),
                 "updated_at"=> \Carbon\Carbon::now()
             ],
             [
                 'JobType'=>"Internal Audit",
+                'key'=>'IA',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
             [
                 'JobType'=>"Feasibility",
+                'key'=>'FEA',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ]
@@ -469,6 +472,8 @@ class Important extends Seeder
             ],
 
         ]);
+
+
 
     }
 }
