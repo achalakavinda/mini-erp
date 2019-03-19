@@ -16,6 +16,8 @@ use Illuminate\Http\Request;
 //to get project details without customer array
 Route::get('project/{id}/job-types','ApiController@GetProjectJobTypeById');
 
+Route::get('work-code/{id}','ApiController@GetWorkCodeById');
+
 ///to get project all details
 Route::get('project/{id}/user/{user_id}/date/{date}','ApiController@GetProjectDetailsByID');
 

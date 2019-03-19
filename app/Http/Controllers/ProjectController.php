@@ -13,6 +13,7 @@ use App\Models\ProjectJobType;
 use App\Models\ProjectOverhead;
 use App\Models\ProjectOverheadsActual;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -55,7 +56,6 @@ class ProjectController extends Controller
     {
         User::CheckPermission([config('constant.Permission_Project_Creation')]);
         $request->validate([
-            'code' => 'required | unique:projects',
             'customer_id' => 'required',
             'job_type' => 'required',
             'budget_number_of_hrs' => 'required',
@@ -69,9 +69,10 @@ class ProjectController extends Controller
         $CUSTOMER = Customer::findOrFail($request->customer_id);
         $JobType = JobType::findOrFail($request->job_type);
         $CustomerSector = CustomerSector::findOrFail($request->sector_id);
+        $TimeCode = Carbon::now()->format('yM-d');
 
         //Project Code
-        $code = $CUSTOMER->name."-".$request->code."-".$JobType->jobType;
+        $code = $CUSTOMER->name."-".$JobType->key.$TimeCode;
         //Check code for unique project code validations
         $CheckCode = Project::where('code',$code)->first();
 

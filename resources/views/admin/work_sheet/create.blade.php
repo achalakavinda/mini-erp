@@ -73,6 +73,7 @@
         $(function() {
 
             ajax(projectSelector.val(),userSelector.val());
+            ajaxWorkCode(workCodeSelector.val());
 
             projectSelector.click(function() {
                 ajax(projectSelector.val(),userSelector.val());
@@ -91,6 +92,10 @@
 
             $('#date').change(function () {
                 ajax(projectSelector.val(),userSelector.val());
+            });
+
+            workCodeSelector.change(function() {
+                ajaxWorkCode(workCodeSelector.val());
             });
 
         });
@@ -129,7 +134,8 @@
 
             if (time.length > 1) { // If time format correct
                 time = time.slice (1);  // Remove full string match value
-                time[0] = parseFloat(time[0]) + Math.trunc( Hrs ) ; //
+                time[0] = (parseFloat(time[0]) + Math.trunc( Hrs )).toString() ; //
+                console.log(time);
                 if(Hrs>0){
                     $('#To').val(time.join(''));
                 }
@@ -137,17 +143,14 @@
         }
         
         function ajax(id,user_id) {
+            console.log('work record fetching....')
             if(id === 'undefine' || id === null || id ===''){
                 $( "#jobtypeid" ).find('option').remove().end();
                 $( "#customerid" ).find('option').remove().end();
                 id = 0;
             }
-
             $('.toggle-hide').hide();
-
-
             var url = '{!! url('api/project') !!}/'+id+'/user/'+user_id+'/date/'+$( "#date" ).val();
-            console.log(url);
             $( "#jobtypeid" ).find('option').remove().end();
             $( "#jobtypeid" ).show();
             $( "#customerid" ).find('option').remove().end();
@@ -231,6 +234,37 @@
                     '</tr>');
 
             maxToTime = item.to;
+        }
+
+
+
+        function ajaxWorkCode(id) {
+            if(id === 'undefine' || id === null || id ===''){
+
+            }else {
+                var url = '{!! url('api/work-code') !!}/'+id;
+                $.ajax({
+                    url: url,
+                    success: WorkCodeManupulator,
+                    statusCode: {
+                        404: function() {
+                            alert( "Error Request" );
+                        }
+                    }
+                });
+            }
+        }
+
+        function WorkCodeManupulator(data) {
+            console.log(data);
+            if(data.status === 'true' && data.work_code !=null ){
+                if(data.work_code.read_hrs_first){
+                    $('#Hrs').val(data.work_code.hrs);
+                    changeTimeByHour();
+                }else {
+                    console.log('u are here')
+                }
+            }
         }
 
         function tConvert (time)

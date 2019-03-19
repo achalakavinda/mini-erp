@@ -5,7 +5,7 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Projects</h3>
+            <h3 class="box-title">Project</h3>
         </div>
         <div class="box-body">
             <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
@@ -25,7 +25,7 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Add New Projects</h3>
+                    <h3 class="box-title">Project Creation</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
