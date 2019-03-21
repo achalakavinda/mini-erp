@@ -57,6 +57,20 @@ class WorkSheetController extends Controller
             'row' => 'required'
         ]);
 
+        $SubmitDate = Carbon::parse($request->date);
+        $NextDay = Carbon::now();
+        $MinPreviouDay = Carbon::now()->addDay(-3);
+
+        if($SubmitDate->greaterThan($NextDay))
+        {
+            return redirect()->back()->withErrors(['Submitted date cannot be a future date','Submitted date : '.$SubmitDate." | Server Date : ".$NextDay]);
+        }
+
+        if ($SubmitDate->lessThanOrEqualTo($MinPreviouDay))
+        {
+            return redirect()->back()->withErrors(['Submitted date cannot be more than 2 days back!','Submitted date : '.$SubmitDate." | Server Date : ".$NextDay,"If You are forget to report, Please Contact you're Manger."]);
+        }
+
         $ROWS = $request->row;
         //check for the working states
         //also helpful to calculate employee leave hours

@@ -96,6 +96,35 @@
             </div>
 
             <div class="box box-primary">
+                <div class="box-body">
+                    <div class="col-md-12" style="overflow: auto">
+                            <table id="table" class="table table-responsive table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Budget Cost</th>
+                                    <th>Actual Cost</th>
+                                    <th>Profit Ratio</th>
+                                    <th>Quoted Price</th>
+                                    <th>Invoice Amount</th>
+                                    <th>Receipt Amount</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{!! number_format($Project->budget_cost_by_work+$Project->budget_cost_by_work+$Project->budget_cost_by_overhead,2) !!}</td>
+                                    <td>{!! number_format($Project->actual_cost_by_work+$Project->actual_cost_by_work+$Project->actual_cost_by_overhead,2) !!}</td>
+                                    <td>{!! number_format($Project->profit_ratio,2) !!}</td>
+                                    <td>{!! number_format($Project->quoted_price,2) !!}</td>
+                                    <td>{!! number_format($Project->invoicing_amount,2) !!}</td>
+                                    <td>{!! number_format($Project->receipt_amount,2) !!}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+            </div>
+
+            <div class="box box-primary">
                 {{--summery table--}}
                 @include('admin.project.table.project_cost_summary_table')
                 {{--/summery table--}}

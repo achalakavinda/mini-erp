@@ -27,11 +27,9 @@
 <!-- /main header section -->
 
 <!-- main section -->
-<!-- main section -->
 @section('main-content')
     <div class="row">
         <div class="col-md-12">
-        <!-- form start -->
         {!! Form::open(['action'=>'WorkSheetController@store','class'=>'form-horizontal','id'=>'Form', 'onsubmit'=>'return validateMyForm();']) !!}
         <!-- general form elements -->
             <div class="box box-primary">
@@ -59,9 +57,7 @@
 <!-- /main section -->
 
 @section('js')
-
     <script type="text/javascript">
-
         'use strict'
 
         var projectSelector = $( "#project" );
@@ -97,17 +93,16 @@
             workCodeSelector.change(function() {
                 ajaxWorkCode(workCodeSelector.val());
             });
-
         });
 
-        function fieldHiddenToggle() {
+        function fieldHiddenToggle()
+        {
            $('.toggle-hide').toggle();
         }
 
         function validateMyForm()
         {
             event.preventDefault();
-
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -125,13 +120,11 @@
             })
         }
 
-        function changeTimeByHour() {
-
+        function changeTimeByHour()
+        {
             var Hrs = parseFloat($('#Hrs').val());
             var time = $('#From').val();
-
             time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
             if (time.length > 1) { // If time format correct
                 time = time.slice (1);  // Remove full string match value
                 time[0] = (parseFloat(time[0]) + Math.trunc( Hrs )).toString() ; //
@@ -142,7 +135,8 @@
             }
         }
         
-        function ajax(id,user_id) {
+        function ajax(id,user_id)
+        {
             console.log('work record fetching....')
             if(id === 'undefine' || id === null || id ===''){
                 $( "#jobtypeid" ).find('option').remove().end();
@@ -166,10 +160,9 @@
             });
         }
 
-        function filler(data) {
-
+        function filler(data)
+        {
             if(data.status.length>0 && data.status =='ok'){
-
                 $( "#customerid" ).find('option').remove().end();
 
                 $( "#customerid" ).append($('<option>', {
@@ -202,50 +195,52 @@
             }
         }
 
-        function tableRowAdd(item){
+        function tableRowAdd(item)
+        {
             var company = '';
             var jobType = '';
             var remark = '';
             var date = '';
 
-            if(item.company!=null){
+            if(item.company!=null)
+            {
                 company = item.company;
             }
-            if(item.job_type_name!=null){
+            if(item.job_type_name!=null)
+            {
                 jobType = item.job_type_name
             }
-            if(item.remark!=null){
+            if(item.remark!=null)
+            {
                 remark = item.remark
             }
-            if(item.date!=null){
+            if(item.date!=null)
+            {
                 date = item.date;
             }
-
-            console.log(item);
 
             $('#worksheetTable')
                 .append(
                     '<tr class="removeRW">' +
-                        '<td>'+tConvert(item.from)+' -- '+tConvert(item.to)+'<br/>Report Date : '+date+'<br/>'+item.project_value+'</td>' +
-                        '<td> '+item.actual_work_hrs+' Hours </td>' +
-                        '<td  class="toggle-hide">'+company+' | '+jobType+'</td>' +
+                        '<td>'+tConvert(item.from)+' -- '+tConvert(item.to)+'<br/>Report Date : '+date+'<br/>'+item.project_value+'<br/>'+company+' | '+jobType+'</td>' +
+                        '<td class="toggle-hide"> '+item.actual_work_hrs+' Work Hours </td>' +
                         '<td  class="toggle-hide">'+remark+'</td>' +
-                        '<td> <a  style="color: red" onclick="deleteRecord('+item.id+')">DEL</a> </td>' +
+                        '<td> <a style="color: red" onclick="deleteRecord('+item.id+')">DEL</a> </td>' +
                     '</tr>');
-
             maxToTime = item.to;
         }
 
 
 
-        function ajaxWorkCode(id) {
+        function ajaxWorkCode(id)
+        {
             if(id === 'undefine' || id === null || id ===''){
-
+                alert("Invalid Work Code Request, Please Time Duration Manually!");
             }else {
                 var url = '{!! url('api/work-code') !!}/'+id;
                 $.ajax({
                     url: url,
-                    success: WorkCodeManupulator,
+                    success: WorkCodeManipulator,
                     statusCode: {
                         404: function() {
                             alert( "Error Request" );
@@ -255,23 +250,51 @@
             }
         }
 
-        function WorkCodeManupulator(data) {
-            console.log(data);
-            if(data.status === 'true' && data.work_code !=null ){
+        function WorkCodeManipulator(data)
+        {
+            if(data.status && data.work_code !=null ){
                 if(data.work_code.read_hrs_first){
-                    $('#Hrs').val(data.work_code.hrs);
-                    changeTimeByHour();
+                    $('#Hrs').val(parseFloat(data.work_code.hrs));
+                    setWork(data.work_code,"HR_TYPE");
                 }else {
-                    console.log('u are here')
+                    $('#Hrs').val(parseFloat(data.work_code.hrs));
+                    setWork(data.work_code,"RANGE_TYPE");
+
                 }
             }
+        }
+
+        function setWork(data,action)
+        {
+           console.log("set work type : "+action);
+           if(data.worked){
+
+               $('.ProjectSelectView').fadeIn();
+               $('.CustomerView').fadeIn();
+
+           }else{
+               $('.ProjectSelectView').fadeOut();
+               $('.CustomerView').fadeOut();
+           }
+           switch (action) {
+               case "HR_TYPE":
+                    console.log("todo...");
+                   $('#From').val(data.from);
+                   break;
+               case "RANGE_TYPE":
+                   console.log(data);
+                $('#From').val(data.from);
+                $('#To').val(data.to);
+                   break;
+           }
+
+            changeTimeByHour();
         }
 
         function tConvert (time)
         {
             // Check correct time format and split into components
             time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
-
             if (time.length > 1) { // If time format correct
                 time = time.slice (1);  // Remove full string match value
                 time[5] = +time[0] < 12 ? ' AM' : ' PM'; // Set AM/PM
@@ -280,7 +303,8 @@
             return time.join (''); // return adjusted time or original string
         }
         
-        function deleteRecord(x) {
+        function deleteRecord(x)
+        {
             var Token = "{{ csrf_token() }}";
             $.ajax({
                 url: "{{ url('work-sheet/delete') }}",
@@ -296,5 +320,4 @@
         }
         
     </script>
-
 @endsection

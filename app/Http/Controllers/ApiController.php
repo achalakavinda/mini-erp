@@ -43,13 +43,13 @@ class ApiController extends Controller
     public function GetWorkCodeById ($id){
         try {
             $Arr = [
-                'status'=>"true",
+                'status'=>true,
                 'message'=>"SuccessFull",
                 'work_code'=>WorkCodes::find($id),
             ];
         } catch (\Exception $e){
             $Arr = [
-                'status'=>"false",
+                'status'=>false,
                 'message'=>$e->getMessage(),
                 'work_code'=>[],
             ];

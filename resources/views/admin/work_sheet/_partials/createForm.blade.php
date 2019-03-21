@@ -1,6 +1,6 @@
 <?php
     $Users = \App\Models\User::all()->pluck('name','id');
-    if(isset($PageController))
+    if(isset($PageController))//if this come from page controller this set to default value
     {
         $Users = \App\Models\User::where('id',\Illuminate\Support\Facades\Auth::id())->pluck('name','id');
     }
@@ -13,7 +13,7 @@
     <div class="col-md-3">
         <div class="form-group">
             <label>Employee</label>
-            {!! Form::select('user_id',$Users,null,['class'=>'form-control','id'=>'userid']) !!}
+            {!! Form::select('user_id',$Users,Auth::id(),['class'=>'form-control','id'=>'userid']) !!}
         </div>
     </div>
     <div class="col-md-3">
@@ -22,7 +22,7 @@
             {!! Form::select('work_code_id',$WorkCodes,null,['class'=>'form-control','id'=>'workcodeid']) !!}
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4 ProjectSelectView">
         <div class="form-group">
             <label>Project</label>
             {!! Form::select('project_id',$Project,null,['class'=>'form-control','id'=>'project','placeholder'=>'Please Select a project']) !!}
@@ -59,8 +59,8 @@
                 </td>
                 <td class="toggle-hide">
                     <?php $Company =  \App\Models\Customer::all()->pluck('name','id') ?>
-                    {!! Form::select('row[0][company]',$Company,null,['class'=>'form-control','id'=>'customerid']) !!}
-                    {!! Form::select('row[0][job_type_id]',$JobTypes,null,['class'=>'form-control','id'=>'jobtypeid']) !!}
+                    {!! Form::select('row[0][company]',$Company,null,['class'=>'form-control CustomerView','id'=>'customerid']) !!}
+                    {!! Form::select('row[0][job_type_id]',$JobTypes,null,['class'=>'form-control CustomerView','id'=>'jobtypeid']) !!}
                 </td>
                 <td class="toggle-hide">
                     {!! Form::text('row[0][remark]',null,["class"=>"form-control","id"=>"remark" ,"placeholder"=>"remark"]) !!}
