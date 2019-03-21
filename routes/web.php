@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('customer', 'CustomerController');
 
+    Route::patch('staff/reset-password/{id}', 'StaffController@resetPassword');
     Route::resource('staff', 'StaffController');
 
     Route::resource('job-type', 'JobTypeController');
