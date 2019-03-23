@@ -19,7 +19,6 @@
             <a href="{{ url('/project') }}" class="btn btn-success">Go Back</a>
             <a href="{!! url('/project') !!}/{!! $Project->id !!}/budget-cost" class="btn btn-danger">Budget <i class="fa fa-plus-square"></i></a>
             <a href="{{ url('/project') }}/{!! $Project->id !!}/actual-cost" class="btn btn-danger">Actual Cost <i class="fa fa-money"></i></a>
-
         </div>
         <!-- /.box-body -->
     </div>
@@ -68,8 +67,8 @@
                             ?>
                             <tbody>
                             <tr>
-                                <th>{!! $Project->code !!}</th>
-                                <td>{!! $Project->customer_name  !!}</td>
+                                <th><a href="{!! url('project') !!}/{!! $Project->id !!}">{!! $Project->code !!}</a></th>
+                                <td><a href="{!! url('customer') !!}/{!! $Project->customer_id  !!}">{!! $Project->customer_name  !!}</a> </td>
                                 <td>{!! $Sector !!}</td>
                                 <td><b>{!! $Status !!}</b></td>
                                 <td> @if($User){!! ucwords($User->name)  !!}@endif</td>

@@ -8,10 +8,8 @@ $WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,su
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Hour Rate</th>
                     <th>Work Hours</th>
                     <th>Extra Work Hours</th>
-                    <th>Cost</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,10 +25,8 @@ $WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,su
                 }
                 echo '<tr>
                         <td>'.$USERNAME->name.'</td>
-                        <td>'.$USERNAME->hr_rates.'</td>
                         <td>'.$worksheet->hrs.'</td>
                         <td>'.$worksheet->actual_hrs.'</td>
-                        <td>'.$worksheet->cost.'</td>
                      </tr>';
 
                 $TOLCOST = $TOLCOST+$worksheet->cost;
@@ -40,7 +36,7 @@ $WORKSHEETS =  DB::table('work_sheets')->select(DB::raw('sum(hr_cost) as cost,su
             ?>
             </tbody>
             <tfoot>
-            <?php echo '<tr><th>Total</th><th>'.$TOLHR.'</th><th>'.$TOLWH.'</th><th>'.$TOLCOST.'</th></tr>';?>
+            <?php echo '<tr><th>Total</th><th>'.$TOLHR.'</th><th>'.$TOLWH.'</th></tr>';?>
             </tfoot>
 </table>
 <!-- /.box-body -->

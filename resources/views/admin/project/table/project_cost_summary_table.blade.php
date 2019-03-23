@@ -58,7 +58,7 @@
             </tr>
 
             <tr>
-                <th>Recovery Ratio</th>
+                <th>Profit Margin</th>
                 <?php
                     $rrBudget = 0;
                     $rrActual = 0;
