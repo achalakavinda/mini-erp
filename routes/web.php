@@ -65,6 +65,7 @@ Route::group(['middleware' => ['auth']], function () {
      Route::prefix('project')->group(function () {
             Route::get('/{id}/actual-cost','ProjectController@actualCost');
             Route::get('/{id}/budget-cost','ProjectController@budgetCost');
+            Route::get('/{id}/staff','ProjectController@staffAllocation');
             Route::get('/{id}/estimation/edit/staff-allocation-estimation','ProjectController@editStaffAllocationEstimation');
             Route::get('/{id}/estimation/edit/cost-type','ProjectController@editCostType');
             Route::get('/{id}/settings','ProjectController@settings');
@@ -78,6 +79,8 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/store-new-budget-cost-type','ProjectController@StoreNewBudgetCostType');
             Route::post('/edit-actual-cost-type','ProjectController@editActualCostType');
             Route::post('/store-new-actual-cost-type','ProjectController@StoreNewActualCostType');
+
+            Route::patch('/{id}/staff/update','ProjectController@staffAllocationUpdate');
      });
 
     Route::prefix('spread-sheet')->group(function () {

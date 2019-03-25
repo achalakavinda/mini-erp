@@ -37,6 +37,26 @@ class ProjectController extends Controller
         return view('admin.project.index',compact('Rows'));
     }
 
+    public function staffAllocation($id){
+        $Project = Project::findOrFail($id);
+        return view('admin.project.staff_allocation',compact('Project'));
+    }
+
+    public function staffAllocationUpdate(Request $request,$id){
+        $request->validate([
+            'items' => 'required',
+            ]);
+
+        $Project = Project::findOrFail($id);
+
+        foreach ($request->items as $item){
+            $ProjectStaff = ProjectEmployee::get()->where('project_id',$Project->id)->where('user_id',$item['user_id'])->first();
+            dd($ProjectStaff);
+        }
+
+        dd($request->all());
+    }
+
     /**
      * Show the form for creating a new resource.
      * @return \Illuminate\Http\Response
