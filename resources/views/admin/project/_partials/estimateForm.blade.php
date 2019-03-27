@@ -290,6 +290,7 @@
                 var d = EmployeeTable.row( this ).data();
                 if (typeof d != "undefined") {
                     updateHourRate(ClickRow,d[2]);
+                    $("#StaffName"+ClickRow).text(d[1]);
                 }
                 $('#staffRatesModel').modal('hide');
             } );
@@ -381,7 +382,7 @@
                             designationTable.append('<tr class="tr_designation_'+designation_count+'">\n' +
                                 '                        <td>\n' +
                                 '                            <input style="display:none" type="number" value="'+SelectDesignationTypeId+'" name="designation_row['+designation_count+'][designation_id]" class="form-control">\n' +
-                                '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control">\n' +
+                                '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control"> <span id="StaffName'+designation_count+'"></span>\n' +
                                 '                        </td>\n' +
                                 '                        <td class="hide">\n' +
                                 '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" id="hrRate'+designation_count+'" value="'+data.designation.avg_hr_rate+'" class="form-control">\n' +

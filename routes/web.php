@@ -19,14 +19,13 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
 
-//    Route::get('/dashboard', 'DashboardController@index');
     Route::get('/dashboard',function(){
 
         if(Auth::user()->can(config('constant.Permission_Work_Sheet'))){
             return redirect('/work-sheet/create');
         }else if (Auth::user()->can(config('constant.Permission_Minor_Staff_Work_Sheet'))){
             return redirect('/staff/work-sheet');
-        }else if (Auth::user()->can(config('constant.Permission_Profile'))){
+        }else{
             return redirect('/staff/profile/'.Auth::id());
         }
 
@@ -84,22 +83,16 @@ Route::group(['middleware' => ['auth']], function () {
      });
 
     Route::prefix('spread-sheet')->group(function () {
-
         Route::get('/','SpreadSheet\SpreadSheetController@index');
-
         Route::get('/view-staff-spread-sheet-import','SpreadSheet\SpreadSheetController@ViewStaffSpreadSheetImport');
-
     });
 
     Route::prefix('reports')->group(function () {
-
         Route::get('/','Reports\ReportController@index');
-
         Route::get('/view-work-sheet-report','Reports\ReportController@ViewWorkSheetReport');
         Route::get('/view-employee-wise-work-sheet-report','Reports\ReportController@ViewEmployeeWiseWorkSheetReport');
         Route::get('/view-customer-wise-work-sheet-report','Reports\ReportController@ViewCustomerWiseWorkSheetReport');
         Route::get('/view-job-type-wise-work-sheet-report','Reports\ReportController@ViewJobTypeWiseWorkSheetReport');
-
     });
 
     Route::group(['middleware' => ['permission:Settings']], function () {

@@ -29,7 +29,5 @@
 <!-- /.box-body -->
 
 <div class="box-footer">
-    @if($disabled!='disabled')
-        {!! Form::submit('Update',['class'=>'btn btn-danger']) !!}
-    @endif
+        {!! Form::submit('Change Password',['class'=>'btn btn-danger']) !!}
 </div>
