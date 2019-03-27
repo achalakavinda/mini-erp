@@ -51,10 +51,28 @@ class ProjectController extends Controller
 
         foreach ($request->items as $item){
             $ProjectStaff = ProjectEmployee::get()->where('project_id',$Project->id)->where('user_id',$item['user_id'])->first();
-            dd($ProjectStaff);
+            if(isset($item['assigned']))
+            {
+                if($ProjectStaff){
+                    $ProjectStaff->project_id = $Project->id;
+                    $ProjectStaff->user_id = $item['user_id'];
+                    $ProjectStaff->save();
+                }else{
+                    ProjectEmployee::create([
+                        'project_id'=>$Project->id,
+                        'user_id'=>$item['user_id']
+                    ]);
+                }
+
+            }else{
+                if($ProjectStaff){
+                    \DB::table('project_employees')->where('project_id',$Project->id)->where('user_id',$item['user_id'])->delete();
+                }
+
+            }
         }
 
-        dd($request->all());
+        return \redirect()->back();
     }
 
     /**

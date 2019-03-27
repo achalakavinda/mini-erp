@@ -1,12 +1,21 @@
 <?php
     $Users = \App\Models\User::all()->pluck('name','id');
+    $Project = \App\Models\Project::all()->where('status_id',2)->pluck('code','id');
+
     if(isset($PageController))//if this come from page controller this set to default value
     {
         $Users = \App\Models\User::where('id',\Illuminate\Support\Facades\Auth::id())->pluck('name','id');
+
+        $Project = DB::table('projects')
+            ->rightJoin('project_employees', 'projects.id', '=', 'project_employees.project_id')
+            ->where('user_id',Auth::id())
+            ->where('projects.status_id',2)
+            ->pluck('projects.code','projects.id');
     }
+
     $JobTypes = \App\Models\JobType::all()->pluck('jobType','id');
-    $Project = \App\Models\Project::all()->where('status_id',2)->pluck('code','id');
     $WorkCodes = \App\Models\WorkCodes::all()->pluck('name','id');
+
 ?>
 
 <div class="box-body">
