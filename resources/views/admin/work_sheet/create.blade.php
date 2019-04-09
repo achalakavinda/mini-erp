@@ -128,6 +128,9 @@
             if (time.length > 1) { // If time format correct
                 time = time.slice (1);  // Remove full string match value
                 time[0] = (parseFloat(time[0]) + Math.trunc( Hrs )).toString() ; //
+                if(parseFloat(time[0]) == 9){
+                    time[0] = "0"+time[0];
+                }
                 console.log(time);
                 if(Hrs>0){
                     $('#To').val(time.join(''));

@@ -12,13 +12,12 @@
             ->where('projects.status_id',2)
             ->pluck('projects.code','projects.id');
     }
-
     $JobTypes = \App\Models\JobType::all()->pluck('jobType','id');
     $WorkCodes = \App\Models\WorkCodes::all()->pluck('name','id');
-
 ?>
 
 <div class="box-body">
+
     <div class="col-md-3">
         <div class="form-group">
             <label>Employee</label>
@@ -37,12 +36,13 @@
             {!! Form::select('project_id',$Project,null,['class'=>'form-control','id'=>'project','placeholder'=>'Please Select a project']) !!}
         </div>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-1 toggle-hide">
         <div class="form-group">
             <label>Hrs</label>
             {!! Form::number('row[0][hrs]',null,["class"=>"form-control","id"=>"Hrs"]) !!}
         </div>
     </div>
+
     <table id="worksheetTable" class="table table-responsive table-bordered table-striped">
         <thead>
             <tr>
@@ -80,7 +80,6 @@
     </table>
 </div>
 <!-- /.box-body -->
-
 <div class="box-footer">
     <button type="submit" class="btn btn-primary pull-right">Submit</button>
 </div>

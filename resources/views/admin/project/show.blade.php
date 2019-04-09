@@ -1,7 +1,21 @@
 <?php
-    $User = \App\Models\User::find($Project->created_by_id);
+
+        $ASSIGNED_TYPE = false;
+    if(\App\Models\User::CheckPermission( config('constant.Permission_Project_Registry_Assigned_Show') ))
+    {
+        $ASSIGNED_TYPE = true;
+    }elseif (\App\Models\User::CheckPermission( config('constant.Permission_Project_Show') )){
+
+    }else{
+
+    }
+
+
+$User = \App\Models\User::find($Project->created_by_id);
     $Customers = \App\Models\Customer::where('id',$Project->customer_id)->pluck('name','id');
     $PROJECTJOBTYPE = \App\Models\ProjectJobType::where('project_id',$Project->id)->get();
+
+
 ?>
 
 @extends('layouts.admin')

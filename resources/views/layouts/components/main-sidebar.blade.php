@@ -21,6 +21,8 @@
 
             @can(config('constant.Permission_Project'))
                 <li><a href="{{ url('/project') }}"><i class="fa fa-print"></i> <span>Project</span></a></li>
+                @elsecan(config('constant.Permission_Project_assigned'))
+                <li><a href="{{ url('/project') }}"><i class="fa fa-print"></i> <span>Assigned Project</span></a></li>
             @endcan
 
             @can(config('constant.Permission_Work_Sheet'))

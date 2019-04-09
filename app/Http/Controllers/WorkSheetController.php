@@ -130,7 +130,7 @@ class WorkSheetController extends Controller
                 }
 
                 //actual work hrs related to number of work hrs
-                $CurrentNoOfWork = $CurrentNoOfWork +$tuple->actual_work_hrs;
+                $CurrentNoOfWork = $CurrentNoOfWork +$tuple->actual_work_hrs+$tuple->leave_hrs;
             }
 
             if(!$WorkSheetTuples->isEmpty()){

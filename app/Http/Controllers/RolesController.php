@@ -39,6 +39,7 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
+
         try{
 
             $role = Role::create($request->except('permission'));
@@ -91,10 +92,8 @@ class RolesController extends Controller
             'name' => 'required',
             'permission' => 'required',
         ]);
-
         try{
             $role = Role::find($id);
-            $role->name = $request->name;
             $role->save();
 
             $role->syncPermissions($request->input('permission'));
