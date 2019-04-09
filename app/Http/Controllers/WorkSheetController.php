@@ -107,7 +107,8 @@ class WorkSheetController extends Controller
             $maxToTime = null;
             $WorkSheetTuples = WorkSheet::where(['user_id'=>$request->user_id,'date'=>$DATE_VAR])->get();
             //check current work hrs
-            $CurrentNoOfWork = 0;
+            $CurrentNoOfWorkHours = 0;
+            $CurrentNoOfLeaveHours = 0;
 
             foreach ($WorkSheetTuples as $tuple){
                 $from = $tuple->from;
@@ -128,9 +129,9 @@ class WorkSheetController extends Controller
                         $maxToTime = $to;
                     }
                 }
-
                 //actual work hrs related to number of work hrs
-                $CurrentNoOfWork = $CurrentNoOfWork +$tuple->actual_work_hrs+$tuple->leave_hrs;
+                $CurrentNoOfWorkHours = $CurrentNoOfWorkHours +$tuple->actual_work_hrs;
+                $CurrentNoOfLeaveHours = $CurrentNoOfLeaveHours + $tuple->leave_hrs;
             }
 
             if(!$WorkSheetTuples->isEmpty()){
@@ -139,25 +140,23 @@ class WorkSheetController extends Controller
                 $to = Carbon::parse($maxToTime);
                 $postFrom = Carbon::parse($row['from']);
                 $postTo = Carbon::parse($row['to']);
-
                 ///sequence new time must greater than previous submit value
                 if($postFrom->lessThan($to)){
                     return redirect()->back()->withErrors(['Time sequence overlap']);
                 }
-
             }
 
-
-            if($work_hr>=7.5 || $CurrentNoOfWork>=7.5){//set the working hr to 8
+            if( ( $work_hr>=7.5 || $CurrentNoOfWorkHours>=7.5 ) && $CurrentNoOfLeaveHours < 1)
+            {
                 $work_hr = 7.5;
-                if($CurrentNoOfWork>=7.5){
+                if($CurrentNoOfWorkHours>=7.5){
                     $work_hr = 0;
                 }
-            }else{
+            }else {
                 //this value must be check with combination
-                $CombinationHrTotal = ($CurrentNoOfWork+$actual_work_hr);
+                $CombinationHrTotal = ($CurrentNoOfWorkHours+$actual_work_hr);
                 if($CombinationHrTotal>=7.5){
-                    $work_hr = 7.5-$CurrentNoOfWork;
+                    $work_hr = 7.5-$CurrentNoOfWorkHours;
                 }
             }
 
@@ -203,7 +202,7 @@ class WorkSheetController extends Controller
                     'remark'=>$INSERT_Remarks
                 ]);
 
-                if($CurrentNoOfWork<=8){
+                if($CurrentNoOfWorkHours<=8){
                     //update the time report project
                     $PJ = Project::find($request->project_id);
                     if($PJ) {
