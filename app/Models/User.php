@@ -33,10 +33,31 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_user');
     }
 
-    public static function CheckPermission($arr){
-        $permission = \Auth::user()->hasAnyPermission($arr);
-        if(!$permission){
-            abort(403);
+    public static function CheckPermission($_value){
+        if (is_array($_value))
+        {
+
+                $permission = \Auth::user()->hasAnyPermission($_value);
+                if(!$permission){
+                    abort(403);
+                    return false;
+                }else{
+                    return true;
+                }
+        }else{
+                try {
+                    return \Auth::user()->hasPermissionTo($_value);
+                } catch (\Exception $e){
+                    return false;
+                }
         }
     }
+
+    public static function CheckUserForProject(Project $project){
+        $ProjectEmployee = ProjectEmployee::where(['user_id'=>\Auth::id(),'project_id'=>$project->id])->get();
+        if ($ProjectEmployee->isEmpty()){
+            abort('403');
+        }
+    }
+
 }

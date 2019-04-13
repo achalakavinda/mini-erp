@@ -40,9 +40,26 @@ class ApiController extends Controller
         return $Arr;
     }
 
+    public function GetWorkCodeById ($id){
+        try {
+            $Arr = [
+                'status'=>true,
+                'message'=>"SuccessFull",
+                'work_code'=>WorkCodes::find($id),
+            ];
+        } catch (\Exception $e){
+            $Arr = [
+                'status'=>false,
+                'message'=>$e->getMessage(),
+                'work_code'=>[],
+            ];
+        }
+        return $Arr;
+    }
+
     public function GetProjectDetailsByID($id,$user_id,$date){
         try{
-            $PJ = \App\Models\Project::find($id);
+            $PJ = \App\Models\Project::select(['id','code','customer_id','job_type_id','job_type_name'])->find($id);
             $PJT = \App\Models\ProjectJobType::where('project_id',$id)->get();
             $PJCUS = [];
             if(!empty($PJ)){

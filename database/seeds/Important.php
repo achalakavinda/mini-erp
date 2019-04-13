@@ -274,16 +274,19 @@ class Important extends Seeder
         DB::table('job_types')->insert([
             [
                 'JobType'=>"External Audit",
+                'key'=>'EA',
                 "created_at"=> \Carbon\Carbon::now(),
                 "updated_at"=> \Carbon\Carbon::now()
             ],
             [
                 'JobType'=>"Internal Audit",
+                'key'=>'IA',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
             [
                 'JobType'=>"Feasibility",
+                'key'=>'FEA',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ]
@@ -469,6 +472,36 @@ class Important extends Seeder
             ],
 
         ]);
+
+
+        DB::table('day_types')->insert([
+            [
+                'id'=>1,
+                'name'=>'Working Day',
+                'workable'=>true,
+            ],
+            [
+                'id'=>2,
+                'name'=>'Saturday',
+                'workable'=>false,
+            ],
+            [
+                'id'=>3,
+                'name'=>'Saturday',
+                'workable'=>false,
+            ],
+            [
+                'id'=>4,
+                'name'=>'Sunday',
+                'workable'=>false,
+            ],
+            [
+                'id'=>5,
+                'name'=>'Poya day',
+                'workable'=>false,
+            ],
+        ]);
+
 
     }
 }

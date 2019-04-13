@@ -13,6 +13,7 @@ use App\Models\ProjectJobType;
 use App\Models\ProjectOverhead;
 use App\Models\ProjectOverheadsActual;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -21,7 +22,8 @@ class ProjectController extends Controller
 
     public function __construct()
     {
-        $this->middleware(['permission:'.config('constant.Permission_Project')]);
+        $_string = 'permission:'.config('constant.Permission_Project').'|'.config('constant.Permission_Project_Assigned');
+        $this->middleware([$_string]);
     }
 
     /**
@@ -31,9 +33,21 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        User::CheckPermission([config('constant.Permission_Project_Registry')]);
-        $Rows = Project::all();
-        return view('admin.project.index',compact('Rows'));
+
+        User::CheckPermission([config('constant.Permission_Project_Registry'),config('constant.Permission_Project_Registry_Assigned')]);
+
+        if( User::checkPermission( config('constant.Permission_Project_Registry') ))
+        {
+            $Rows = Project::all();
+            return view('admin.project.index',compact('Rows'));
+
+        }elseif ( User::checkPermission( config('constant.Permission_Project_Registry_Assigned')) )
+        {
+            return view('admin.project.assigned.index');
+        }else
+        {
+           return view('errors.404');
+        }
     }
 
     /**
@@ -42,7 +56,7 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        User::CheckPermission([config('constant.Permission_Project_Creation')]);
+        User::CheckPermission([config('constant.Permission_Project_Creation'),config('constant.Permission_Project_Budget_Creation_Assigned')]);
         return view('admin.project.create');
     }
 
@@ -53,11 +67,10 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        User::CheckPermission([config('constant.Permission_Project_Creation')]);
+        User::CheckPermission([config('constant.Permission_Project_Creation'),config('constant.Permission_Project_Creation_Assigned')]);
         $request->validate([
-            'code' => 'required | unique:projects',
             'customer_id' => 'required',
-            'job_types' => 'required',
+            'job_type' => 'required',
             'budget_number_of_hrs' => 'required',
             'budget_cost' => 'required',
             'profit_ratio' => 'required',
@@ -67,10 +80,12 @@ class ProjectController extends Controller
 
         //fetch customer information
         $CUSTOMER = Customer::findOrFail($request->customer_id);
+        $JobType = JobType::findOrFail($request->job_type);
         $CustomerSector = CustomerSector::findOrFail($request->sector_id);
+        $TimeCode = Carbon::now()->format('yM-d');
 
         //Project Code
-        $code = $CUSTOMER->name."-".$request->code."-".$CustomerSector->name;
+        $code = $CUSTOMER->name."-".$JobType->key.$TimeCode;
         //Check code for unique project code validations
         $CheckCode = Project::where('code',$code)->first();
 
@@ -91,6 +106,9 @@ class ProjectController extends Controller
             'customer_name'=>$CUSTOMER->name,
             'code'=>$code,
             'sector_id'=>$request->sector_id,
+            'sector_name'=>$CustomerSector->name,
+            'job_type_id'=>$JobType->id,
+            'job_type_name'=>$JobType->jobType,
             'quoted_price'=>$quoted_price,
             'budget_revenue'=>$quoted_price,
             'budget_number_of_hrs'=>$request->budget_number_of_hrs,
@@ -101,16 +119,86 @@ class ProjectController extends Controller
             'updated_by_id'=>\Auth::id(),
         ]);
 
-        //assign jobs to projects
-        foreach ($request->job_types as $item)
-        {
-            ProjectJobType::create([
+        if(User::CheckPermission( config('constant.Permission_Project_Creation_Assigned') )){
+            ProjectEmployee::create([
                 'project_id'=>$Project->id,
-                'jop_type_id'=>$item
+                'user_id'=>\Auth::id()
             ]);
         }
 
         return \redirect('project/'.$Project->id);
+    }
+
+    /**
+     * Web Route /project/{id}/staff
+     * View User Project Assigning Interface
+     */
+    public function staffAllocation($id)
+    {
+        //check access control default templates
+        User::CheckPermission([
+            config('constant.Permission_Project_Staff'),
+            config('constant.Permission_Project_Staff_Assigned')
+        ]);
+
+        $Project = Project::findOrFail($id);
+
+        //validate specific access control
+        if( !User::CheckPermission( config('constant.Permission_Project_Staff')) && User::CheckPermission( config('constant.Permission_Project_Staff_Assigned')) ) {
+            User::CheckUserForProject($Project);
+        }
+
+        return view('admin.project.staff_allocation',compact('Project'));
+    }
+
+    /**
+     * Web Route /project/{id}/staff/update
+     * View User Project Assigning Update [Store | Update]
+     */
+    public function staffAllocationUpdate(Request $request,$id)
+    {
+        //validate for users
+        $request->validate([
+            'items' => 'required',
+            ]);
+
+        //check access control default templates
+        User::CheckPermission([
+            config('constant.Permission_Project_Staff'),
+            config('constant.Permission_Project_Staff_Assigned')
+        ]);
+
+        $Project = Project::findOrFail($id);
+
+        //validate specific access control
+        if( !User::CheckPermission( config('constant.Permission_Project_Staff')) && User::CheckPermission( config('constant.Permission_Project_Staff_Assigned')) ) {
+            User::CheckUserForProject($Project);
+        }
+
+        foreach ($request->items as $item)
+        {
+            $ProjectStaff = ProjectEmployee::get()->where('project_id',$Project->id)->where('user_id',$item['user_id'])->first();
+            if(isset($item['assigned']))
+            {
+                if($ProjectStaff){
+                    $ProjectStaff->project_id = $Project->id;
+                    $ProjectStaff->user_id = $item['user_id'];
+                    $ProjectStaff->save();
+                }else{
+                    ProjectEmployee::create([
+                        'project_id'=>$Project->id,
+                        'user_id'=>$item['user_id']
+                    ]);
+                }
+
+            }else{
+                if($ProjectStaff){
+                    \DB::table('project_employees')->where('project_id',$Project->id)->where('user_id',$item['user_id'])->delete();
+                }
+
+            }
+        }
+        return \redirect()->back();
     }
 
     public function projectStatusStore(Request $request)
@@ -185,8 +273,16 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        User::CheckPermission([config('constant.Permission_Project_Registry')]);
+        User::CheckPermission([config('constant.Permission_Project_Show'),
+            config('constant.Permission_Project_Registry_Assigned_Show')]);
+
         $Project = Project::findOrFail($id);
+
+        if( !User::CheckPermission( config('constant.Permission_Project_Show')) && User::CheckPermission( config('constant.Permission_Project_Registry_Assigned_Show')) )
+        {
+            User::CheckUserForProject($Project);
+        }
+
         return view('admin.project.show',compact('Project'));
     }
 
@@ -231,8 +327,15 @@ class ProjectController extends Controller
      */
     public function budgetCost($id)
     {
-        User::CheckPermission([config('constant.Permission_Project_Budget')]);
+        User::CheckPermission( [ config('constant.Permission_Project_Budget'), config('constant.Permission_Project_Budget_Assigned') ] );
+
         $Project = Project::findOrFail($id);
+
+        if( !User::CheckPermission( config('constant.Permission_Project_Budget')) && User::CheckPermission( config('constant.Permission_Project_Budget_Assigned')) )
+        {
+            User::CheckUserForProject($Project);
+        }
+
         return view('admin.project.budget_cost',compact('Project'));
     }
 
@@ -255,7 +358,8 @@ class ProjectController extends Controller
      */
     public function budgetCostStore(Request $request)
     {
-        User::CheckPermission([config('constant.Permission_Project_Budget_Creation')]);
+        User::CheckPermission([ config('constant.Permission_Project_Budget_Creation'), config('constant.Permission_Project_Budget_Creation_Assigned') ]);
+
         $request->validate([
             'number_of_hrs' => 'required',
             'budget_cost' => 'required',
@@ -268,6 +372,11 @@ class ProjectController extends Controller
         $Project_Budgeted_Work_Hours = 0;
         $Project_Budgeted_OverHead_Cost = 0;
         $Project_Budgeted_Profit_Margin = 0;
+
+        if( !User::CheckPermission( config('constant.Permission_Project_Budget_Creation')) && User::CheckPermission( config('constant.Permission_Project_Budget_Creation_Assigned')) )
+        {
+            User::CheckUserForProject($Project);
+        }
 
         if(isset($request->cost_row))
         {
@@ -818,4 +927,5 @@ class ProjectController extends Controller
         $Project->updated_by_id = \Auth::id();//set updated by parameter
         $Project->save();//save the updated values
     }
+
 }

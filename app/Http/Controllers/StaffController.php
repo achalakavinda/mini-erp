@@ -94,6 +94,27 @@ class StaffController extends Controller
         return redirect()->back()->with(['created'=>'success','message'=>'Successfully created!']);
     }
 
+    public function resetPassword(Request $request,$id){
+        $request->validate([
+            'old_password'=>'required',
+            'new_password'=>'required',
+            're_password'=>'required'
+        ]);
+        $User = User::findOrFail($id);
+        $hashedPassword  = $User->password;
+        if (\Hash::check($request->old_password, $hashedPassword)) {
+            if($request->new_password === $request->re_password){
+                $User->password = bcrypt($request->new_password);
+                $User->save();
+                return back()->withErrors(['Password Reset!']);
+            }else{
+                return back()->withErrors(['Password are mismatched']);
+            }
+        }else{
+            return back()->withErrors(['Please enter the correct old password!']);
+        }
+    }
+
     /**
      * Display the specified resource.
      *

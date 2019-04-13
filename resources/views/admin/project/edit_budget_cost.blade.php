@@ -48,9 +48,9 @@
                             <thead>
                             <tr>
                                 <th>Designation</th>
-                                <th>Hour Rate</th>
+                                <th class="hide">Hour Rate</th>
                                 <th>Work Hours</th>
-                                <th>Total</th>
+                                <th class="hide">Total</th>
                                 <th>Edit</th>
                             </tr>
                             </thead>
@@ -67,7 +67,7 @@
                                                     <input style="display: none" value="{{ $item->project_designation_id }}" type="number" id="DesignationID_{{ $count }}">
                                                     <input style="display: none" value="{{ $item->id }}" type="number" id="ProjectDesignationCostID_{{ $count }}">
                                             </td>
-                                            <td style="text-align: right;">
+                                            <td class="hide" style="text-align: right;">
                                                 {!! number_format($item->hr_rates,2) !!}
                                                 <input style="display: none" value="{{ $item->hr_rates }}" type="number" id="rowWorkHourRates_{{ $count }}">
                                             </td>
@@ -75,7 +75,7 @@
                                                 {!! number_format($item->hr,2) !!}
                                                 <input style="display: none" value="{{ $item->hr }}" type="number" id="rowWorkHours_{{ $count }}">
                                             </td>
-                                            <td style="text-align: right;">
+                                            <td class="hide" style="text-align: right;">
                                                 {!! number_format($item->hr_rates*$item->hr,2) !!}
                                             </td>
                                             <td>
@@ -138,9 +138,9 @@
                                 <thead>
                                 <tr>
                                     <th>Designation</th>
-                                    <th>Hour Rate</th>
+                                    <th class="hide">Hour Rate</th>
                                     <th>Work Hours</th>
-                                    <th>Total</th>
+                                    <th class="hide">Total</th>
                                     <th>Delete</th>
                                 </tr>
                                 </thead>
@@ -149,9 +149,9 @@
                                         <input name="selected_row_id" id="selectedRowId" style="display: none;">
                                         <input name="selected_project_id" value="{!! $Project->id !!}" style="display: none;">
                                         {!! Form::select('selected_designation_type_id',\App\Models\Designation::get()->pluck('designationType','id'),null,['class'=>'form-control','id'=>'selectedDesignationTypeId']) !!}</td>
-                                    <td>{!! Form::number('selected_hr_rates',null,['class'=>'form-control','id'=>'selectedHrRates','step'=>'0.01']) !!}</td>
+                                    <td class="hide">{!! Form::number('selected_hr_rates',null,['class'=>'form-control','id'=>'selectedHrRates','step'=>'0.01']) !!}</td>
                                     <td>{!! Form::number('selected_work_hrs',null,['class'=>'form-control','id'=>'selectedWorkHrs','step'=>'0.01']) !!}</td>
-                                    <td>{!! Form::number('selected_total',null,['class'=>'form-control','id'=>'selectedTotal','step'=>'0.01']) !!}</td>
+                                    <td class="hide">{!! Form::number('selected_total',null,['class'=>'form-control','id'=>'selectedTotal','step'=>'0.01']) !!}</td>
                                     <td>
                                         <input type="checkbox" name="selected_row_delete" id="selectedRowDelete">
                                     </td>
@@ -226,7 +226,14 @@
         var designation_RawCount = 1;
         var DesignationCostSum = 0;
         var ClickRow = 0;
-        var EmployeeTable = $('#tableEmployee').DataTable();
+        var EmployeeTable = $('#tableEmployee').DataTable({
+            "columnDefs": [
+                {
+                    "targets": [ 2 ],
+                    "visible": false,
+                    "searchable": false
+                }]
+        });
 
         $('#addNewDesignation').click(function() {
             addNewDesignationCost();
@@ -317,13 +324,13 @@
                                 '                            <input style="display:none" type="number" value="'+SelectDesignationTypeId+'" name="designation_row['+designation_count+'][designation_id]" class="form-control">\n' +
                                 '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control">\n' +
                                 '                        </td>\n' +
-                                '                        <td>\n' +
+                                '                        <td class="hide">\n' +
                                 '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" id="hrRate'+designation_count+'" value="'+data.designation.avg_hr_rate+'" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input  type="text" name="designation_row['+designation_count+'][hrs]" id="hrs'+designation_count+'"  value="" class="form-control">\n' +
                                 '                        </td>\n' +
-                                '                        <td>\n' +
+                                '                        <td class="hide">\n' +
                                 '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
@@ -337,29 +344,7 @@
                             calculateCostDesignationTypes(designation_count);
 
                         }else {
-
-                            designationTable.append('<tr class="tr_designation_'+designation_count+'">\n' +
-                                '                        <td>\n' +
-                                '                            <input style="display:none" type="number" value="'+SelectDesignationTypeId+'" name="designation_row['+designation_count+'][designation_id]" class="form-control">\n' +
-                                '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control">\n' +
-                                '                        </td>\n' +
-                                '                        <td>\n' +
-                                '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" id="hrRate'+designation_count+'" value="" class="form-control">\n' +
-                                '                        </td>\n' +
-                                '                        <td>\n' +
-                                '                            <input  type="text" name="designation_row['+designation_count+'][hrs]" id="hrs'+designation_count+'"   value="" class="form-control">\n' +
-                                '                        </td>\n' +
-                                '                        <td>\n' +
-                                '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
-                                '                        </td>\n' +
-                                '                        <td>\n' +
-                                '                            <a style="cursor: pointer" type="button" onclick="openEmployeeTable('+SelectDesignationTypeId+','+designation_count+')"><i class="fa fa-2x fa-remove"></i></a>\n' +
-                                '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_designation_'+designation_count+'\')"><i class="fa fa-2x fa-remove"></i></a>\n' +
-                                '                        </td>\n' +
-                                '                    <tr/>');
-
-                            designation_count++;
-                            designation_RawCount++;
+                            alert('Designation Values Cannot Fetch...');
                             calculateCostDesignationTypes(designation_count);
                         }
                     },
@@ -371,28 +356,7 @@
                 });
 
             }catch (e) {
-
-                designationTable.append('<tr class="tr_designation_'+designation_count+'">\n' +
-                    '                        <td>\n' +
-                    '                            <input style="display:none" type="number" value="'+SelectDesignationTypeId+'" name="designation_row['+designation_count+'][designation_id]" class="form-control">\n' +
-                    '                            <input type="text" name="designation_row['+designation_count+'][designation_name]" value="'+SelectDesignationTypeName+'" class="form-control">\n' +
-                    '                        </td>\n' +
-                    '                        <td>\n' +
-                    '                            <input  type="text" name="designation_row['+designation_count+'][hr_rate]" id="hrRate'+designation_count+'" value="" class="form-control">\n' +
-                    '                        </td>\n' +
-                    '                        <td>\n' +
-                    '                            <input  type="text" name="designation_row['+designation_count+'][hrs]" id="hrs'+designation_count+'"  value="" class="form-control">\n' +
-                    '                        </td>\n' +
-                    '                        <td>\n' +
-                    '                            <input  type="text" name="designation_row['+designation_count+'][total]"  id="total'+designation_count+'" value="" class="form-control">\n' +
-                    '                        </td>\n' +
-                    '                        <td>\n' +
-                    '                            <a style="cursor: pointer" type="button" onclick="openEmployeeTable('+SelectDesignationTypeId+','+designation_count+')"><i class="fa fa-2x fa-remove"></i></a>\n' +
-                    '                            <a style="cursor: pointer" type="button" onclick="rowRemoves(\'.tr_designation_'+designation_count+'\')"><i class="fa fa-remove"></i></a>\n' +
-                    '                        </td>\n' +
-                    '                    <tr/>');
-                designation_count++;
-                designation_RawCount++;
+                alert('Designation Values Cannot Fetch...');
                 calculateCostDesignationTypes(designation_count);
             }
         }

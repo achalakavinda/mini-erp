@@ -1,3 +1,8 @@
+<style>
+    .box-body>a {
+        margin-top: 10px;
+    }
+</style>
 <!-- Default box -->
 <div class="box-body">
         @can(config('constant.Permission_Dashboard'))<a href="{{ url('/dashboard') }}" class="btn btn-success">Dashboard <span class="fa fa-dashboard"></span></a>@endcan

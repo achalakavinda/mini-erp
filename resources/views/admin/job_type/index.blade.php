@@ -30,6 +30,7 @@
                     <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>
                         <tr>
+                            <th>Key</th>
                             <th>Job</th>
                             <th>Description</th>
                             <th>View</th>
@@ -39,6 +40,7 @@
 
                         @foreach($Rows as $row)
                             <tr>
+                                <td>{{ $row->key }}</td>
                                 <td>{{ $row->jobType }}</td>
                                 <td>{{ $row->description }}</td>
                                 <td>

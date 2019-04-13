@@ -18,7 +18,9 @@ class CreateWorkCodesTable extends Migration
             $table->string('name');
             $table->time('from');
             $table->time('to');
+            $table->integer('hrs');
             $table->boolean('worked');
+            $table->boolean('read_hrs_first')->default(false);
             $table->timestamps();
         });
 
@@ -28,7 +30,9 @@ class CreateWorkCodesTable extends Migration
                     'name'=>'Work',
                     'from'=>'08:30:00',
                     'to'=>'17:30:00',
+                    'hrs'=>'7.5',
                     'worked'=>true,
+                    'read_hrs_first'=>true,
                     "created_at"=>\Carbon\Carbon::now(),
                     "updated_at"=>\Carbon\Carbon::now()
                 ],
@@ -37,7 +41,9 @@ class CreateWorkCodesTable extends Migration
                     'name'=>'Half Day - Morning',
                     'from'=>'08:30:00',
                     'to'=>'12:30:00',
+                    'hrs'=>'4',
                     'worked'=>false,
+                    'read_hrs_first'=>true,
                     "created_at"=>\Carbon\Carbon::now(),
                     "updated_at"=>\Carbon\Carbon::now()
                 ],
@@ -46,7 +52,9 @@ class CreateWorkCodesTable extends Migration
                     'name'=>'Half Day - Evening',
                     'from'=>'12:30:00',
                     'to'=>'17:30:00',
+                    'hrs'=>'4',
                     'worked'=>false,
+                    'read_hrs_first'=>true,
                     "created_at"=>\Carbon\Carbon::now(),
                     "updated_at"=>\Carbon\Carbon::now()
                 ],
@@ -55,10 +63,23 @@ class CreateWorkCodesTable extends Migration
                     'name'=>'Full day leave',
                     'from'=>'08:30:00',
                     'to'=>'17:30:00',
+                    'hrs'=>'7.5',
                     'worked'=>false,
+                    'read_hrs_first'=>true,
                     "created_at"=>\Carbon\Carbon::now(),
                     "updated_at"=>\Carbon\Carbon::now()
                 ],
+                [
+                    'id'=>5,
+                    'name'=>'Short Leave',
+                    'from'=>'08:30:00',
+                    'to'=>'17:30:00',
+                    'hrs'=>'1',
+                    'worked'=>false,
+                    'read_hrs_first'=>true,
+                    "created_at"=>\Carbon\Carbon::now(),
+                    "updated_at"=>\Carbon\Carbon::now()
+                ]
             ]);
     }
 

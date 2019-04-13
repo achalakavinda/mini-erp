@@ -57,17 +57,27 @@ class WorkSheetController extends Controller
             'row' => 'required'
         ]);
 
-        $ROWS = $request->row;
+        $SubmitDate = Carbon::parse($request->date);
+        $NextDay = Carbon::now();
+        $MinPreviouDay = Carbon::now()->addDay(-3);
 
+        if($SubmitDate->greaterThan($NextDay))
+        {
+            return redirect()->back()->withErrors(['Submitted date cannot be a future date','Submitted date : '.$SubmitDate." | Server Date : ".$NextDay]);
+        }
+
+        if ($SubmitDate->lessThanOrEqualTo($MinPreviouDay))
+        {
+            return redirect()->back()->withErrors(['Submitted date cannot be more than 2 days back!','Submitted date : '.$SubmitDate." | Server Date : ".$NextDay,"If You are forget to report, Please Contact you're Manger."]);
+        }
+
+        $ROWS = $request->row;
         //check for the working states
         //also helpful to calculate employee leave hours
         $WorkCode = WorkCodes::findOrFail($request->work_code_id);
         $Worked = $WorkCode->worked;
         //date time convert to sql format
         $DATE_VAR = date_format(date_create($request->date),"Y-m-d");
-
-
-
 
         //loop the row array and insert row into worksheet table
         foreach ($ROWS as $row)
@@ -97,7 +107,8 @@ class WorkSheetController extends Controller
             $maxToTime = null;
             $WorkSheetTuples = WorkSheet::where(['user_id'=>$request->user_id,'date'=>$DATE_VAR])->get();
             //check current work hrs
-            $CurrentNoOfWork = 0;
+            $CurrentNoOfWorkHours = 0;
+            $CurrentNoOfLeaveHours = 0;
 
             foreach ($WorkSheetTuples as $tuple){
                 $from = $tuple->from;
@@ -118,9 +129,9 @@ class WorkSheetController extends Controller
                         $maxToTime = $to;
                     }
                 }
-
                 //actual work hrs related to number of work hrs
-                $CurrentNoOfWork = $CurrentNoOfWork +$tuple->actual_work_hrs;
+                $CurrentNoOfWorkHours = $CurrentNoOfWorkHours +$tuple->work_hrs;
+                $CurrentNoOfLeaveHours = $CurrentNoOfLeaveHours + $tuple->leave_hrs;
             }
 
             if(!$WorkSheetTuples->isEmpty()){
@@ -129,28 +140,68 @@ class WorkSheetController extends Controller
                 $to = Carbon::parse($maxToTime);
                 $postFrom = Carbon::parse($row['from']);
                 $postTo = Carbon::parse($row['to']);
-
                 ///sequence new time must greater than previous submit value
                 if($postFrom->lessThan($to)){
                     return redirect()->back()->withErrors(['Time sequence overlap']);
                 }
-
             }
 
 
-            if($work_hr>=7.5 || $CurrentNoOfWork>=7.5){//set the working hr to 8
-                $work_hr = 7.5;
-                if($CurrentNoOfWork>=7.5){
+            if( $work_hr >= 7.5 || $CurrentNoOfWorkHours >= 7.5 )
+            {
+                $work_hr = 7.5; //previous value set in actual hrs
+
+                if( $CurrentNoOfWorkHours >= 7.5 ){
                     $work_hr = 0;
                 }
-            }else{
-                //this value must be check with combination
-                $CombinationHrTotal = ($CurrentNoOfWork+$actual_work_hr);
-                if($CombinationHrTotal>=7.5){
-                    $work_hr = 7.5-$CurrentNoOfWork;
+                if( $CurrentNoOfLeaveHours >= 7.5 ){
+                    $work_hr = 0;
                 }
-            }
 
+                if( $CurrentNoOfLeaveHours>=1 ){
+
+                    $CombinationHrTotal = ( $CurrentNoOfWorkHours + $CurrentNoOfLeaveHours);
+
+                    if($CombinationHrTotal>=7.5){
+                        $work_hr = 0;
+                    }elseif ($CombinationHrTotal>0){
+
+                        $Post_work_hrs_sum_with_Combination = $actual_work_hr+$CombinationHrTotal;
+
+                        if( $Post_work_hrs_sum_with_Combination >=7.5 ){
+                            $work_hr = 7.5 - $CombinationHrTotal;
+                        }elseif ( $Post_work_hrs_sum_with_Combination>0 ){
+                            $work_hr = $actual_work_hr;
+                        }
+                    }
+                }
+
+            } else {
+                    //this value must be check with combination
+                    $CombinationHrTotal = ( $CurrentNoOfWorkHours + $actual_work_hr );
+                    if( $CurrentNoOfLeaveHours >=7.5 ){
+                        $work_hr = 0;
+
+                    }elseif ( $CurrentNoOfLeaveHours>=1 ){
+
+                        $tolNumOfWork = $CombinationHrTotal + $CurrentNoOfLeaveHours;
+
+                        if($tolNumOfWork>=7.5){
+                            $work_hr = 0;
+                        }elseif ($tolNumOfWork>0){
+                            $work_hr = 7.5 - $tolNumOfWork;
+                            if($work_hr<0){
+                                $work_hr = 0 ;
+                            }
+                        }
+                    }else{
+                        if( $CombinationHrTotal>=7.5 ){
+                            $work_hr = 7.5-$CurrentNoOfWorkHours;
+                        }else{
+                            //no changes to work hours
+                        }
+                    }
+            }
 
             $INSERT_COMPANYID = null;
             $INSERT_JOBTYPEID = null;
@@ -159,19 +210,14 @@ class WorkSheetController extends Controller
             //check the work state
             if($Worked)
             {
-                if ((isset($row['company'])))
-                {
-                    $INSERT_COMPANYID = $row['company'];
-                }else{
-                    return redirect()->back()->withErrors('Please select a project');
+                //fetch Project
+                $Project = Project::findOrFail($request->project_id);
+
+                if($Project){
+                    $INSERT_COMPANYID = $Project->customer_id;
+                    $INSERT_JOBTYPEID = $Project->job_type_id;
                 }
 
-                if ((isset($row['job_type_id'])))
-                {
-                    $INSERT_JOBTYPEID = $row['job_type_id'];
-                }else{
-                    return redirect()->back()->withErrors('Please select a project');
-                }
                 if ((isset($row['remark'])))
                 {
                     $INSERT_Remarks = $row['remark'];
@@ -198,7 +244,7 @@ class WorkSheetController extends Controller
                     'remark'=>$INSERT_Remarks
                 ]);
 
-                if($CurrentNoOfWork<=8){
+                if($CurrentNoOfWorkHours<=8){
                     //update the time report project
                     $PJ = Project::find($request->project_id);
                     if($PJ) {
@@ -208,6 +254,12 @@ class WorkSheetController extends Controller
                     }
                 }
             }else{
+
+                $ProjectExisingCodeCheck = WorkSheet::where(['date'=>$request->date,'user_id'=>$request->user_id, 'work_code_id'=>$WorkCode->id, ])->get();
+                if ( !$ProjectExisingCodeCheck->isEmpty() ){
+                    return redirect()->back()->withErrors(['You already submit '.$WorkCode->name.' type leave to selected day..']);
+                }
+
                 if ((isset($row['remark'])))
                 {
                     $INSERT_Remarks = $row['remark'];

@@ -23,6 +23,8 @@ class CreateWorkSheetsTable extends Migration
             $table->string('project_code')->nullable();
             $table->unsignedInteger('job_type_id')->nullable();
             $table->string('job_type')->nullable();
+            $table->unsignedInteger('sector_id')->nullable();
+            $table->string('sector_name')->nullable();
             $table->unsignedInteger('work_code_id');
             $table->string('work_code')->nullable();
 

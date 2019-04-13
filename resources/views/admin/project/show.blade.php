@@ -1,7 +1,21 @@
 <?php
-    $User = \App\Models\User::find($Project->created_by_id);
+
+        $ASSIGNED_TYPE = false;
+    if(\App\Models\User::CheckPermission( config('constant.Permission_Project_Registry_Assigned_Show') ))
+    {
+        $ASSIGNED_TYPE = true;
+    }elseif (\App\Models\User::CheckPermission( config('constant.Permission_Project_Show') )){
+
+    }else{
+
+    }
+
+
+$User = \App\Models\User::find($Project->created_by_id);
     $Customers = \App\Models\Customer::where('id',$Project->customer_id)->pluck('name','id');
     $PROJECTJOBTYPE = \App\Models\ProjectJobType::where('project_id',$Project->id)->get();
+
+
 ?>
 
 @extends('layouts.admin')
@@ -17,9 +31,9 @@
         </div>
         <div class="box-body">
             <a href="{{ url('/project') }}" class="btn btn-success">Go Back</a>
+            <a href="{!! url('/project') !!}/{!! $Project->id !!}/staff" class="btn btn-info">Staff <i class="fa fa-plus-square"></i></a>
             <a href="{!! url('/project') !!}/{!! $Project->id !!}/budget-cost" class="btn btn-danger">Budget <i class="fa fa-plus-square"></i></a>
             <a href="{{ url('/project') }}/{!! $Project->id !!}/actual-cost" class="btn btn-danger">Actual Cost <i class="fa fa-money"></i></a>
-
         </div>
         <!-- /.box-body -->
     </div>
@@ -68,8 +82,8 @@
                             ?>
                             <tbody>
                             <tr>
-                                <th>{!! $Project->code !!}</th>
-                                <td>{!! $Project->customer_name  !!}</td>
+                                <th><a href="{!! url('project') !!}/{!! $Project->id !!}">{!! $Project->code !!}</a></th>
+                                <td><a href="{!! url('customer') !!}/{!! $Project->customer_id  !!}">{!! $Project->customer_name  !!}</a> </td>
                                 <td>{!! $Sector !!}</td>
                                 <td><b>{!! $Status !!}</b></td>
                                 <td> @if($User){!! ucwords($User->name)  !!}@endif</td>
@@ -93,6 +107,35 @@
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div class="col-md-12" style="overflow: auto">
+                            <table id="table" class="table table-responsive table-bordered table-striped">
+                                <thead>
+                                <tr>
+                                    <th>Budget Cost</th>
+                                    <th>Actual Cost</th>
+                                    <th>Profit Ratio</th>
+                                    <th>Quoted Price</th>
+                                    <th>Invoice Amount</th>
+                                    <th>Receipt Amount</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{!! number_format($Project->budget_cost_by_work+$Project->budget_cost_by_work+$Project->budget_cost_by_overhead,2) !!}</td>
+                                    <td>{!! number_format($Project->actual_cost_by_work+$Project->actual_cost_by_work+$Project->actual_cost_by_overhead,2) !!}</td>
+                                    <td>{!! number_format($Project->profit_ratio,2) !!}</td>
+                                    <td>{!! number_format($Project->quoted_price,2) !!}</td>
+                                    <td>{!! number_format($Project->invoicing_amount,2) !!}</td>
+                                    <td>{!! number_format($Project->receipt_amount,2) !!}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
             </div>
 
             <div class="box box-primary">

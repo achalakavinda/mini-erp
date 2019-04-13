@@ -102,6 +102,7 @@
                         <li><a href="#project" data-toggle="tab">Projects</a></li>
                         <li><a href="#settings" data-toggle="tab">Settings</a></li>
                     </ul>
+                    @include('error.error')
                     <div class="tab-content">
                         <div class="active tab-pane" id="workdays">
 
@@ -175,9 +176,23 @@
                         <div class="tab-pane" id="settings">
 
                             {!! Form::model($User, ['method' => 'PATCH', 'action' => ['StaffController@update', $User->id],'class'=>'form-horizontal']) !!}
-                               @include('error.error')
                                @include('admin.staff._partials.profileForm')
                            {!! Form::close() !!}
+
+                            <hr/>
+
+                            <?php
+                            if(Auth::user()->hasAnyPermission([config('constant.Permission_Profile_Update')])){
+                                $disabled=null;
+                            }else{
+                                $disabled ='disabled';
+                            }
+                            ?>
+
+
+                            {!! Form::model($User, ['method' => 'PATCH', 'action' => ['StaffController@resetPassword', $User->id],'class'=>'form-horizontal']) !!}
+                                @include('admin.staff._partials.passwordForm')
+                            {!! Form::close() !!}
                         </div>
                         <!-- /.tab-pane -->
                     </div>

@@ -19,7 +19,17 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
 
-    Route::get('/dashboard', 'DashboardController@index');
+    Route::get('/dashboard',function(){
+
+        if(Auth::user()->can(config('constant.Permission_Work_Sheet'))){
+            return redirect('/work-sheet/create');
+        }else if (Auth::user()->can(config('constant.Permission_Minor_Staff_Work_Sheet'))){
+            return redirect('/staff/work-sheet');
+        }else{
+            return redirect('/staff/profile/'.Auth::id());
+        }
+
+    });
 
     Route::get('/staff/profile/{id}', function ($id){
             $User = \App\Models\User::findOrFail($id);
@@ -42,6 +52,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('customer', 'CustomerController');
 
+    Route::patch('staff/reset-password/{id}', 'StaffController@resetPassword');
     Route::resource('staff', 'StaffController');
 
     Route::resource('job-type', 'JobTypeController');
@@ -53,6 +64,7 @@ Route::group(['middleware' => ['auth']], function () {
      Route::prefix('project')->group(function () {
             Route::get('/{id}/actual-cost','ProjectController@actualCost');
             Route::get('/{id}/budget-cost','ProjectController@budgetCost');
+            Route::get('/{id}/staff','ProjectController@staffAllocation');
             Route::get('/{id}/estimation/edit/staff-allocation-estimation','ProjectController@editStaffAllocationEstimation');
             Route::get('/{id}/estimation/edit/cost-type','ProjectController@editCostType');
             Route::get('/{id}/settings','ProjectController@settings');
@@ -66,13 +78,28 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/store-new-budget-cost-type','ProjectController@StoreNewBudgetCostType');
             Route::post('/edit-actual-cost-type','ProjectController@editActualCostType');
             Route::post('/store-new-actual-cost-type','ProjectController@StoreNewActualCostType');
+
+            Route::patch('/{id}/staff/update','ProjectController@staffAllocationUpdate');
      });
+
+    Route::prefix('spread-sheet')->group(function () {
+        Route::get('/','SpreadSheet\SpreadSheetController@index');
+        Route::get('/view-staff-spread-sheet-import','SpreadSheet\SpreadSheetController@ViewStaffSpreadSheetImport');
+    });
+
+    Route::prefix('reports')->group(function () {
+        Route::get('/','Reports\ReportController@index');
+        Route::get('/view-work-sheet-report','Reports\ReportController@ViewWorkSheetReport');
+        Route::get('/view-employee-wise-work-sheet-report','Reports\ReportController@ViewEmployeeWiseWorkSheetReport');
+        Route::get('/view-customer-wise-work-sheet-report','Reports\ReportController@ViewCustomerWiseWorkSheetReport');
+        Route::get('/view-job-type-wise-work-sheet-report','Reports\ReportController@ViewJobTypeWiseWorkSheetReport');
+    });
 
     Route::group(['middleware' => ['permission:Settings']], function () {
         Route::get('settings','SettingController@index');
         Route::prefix('settings')->group(function () {
             Route::get('/','SettingController@index');
-            Route::get('/access-control/permissions','PermissionsController@index');
+            Route::Resource('/access-control/permissions','PermissionsController');
             Route::Resource('/access-control/roles','RolesController');
             Route::Resource('/access-control/user-management','UserManagementController');
         });

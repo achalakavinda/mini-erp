@@ -8,7 +8,7 @@ class RolesAndPermissionsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
-     *
+     * Always add new seed on bottom
      * @return void
      */
     public function run()
@@ -66,6 +66,7 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $permission = Permission::create(['name' => config('constant.Permission_Staff') ]);
         $role_admin->givePermissionTo($permission);
+        $role_staff->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Staff_Registry') ]);
         $role_admin->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Staff_Creation') ]);
@@ -126,6 +127,63 @@ class RolesAndPermissionsSeeder extends Seeder
         $role_admin->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Attendance_Update') ]);
         $role_admin->givePermissionTo($permission);
+
+
+        //Please Add New seeds always from end
+        //P2 New Assigned Permission Types Seeder
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Assigned')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Registry_Assigned')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Creation_Assigned')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Budget_Assigned')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Budget_Creation_Assigned')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Budget_Update_Assigned')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Actual_Assigned')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Actual_Creation_Assigned')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Actual_Update_Assigned')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Setting_Assigned')]);
+        $role_admin->givePermissionTo($permission);
+        //P2 End
+
+        /**
+         * Change 1
+         * Add new Permission type for all as show
+         * this use to view show page
+         * Replace default registry ACl from this
+         */
+
+
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Show')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Registry_Assigned_Show')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Designation_Show')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Job_Type_Show')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Customer_Show')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Holidays_Show')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Attendance_Show')]);
+        $role_admin->givePermissionTo($permission);
+
+        //Change 1 end
+        //project staff change
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Staff')]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Project_Staff_Assigned')]);
+        $role_admin->givePermissionTo($permission);
+
+
 
         $user = \App\Models\User::where('email','admin@test.com')->first();
         $user->assignRole( config('constant.ROLE_SUPER_ADMIN') );

@@ -47,11 +47,14 @@ class JobTypeController extends Controller
         User::CheckPermission([ config('constant.Permission_Job_Type_Creation') ]);
         $request->validate([
             'jobType' => 'required | min:3',
+            'key' => 'required | min:2',
         ]);
+        
         try{
             JobType::create([
                 'jobType'=>$request->jobType,
-                'description'=>$request->description
+                'description'=>$request->description,
+                'key'=>$request->key
             ]);
         }catch (\Exception $exception){
             return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
@@ -95,6 +98,7 @@ class JobTypeController extends Controller
         User::CheckPermission([ config('constant.Permission_Job_Type_Update') ]);
         $request->validate([
             'jobType' => 'required | min:3',
+            'key' => 'required | min:2',
         ]);
 
         try{
@@ -102,6 +106,7 @@ class JobTypeController extends Controller
             if(!empty($JOBTYPE)){
                 $JOBTYPE->jobType = $request->jobType;
                 $JOBTYPE->description = $request->description;
+                $JOBTYPE->key = $request->key;
                 $JOBTYPE->save();
             }
         }catch (\Exception $exception){
