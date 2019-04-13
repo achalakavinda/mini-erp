@@ -130,7 +130,7 @@ class WorkSheetController extends Controller
                     }
                 }
                 //actual work hrs related to number of work hrs
-                $CurrentNoOfWorkHours = $CurrentNoOfWorkHours +$tuple->actual_work_hrs;
+                $CurrentNoOfWorkHours = $CurrentNoOfWorkHours +$tuple->work_hrs;
                 $CurrentNoOfLeaveHours = $CurrentNoOfLeaveHours + $tuple->leave_hrs;
             }
 
@@ -146,20 +146,62 @@ class WorkSheetController extends Controller
                 }
             }
 
-            if( ( $work_hr>=7.5 || $CurrentNoOfWorkHours>=7.5 ) && $CurrentNoOfLeaveHours < 1)
+
+            if( $work_hr >= 7.5 || $CurrentNoOfWorkHours >= 7.5 )
             {
-                $work_hr = 7.5;
-                if($CurrentNoOfWorkHours>=7.5){
+                $work_hr = 7.5; //previous value set in actual hrs
+
+                if( $CurrentNoOfWorkHours >= 7.5 ){
                     $work_hr = 0;
                 }
-            }else {
-                //this value must be check with combination
-                $CombinationHrTotal = ($CurrentNoOfWorkHours+$actual_work_hr);
-                if($CombinationHrTotal>=7.5){
-                    $work_hr = 7.5-$CurrentNoOfWorkHours;
+                if( $CurrentNoOfLeaveHours >= 7.5 ){
+                    $work_hr = 0;
                 }
-            }
 
+                if( $CurrentNoOfLeaveHours>=1 ){
+
+                    $CombinationHrTotal = ( $CurrentNoOfWorkHours + $CurrentNoOfLeaveHours);
+
+                    if($CombinationHrTotal>=7.5){
+                        $work_hr = 0;
+                    }elseif ($CombinationHrTotal>0){
+
+                        $Post_work_hrs_sum_with_Combination = $actual_work_hr+$CombinationHrTotal;
+
+                        if( $Post_work_hrs_sum_with_Combination >=7.5 ){
+                            $work_hr = 7.5 - $CombinationHrTotal;
+                        }elseif ( $Post_work_hrs_sum_with_Combination>0 ){
+                            $work_hr = $actual_work_hr;
+                        }
+                    }
+                }
+
+            } else {
+                    //this value must be check with combination
+                    $CombinationHrTotal = ( $CurrentNoOfWorkHours + $actual_work_hr );
+                    if( $CurrentNoOfLeaveHours >=7.5 ){
+                        $work_hr = 0;
+
+                    }elseif ( $CurrentNoOfLeaveHours>=1 ){
+
+                        $tolNumOfWork = $CombinationHrTotal + $CurrentNoOfLeaveHours;
+
+                        if($tolNumOfWork>=7.5){
+                            $work_hr = 0;
+                        }elseif ($tolNumOfWork>0){
+                            $work_hr = 7.5 - $tolNumOfWork;
+                            if($work_hr<0){
+                                $work_hr = 0 ;
+                            }
+                        }
+                    }else{
+                        if( $CombinationHrTotal>=7.5 ){
+                            $work_hr = 7.5-$CurrentNoOfWorkHours;
+                        }else{
+                            //no changes to work hours
+                        }
+                    }
+            }
 
             $INSERT_COMPANYID = null;
             $INSERT_JOBTYPEID = null;
@@ -212,6 +254,11 @@ class WorkSheetController extends Controller
                     }
                 }
             }else{
+
+                $ProjectExisingCodeCheck = WorkSheet::where(['date'=>$request->date,'user_id'=>$request->user_id, 'work_code_id'=>$WorkCode->id, ])->get();
+                if ( !$ProjectExisingCodeCheck->isEmpty() ){
+                    return redirect()->back()->withErrors(['You already submit '.$WorkCode->name.' type leave to selected day..']);
+                }
 
                 if ((isset($row['remark'])))
                 {

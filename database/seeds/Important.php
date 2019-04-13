@@ -474,6 +474,34 @@ class Important extends Seeder
         ]);
 
 
+        DB::table('day_types')->insert([
+            [
+                'id'=>1,
+                'name'=>'Working Day',
+                'workable'=>true,
+            ],
+            [
+                'id'=>2,
+                'name'=>'Saturday',
+                'workable'=>false,
+            ],
+            [
+                'id'=>3,
+                'name'=>'Saturday',
+                'workable'=>false,
+            ],
+            [
+                'id'=>4,
+                'name'=>'Sunday',
+                'workable'=>false,
+            ],
+            [
+                'id'=>5,
+                'name'=>'Poya day',
+                'workable'=>false,
+            ],
+        ]);
+
 
     }
 }

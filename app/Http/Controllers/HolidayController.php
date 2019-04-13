@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Day;
+use App\Models\DayType;
 use Illuminate\Http\Request;
 
 class HolidayController extends Controller
@@ -13,7 +15,7 @@ class HolidayController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.holidays.index');
     }
 
     /**
@@ -34,7 +36,37 @@ class HolidayController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        foreach ($request->row as $item){
+            $date = $item['date'];
+            $day_type_id = $item['day_type'];
+            $description = $item['description'];
+
+            $Day = Day::where('date',$date)->first();
+            $DayType = DayType::findOrFail($day_type_id);
+
+            if($Day!= null)
+            {
+                $Day->type_name = $DayType->name;
+                $Day->type_id = $DayType->id;
+                $Day->description = $description;
+                $Day->date = $date;
+                $Day->workable = $DayType->workable;
+                $Day->save();
+
+            }else
+                {
+                Day::create([
+                    'type_name'=>$DayType->name,
+                    'type_id'=>$DayType->id,
+                    'description'=>$description,
+                    'date'=>$date,
+                    'workable'=>$DayType->workable
+                ]);
+            }
+
+        }
+
+       return \Redirect::back();
     }
 
     /**
