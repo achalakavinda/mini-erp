@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Day;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\WorkCodes;
@@ -56,6 +57,12 @@ class WorkSheetController extends Controller
             'date' => 'required',
             'row' => 'required'
         ]);
+
+
+        $DayCheck = Day::where('date',$request->date)->first();
+        if($DayCheck){
+            return redirect()->back()->withErrors(['You can not report today - '.$DayCheck->type_name]);
+        }
 
         $SubmitDate = Carbon::parse($request->date);
         $NextDay = Carbon::now();

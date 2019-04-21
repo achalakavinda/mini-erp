@@ -487,17 +487,12 @@ class Important extends Seeder
             ],
             [
                 'id'=>3,
-                'name'=>'Saturday',
-                'workable'=>false,
-            ],
-            [
-                'id'=>4,
                 'name'=>'Sunday',
                 'workable'=>false,
             ],
             [
-                'id'=>5,
-                'name'=>'Poya day',
+                'id'=>4,
+                'name'=>'Holiday',
                 'workable'=>false,
             ],
         ]);

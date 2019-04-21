@@ -44,10 +44,6 @@
     {!! Html::script('https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js') !!}
     <script type="text/javascript">
         $(function () {
-            // $('#table').DataTable({
-            //     responsive: true,   // page length options
-            //     buttons: []
-            // })
             $('#loader').hide();
             $('#table_wrapper').fadeIn();
             $('#table').fadeIn();
