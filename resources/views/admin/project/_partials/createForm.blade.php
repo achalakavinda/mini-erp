@@ -44,20 +44,28 @@
         <div class="col-md-4">
             <div class="form-group">
                 {!! Form::label('budget_cost','Budget Cost',['class' => 'control-label']) !!}
-                {!! Form::number('budget_cost',0,['class'=>'form-control','id'=>'budgeCost']) !!}
+                {!! Form::number('budget_cost',0,['readonly','class'=>'form-control','id'=>'budgeCost']) !!}
             </div>
         </div>
     </div>
 
     <div class="col-md-12">
-        <div class="col-md-4">
+
+        <div class="col-md-3">
+            <div class="form-group">
+                {!! Form::label('p_y_quoted_price','P / Y Quoted Price',['class' => 'control-label']) !!}
+                {!! Form::number('p_y_quoted_price',null,['class'=>'form-control','id'=>'PYQuotedPrice', 'step'=>'0.01']) !!}
+            </div>
+        </div>
+
+        <div class="col-md-3">
             <div class="form-group">
                 {!! Form::label('profit_ratio','Profit Mark Up',['class' => 'control-label']) !!}
                 {!! Form::number('profit_ratio',10,['class'=>'form-control','id'=>'profitRatio', 'step'=>'0.01']) !!}
             </div>
         </div>
 
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-group">
                 {!! Form::label('quoted_price','Quoted Price',['class' => 'control-label']) !!}
                 {!! Form::number('quoted_price',0,['class'=>'form-control','id'=>'quotedPrice', 'step'=>'0.01']) !!}
