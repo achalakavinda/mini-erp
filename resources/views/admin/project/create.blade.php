@@ -41,24 +41,22 @@
     <script>
         $(document).ready(function()
         {
-            var BudgetCost = $('#budgeCost');
+
             var ProfitRation = $('#profitRatio');
-            var QuotedPrice = $('#quotedPrice');
-            $('#budgeCost').on('click', function() {
-                    calculate(BudgetCost.val(),ProfitRation.val());
-                }
-            );
+            var PYQuotedPrice = $('#PYQuotedPrice');
+            var BudgetCost = $('#budgeCost');
+
             $('#profitRatio').on('click', function() {
-                    calculate(BudgetCost.val(),ProfitRation.val())
+                    calculate(PYQuotedPrice.val(),ProfitRation.val())
                 }
             );
 
-            $('#budgeCost').on('keyup', function() {
-                    calculate(BudgetCost.val(),ProfitRation.val());
+            $('#PYQuotedPrice').on('keyup', function() {
+                    calculate(PYQuotedPrice.val(),ProfitRation.val());
                 }
             );
             $('#profitRatio').on('keyup', function() {
-                    calculate(BudgetCost.val(),ProfitRation.val())
+                    calculate(PYQuotedPrice.val(),ProfitRation.val())
                 }
             );
         });
@@ -68,6 +66,7 @@
             budget_cost = parseFloat(budget_cost);
             profile_ratio = parseFloat(profile_ratio);
             $('#quotedPrice').val(budget_cost+(budget_cost*(profile_ratio/100)));
+            $('#budgeCost').val(budget_cost);
         }
     </script>
 @endsection

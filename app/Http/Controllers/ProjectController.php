@@ -68,14 +68,16 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         User::CheckPermission([config('constant.Permission_Project_Creation'),config('constant.Permission_Project_Creation_Assigned')]);
+
         $request->validate([
             'customer_id' => 'required',
             'job_type' => 'required',
             'budget_number_of_hrs' => 'required',
             'budget_cost' => 'required',
+            'p_y_quoted_price' => 'required',
             'profit_ratio' => 'required',
             'quoted_price' => 'required',
-            'sector_id'=>'required'
+            'sector_id'=>'required',
         ]);
 
         //fetch customer information
@@ -113,6 +115,7 @@ class ProjectController extends Controller
             'budget_revenue'=>$quoted_price,
             'budget_number_of_hrs'=>$request->budget_number_of_hrs,
             'budget_cost_by_overhead'=>$request->budget_cost,
+            'p_y_quoted_price'=>$request->p_y_quoted_price,
             'profit_ratio'=>$request->profit_ratio/100,
             'status_id'=>1,
             'created_by_id'=>\Auth::id(),
