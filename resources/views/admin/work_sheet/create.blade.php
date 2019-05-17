@@ -15,11 +15,6 @@
         <div class="box-header with-border">
             <h3 class="box-title">Work Sheet</h3>
         </div>
-        <div class="box-body">
-            <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/work-sheet') }}" class="btn btn-success">Work Sheet</a>
-            <a href="{{ url('/work-sheet/create') }}" class="btn btn-success">New</a>
-        </div>
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
