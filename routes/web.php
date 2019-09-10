@@ -78,7 +78,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/store-new-budget-cost-type','ProjectController@StoreNewBudgetCostType');
             Route::post('/edit-actual-cost-type','ProjectController@editActualCostType');
             Route::post('/store-new-actual-cost-type','ProjectController@StoreNewActualCostType');
-
             Route::patch('/{id}/staff/update','ProjectController@staffAllocationUpdate');
      });
 

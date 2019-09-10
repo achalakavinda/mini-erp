@@ -13,22 +13,6 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('ca_trainings', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-        });
-
-        Schema::create('hometown_districts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-        });
-
-        Schema::create('cmb_location_districts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-        });
-
-
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
@@ -96,9 +80,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('ca_trainings');
-        Schema::dropIfExists('hometown_districts');
-        Schema::dropIfExists('cmb_location_districts');
         Schema::dropIfExists('users');
     }
 }
