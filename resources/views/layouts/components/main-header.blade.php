@@ -3,9 +3,9 @@
     <!-- Logo -->
     <a href="#" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>P</b>MIS</span>
+        <span class="logo-mini"><b>M</b>IS</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>PMIS</b></span>
+        <span class="logo-lg"><b>MIS</b></span>
     </a>
 
     <!-- Header Navbar -->
