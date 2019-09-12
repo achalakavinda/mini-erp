@@ -18,6 +18,7 @@ class CreateDaysTable extends Migration
             $table->string('name');
             $table->boolean('workable')->default(0);
             $table->text('description')->nullable();
+            
         });
 
         Schema::create('days', function (Blueprint $table) {
