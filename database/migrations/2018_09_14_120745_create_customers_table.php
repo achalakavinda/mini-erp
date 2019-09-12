@@ -13,28 +13,6 @@ class CreateCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::create('customer_secretaries', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('description')->nullable();
-            $table->timestamps();
-        });
-
-        Schema::create('customer_services', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('description')->nullable();
-            $table->timestamps();
-        });
-
-        Schema::create('customer_sectors', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('code');
-            $table->string('description');
-            $table->timestamps();
-        });
-
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
@@ -73,22 +51,6 @@ class CreateCustomersTable extends Migration
             $table->foreign('sector_id')->references('id')->on('customer_sectors')->onDelete('cascade');
         });
 
-        Schema::create('cus_services', function (Blueprint $table) {
-            $table->unsignedInteger('customer_id');
-            $table->unsignedInteger('service_id');
-            $table->timestamps();
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->foreign('service_id')->references('id')->on('customer_services')->onDelete('cascade');
-        });
-
-        Schema::create('cus_sectors', function (Blueprint $table) {
-            $table->unsignedInteger('customer_id');
-            $table->unsignedInteger('sector_id');
-            $table->timestamps();
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->foreign('sector_id')->references('id')->on('customer_sectors')->onDelete('cascade');
-        });
-
     }
 
     /**
@@ -98,11 +60,6 @@ class CreateCustomersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cus_services');
-        Schema::dropIfExists('cus_sectors');
         Schema::dropIfExists('customers');
-        Schema::dropIfExists('customer_secretaries');
-        Schema::dropIfExists('customer_services');
-        Schema::dropIfExists('customer_sectors');
     }
 }

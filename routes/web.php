@@ -36,8 +36,8 @@ Route::group(['middleware' => ['auth']], function () {
             return view('admin.staff.profile.profile',compact('User'));
         });
 
-    Route::get('/staff/work-sheet', 'PageController@workSheet');
 
+    Route::get('/staff/work-sheet', 'PageController@workSheet');
     Route::post('/staff/work-sheet/store', 'PageController@workSheetStore');
 
     Route::post('work-sheet/delete','WorkSheetController@delete');
@@ -78,7 +78,6 @@ Route::group(['middleware' => ['auth']], function () {
             Route::post('/store-new-budget-cost-type','ProjectController@StoreNewBudgetCostType');
             Route::post('/edit-actual-cost-type','ProjectController@editActualCostType');
             Route::post('/store-new-actual-cost-type','ProjectController@StoreNewActualCostType');
-
             Route::patch('/{id}/staff/update','ProjectController@staffAllocationUpdate');
      });
 
@@ -93,6 +92,12 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/view-employee-wise-work-sheet-report','Reports\ReportController@ViewEmployeeWiseWorkSheetReport');
         Route::get('/view-customer-wise-work-sheet-report','Reports\ReportController@ViewCustomerWiseWorkSheetReport');
         Route::get('/view-job-type-wise-work-sheet-report','Reports\ReportController@ViewJobTypeWiseWorkSheetReport');
+    });
+
+
+    Route::prefix('ims')->group(function () {
+        Route::resource('/brand','Ims\BrandController');
+        Route::resource('/item','Ims\ItemController');
     });
 
     Route::group(['middleware' => ['permission:Settings']], function () {
