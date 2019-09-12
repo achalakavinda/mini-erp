@@ -2,7 +2,7 @@
 
 <!-- main header section -->
 @section('main-content-header')
-    @include('layouts.selectors.ims.header-widgets.header')
+   @include('layouts.selectors.ims.header-widgets.header')
 @endsection
 <!-- /main header section -->
 
@@ -18,9 +18,9 @@
                 <!-- /.box-header -->
                 <!-- form start -->
 
-                {!! Form::open(['action'=>'Ims\BrandController@store','class'=>'form-horizontal','id'=>'Form']) !!}
+                {!! Form::open(['action'=>'Ims\ItemController@store','class'=>'form-horizontal','id'=>'Form']) !!}
                 @include('error.error')
-                @include('admin.ims.brand._partials.createForm')
+                @include('admin.ims.item._partials.createForm')
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->

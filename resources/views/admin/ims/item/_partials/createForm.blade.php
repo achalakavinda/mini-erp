@@ -1,10 +1,3 @@
-<?php
-
-    $BrandModel = \App\Models\Brand::all();
-
-    $Brands  = [];
-
-?>
 <div class="box-body">
 
     <div class="col-md-6">
@@ -20,7 +13,7 @@
             <select name="brand_id" class="form-control" id="brand">
                 <?php
                 foreach ($BrandModel as $brand){
-                    echo '<option value="'.$brand->id.'">'.$brand->name.' - '.$brand->company_code.' - '.$brand->division_code.'</option>';
+                    echo '<option value="'.$brand->id.'">'.$brand->name.'</option>';
                 }
                 ?>
             </select>

@@ -24,10 +24,13 @@ class CreateSuppliersTable extends Migration
             $table->string('address_0')->nullable();
             $table->string('address_1')->nullable();
             $table->string('web_url')->nullable();
-
+            $table->unsignedInteger('company_id');
             $table->unsignedInteger('company_division_id');
             $table->timestamps();
-            $table->foreign('company_division_id')->references('id')->on('company_divisions')->onDelete('cascade');
+
+
+            $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('company_division_id')->references('id')->on('company_divisions');
 
         });
     }

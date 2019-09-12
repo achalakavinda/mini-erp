@@ -60,7 +60,7 @@
 
             <!-- inventory block -->
             <li class="treeview">
-                <a href="{!! url('ims/inventory') !!}">
+                <a href="{!! url('#') !!}">
                     <i class="fa fa-database"></i> <span>Inventory</span>
                     <span class="pull-right-container">
                       <i class="fa fa-angle-left pull-right"></i>
@@ -77,26 +77,26 @@
                         </a>
                         <ul class="treeview-menu">
                             <li><a href="{!! url('ims/brand') !!}"><i class="fa fa-table"></i> brands</a></li>
-                            <li><a href="{!! url('ims/brand/new') !!}"><i class="fa fa-plus"></i> new</a></li>
+                            <li><a href="{!! url('ims/brand/create') !!}"><i class="fa fa-plus"></i> new</a></li>
                         </ul>
                     </li><!-- /brand  -->
 
                     <!-- item -->
                     <li class="treeview">
-                        <a href="{!! url('ims/model') !!}"><i class="fa fa-steam"></i> Item
+                        <a href="{!! url('ims/item') !!}"><i class="fa fa-steam"></i> Item
                             <span class="pull-right-container">
                               <i class="fa fa-angle-left pull-right"></i>
                             </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{!! url('ims/model') !!}"><i class="fa fa-table"></i> Item</a></li>
-                            <li><a href="{!! url('ims/model/create') !!}"><i class="fa fa-plus"></i> new</a></li>
+                            <li><a href="{!! url('ims/item') !!}"><i class="fa fa-table"></i> Item</a></li>
+                            <li><a href="{!! url('ims/item/create') !!}"><i class="fa fa-plus"></i> new</a></li>
                         </ul>
                     </li><!-- /item -->
 
                     <!-- stock -->
                     <li class="treeview">
-                        <a href="{!! url('ims/model') !!}"><i class="fa fa-truck"></i> Stock
+                        <a href="{!! url('') !!}"><i class="fa fa-truck"></i> Stock
                             <span class="pull-right-container">
                               <i class="fa fa-angle-left pull-right"></i>
                             </span>
@@ -108,27 +108,27 @@
                     </li><!-- /stock -->
 
                     <li class="treeview">
-                        <a href="{{ url('/invoice') }}"><i class="fa fa-info"></i> <span>Invoice</span>
+                        <a href="{{ url('ims/invoice') }}"><i class="fa fa-info"></i> <span>Invoice</span>
                             <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                           </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ url('/invoice') }}"><i class="fa fa-table"></i> Invoice</a></li>
-                            <li><a href="{{ url('/invoice/create') }}"><i class="fa fa-plus"></i> New</a></li>
+                            <li><a href="{{ url('ims/invoice') }}"><i class="fa fa-table"></i> Invoice</a></li>
+                            <li><a href="{{ url('ims/invoice/create') }}"><i class="fa fa-plus"></i> New</a></li>
                         </ul>
                     </li>
 
 
                     <li class="treeview">
-                        <a href="{{ url('/requisition') }}"><i class="fa fa-info"></i> <span>Requisition</span>
+                        <a href="{{ url('ims/requisition') }}"><i class="fa fa-info"></i> <span>Requisition</span>
                             <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                           </span>
                         </a>
                         <ul class="treeview-menu">
-                            <li><a href="{{ url('/requisition') }}"><i class="fa fa-table"></i> Requisition</a></li>
-                            <li><a href="{{ url('/requisition/create') }}"><i class="fa fa-plus"></i> New</a></li>
+                            <li><a href="{{ url('ims/requisition') }}"><i class="fa fa-table"></i> Requisition</a></li>
+                            <li><a href="{{ url('ims/requisition/create') }}"><i class="fa fa-plus"></i> New</a></li>
                         </ul>
                     </li>
                 </ul>

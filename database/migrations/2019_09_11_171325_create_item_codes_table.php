@@ -33,13 +33,15 @@ class CreateItemCodesTable extends Migration
 
 
             $table->float('opening_stock_qty')->default(0);
+            $table->unsignedInteger('company_id');
             $table->unsignedInteger('company_division_id');
             $table->unsignedInteger('type_measurement_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
+            $table->foreign('brand_id')->references('id')->on('brands');
             $table->foreign('type_measurement_id')->references('id')->on('type_measurements');
-            $table->foreign('company_division_id')->references('id')->on('company_divisions')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('company_division_id')->references('id')->on('company_divisions');
 
         });
     }

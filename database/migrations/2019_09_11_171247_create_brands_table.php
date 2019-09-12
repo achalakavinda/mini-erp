@@ -18,11 +18,13 @@ class CreateBrandsTable extends Migration
             $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('level')->default(0);
             $table->string('name');
-            $table->unsignedInteger('company_division_id')->nullable();
+            $table->unsignedInteger('company_id');
+            $table->unsignedInteger('company_division_id');
             $table->timestamps();
 
-            $table->foreign('parent_id')->references('id')->on('brands')->onDelete('CASCADE');
-            $table->foreign('company_division_id')->references('id')->on('company_divisions')->onDelete('cascade');
+            $table->foreign('parent_id')->references('id')->on('brands');
+            $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('company_division_id')->references('id')->on('company_divisions');
         });
     }
 
