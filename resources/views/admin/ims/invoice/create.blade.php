@@ -8,7 +8,7 @@
             <h3 class="box-title">Dashboard / Invoice</h3>
         </div>
         <div class="box-body">
-            <a href="{{ url('/invoice') }}" class="btn btn-success"> Invoice <i class="fa fa-backward"></i> </a>
+            <a href="{{ url('ims/invoice') }}" class="btn btn-success"> Invoice <i class="fa fa-backward"></i> </a>
         </div>
         <!-- /.box-body -->
     </div>
@@ -28,9 +28,9 @@
                 <!-- /.box-header -->
                 <!-- form start -->
 
-                {!! Form::open(['action'=>'InvoiceController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl']) !!}
+                {!! Form::open(['action'=>'Ims\InvoiceController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl']) !!}
                 @include('error.error')
-                @include('admin.invoice._partials.createForm')
+                @include('admin.ims.invoice._partials.createForm')
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->

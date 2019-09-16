@@ -24,3 +24,36 @@ Route::get('project/{id}/user/{user_id}/date/{date}','ApiController@GetProjectDe
 //to get designation details [ use in budgeting]
 Route::get('designation/{id}','ApiController@GetDesignation');
 Route::get('staff/designation/{id}','ApiController@getStaffByDesignation');
+
+Route::get('/item-code-for-invoices/{id}',function ($id){
+    $Model = \Illuminate\Support\Facades\DB::table('stock_items')
+        ->select(DB::raw('sum(tol_qty) as qty'))
+        ->where('item_code_id','=',$id)
+        ->get();
+    $ITEM_QTY = 0;
+    foreach ($Model as $item){
+        $ITEM_QTY = $ITEM_QTY+$item->qty;
+    }
+    $Model = \App\Models\Ims\ItemCode::find($id);
+    return ['item'=>$Model,'qty'=>$ITEM_QTY];
+});
+
+//api endpoint for the requisitions
+Route::get('/item-code-for-purchase-requisitions/{id}',function ($id){
+    $Model = \Illuminate\Support\Facades\DB::table('stock_items')
+        ->select(DB::raw('sum(tol_qty) as qty'))
+        ->where('item_code_id','=',$id)
+        ->get();
+
+    $ITEM_QTY = 0;
+
+    foreach ($Model as $item){
+        $ITEM_QTY = $ITEM_QTY+$item->qty;
+    }
+    $Model = \App\Models\Ims\ItemCode::find($id);
+    return ['item'=>$Model,'qty'=>$ITEM_QTY];
+});
+
+Route::get('/customer-for-invoices/{id}',function ($id){
+    return \App\Models\Customer::find($id);
+});

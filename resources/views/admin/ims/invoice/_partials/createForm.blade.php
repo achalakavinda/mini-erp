@@ -121,7 +121,7 @@
         <div class="col-md-12">
             <div class="form-group">
                 {!! Form::label('Select Model') !!}
-                {!! Form::select('model_select_id',\App\Models\ItemCode::all()->pluck('name','id'),null,['id'=>'ModelSelectId','class'=>'form-control']) !!}
+                {!! Form::select('model_select_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ModelSelectId','class'=>'form-control']) !!}
             </div>
         </div>
         <div class="col-md-11"></div>

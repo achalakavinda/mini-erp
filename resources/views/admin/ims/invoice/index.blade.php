@@ -8,7 +8,7 @@
             <h3 class="box-title">Dashboard / Invoice</h3>
         </div>
         <div class="box-body">
-            <a href="{{ url('/invoice/create') }}" class="btn btn-success">Invoice <i class="fa fa-plus"></i> </a>
+            <a href="{{ url('ims/invoice/create') }}" class="btn btn-success">Invoice <i class="fa fa-plus"></i> </a>
         </div>
         <!-- /.box-body -->
     </div>

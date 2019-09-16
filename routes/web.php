@@ -98,6 +98,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('ims')->group(function () {
         Route::resource('/brand','Ims\BrandController');
         Route::resource('/item','Ims\ItemController');
+        Route::resource('/invoice','Ims\InvoiceController');
     });
 
     Route::group(['middleware' => ['permission:Settings']], function () {
