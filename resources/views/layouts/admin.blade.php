@@ -7,7 +7,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Kreston MNS & Co | PMIS</title>
+    <title>Management Information System | MIS</title>
     <link rel="shortcut icon" href="{!! asset('img/logo.png') !!}" />
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -19,7 +19,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Theme style -->
     {!! Html::style('admin/css/AdminLTE.min.css') !!}
     {!! Html::style('admin/css/skins/skin-blue.min.css') !!}
-
     <style>
         .form-group{
             padding-left:5px;
@@ -36,7 +35,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 
     <![endif]-->
-
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
@@ -49,20 +47,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Main Header -->
         @include('layouts.components.main-header')
     <!-- /Main Header -->
-
     <!-- Left side column. contains the logo and sidebar -->
-
     <!-- main sidebar -->
         @include('layouts.components.main-sidebar')
     <!-- /main sidebar -->
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <!-- Content Header (Page header) -->
         <section class="content-header">
            @yield('main-content-header')
         </section>
-
         <!-- Main content -->
         <section class="content container-fluid">
             @yield('main-content')
@@ -70,18 +64,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-
     <!-- Main Footer -->
         @include('layouts.components.main-footer')
     <!-- /Main Footer -->
-
     @yield('model')
-
 </div>
 <!-- ./wrapper -->
 
 <!-- REQUIRED JS SCRIPTS -->
-
 <!-- jQuery 3 -->
 {!! Html::script('admin/bower_components/jquery/dist/jquery.min.js') !!}
 <!-- Bootstrap 3.3.7 -->

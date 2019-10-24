@@ -6,7 +6,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Kreston MNS & Co | PMIS</title>
+    <title>Management Information System | MIS</title>
     <link rel="shortcut icon" href="{!! asset('img/logo.png') !!}" />
     <!--===============================================================================================-->
     {!! Html::style('admin/bower_components/bootstrap/dist/css/bootstrap.min.css') !!}

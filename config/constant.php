@@ -6,7 +6,6 @@ return [
     'ROLE_SUPER_STAFF'=>'Staff',
     //Permission
     'Permission_Dashboard'=>'Dashboard',
-
     //Project Access Controls
     'Permission_Project'=>'Project',
     'Permission_Project_Registry'=>'Project-Registry',
