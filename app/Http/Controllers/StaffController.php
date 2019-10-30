@@ -45,6 +45,7 @@ class StaffController extends Controller
     public function store(Request $request)
     {
         User::CheckPermission([ config('constant.Permission_Staff_Creation') ]);
+
         $request->validate([
             'name'=>'required',
             'nic'=>'required',
@@ -56,7 +57,9 @@ class StaffController extends Controller
             'email'=>'required | unique:users',
         ]);
 
+
         try {
+
            $user =  User::create([
                 'name'=>$request->name,
                 'date_joined'=>$request->date_joined,
@@ -87,10 +90,13 @@ class StaffController extends Controller
                 'hr_billing_rates'=>$request->hr_billing_rates,
                 'password'=> bcrypt('password')
             ]);
+
            $user->assignRole( config('constant.ROLE_SUPER_STAFF') );
+
         }catch (\Exception $exception){
             return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
         }
+
         return redirect()->back()->with(['created'=>'success','message'=>'Successfully created!']);
     }
 
