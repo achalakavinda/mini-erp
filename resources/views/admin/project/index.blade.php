@@ -9,7 +9,7 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Projects</h3>
+            <h3 class="box-title">Project Table</h3>
         </div>
         @include('admin.header-widgets.dashboard-header')
         <!-- /.box-body -->
@@ -23,10 +23,12 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <div class="box-header">
-                    <a href="{{ url('/project/create') }}" class="btn btn-sm btn-danger">New <i class="fa fa-plus-square"></i></a>
-                </div>
                 <!-- /.box-header -->
+                <div style="overflow: auto" class="box-body">
+                    <a href="{{ url('/project/create') }}" class="btn btn-app pull-right">
+                        <i style="color: red" class="fa fa-plus"></i> New
+                    </a>
+                </div>
                 <div style="overflow: auto" class="box-body">
                     <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>

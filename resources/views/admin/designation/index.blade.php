@@ -34,19 +34,15 @@
                             <th>Type</th>
                             <th>Avg Hr Rate</th>
                             <th>Description</th>
-                            <th>View</th>
                         </tr>
                         </thead>
                         <tbody>
 
                             @foreach($Rows as $row)
-                                <tr>
-                                    <td>{{ $row->designationType }}</td>
+                                <tr onclick="click()">
+                                    <td> <a href="{{ url('designation') }}/{{ $row->id }}" > {{ $row->designationType }} </a></td>
                                     <td>{{ $row->avg_hr_rate }}</td>
                                     <td>{{ $row->description }}</td>
-                                    <td>
-                                        <a href="{{ url('designation') }}/{{ $row->id }}" ><i class="fa fa-paper-plane"></i></a>
-                                    </td>
                                 </tr>
                             @endforeach
 
@@ -70,7 +66,7 @@
     <script type="text/javascript">
 
         $(function () {
-            $('#table').DataTable({
+            var table = $('#table').DataTable({
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
             })
         })

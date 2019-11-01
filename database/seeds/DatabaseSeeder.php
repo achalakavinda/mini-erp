@@ -17,10 +17,10 @@ class DatabaseSeeder extends Seeder
             Important::class,
             RolesAndPermissionsSeeder::class,
             TestDataSeeder::class,
-//            DesignationSeeder::class,
-//            JobTypeTableSeeder::class,
+            DesignationSeeder::class,
+            JobTypeTableSeeder::class,
 //            CustomerSeeder::class,
-//            ProjectCostTypeTableSeeder::class,
+            ProjectCostTypeTableSeeder::class,
 //            UserTableSeeder::class,
 //            ProjectSeeder::class
         ]);

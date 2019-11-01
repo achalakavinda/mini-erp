@@ -2,6 +2,13 @@
 
     <div class="col-md-12">
         <div class="form-group">
+            {!! Form::label("Parent Brand") !!}
+            {!! Form::select('parent_brand_id',$Brand,null,['class'=>'form-control','id'=>'companyId']) !!}
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="form-group">
             {!! Form::label("Brand Name") !!}
             {!! Form::text('name',null,['class'=>'form-control','id'=>'nameId', 'placeholder'=>'Brand']) !!}
         </div>

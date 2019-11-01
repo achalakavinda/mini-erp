@@ -101,6 +101,7 @@ class StaffController extends Controller
     }
 
     public function resetPassword(Request $request,$id){
+
         $request->validate([
             'old_password'=>'required',
             'new_password'=>'required',

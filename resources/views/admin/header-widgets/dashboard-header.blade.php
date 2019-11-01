@@ -2,17 +2,78 @@
     .box-body>a {
         margin-top: 10px;
     }
+
+    .mega-menu-ul{
+        list-style: none;
+        text-align: left;
+    }
+
+    .mega-menu-ul>li>ul{
+        list-style: none;
+    }
+
+    .mega-menu-ul>li{
+        border-left: 1px solid rgba(0,0,0,0.2);
+    }
+
 </style>
 <!-- Default box -->
 <div class="box-body">
-        @can(config('constant.Permission_Dashboard'))<a href="{{ url('/dashboard') }}" class="btn btn-success">Dashboard <span class="fa fa-dashboard"></span></a>@endcan
-        @can(config('constant.Permission_Project'))<a href="{{ url('/project') }}" class="btn btn-success">Project <span class="fa fa-print"></span></a>@endcan
-        @can(config('constant.Permission_Work_Sheet'))<a href="{{ url('/work-sheet') }}" class="btn btn-success">Work Sheet <span class="fa fa-file"></span></a>@endcan
-        @can(config('constant.Permission_Staff'))<a href="{{ url('/staff') }}" class="btn btn-success">Staff <span class="fa fa-user"></span></a>@endcan
-        @can(config('constant.Permission_Designation'))<a href="{{ url('/designation') }}" class="btn btn-success">Designation <span class="fa fa-table"></span></a>@endcan
-        @can(config('constant.Permission_Job_Type'))<a href="{{ url('/job-type') }}" class="btn btn-success">Job Type <span class="fa fa-table"></span></a>@endcan
-        @can(config('constant.Permission_Customer'))<a href="{{ url('/customer') }}" class="btn btn-success">Customer <span class="fa fa-users"></span></a>@endcan
-        @can(config('constant.Permission_Holidays'))<a href="{{ url('/holidays') }}" class="btn btn-success">Holidays <span class="fa fa-calendar"></span></a>@endcan
-        @can(config('constant.Permission_Attendance'))<a href="{{ url('/attendance') }}" class="btn btn-success">Attendance <span class="fa fa-list"></span></a>@endcan
-        @can(config('constant.Permission_Setting'))<a href="{{ url('/settings') }}" class="btn btn-success">Settings <span class="fa fa-cogs"></span></a>@endcan
+
+    <ul class="row mega-menu-ul">
+
+        <li class="col-md-2">
+            <ul>
+                <li  class="list-header">Main Categories</li>
+                @can(config('constant.Permission_Dashboard'))<li><a href="{{ url('/dashboard') }}">Dashboard</a></li>@endcan
+                @can(config('constant.Permission_Project'))<li><a href="{{ url('/project') }}">Project</a></li>@endcan
+                @can(config('constant.Permission_Work_Sheet'))<li><a href="{{ url('/work-sheet') }}">Work Sheet</a></li>@endcan
+                @can(config('constant.Permission_Staff'))<li><a href="{{ url('/staff') }}">Staff</a></li>@endcan
+                @can(config('constant.Permission_Designation'))<li><a href="{{ url('/designation') }}">Designation</a></li>@endcan
+                @can(config('constant.Permission_Job_Type'))<li><a href="{{ url('/job-type') }}">Job Type</a></li>@endcan
+                @can(config('constant.Permission_Customer'))<li><a href="{{ url('/customer') }}">Customer </a></li>@endcan
+                @can(config('constant.Permission_Holidays'))<li><a href="{{ url('/holidays') }}">Holidays </a></li>@endcan
+                @can(config('constant.Permission_Attendance'))<li><a href="{{ url('/attendance') }}">Attendance </a></li>@endcan
+                @can(config('constant.Permission_Setting'))<li><a href="{{ url('/settings') }}">Settings</a></li>@endcan
+            </ul>
+        </li>
+
+        <li class="col-md-2">
+            <ul>
+                <li class="list-header">Project Management</li>
+                @can(config('constant.Permission_Project'))<li><a href="{{ url('/project') }}">Project</a></li>@endcan
+            </ul>
+        </li>
+
+        <li class="col-md-2">
+            <ul>
+                <li class="list-header">Human Resource</li>
+                @can(config('constant.Permission_Staff'))<li><a href="{{ url('/staff') }}">Staff</a></li>@endcan
+                @can(config('constant.Permission_Work_Sheet'))<li><a href="{{ url('/work-sheet') }}">Work Sheet</a></li>@endcan
+                @can(config('constant.Permission_Designation'))<li><a href="{{ url('/designation') }}">Designation</a></li>@endcan
+                @can(config('constant.Permission_Job_Type'))<li><a href="{{ url('/job-type') }}">Job Type</a></li>@endcan
+                @can(config('constant.Permission_Attendance'))<li><a href="{{ url('/attendance') }}">Attendance </a></li>@endcan
+            </ul>
+        </li>
+
+        <li class="col-md-2">
+            <ul>
+                <li class="list-header">Inventory</li>
+                @can(config('constant.Permission_Dashboard'))<li><a href="{{ url('/dashboard') }}">Dashboard</a></li>@endcan
+                @can(config('constant.Permission_Project'))<li><a href="{{ url('/project') }}">Project</a></li>@endcan
+                @can(config('constant.Permission_Work_Sheet'))<li><a href="{{ url('/work-sheet') }}">Work Sheet</a></li>@endcan
+                @can(config('constant.Permission_Staff'))<li><a href="{{ url('/staff') }}">Staff</a></li>@endcan
+                @can(config('constant.Permission_Designation'))<li><a href="{{ url('/designation') }}">Designation</a></li>@endcan
+                @can(config('constant.Permission_Job_Type'))<li><a href="{{ url('/job-type') }}">Job Type</a></li>@endcan
+                @can(config('constant.Permission_Customer'))<li><a href="{{ url('/customer') }}">Customer </a></li>@endcan
+                @can(config('constant.Permission_Holidays'))<li><a href="{{ url('/holidays') }}">Holidays </a></li>@endcan
+                @can(config('constant.Permission_Attendance'))<li><a href="{{ url('/attendance') }}">Attendance </a></li>@endcan
+                @can(config('constant.Permission_Setting'))<li><a href="{{ url('/settings') }}">Settings</a></li>@endcan
+            </ul>
+        </li>
+
+
+
+    </ul>
+
 </div>
