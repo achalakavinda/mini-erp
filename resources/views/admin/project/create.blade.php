@@ -7,8 +7,19 @@
         <div class="box-header with-border">
             <h3 class="box-title">Project</h3>
         </div>
-    @include('admin.header-widgets.dashboard-header')
+    @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
+        <div class="box-body">
+            <a href="{{ url('/project') }}" class="btn btn-app">
+                <i  class="main-action-btn-info fa fa-arrow-left"></i> Go Back
+            </a>
+            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{{ url('/project/create') }}" class="btn btn-app">
+                <i  class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
+        </div>
     </div>
     <!-- /.box -->
 @endsection
@@ -35,6 +46,7 @@
     <!-- /.row -->
 @endsection
 <!-- /main section -->
+
 @section('js')
     <script>
         $(document).ready(function()

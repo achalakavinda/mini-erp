@@ -11,8 +11,17 @@
         <div class="box-header with-border">
             <h3 class="box-title">Project Table</h3>
         </div>
-        @include('admin.header-widgets.dashboard-header')
+        @include('layouts.components.header-widgets.dashboard-header')
         <!-- /.box-body -->
+
+        <div class="box-body">
+            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{{ url('/project/create') }}" class="btn btn-app">
+                <i  class="main-action-btn-danger fa fa-plus"></i> New
+            </a>
+        </div>
     </div>
     <!-- /.box -->
 @endsection
@@ -24,11 +33,6 @@
         <div class="col-xs-12">
             <div class="box">
                 <!-- /.box-header -->
-                <div style="overflow: auto" class="box-body">
-                    <a href="{{ url('/project/create') }}" class="btn btn-app pull-right">
-                        <i style="color: red" class="fa fa-plus"></i> New
-                    </a>
-                </div>
                 <div style="overflow: auto" class="box-body">
                     <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>

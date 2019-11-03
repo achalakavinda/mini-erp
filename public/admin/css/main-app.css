@@ -1,0 +1,8 @@
+/*colour for the action buttons*/
+.main-action-btn-info {
+    color:#3f9ae5
+}
+
+.main-action-btn-danger{
+    color: red;
+}

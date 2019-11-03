@@ -19,6 +19,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Theme style -->
     {!! Html::style('admin/css/AdminLTE.min.css') !!}
     {!! Html::style('admin/css/skins/skin-blue.min.css') !!}
+    {!! Html::style('admin/css/main-app.css') !!}
     <style>
         .form-group{
             padding-left:5px;

@@ -9,12 +9,26 @@
         <div class="box-header with-border">
             <h3 class="box-title">Project | {!! $Project->code !!}</h3>
         </div>
-        <div class="box-body">
-            <a href="{{ url('/project') }}" class="btn btn-success">Go Back</a>
-            <a href="{!! url('/project') !!}/{!! $Project->id !!}/staff" class="btn btn-info">Staff <i class="fa fa-plus-square"></i></a>
-            <a href="{!! url('/project') !!}/{!! $Project->id !!}/budget-cost" class="btn btn-danger">Budget <i class="fa fa-plus-square"></i></a>
-            <a href="{{ url('/project') }}/{!! $Project->id !!}/actual-cost" class="btn btn-danger">Actual Cost <i class="fa fa-money"></i></a>
-        </div>
+        @include('layouts.components.header-widgets.dashboard-header')
+        <!-- /.box-body -->
+            <div class="box-body">
+                <a href="{!! url('/project') !!}/{!! $Project->id !!}" class="btn btn-app">
+                    <i  class="main-action-btn-info fa fa-arrow-left"></i> Go Back
+                </a>
+                <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                    <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+                </a>
+                <a href="{!! url('/project') !!}/{!! $Project->id !!}/staff" class="btn btn-app">
+                    <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+                </a>
+                <a href="{!! url('/project') !!}/{!! $Project->id !!}/budget-cost" class="btn btn-app">
+                    <i class="main-action-btn-info fa fa-table"></i> Budget
+                </a>
+                <a href="{{ url('/project') }}/{!! $Project->id !!}/actual-cost" class="btn btn-app">
+                    <i  class="main-action-btn-info fa fa-table"></i> Actual Cost
+                </a>
+            </div>
+        <!-- /.box -->
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
@@ -27,14 +41,14 @@
         <div class="col-md-12">
             <!-- general form elements -->
             <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Assign User</h3>
-                </div>
-                <!-- /.box-header -->
+
                 <!-- form start -->
                 {!! Form::model($Project, ['method' => 'PATCH','action' => ['ProjectController@staffAllocationUpdate', $Project->id],'class'=>'form-horizontal','id'=>'Form']) !!}
-                @include('error.error')
                 <div class="box-body">
+                @include('error.error')
+                <button type="submit" class="btn btn-app"><i style="color: #00a157" class="fa fa-save"></i> Save </button>
+                </div>
+                    <div class="box-body">
                     <div class="col-md-12">
                         <div class="form-group">
                             <table id="table" class="table table-responsive table-bordered table-striped">
@@ -73,11 +87,6 @@
                     </div>
                 </div>
                 <!-- /.box-body -->
-
-                <div class="box-footer">
-                    {!! Form::submit('Submit',['class'=>'pull-right btn btn-primary']) !!}
-                </div>
-
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->

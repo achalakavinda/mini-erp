@@ -26,5 +26,5 @@
 <!-- /.box-body -->
 
 <div class="box-footer">
-    {!! Form::submit('submit',['class'=>'btn btn-primary pull-right']) !!}
+    <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i> Save </button>
 </div>

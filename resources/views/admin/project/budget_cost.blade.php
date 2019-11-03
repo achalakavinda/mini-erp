@@ -25,12 +25,26 @@
         <div class="box-header with-border">
             <h3 class="box-title">Project Estimations | {!! $Project->code !!}</h3>
         </div>
+    @include('layouts.components.header-widgets.dashboard-header')
+    <!-- /.box-body -->
         <div class="box-body">
-            <a href="{{ url('/project') }}/{!! $Project->id !!}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/project') }}/{!! $Project->id !!}/budget-cost" class="btn btn-danger">Budget <i class="fa fa-plus-square"></i></a>
-            <a href="{{ url('/project') }}/{!! $Project->id !!}/actual-cost" class="btn btn-danger">Actual Cost <i class="fa fa-money"></i></a>
+            <a href="{!! url('/project') !!}/{!! $Project->id !!}" class="btn btn-app">
+                <i  class="main-action-btn-info fa fa-arrow-left"></i> Go Back
+            </a>
+            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{!! url('/project') !!}/{!! $Project->id !!}/budget-cost" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
+            <a href="{!! url('/project') !!}/{!! $Project->id !!}/staff" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-table"></i> Staff
+            </a>
+            <a href="{{ url('/project') }}/{!! $Project->id !!}/actual-cost" class="btn btn-app">
+                <i  class="main-action-btn-info fa fa-table"></i> Actual Cost
+            </a>
         </div>
-        <!-- /.box-body -->
+        <!-- /.box -->
     </div>
     <!-- /.box -->
 @endsection

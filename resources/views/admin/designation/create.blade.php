@@ -5,12 +5,19 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Create New Designation Type</h3>
+            <h3 class="box-title">Designation Type</h3>
         </div>
+        @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
-            <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/designation') }}" class="btn btn-success">Designation</a>
-            <a href="{{ url('/designation/create') }}" class="btn btn-success">New</a>
+            <a href="{!! url('designation') !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-arrow-left"></i> Go Back
+            </a>
+            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{!! url('/designation/create') !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
         </div>
         <!-- /.box-body -->
     </div>

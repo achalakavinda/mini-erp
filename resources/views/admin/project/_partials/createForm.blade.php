@@ -33,7 +33,7 @@
                 {!! Form::label('budget_cost','Budget Cost',['class' => 'control-label']) !!}
                 {!! Form::number('budget_cost',0,['readonly','class'=>'form-control','id'=>'budgeCost']) !!}
             </div>
-    </div>
+        </div>
 
         <div class="col-md-4">
             <div class="form-group">
