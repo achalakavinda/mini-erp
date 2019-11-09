@@ -4,11 +4,22 @@ namespace App\Http\Controllers\Ims;
 
 use App\Models\CompanyDivision;
 use App\Models\Ims\Invoice;
+use App\Models\Ims\ItemCode;
+use App\Models\Ims\StockItem;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 class InvoiceController extends Controller
 {
+    public $Company_Division_id = 1;
+
+    public $CompanyDivision;
+
+    public function __construct()
+    {
+        $this->CompanyDivision = CompanyDivision::get()->first();
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -66,78 +77,78 @@ class InvoiceController extends Controller
             'company_division_id'=>$this->CompanyDivision->id,
         ]);
 
-        try{
-
-            $Stock = null;
-            $TotalAmount = 0;
-            $TotalSum = 0;
-            $TotalDiscount = $DiscountPercentage;
-
-            foreach ($request->row as $item){
-
-                $Model = ItemCode::find($item['model_id']);
-                $Stock_Item_Same_Unit = StockItem::where(['item_code_id'=>$item['model_id'],'unit_price'=>$item['unit'],'company_division_id'=>$this->CompanyDivision->id])->first();
-                if ($Stock_Item_Same_Unit!=null){
-
-                    $SUM_TOL_QTY = $Stock_Item_Same_Unit->tol_qty;
-                    $SUM_QTY = $Stock_Item_Same_Unit->qty;
-
-                    $Stock_Item_Same_Unit->tol_qty = $SUM_TOL_QTY-$item['qty'];
-                    $Stock_Item_Same_Unit->qty = $SUM_QTY-$item['qty'];
-                    $Stock_Item_Same_Unit->save();
-
-                }else{
-
-                    //if no stock item found need create new stock
-                    if ($Stock == null){
-                        $Stock = Stock::create(['company_division_id'=>1]);
-                    }
-
-                    $Stock_Item_Same_Unit = StockItem::create([
-                        'stock_id'=>$Stock->id,
-                        'brand_id'=>$Model->brand_id,
-                        'item_code_id'=>$Model->id,
-                        'unit_price'=>$item['unit'],
-                        'qty'=>0-$item['qty'],
-                        'open_qty'=>0,
-                        'tol_qty'=>0-$item['qty'],
-                        'company_division_id'=>$this->CompanyDivision->id,
-                    ]);
-
-                }
-
-                InvoiceItem::create([
-                    'invoice_id'=>$Invoice->id,
-                    'brand_id'=>$Stock_Item_Same_Unit->brand_id,
-                    'item_code_id'=>$item['model_id'],
-                    'price'=>$item['unit'],
-                    'qty'=>$item['qty'],
-                    'value'=>$item['qty']*$item['unit'],
-                    'remarks'=>'k',
-                    'company_division_id'=>$this->Company_Division_id
-                ]);
-
-                $TotalAmount = $TotalAmount + ($item['qty']*$item['unit']);
-            }
-
-            if($DiscountPercentage!=null){
-                $TotalSum = $TotalAmount - ($TotalAmount*($DiscountPercentage/100));
-            }else{
-                $TotalSum = $TotalAmount;
-                $DiscountPercentage = 0;
-            }
-
-            $Invoice->amount = $TotalAmount;
-            $Invoice->discount = $DiscountPercentage;
-            $Invoice->total = $TotalSum;
-            $Invoice->save();
-
-        } catch (\Exception $exception){
-
-            $Invoice->delete();
-            return redirect(url('invoice/create'))->with(['error'=>$exception->getMessage()]);
-
-        }
+//        try{
+//
+//            $Stock = null;
+//            $TotalAmount = 0;
+//            $TotalSum = 0;
+//            $TotalDiscount = $DiscountPercentage;
+//
+//            foreach ($request->row as $item){
+//
+//                $Model = ItemCode::find($item['model_id']);
+//                $Stock_Item_Same_Unit = StockItem::where(['item_code_id'=>$item['model_id'],'unit_price'=>$item['unit'],'company_division_id'=>$this->CompanyDivision->id])->first();
+//                if ($Stock_Item_Same_Unit!=null){
+//
+//                    $SUM_TOL_QTY = $Stock_Item_Same_Unit->tol_qty;
+//                    $SUM_QTY = $Stock_Item_Same_Unit->qty;
+//
+//                    $Stock_Item_Same_Unit->tol_qty = $SUM_TOL_QTY-$item['qty'];
+//                    $Stock_Item_Same_Unit->qty = $SUM_QTY-$item['qty'];
+//                    $Stock_Item_Same_Unit->save();
+//
+//                }else{
+//
+//                    //if no stock item found need create new stock
+//                    if ($Stock == null){
+//                        $Stock = Stock::create(['company_division_id'=>1]);
+//                    }
+//
+//                    $Stock_Item_Same_Unit = StockItem::create([
+//                        'stock_id'=>$Stock->id,
+//                        'brand_id'=>$Model->brand_id,
+//                        'item_code_id'=>$Model->id,
+//                        'unit_price'=>$item['unit'],
+//                        'qty'=>0-$item['qty'],
+//                        'open_qty'=>0,
+//                        'tol_qty'=>0-$item['qty'],
+//                        'company_division_id'=>$this->CompanyDivision->id,
+//                    ]);
+//
+//                }
+//
+//                InvoiceItem::create([
+//                    'invoice_id'=>$Invoice->id,
+//                    'brand_id'=>$Stock_Item_Same_Unit->brand_id,
+//                    'item_code_id'=>$item['model_id'],
+//                    'price'=>$item['unit'],
+//                    'qty'=>$item['qty'],
+//                    'value'=>$item['qty']*$item['unit'],
+//                    'remarks'=>'k',
+//                    'company_division_id'=>$this->Company_Division_id
+//                ]);
+//
+//                $TotalAmount = $TotalAmount + ($item['qty']*$item['unit']);
+//            }
+//
+//            if($DiscountPercentage!=null){
+//                $TotalSum = $TotalAmount - ($TotalAmount*($DiscountPercentage/100));
+//            }else{
+//                $TotalSum = $TotalAmount;
+//                $DiscountPercentage = 0;
+//            }
+//
+//            $Invoice->amount = $TotalAmount;
+//            $Invoice->discount = $DiscountPercentage;
+//            $Invoice->total = $TotalSum;
+//            $Invoice->save();
+//
+//        } catch (\Exception $exception){
+//
+//            $Invoice->delete();
+//            return redirect(url('invoice/create'))->with(['error'=>$exception->getMessage()]);
+//
+//        }
 
         return redirect(url('invoice').'/'.$Invoice->id.'/print');
 

@@ -7,15 +7,23 @@
         <div class="box-header with-border">
             <h3 class="box-title">Customers</h3>
         </div>
+        @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
-            <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/customer') }}" class="btn btn-success">Customer</a>
-            <a href="{{ url('/customer/create') }}" class="btn btn-success">New</a>
-            <button id="ShowAdvance" type="button" class=" btn btn-light">Show All Fields <i class="fa fa-list"></i></button>
+            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{!! url('customer') !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-arrow-left"></i> Go Back
+            </a>
+            <a href="{!! url('customer/create') !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
+            <a href="#" id="ShowAdvance" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Show all Fields
+            </a>
         </div>
         <!-- /.box-body -->
     </div>
-    <!-- /.box -->
     <!-- /.box -->
 @endsection
 <!-- /main header section -->
