@@ -21,6 +21,7 @@ class CreateProjectsTable extends Migration
         });
 
         Schema::create('projects', function (Blueprint $table) {
+
             $table->increments('id');
             $table->integer('customer_id')->unsigned();
             $table->string('customer_name');

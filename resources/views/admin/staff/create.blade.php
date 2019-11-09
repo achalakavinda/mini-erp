@@ -5,13 +5,22 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Staff Board</h3>
+            <h3 class="box-title">Staff</h3>
         </div>
+        @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
-            <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/staff') }}" class="btn btn-success">Staff</a>
-            <a href="{{ url('/staff/create') }}" class="btn btn-success">New</a>
-            <button id="ShowAdvance" type="button" class=" btn btn-light">Show All Fields <i class="fa fa-list"></i></button>
+            <a href="{!! url('staff') !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
+            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a id="ShowAdvance" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Show All Fields
+            </a>
+            <a href="{!! url('staff/create') !!}" class="btn btn-app">
+                <i class="main-action-btn-danger fa fa-plus"></i> New
+            </a>
         </div>
         <!-- /.box-body -->
     </div>
@@ -26,7 +35,7 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Add New Employee</h3>
+                    <h3 class="box-title">Add a new Employee</h3>
                 </div>
                 <!-- /.box-header -->
                 {!! Form::open(['action'=>'StaffController@store','class'=>'form-horizontal','id'=>'Form']) !!}
@@ -45,8 +54,6 @@
 @section('js')
     <script type="text/javascript">
 
-
-
         $("#cost").keyup(function () {
             calculate();
         });
@@ -59,9 +66,7 @@
            if( getCost()>0){
                calculate();
            }
-        })
-
-
+        });
 
         $("#basicSalary").keyup(function () {
             calculateEtfEpf()
@@ -78,7 +83,6 @@
         
         function getCost() {
             var costValue = 0;
-
             var Epf_Cost = parseFloat($('#epfCost').val());
             var Etf_Cost = parseFloat($('#etfCost').val());
             var Allowance_Cost = parseFloat($('#allowanceCost').val());
@@ -104,7 +108,6 @@
             if(basicSal>0){
                 costValue = costValue+basicSal;
             }
-
             $('#cost').val(costValue.toFixed(2));
             return costValue.toFixed(2);
         }
@@ -116,14 +119,12 @@
             $('#epfCost').val(epf.toFixed(2));
             $('#etfCost').val(etf.toFixed(2))
         }
-
     </script>
 
     @include('error.swal')
     <script>
         $('#ShowAdvance').on('click',function () {
-            $('#AdvanceForm').fadeIn('slow');
-            $('#ShowAdvance').hide();
+            $('#AdvanceForm').toggle();
         })
     </script>
 @endsection

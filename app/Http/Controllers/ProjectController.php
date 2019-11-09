@@ -57,7 +57,12 @@ class ProjectController extends Controller
     public function create()
     {
         User::CheckPermission([config('constant.Permission_Project_Creation'),config('constant.Permission_Project_Budget_Creation_Assigned')]);
-        return view('admin.project.create');
+
+        $Customers = Customer::all()->pluck('name','id');
+        $JobTypes = JobType::all()->pluck('jobType','id');
+        $CustomerSector = CustomerSector::all()->pluck('name','id');
+
+        return view('admin.project.create',compact(['Customers','JobTypes','CustomerSector']));
     }
 
     /**
@@ -88,19 +93,21 @@ class ProjectController extends Controller
 
         //Project Code
         $code = $CUSTOMER->name."-".$JobType->key.$TimeCode;
+
         //Check code for unique project code validations
         $CheckCode = Project::where('code',$code)->first();
 
-        if($CheckCode)
+        if( $CheckCode )
         {
             return    \redirect()->back()->withErrors('*Code must be unique');
         }
 
-        if($request->profit_ratio<10){
+        if( $request->profit_ratio<10 )
+        {
             return    \redirect()->back()->withErrors('Minimum mark up 10%');
         }
 
-        $quoted_price = $request->budget_cost +($request->budget_cost*($request->profit_ratio/100));
+        $quoted_price = $request->budget_cost +( $request->budget_cost* ($request->profit_ratio/100) );
 
         //create project
         $Project = Project::create([

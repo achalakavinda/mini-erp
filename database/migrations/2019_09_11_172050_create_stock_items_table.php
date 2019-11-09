@@ -18,6 +18,7 @@ class CreateStockItemsTable extends Migration
             $table->unsignedInteger('stock_id');
             $table->unsignedInteger('brand_id');
             $table->unsignedInteger('item_code_id');
+            $table->string('item_code');
             $table->double('unit_price')->default(0);
             $table->double('qty')->default(0);
             $table->double('open_qty')->default(0);

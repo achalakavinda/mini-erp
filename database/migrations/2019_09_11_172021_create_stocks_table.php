@@ -15,12 +15,15 @@ class CreateStocksTable extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
             $table->date('created_date')->default(\Carbon\Carbon::now());
             $table->unsignedInteger('stock_location_id')->nullable();
             $table->unsignedInteger('company_division_id')->nullable();
+            $table->unsignedInteger('company_id');
             $table->timestamps();
             $table->foreign('stock_location_id')->references('id')->on('stock_location')->onDelete('cascade');
             $table->foreign('company_division_id')->references('id')->on('company_divisions')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
     }
 

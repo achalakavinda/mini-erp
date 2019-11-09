@@ -1,32 +1,33 @@
 @extends('layouts.admin')
-
-@section('style')
-    {!! Html::style('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') !!}
-@endsection
-
-@section('js')
-    {!! Html::script('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') !!}
-    {!! Html::script('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') !!}
-    <script type="text/javascript">
-
-        $(function () {
-            $('#table').DataTable({
-                'paging'      : true,
-                'lengthChange': false,
-                'searching'   : true,
-                'ordering'    : true,
-                'info'        : true,
-                'autoWidth'   : true,
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-            })
-        })
-    </script>
-
-@endsection
-
 <!-- main header section -->
 @section('main-content-header')
-    @include('layouts.selectors.ims.header-widgets.header')
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Category Table</h3>
+        </div>
+    @include('layouts.components.header-widgets.dashboard-header')
+    <!-- /.box-body -->
+
+        <div class="box-body">
+            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{{ url('/ims/brand') }}" class="btn btn-app">
+                <i  class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
+            <a href="{{ url('/ims/item') }}" class="btn btn-app">
+                <i  class="main-action-btn-info fa fa-table"></i> Item
+            </a>
+            <a href="{{ url('/ims/invoice') }}" class="btn btn-app">
+                <i  class="main-action-btn-info fa fa-table"></i> Invoice
+            </a>
+            <a href="{{ url('/ims/brand/create') }}" class="btn btn-app">
+                <i  class="main-action-btn-danger fa fa-plus"></i> New
+            </a>
+        </div>
+    </div>
+    <!-- /.box -->
 @endsection
 <!-- /main header section -->
 <!-- main section -->
@@ -34,9 +35,6 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">Brands</h3>
-                </div>
                 <!-- /.box-header -->
                 <div style="overflow: auto" class="box-body">
                     <table id="table" class="table table-responsive table-bordered table-striped">
@@ -53,10 +51,7 @@
                                 <td>{!! $brand->id !!}</td>
                                 <td>{!! $brand->name !!}</td>
                                 <td>
-                                    {!! Form::model($brand, ['method' => 'PATCH', 'action' => ['Ims\BrandController@update', $brand->id],'class'=>'form-horizontal']) !!}
-                                        {!! Form::text('set_delete',"value",['style'=>'display:none']) !!}
-                                        <button type="submit" class="btn btn-sm"><i class="fa fa-trash"></i></button>
-                                    {!! Form::close() !!}
+                                    <a href="{!! url('ims/brand') !!}/{!! $brand->id !!}"><i class="fa fa-paper-plane"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -72,3 +67,7 @@
     <!-- /.row -->
 @endsection
 <!-- /main section -->
+
+@section('js')
+    @include('layouts.components.dataTableJs.index')
+@endsection
