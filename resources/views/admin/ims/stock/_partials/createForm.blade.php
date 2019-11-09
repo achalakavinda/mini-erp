@@ -1,6 +1,6 @@
 <?php
 
-    $ItemCode = \App\Models\ItemCode::all()->pluck('name','id');
+    $ItemCode = \App\Models\Ims\ItemCode::all()->pluck('name','id');
 
 ?>
 <div class="box-body">

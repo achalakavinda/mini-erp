@@ -1,5 +1,4 @@
 <div class="box-body">
-
     <div class="col-md-12">
         <div class="form-group">
             {!! Form::label("Parent Brand") !!}
@@ -27,11 +26,9 @@
             {!! Form::select('company_division_id',$CompanyDivision,null,['readonly','class'=>'form-control','id'=>'companyDivisionId']) !!}
         </div>
     </div>
-
-
 </div>
 <!-- /.box-body -->
 
 <div class="box-footer">
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i> Save </button>
 </div>

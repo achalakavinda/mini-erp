@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             Important::class,
             RolesAndPermissionsSeeder::class,
             TestDataSeeder::class,
+            InventorySeeder::class,
             DesignationSeeder::class,
             JobTypeTableSeeder::class,
 //            CustomerSeeder::class,
