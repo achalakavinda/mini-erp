@@ -11,8 +11,21 @@
         <div class="box-header with-border">
             <h3 class="box-title">Work Sheet</h3>
         </div>
-        @include('admin.header-widgets.dashboard-header')
+
+        @include('layouts.components.header-widgets.dashboard-header')
+        <div class="box-body">
+            <a href="{!! url('work-sheet') !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
+            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{!! url('work-sheet/create') !!}" class="btn btn-app">
+                <i class="main-action-btn-danger fa fa-plus"></i> New
+            </a>
+        </div>
         <!-- /.box-body -->
+
     </div>
     <!-- /.box -->
 @endsection
@@ -23,10 +36,6 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <div class="box-header">
-                    <a href="{{ url('/work-sheet/create') }}" class="btn btn-sm btn-danger">New <i class="fa fa-plus-square"></i></a>
-                </div>
-                <!-- /.box-header -->
                 <div style="overflow: auto" class="box-body">
                     <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>

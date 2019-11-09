@@ -1,13 +1,13 @@
 <div class="box-body">
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="form-group">
             {!! Form::label('designationType','*Designation Type',['class' => 'control-label']) !!}
             {!! Form::text('designationType',null,['class'=>'form-control','id'=>'designationType']) !!}
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-12">
         <div class="form-group">
             {!! Form::label('avg_hr_rate','*Avg Hr Rate',['class' => 'control-label']) !!}
             {!! Form::number('avg_hr_rate',null,['class'=>'form-control','id'=>'AvgHrRate','step'=>'0.01']) !!}
@@ -26,5 +26,5 @@
 <!-- /.box-body -->
 
 <div class="box-footer">
-    {!! Form::submit('submit',['class'=>'btn btn-primary']) !!}
+    <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i> Save </button>
 </div>

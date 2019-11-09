@@ -6,7 +6,7 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
             <div class="pull-left">
-                <img style="width: 70%" src="{!! asset('img/logo.png') !!}">
+                {{--<img style="width: 70%" src="{!! asset('img/logo.png') !!}">--}}
             </div>
         </div>
 
@@ -21,7 +21,7 @@
 
             <!-- PMIS MENU BLOCK -->
             <li class="treeview">
-                <a href="#"><i class="fa fa-train"></i> <span> PMIS </span>
+                <a href="#"><i class="fa fa-train"></i> <span> Project Management </span>
                     <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                 </a>
                 <ul class="treeview-menu">
@@ -31,31 +31,39 @@
                     @elsecan(config('constant.Permission_Project_assigned'))
                         <li><a href="{{ url('/project') }}"><i class="fa fa-print"></i> <span>Assigned Project</span></a></li>
                     @endcan
-
-                    @can(config('constant.Permission_Work_Sheet'))
-                        <li><a href="{{ url('work-sheet') }}"><i class="fa fa-file"></i> <span>Work Sheet</span></a></li>
-                    @endcan
-
-                    @can(config('constant.Permission_Staff'))
-                        <li class="treeview">
-                                <a href="{{ url('/staff') }}"><i class="fa fa-user"></i> <span>Staff</span>
-                                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
-                                </a>
-                                <ul class="treeview-menu">
-                                    <li><a href="{{ url('designation') }}"><i class="fa fa-table"></i> Designation</a></li>
-                                    <li><a href="{{ url('job-type') }}"><i class="fa fa-table"></i> Job Type</a></li>
-                                    <li><a href="{{ url('/staff') }}"><i class="fa fa-table"></i> Registry</a></li>
-                                    <li><a href="{{ url('/staff/create') }}"><i class="fa fa-plus-square"></i> New</a></li>
-                                </ul>
-                        </li>
-                    @endcan
-
-                    @can(config('constant.Permission_Attendance'))
-                        <li><a href="{{ url('attendance') }}"><i class="fa fa-list"></i> <span>Attendance</span></a></li>
-                    @endcan
-
                 </ul>
             </li><!-- /PMIS MENU BLOCK -->
+
+
+            <!-- human resource -->
+            @can(config('constant.Permission_Staff'))
+                <li class="treeview">
+                    <a href="{{ url('/staff') }}"><i class="fa fa-user"></i> <span>Human Resource</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @can(config('constant.Permission_Work_Sheet'))
+                            <li><a href="{{ url('work-sheet') }}"><i class="fa fa-file"></i> <span>Work Sheet</span></a></li>
+                        @endcan
+
+                        @can(config('constant.Permission_Attendance'))
+                            <li><a href="{{ url('attendance') }}"><i class="fa fa-list"></i> <span>Attendance</span></a></li>
+                        @endcan
+                        <li class="treeview">
+                            <a href="{{ url('/staff') }}"><i class="fa fa-user"></i> <span>Staff</span>
+                                <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li><a href="{{ url('designation') }}"><i class="fa fa-table"></i> Designation</a></li>
+                                <li><a href="{{ url('job-type') }}"><i class="fa fa-table"></i> Job Type</a></li>
+                                <li><a href="{{ url('/staff') }}"><i class="fa fa-table"></i> Registry</a></li>
+                                <li><a href="{{ url('/staff/create') }}"><i class="fa fa-plus-square"></i> New</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
+            @endcan
+            <!-- /human resource -->
 
 
             <!-- inventory block -->

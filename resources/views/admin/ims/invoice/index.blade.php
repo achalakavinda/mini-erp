@@ -5,10 +5,19 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Dashboard / Invoice</h3>
+            <h3 class="box-title">Invoice</h3>
         </div>
+        @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
-            <a href="{{ url('ims/invoice/create') }}" class="btn btn-success">Invoice <i class="fa fa-plus"></i> </a>
+            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{!! url('ims/invoice') !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
+            <a href="{!! url('ims/invoice/create') !!}" class="btn btn-app">
+                <i class="main-action-btn-danger fa fa-plus"></i> New
+            </a>
         </div>
         <!-- /.box-body -->
     </div>
@@ -21,12 +30,9 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <div class="box-header">
-                    <h3 class="box-title">#Invoice</h3>
-                </div>
                 <!-- /.box-header -->
                 <div style="overflow: auto" class="box-body">
-                    <table id="dataTable" class="table table-responsive table-bordered table-striped">
+                    <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>
                         <tr>
                             <th>#ID</th>
@@ -42,7 +48,6 @@
                         </tr>
                         </thead>
                         <tbody>
-
                         @foreach($Items as $item)
                             <tr>
                                 <td>{!! $item->id !!}</td>
@@ -74,20 +79,5 @@
 
 
 @section('js')
-
-    <style type="text/css" href="{!! asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') !!}"></style>
-    <style type="text/css">
-        .dataTables_filter{
-            float: right;
-        }
-    </style>
-    <script type="text/javascript" src="{!! asset('bower_components/datatables.net/js/jquery.dataTables.min.js') !!}"></script>
-    <script type="text/javascript" src="{!! asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') !!}"></script>
-
-    <script type="text/javascript">
-        $('#dataTable').DataTable({
-            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-        });
-    </script>
-
+    @include('layouts.components.dataTableJs.index')
 @endsection

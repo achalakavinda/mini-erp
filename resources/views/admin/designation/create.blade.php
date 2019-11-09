@@ -7,10 +7,17 @@
         <div class="box-header with-border">
             <h3 class="box-title">Designation Type</h3>
         </div>
+        @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
-            <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/designation') }}" class="btn btn-success">Designation</a>
-            <a href="{{ url('/designation/create') }}" class="btn btn-success">New</a>
+            <a href="{!! url('designation') !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-arrow-left"></i> Go Back
+            </a>
+            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{!! url('/designation/create') !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
         </div>
         <!-- /.box-body -->
     </div>
@@ -21,11 +28,11 @@
 <!-- main section -->
 @section('main-content')
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Add Designation Type</h3>
+                    <h3 class="box-title">Add New Designation</h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->

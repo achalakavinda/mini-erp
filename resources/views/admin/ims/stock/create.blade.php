@@ -31,9 +31,9 @@
                 <!-- /.box-header -->
                 <!-- form start -->
 
-                {!! Form::open(['action'=>'StockController@store','class'=>'form-horizontal','id'=>'Form']) !!}
+                {!! Form::open(['action'=>'Ims\StockController@store','class'=>'form-horizontal','id'=>'Form']) !!}
                 @include('error.error')
-                @include('admin.stock._partials.createForm')
+                @include('admin.ims.stock._partials.createForm')
                 {!! Form::close() !!}
             </div>
             <!-- /.box -->

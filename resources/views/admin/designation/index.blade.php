@@ -9,9 +9,20 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Designation Type</h3>
+            <h3 class="box-title">Designation Table</h3>
         </div>
-        @include('admin.header-widgets.dashboard-header')
+        @include('layouts.components.header-widgets.dashboard-header')
+        <div class="box-body">
+            <a href="{!! url('designation') !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
+            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{!! url('/designation/create') !!}" class="btn btn-app">
+                <i class="main-action-btn-danger fa fa-plus"></i> New
+            </a>
+        </div>
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
@@ -23,9 +34,6 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <div class="box-header">
-                    <a href="{{ url('/designation/create') }}" class="btn btn-sm btn-danger">New <i class="fa fa-plus-square"></i></a>
-                </div>
                 <!-- /.box-header -->
                 <div style="overflow: auto" class="box-body">
                     <table id="table" class="table table-responsive table-bordered table-striped">
@@ -34,19 +42,15 @@
                             <th>Type</th>
                             <th>Avg Hr Rate</th>
                             <th>Description</th>
-                            <th>View</th>
                         </tr>
                         </thead>
                         <tbody>
 
                             @foreach($Rows as $row)
-                                <tr>
-                                    <td>{{ $row->designationType }}</td>
+                                <tr onclick="click()">
+                                    <td> <a href="{{ url('designation') }}/{{ $row->id }}" > {{ $row->designationType }} </a></td>
                                     <td>{{ $row->avg_hr_rate }}</td>
                                     <td>{{ $row->description }}</td>
-                                    <td>
-                                        <a href="{{ url('designation') }}/{{ $row->id }}" ><i class="fa fa-paper-plane"></i></a>
-                                    </td>
                                 </tr>
                             @endforeach
 
@@ -70,7 +74,7 @@
     <script type="text/javascript">
 
         $(function () {
-            $('#table').DataTable({
+            var table = $('#table').DataTable({
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
             })
         })

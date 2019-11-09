@@ -16,6 +16,17 @@
             <h3 class="box-title">Work Sheet</h3>
         </div>
         <!-- /.box-body -->
+    @include('layouts.components.header-widgets.dashboard-header')
+    <!-- /.box-body -->
+        <div class="box-body">
+            <a href="{!! url('work-sheet/create') !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
+            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+        </div>
+        <!-- /.box -->
     </div>
     <!-- /.box -->
 @endsection

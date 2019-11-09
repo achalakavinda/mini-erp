@@ -6,6 +6,7 @@ use App\Models\Ims\Brand;
 use App\Models\Ims\ItemCode;
 use App\Models\Ims\Stock;
 use App\Models\Ims\StockItem;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -83,26 +84,34 @@ class ItemController extends Controller
             'company_division_id'=>$Brand->company_division_id,
         ]);
 
-        //stock logic
         //if open stock is available you need to add it to stock
         //check for the existing stock or create a new stock
         if( $request->opening_stock_qty>0 )
         {
             $Stock_Item = StockItem::where('item_code_id',$ItemCode->id)->first();
+
             if($Stock_Item == null){
-                $Stock = Stock::create(['company_division_id'=>$Brand->company_division_id]);
+
+                $Stock = Stock::create([
+                    'name'=>'Stock-'.Carbon::now(),
+                    'company_division_id'=>$Brand->company_division_id,
+                    'company_id'=>$Brand->company_id]
+                );
+
                 StockItem::create([
                     'stock_id'=>$Stock->id,
                     'brand_id'=>$ItemCode->brand_id,
                     'item_code_id'=>$ItemCode->id,
+                    'item_code'=>$ItemCode->name,
                     'unit_price'=>$UnitPriceWithTax,
                     'qty'=>0,
                     'open_qty'=>$request->opening_stock_qty,
                     'tol_qty'=>$request->opening_stock_qty,
+                    'company_id'=>$Brand->company_id,
                     'company_division_id'=>$Brand->company_division_id,
                 ]);
             }
-        }//stock logic  ends here
+        }
 
         return redirect()->back();
     }

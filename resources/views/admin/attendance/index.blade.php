@@ -11,8 +11,16 @@
         <div class="box-header with-border">
             <h3 class="box-title">Attendance</h3>
         </div>
-    @include('admin.header-widgets.dashboard-header')
-    <!-- /.box-body -->
+        @include('layouts.components.header-widgets.dashboard-header')
+        <div class="box-body">
+            <a href="{!! url('attendance') !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
+            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+        </div>
+        <!-- /.box-body -->
     </div>
     <!-- /.box -->
 @endsection
