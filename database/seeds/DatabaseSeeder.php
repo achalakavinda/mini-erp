@@ -21,9 +21,9 @@ class DatabaseSeeder extends Seeder
             DesignationSeeder::class,
             JobTypeTableSeeder::class,
 //            CustomerSeeder::class,
-            ProjectCostTypeTableSeeder::class,
+//            ProjectCostTypeTableSeeder::class,
 //            UserTableSeeder::class,
-//            ProjectSeeder::class
+            ProjectSeeder::class
         ]);
 
 
