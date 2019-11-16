@@ -15,7 +15,6 @@
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
-    <!-- /.box -->
 @endsection
 <!-- /main header section -->
 
