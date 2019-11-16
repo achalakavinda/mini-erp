@@ -12,11 +12,11 @@
         </div>
         @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
-            <a href="{!! url('staff') !!}" class="btn btn-app">
-                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
-            </a>
             <a onclick="showMegaMenu()" href="#" class="btn btn-app">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{!! url('staff') !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
             </a>
             <a href="{!! url('staff/create') !!}" class="btn btn-app">
                 <i class="main-action-btn-danger fa fa-plus"></i> New

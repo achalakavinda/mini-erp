@@ -2,15 +2,22 @@
 
 <!-- main header section -->
 @section('main-content-header')
-    <!-- Default box -->
+
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Customers</h3>
+            <h3 class="box-title">Customer : {!! $Customer->name !!} | {!! $Customer->code !!}</h3>
         </div>
+        @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
-            <a href="{{ url('/dashboard') }}" class="btn btn-success">Go Back</a>
-            <a href="{{ url('/customer') }}" class="btn btn-success">Customer</a>
-            <a href="{{ url('/customer/create') }}" class="btn btn-success">New</a>
+            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{!! url('customer') !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-arrow-left"></i> Go Back
+            </a>
+            <a href="{!! url('customer') !!}/{!! $Customer->id !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
         </div>
         <!-- /.box-body -->
     </div>
@@ -26,8 +33,6 @@
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">{!! $Customer->name !!} | {!! $Customer->code !!}</h3>
-
                     @include('error.error')
                 </div>
                 <!-- /.box-header -->
