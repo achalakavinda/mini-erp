@@ -22,14 +22,16 @@ class CreateUsersTable extends Migration
             $table->string('password');
 
 
-            $table->date('date_joined')->nullable();
+            $table->date('date_joined')->default(\Carbon\Carbon::now());
             $table->text('mobile')->nullable();
             $table->text('residence')->nullable();
+
             $table->integer('hometown_district_id')->nullable();
             $table->text('hometown_city')->nullable();
             $table->integer('cmb_location_district')->nullable();
             $table->text('cmb_city')->nullable();
             $table->text('address')->nullable();
+
 
             $table->string('emp_no')->nullable();
             $table->string('epf_no')->nullable();

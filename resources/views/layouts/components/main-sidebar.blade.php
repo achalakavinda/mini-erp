@@ -65,6 +65,15 @@
             @endcan
             <!-- /human resource -->
 
+            <!-- GL MENU BLOCK -->
+            <li class="treeview">
+                <a href="#"><i class="fa fa-train"></i> <span> General Ledger </span>
+                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                        <li><a href="{{ url('/general-ledger') }}"><i class="fa fa-print"></i> <span>General Ledger</span></a></li>
+                </ul>
+            </li><!-- /GL MENU BLOCK -->
 
             <!-- inventory block -->
             <li class="treeview">
