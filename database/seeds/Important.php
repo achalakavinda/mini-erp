@@ -36,6 +36,7 @@ class Important extends Seeder
             ],
 
         ]);
+
         DB::table('customer_services')->insert([
             [
                 'name'=>'External Audit',
@@ -86,6 +87,7 @@ class Important extends Seeder
                 "updated_at"=>\Carbon\Carbon::now()
             ],
         ]);
+
         DB::table('customer_sectors')->insert([
             [
                 'name'=>'Agriculture, Fishing & Forestry',
@@ -172,15 +174,15 @@ class Important extends Seeder
                 "updated_at"=>\Carbon\Carbon::now()
             ],
             [
-                'name'=>'Other Sectors ',
-                'code'=>'O',
+                'name'=>'Individuals / Not applicable',
+                'code'=>'I',
                 'description'=>'description',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
             [
-                'name'=>'Individuals / Not applicable',
-                'code'=>'I',
+                'name'=>'Information & Communication',
+                'code'=>'IT',
                 'description'=>'description',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
@@ -289,6 +291,12 @@ class Important extends Seeder
                 'key'=>'FEA',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
+            ],
+            [
+                'JobType'=>"Other",
+                'key'=>'OTHER',
+                "created_at"=>\Carbon\Carbon::now(),
+                "updated_at"=>\Carbon\Carbon::now()
             ]
         ]);
 
@@ -343,6 +351,9 @@ class Important extends Seeder
 
         //staff important seeds
         DB::table('ca_trainings')->insert([
+            [
+                'name' => 'NULL'
+            ],
             [
                 'name' => 'EL'
             ],
@@ -493,6 +504,11 @@ class Important extends Seeder
             [
                 'id'=>4,
                 'name'=>'Holiday',
+                'workable'=>false,
+            ],
+            [
+                'id'=>5,
+                'name'=>'Company Holiday',
                 'workable'=>false,
             ],
         ]);

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\GeneralLedger\GeneralLedger;
+use App\Models\GeneralLedger\GLCode;
+use App\Models\GeneralLedger\JournalCode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -32,7 +34,9 @@ class GeneralLedgerController extends Controller
      */
     public function create()
     {
-        //
+        $GLCodes = GLCode::all()->pluck('name','id');
+        $JournalCodes = JournalCode::all()->pluck('name','id');
+        return view('admin.general_ledger.create',compact(['GLCodes','JournalCodes']));
     }
 
     /**
@@ -43,7 +47,25 @@ class GeneralLedgerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+             "date" => "required",
+             "g_l_code_id" => "required",
+             "description" => "required",
+             "journal_code_id" => "required",
+             "amount" => "required",
+        ]);
+
+        GeneralLedger::create([
+            'date'=>$request->date,
+            'g_l_code_id'=>$request->g_l_code_id,
+            'description'=>$request->description,
+            'journal_code_id'=>$request->journal_code_id,
+            'amount'=>$request->amount,
+            'user_id'=>\Auth::id(),
+        ]);
+
+        return \Redirect::to('general-ledger');
+
     }
 
     /**

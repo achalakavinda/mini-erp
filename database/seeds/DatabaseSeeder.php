@@ -17,14 +17,8 @@ class DatabaseSeeder extends Seeder
             GeneralLedgerSeeder::class,
             Important::class,
             RolesAndPermissionsSeeder::class,
-            TestDataSeeder::class,
-            InventorySeeder::class,
-            DesignationSeeder::class,
-            JobTypeTableSeeder::class,
-//            CustomerSeeder::class,
-//            ProjectCostTypeTableSeeder::class,
-//            UserTableSeeder::class,
-            ProjectSeeder::class
+//            TestDataSeeder::class,
+            InventorySeeder::class
         ]);
 
 
