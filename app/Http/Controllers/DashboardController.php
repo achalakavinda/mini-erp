@@ -10,11 +10,14 @@ class DashboardController extends Controller
 
     public function index()
     {
-        $user_permission = auth()->user()->hasAnyPermission('Project');
-        if($user_permission){
-            return view('dashboard');
-        }else{
-            return view('staff-dashboard');
-        }
+        return view('dashboard');
+//
+//        if(Auth::user()->can(config('constant.Permission_Work_Sheet'))){
+//            return redirect('/work-sheet/create');
+//        }else if (Auth::user()->can(config('constant.Permission_Minor_Staff_Work_Sheet'))){
+//            return redirect('/staff/work-sheet');
+//        }else{
+//            return redirect('/staff/profile/'.Auth::id());
+//        }
     }
 }
