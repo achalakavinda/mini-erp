@@ -1,21 +1,15 @@
 <?php
-
         $ASSIGNED_TYPE = false;
     if(\App\Models\User::CheckPermission( config('constant.Permission_Project_Registry_Assigned_Show') ))
     {
         $ASSIGNED_TYPE = true;
     }elseif (\App\Models\User::CheckPermission( config('constant.Permission_Project_Show') )){
 
-    }else{
+    }else{    }
 
-    }
-
-
-$User = \App\Models\User::find($Project->created_by_id);
+    $User = \App\Models\User::find($Project->created_by_id);
     $Customers = \App\Models\Customer::where('id',$Project->customer_id)->pluck('name','id');
     $PROJECTJOBTYPE = \App\Models\ProjectJobType::where('project_id',$Project->id)->get();
-
-
 ?>
 
 @extends('layouts.admin')
@@ -69,7 +63,6 @@ $User = \App\Models\User::find($Project->created_by_id);
                     <h4 class="box-title">Project Details</h4>
                 </div>
                 <div class="box-body">
-
                     <div class="col-md-12" style="overflow: auto">
                         <table id="table" class="table table-responsive table-bordered table-striped">
                             <thead>
@@ -109,50 +102,49 @@ $User = \App\Models\User::find($Project->created_by_id);
                         </table>
                     </div>
 
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <button type="button" class="form-control" data-toggle="modal" data-target="#modal-default">
-                                Work Report <i class="fa fa-table"></i>
-                            </button>
+                    <div class="col-md-12">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <button type="button" class="form-control" data-toggle="modal" data-target="#modal-default">
+                                    Work Report <i class="fa fa-table"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <a type="button" style="text-align: center; cursor: pointer" class="form-control"  href="{{ url('/project') }}/{!! $Project->id !!}/settings">
+                                    Project Settings <i class="fa fa-cogs"></i>
+                                </a>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <a type="button" style="text-align: center; cursor: pointer" class="form-control"  href="{{ url('/project') }}/{!! $Project->id !!}/settings">
-                                Project Settings <i class="fa fa-cogs"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="box box-primary">
-                <div class="box-body">
                     <div class="col-md-12" style="overflow: auto">
-                            <table id="table" class="table table-responsive table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Budget Cost</th>
-                                    <th>Actual Cost</th>
-                                    <th>Profit Ratio</th>
-                                    <th>Quoted Price</th>
-                                    <th>Invoice Amount</th>
-                                    <th>Receipt Amount</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>{!! number_format($Project->budget_cost_by_work+$Project->budget_cost_by_work+$Project->budget_cost_by_overhead,2) !!}</td>
-                                    <td>{!! number_format($Project->actual_cost_by_work+$Project->actual_cost_by_work+$Project->actual_cost_by_overhead,2) !!}</td>
-                                    <td>{!! number_format($Project->profit_ratio,2) !!}</td>
-                                    <td>{!! number_format($Project->quoted_price,2) !!}</td>
-                                    <td>{!! number_format($Project->invoicing_amount,2) !!}</td>
-                                    <td>{!! number_format($Project->receipt_amount,2) !!}</td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <table id="table" class="table table-responsive table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Budget Cost</th>
+                                <th>Actual Cost</th>
+                                <th>Profit Ratio</th>
+                                <th>Quoted Price</th>
+                                <th>Invoice Amount</th>
+                                <th>Receipt Amount</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>{!! number_format($Project->budget_cost_by_work+$Project->budget_cost_by_work+$Project->budget_cost_by_overhead,2) !!}</td>
+                                <td>{!! number_format($Project->actual_cost_by_work+$Project->actual_cost_by_work+$Project->actual_cost_by_overhead,2) !!}</td>
+                                <td>{!! number_format($Project->profit_ratio,2) !!}</td>
+                                <td>{!! number_format($Project->quoted_price,2) !!}</td>
+                                <td>{!! number_format($Project->invoicing_amount,2) !!}</td>
+                                <td>{!! number_format($Project->receipt_amount,2) !!}</td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
+
+                </div>
             </div>
 
             <div class="box box-primary">
