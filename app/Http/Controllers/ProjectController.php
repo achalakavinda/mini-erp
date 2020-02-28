@@ -57,7 +57,6 @@ class ProjectController extends Controller
     public function create()
     {
         User::CheckPermission([config('constant.Permission_Project_Creation'),config('constant.Permission_Project_Budget_Creation_Assigned')]);
-
         $Customers = Customer::all()->pluck('name','id');
         $JobTypes = JobType::all()->pluck('jobType','id');
         $CustomerSector = CustomerSector::all()->pluck('name','id');
@@ -99,7 +98,7 @@ class ProjectController extends Controller
 
         if( $CheckCode )
         {
-            return    \redirect()->back()->withErrors('*Code must be unique');
+            return    \redirect()->back()->withErrors('*Code should be unique');
         }
 
         if( $request->profit_ratio<10 )
