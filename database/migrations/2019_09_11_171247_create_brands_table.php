@@ -18,6 +18,8 @@ class CreateBrandsTable extends Migration
             $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('level')->default(0);
             $table->string('name');
+            $table->string('description')->nullable();
+            $table->string('img_url')->nullable();
             $table->unsignedInteger('company_id');
             $table->unsignedInteger('company_division_id');
             $table->timestamps();

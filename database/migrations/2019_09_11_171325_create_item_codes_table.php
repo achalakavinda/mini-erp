@@ -38,7 +38,7 @@ class CreateItemCodesTable extends Migration
             $table->unsignedInteger('type_measurement_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('brand_id')->references('id')->on('brands');
+            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
             $table->foreign('type_measurement_id')->references('id')->on('type_measurements');
             $table->foreign('company_id')->references('id')->on('companies');
             $table->foreign('company_division_id')->references('id')->on('company_divisions');
