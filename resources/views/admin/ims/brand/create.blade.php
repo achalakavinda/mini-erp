@@ -34,25 +34,26 @@
 
 <!-- main section -->
 @section('main-content')
+    @include('error.error')
+    <!-- form start -->
+    {!! Form::open(['action'=>'Ims\BrandController@store','class'=>'form-horizontal','id'=>'Form']) !!}
     <div class="row">
         <div class="col-md-6">
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-
                 </div>
                 <!-- /.box-header -->
-                <!-- form start -->
-
-                {!! Form::open(['action'=>'Ims\BrandController@store','class'=>'form-horizontal','id'=>'Form']) !!}
-                @include('error.error')
                 @include('admin.ims.brand._partials.createForm')
-                {!! Form::close() !!}
             </div>
             <!-- /.box -->
         </div>
+
+        @include('admin.ims.brand._partials.extentions.extCreateForm')
+
     </div>
     <!-- /.row -->
+    {!! Form::close() !!}
 
 @endsection
 <!-- /main section -->

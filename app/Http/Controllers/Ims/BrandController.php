@@ -30,7 +30,7 @@ class BrandController extends Controller
     {
         $Company = Company::all()->pluck('code','id');
         $CompanyDivision = CompanyDivision::all()->pluck('code','id');
-        $Brand = Brand::all()->pluck('code','id');
+        $Brand = Brand::all()->pluck('name','id');
         return view('admin.ims.brand.create',compact(['Company','CompanyDivision','Brand']));
     }
 
@@ -52,8 +52,11 @@ class BrandController extends Controller
         Brand::create([
             'name'=>$request->name,
             'company_id'=>$CompanyDivision->company_id,
-            'company_division_id'=>$CompanyDivision->id
+            'company_division_id'=>$CompanyDivision->id,
+            'description'=>$request->description,
+            'img_url'=>asset('storage/img/brand').'/'.$request->img_url,
         ]);
+
         return redirect()->back();
     }
 

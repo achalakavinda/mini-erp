@@ -183,6 +183,62 @@ class RolesAndPermissionsSeeder extends Seeder
         $permission = Permission::create(['name' => config('constant.Permission_Project_Staff_Assigned')]);
         $role_admin->givePermissionTo($permission);
 
+        //Inventory permissions
+        $permission = Permission::create(['name' => config('constant.Permission_Supplier') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Supplier_Registry') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Supplier_Show') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Supplier_Creation') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Supplier_Update') ]);
+        $role_admin->givePermissionTo($permission);
+
+        $permission = Permission::create(['name' => config('constant.Permission_Brand') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Brand_Registry') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Brand_Show') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Brand_Creation') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Brand_Update') ]);
+        $role_admin->givePermissionTo($permission);
+
+        $permission = Permission::create(['name' => config('constant.Permission_Item') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Item_Registry') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Item_Show') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Item_Creation') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Item_Update') ]);
+        $role_admin->givePermissionTo($permission);
+
+        $permission = Permission::create(['name' => config('constant.Permission_Stock') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Stock_Registry') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Stock_Show') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Stock_Creation') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Stock_Update') ]);
+        $role_admin->givePermissionTo($permission);
+
+        $permission = Permission::create(['name' => config('constant.Permission_Inventory') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Inventory_Registry') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Inventory_Show') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Inventory_Creation') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Inventory_Update') ]);
+        $role_admin->givePermissionTo($permission);
+
 
 
         $user = \App\Models\User::where('email','admin@test.com')->first();

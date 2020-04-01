@@ -91,6 +91,38 @@ return [
     'Permission_Attendance_Creation'=> 'Attendance-Creation',
     'Permission_Attendance_Update'=> 'Attendance-Update',
 
+    //Inventory permissions
+    'Permission_Supplier'=> 'Supplier',
+    'Permission_Supplier_Registry'=> 'Supplier-Registry',
+    'Permission_Supplier_Show'=> 'Supplier-Show',
+    'Permission_Supplier_Creation'=> 'Supplier-Creation',
+    'Permission_Supplier_Update'=> 'Supplier-Update',
+
+    'Permission_Brand'=> 'Brand',
+    'Permission_Brand_Registry'=> 'Brand-Registry',
+    'Permission_Brand_Show'=> 'Brand-Show',
+    'Permission_Brand_Creation'=> 'Brand-Creation',
+    'Permission_Brand_Update'=> 'Brand-Update',
+
+    'Permission_Item'=> 'Item',
+    'Permission_Item_Registry'=> 'Item-Registry',
+    'Permission_Item_Show'=> 'Item-Show',
+    'Permission_Item_Creation'=> 'Item-Creation',
+    'Permission_Item_Update'=> 'Item-Update',
+
+    'Permission_Stock'=> 'Stock',
+    'Permission_Stock_Registry'=> 'Stock-Registry',
+    'Permission_Stock_Show'=> 'Stock-Show',
+    'Permission_Stock_Creation'=> 'Stock-Creation',
+    'Permission_Stock_Update'=> 'Stock-Update',
+
+    'Permission_Inventory'=> 'Inventory',
+    'Permission_Inventory_Registry'=> 'Inventory-Registry',
+    'Permission_Inventory_Show'=> 'Inventory-Show',
+    'Permission_Inventory_Creation'=> 'Inventory-Creation',
+    'Permission_Inventory_Update'=> 'Inventory-Update',
+
+    //utility permissions
     'Permission_Reports'=> 'Reports',
     'Permission_Setting'=> 'Settings',
 ];

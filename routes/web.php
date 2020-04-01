@@ -19,17 +19,7 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
 
-    Route::get('/dashboard',function(){
-
-        if(Auth::user()->can(config('constant.Permission_Work_Sheet'))){
-            return redirect('/work-sheet/create');
-        }else if (Auth::user()->can(config('constant.Permission_Minor_Staff_Work_Sheet'))){
-            return redirect('/staff/work-sheet');
-        }else{
-            return redirect('/staff/profile/'.Auth::id());
-        }
-
-    });
+    Route::get('/dashboard','DashboardController@index');
 
     Route::get('/staff/profile/{id}', function ($id){
             $User = \App\Models\User::findOrFail($id);
@@ -51,6 +41,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('attendance', 'AttendanceController');
 
     Route::resource('customer', 'CustomerController');
+    Route::resource('supplier','SupplierController');
+    Route::resource('general-ledger','GeneralLedgerController');
 
     Route::patch('staff/reset-password/{id}', 'StaffController@resetPassword');
     Route::resource('staff', 'StaffController');
