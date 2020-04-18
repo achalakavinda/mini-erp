@@ -24,6 +24,7 @@ class CreateItemCodesTable extends Migration
             $table->string('name');
             $table->unsignedInteger('brand_id');
             $table->string('description')->nullable();
+            $table->text('thumbnail_url')->default("https://f0.pngfuel.com/png/1006/626/valentine-day-frame-valentines-day-decorative-ornament-for-frame-red-and-brown-heart-frame-png-clip-art-thumbnail.png");
 
             $table->float('unit_cost');
             $table->float('selling_price');

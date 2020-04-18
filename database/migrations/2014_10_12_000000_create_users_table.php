@@ -23,21 +23,19 @@ class CreateUsersTable extends Migration
 
 
             $table->date('date_joined')->default(\Carbon\Carbon::now());
+
+
             $table->text('mobile')->nullable();
             $table->text('residence')->nullable();
-
             $table->integer('hometown_district_id')->nullable();
             $table->text('hometown_city')->nullable();
             $table->integer('cmb_location_district')->nullable();
             $table->text('cmb_city')->nullable();
             $table->text('address')->nullable();
-
-
             $table->string('emp_no')->nullable();
             $table->string('epf_no')->nullable();
             $table->unsignedInteger('designation_id')->nullable();
             $table->string('nic')->nullable();
-
 
             $table->integer('user_id')->default(-999);
 
@@ -45,7 +43,6 @@ class CreateUsersTable extends Migration
             $table->date('ca_training_period_from')->nullable();
             $table->date('ca_training_period_to')->nullable();
             $table->string('ca_training')->nullable();
-
             $table->double('basic_sal')->default(0);
             $table->double('epf_cost')->nullable();
             $table->double('etf_cost')->nullable();
@@ -69,7 +66,7 @@ class CreateUsersTable extends Migration
                 'id'=>1,
                 'name' => 'admin',
                 'email' => 'admin@test.com',
-                'password' => bcrypt('Appowner123'),
+                'password' => bcrypt('admin123'),
                 'date_joined'=>\Carbon\Carbon::now()
             ]
         ]);
