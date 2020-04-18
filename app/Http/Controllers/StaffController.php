@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CaTraining;
+use App\Models\CmbLocationDistrict;
 use App\Models\Designation;
+use App\Models\HometownDistrict;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -14,8 +17,6 @@ class StaffController extends Controller
     }
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -26,21 +27,21 @@ class StaffController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function create()
     {
         User::CheckPermission([ config('constant.Permission_Staff_Creation') ]);
+
         $Designation = Designation::all()->pluck('designationType','id');
-        return view('admin.staff.create',compact('Designation'));
+        $CA_TRAINGINS = CaTraining::all()->pluck('name','id');
+        $CM_LOCATION_DISTRICTS = CmbLocationDistrict::all()->pluck('name','id');
+        $HOMETOWN_DISTRICTS = HometownDistrict::all()->pluck('name','id');
+
+        return view('admin.staff.create',compact(['Designation','CA_TRAINGINS','CM_LOCATION_DISTRICTS','HOMETOWN_DISTRICTS']));
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
@@ -96,19 +97,20 @@ class StaffController extends Controller
         }catch (\Exception $exception){
             return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
         }
-
         return redirect()->back()->with(['created'=>'success','message'=>'Successfully created!']);
     }
 
-    public function resetPassword(Request $request,$id){
-
+    public function resetPassword(Request $request,$id)
+    {
         $request->validate([
             'old_password'=>'required',
             'new_password'=>'required',
             're_password'=>'required'
         ]);
+
         $User = User::findOrFail($id);
         $hashedPassword  = $User->password;
+
         if (\Hash::check($request->old_password, $hashedPassword)) {
             if($request->new_password === $request->re_password){
                 $User->password = bcrypt($request->new_password);
@@ -153,7 +155,13 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
-        //
+        $User = User::findorFail($id);
+        $Designation = Designation::all()->pluck('designationType','id');
+        $CA_TRAINGINS = CaTraining::all()->pluck('name','id');
+        $CM_LOCATION_DISTRICTS = CmbLocationDistrict::all()->pluck('name','id');
+        $HOMETOWN_DISTRICTS = HometownDistrict::all()->pluck('name','id');
+
+        return view('admin.staff.edit',compact(['User','Designation','CA_TRAINGINS','CM_LOCATION_DISTRICTS','HOMETOWN_DISTRICTS']));
     }
 
     /**

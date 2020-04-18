@@ -19,7 +19,7 @@
 </style>
 <!-- Default box -->
 
-<div id="megaMenuID" class="box-body">
+<div  id="megaMenuID" class="box-body">
     <ul   class="row mega-menu-ul">
 
         <li class="col-md-2">

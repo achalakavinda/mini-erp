@@ -46,7 +46,7 @@
                             <th>Hour Rate</th>
                             <th>Nic</th>
                             <th>Email</th>
-                            <th>View</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -60,7 +60,11 @@
                                     <td>{!! $row->hr_rates !!}</td>
                                     <td>{!! $row->nic !!}</td>
                                     <td>{!! $row->email !!}</td>
-                                    <td><a href="{!! url('/staff/profile') !!}/{!! $row->id !!}" >Profile <i class="fa fa-user"></i></a> </td>
+                                    <td>
+                                        <a href="{!! url('/staff') !!}/{!! $row->id !!}/edit" >Edit <i class="fa fa-edit"></i></a>
+                                        <a href="{!! url('/staff/profile') !!}/{!! $row->id !!}" >Profile <i class="fa fa-user"></i></a>
+
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>
