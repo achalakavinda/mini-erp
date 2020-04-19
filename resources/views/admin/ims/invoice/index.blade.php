@@ -60,7 +60,7 @@
                                 <td>{!! $item->amount !!}</td>
                                 <td>{!! $item->discount !!}</td>
                                 <td>{!! $item->total !!}</td>
-                                <td><a href="{!! url('/invoice') !!}/{!! $item->id !!}" class="btn btn-sm btn-danger">view</a> </td>
+                                <td><a href="{!! url('ims/invoice') !!}/{!! $item->id !!}/print" class="btn btn-sm btn-danger">view</a> </td>
                             </tr>
                         @endforeach
                         </tbody>

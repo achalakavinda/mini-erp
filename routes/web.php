@@ -86,6 +86,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::prefix('ims')->group(function () {
         Route::get('/','Ims\ImsController@index');
+        Route::get('/invoice/{id}/print','Ims\InvoiceController@print');
         Route::resource('/brand','Ims\BrandController');
         Route::resource('/item','Ims\ItemController');
         Route::resource('/invoice','Ims\InvoiceController');
