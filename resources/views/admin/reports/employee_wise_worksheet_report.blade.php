@@ -1,8 +1,8 @@
 <?php
 
     $Count = 0;
-    $from = \Illuminate\Support\Facades\Input::get('from');
-    $to = \Illuminate\Support\Facades\Input::get('to');
+    $from = Request::get('from');
+    $to = Request::get('to');
 
     if($from!=null && $to!=null)
     {
