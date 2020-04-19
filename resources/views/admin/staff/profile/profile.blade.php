@@ -60,10 +60,10 @@
 
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
-                                <b>Project</b> <a class="pull-right">1,322</a>
+                                <b>Project</b> <a class="pull-right"></a>
                             </li>
                             <li class="list-group-item">
-                                <b>Working Hours</b> <a class="pull-right">543</a>
+                                <b>Working Hours</b> <a class="pull-right"></a>
                             </li>
                         </ul>
                     </div>

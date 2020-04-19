@@ -21,10 +21,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/dashboard','DashboardController@index');
 
-    Route::get('/staff/profile/{id}', function ($id){
-            $User = \App\Models\User::findOrFail($id);
-            return view('admin.staff.profile.profile',compact('User'));
-        });
+    Route::get('/staff/profile/{id}','StaffController@profile');
 
 
     Route::get('/staff/work-sheet', 'PageController@workSheet');
@@ -88,6 +85,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     Route::prefix('ims')->group(function () {
+        Route::get('/','Ims\ImsController@index');
         Route::resource('/brand','Ims\BrandController');
         Route::resource('/item','Ims\ItemController');
         Route::resource('/invoice','Ims\InvoiceController');

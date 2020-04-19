@@ -1,28 +1,30 @@
-<?php
-
-    $ItemCode = \App\Models\Ims\ItemCode::all()->pluck('name','id');
-
-?>
-<div class="box-body">
-
-    <div class="col-md-6">
-        <div class="form-group">
-            {!! Form::label("Model") !!}
-            {!! Form::select('model_id',$ItemCode,null,['class'=>'form-control','id'=>'modelid']) !!}
+<div class="col-md-12">
+    <!-- general form elements -->
+    <div class="box box-primary">
+        <div class="box-header with-border">
+            Stock Batch Items
         </div>
-    </div>
-
-    <div class="col-md-6">
-        <div class="form-group">
-            {!! Form::label("Qty") !!}
-            {!! Form::text('qty',null,['class'=>'form-control','id'=>'qty']) !!}
+        <!-- /.box-header -->
+        <!-- form start -->
+        <div class="box-body">
+                <table id="invoiceItemTable" class="table table-responsive table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Model</th>
+                        <th>Qty</th>
+                        <th>Unit Price (LKR)</th>
+                        <th>Total</th>
+                        <th><i class="fa fa-remove"></i></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
         </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+        <button type="submit" class="btn btn-primary">Submit</button>
     </div>
-
-
-</div>
-<!-- /.box-body -->
-
-<div class="box-footer">
-    <button type="submit" class="btn btn-primary">Submit</button>
+    </div>
 </div>

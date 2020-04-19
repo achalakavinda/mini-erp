@@ -14,15 +14,13 @@ class AttendanceController extends Controller
 {
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $reques)
     {
         $dateArray = [Carbon::now()->format('Y-m-d')];
 
-        $from = Input::get('from');
-        $to = Input::get('to');
+        $from = $reques->input('from');
+        $to = $reques->input('to');
 
         if($from!=null && $to!=null)
         {

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUsersTable extends Migration
+class CreateEmployeesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,12 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('img_url')->default("https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-512.png");
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-
-
+            $table->unsignedInteger('user_id');
             $table->date('date_joined')->default(\Carbon\Carbon::now());
-
-
             $table->text('mobile')->nullable();
+            $table->text('email')->nullable();
             $table->text('residence')->nullable();
             $table->integer('hometown_district_id')->nullable();
             $table->text('hometown_city')->nullable();
@@ -37,7 +30,7 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('designation_id')->nullable();
             $table->string('nic')->nullable();
 
-            $table->integer('user_id')->default(-999);
+            $table->integer('supervisor_user_id')->default(-999);
 
             $table->string('ca_agree_no')->nullable();
             $table->date('ca_training_period_from')->nullable();
@@ -53,23 +46,12 @@ class CreateUsersTable extends Migration
             $table->double('hr_rates')->default(0);
             $table->double('hr_billing_rates')->nullable();
 
-
-            $table->rememberToken();
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
 
-        });
 
-        DB::table('users')->insert([
-            [
-                'id'=>1,
-                'name' => 'admin',
-                'email' => 'admin@test.com',
-                'password' => bcrypt('admin123'),
-                'date_joined'=>\Carbon\Carbon::now()
-            ]
-        ]);
+        });
     }
 
     /**
@@ -79,6 +61,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('employees');
     }
 }

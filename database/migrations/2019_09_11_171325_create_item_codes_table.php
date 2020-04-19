@@ -24,6 +24,7 @@ class CreateItemCodesTable extends Migration
             $table->string('name');
             $table->unsignedInteger('brand_id');
             $table->string('description')->nullable();
+            $table->text('thumbnail_url')->default("http://itinerantnotes.com/blog/images/logo.png");
 
             $table->float('unit_cost');
             $table->float('selling_price');

@@ -1,14 +1,14 @@
 @extends('layouts.admin')
 
-<!-- main header section -->
-    @section('main-content-header')
+@section('main-content-header')
+        <!-- main header section -->
         <div class="box">
             <div class="box-header with-border">
                 <h3 class="box-title">Dashboard</h3>
             </div>
             @include('admin.header-widgets.dashboard-header')
         </div>
-            <div class="box">
+        <div class="box">
                 <div style="padding: 10px" class="row">
 
                     <div class="col-md-3 col-sm-6 col-xs-12">
@@ -57,14 +57,16 @@
                 <!-- /.row -->
             </div>
         <!-- /.box -->
-    @endsection
-<!-- /main header section -->
+        <!-- /main header section -->
+@endsection
 
-<!-- main section -->
+
+
 @section('main-content')
+    <!-- main section -->
     <div class="row">
 
-        <div class="col-md-12">
+        <div class="col-md-6">
             <!-- BAR CHART -->
             <div class="box box-success">
                 <div class="box-header with-border">
@@ -106,9 +108,9 @@
 
     </div>
     <!-- /.row -->
-
+    <!-- /main section -->
 @endsection
-<!-- /main section -->
+
 
 @section('style')
     {!! Html::style('admin/bower_components/morris.js/morris.css') !!}
