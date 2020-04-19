@@ -54,7 +54,7 @@
                                 <tr>
                                     <td>{!! $row->id !!}</td>
                                     <td>{!! $row->emp_no !!}</td>
-                                    <td>{!! $row->name !!}</td>
+                                    <td>{!! $row->User->name !!}</td>
                                     <td>{!! $row->address !!}</td>
                                     <td>{!! $row->cost  !!}</td>
                                     <td>{!! $row->hr_rates !!}</td>

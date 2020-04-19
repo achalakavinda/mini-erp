@@ -4,7 +4,7 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">User : {!! $User->name !!}</h3>
+            <h3 class="box-title">User : {!! $Employee->User->name !!}</h3>
         </div>
         @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
@@ -14,7 +14,7 @@
             <a onclick="showMegaMenu()" href="#" class="btn btn-app">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
             </a>
-            <a href="{!! url('staff') !!}/{!! $User->id !!}/edit" class="btn btn-app">
+            <a href="{!! url('staff') !!}/{!! $Employee->id !!}/edit" class="btn btn-app">
                 <i class="main-action-btn-info fa fa-refresh"></i> Refresh
             </a>
             <a id="ShowAdvance" href="#" class="btn btn-app">
@@ -31,7 +31,7 @@
 @section('main-content')
     <!-- main section -->
     <div class="row">
-                {!! Form::model($User, ['method' => 'PATCH', 'action' => ['StaffController@update', $User->id],'class'=>'form-horizontal']) !!}
+                {!! Form::model($Employee, ['method' => 'PATCH', 'action' => ['StaffController@update', $Employee->id],'class'=>'form-horizontal']) !!}
                 @include('error.error')
                 @include('admin.staff._partials.createForm')
                 {!! Form::close() !!}

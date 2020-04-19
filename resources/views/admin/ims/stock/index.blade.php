@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-<!-- main header section -->
 @section('main-content-header')
+    <!-- main header section -->
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
@@ -22,17 +22,18 @@
             <a href="{{ url('/ims/invoice') }}" class="btn btn-app">
                 <i  class="main-action-btn-info fa fa-table"></i> Invoice
             </a>
-            {{--<a href="{{ url('/ims/stock/create') }}" class="btn btn-app">--}}
-                {{--<i  class="main-action-btn-danger fa fa-plus"></i> New--}}
-            {{--</a>--}}
+            <a href="{{ url('/ims/stock/create') }}" class="btn btn-app">
+                <i  class="main-action-btn-info fa fa-plus"></i> New
+            </a>
         </div>
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
+    <!-- /main header section -->
 @endsection
-<!-- /main header section -->
-<!-- main section -->
+
 @section('main-content')
+    <!-- main section -->
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
@@ -43,8 +44,8 @@
                             <th>Code</th>
                             <th>Brand</th>
                             <th>Qty</th>
-                            <th>Open Stock Qty</th>
-                            <th>Total Qty </th>
+                            <th>Open Stock [created]</th>
+                            <th>Available Total Qty </th>
 
                         </tr>
                         </thead>
@@ -74,9 +75,9 @@
         <!-- /.col -->
     </div>
     <!-- /.row -->
-
+    <!-- /main section -->
 @endsection
-<!-- /main section -->
+
 
 @section('js')
     @include('layouts.components.dataTableJs.index')
