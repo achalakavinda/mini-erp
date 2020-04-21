@@ -20,9 +20,9 @@ class CreateStockItemsTable extends Migration
             $table->unsignedInteger('item_code_id');
             $table->string('item_code');
             $table->double('unit_price')->default(0);
-            $table->double('qty')->default(0);
-            $table->double('open_qty')->default(0);
+            $table->double('created_qty')->default(0);
             $table->double('tol_qty')->default(0);
+            $table->boolean("is_open_stock")->default(false);
             $table->unsignedInteger('company_division_id');
             $table->unsignedInteger('company_id');
             $table->timestamps();

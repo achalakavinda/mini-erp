@@ -27,7 +27,7 @@ class StockController extends Controller
     public function index()
     {
         $Stocks = \DB::table('stock_items')
-            ->select(\DB::raw('sum(stock_items.open_qty) as open_qty, sum(stock_items.qty) as qty , sum(stock_items.tol_qty) as tol_qty,stock_items.item_code_id'))
+            ->select(\DB::raw('sum(stock_items.created_qty) as created_qty, sum(stock_items.tol_qty) as tol_qty,stock_items.item_code_id'))
             ->groupBy('stock_items.item_code_id')
             ->get();
         return view('admin.ims.stock.index',compact(['Stocks']));
@@ -72,8 +72,7 @@ class StockController extends Controller
                             'item_code_id'=>$Model->id,
                             'item_code'=>$Model->name,
                             'unit_price'=>$Model->unit_cost,
-                            'qty'=>$item['qty'],
-                            'open_qty'=>$item['qty'],//to identify the initial qty for bath item
+                            'created_qty'=>$item['qty'],//to identify the initial qty for bath item
                             'tol_qty'=>$item['qty'],
                             'company_division_id'=>$this->CompanyDivision->id,
                             'company_id'=>1,
