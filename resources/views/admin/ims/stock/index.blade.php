@@ -43,10 +43,7 @@
                         <tr>
                             <th>Code</th>
                             <th>Brand</th>
-                            <th>Qty</th>
-                            <th>Open Stock [created]</th>
-                            <th>Available Total Qty </th>
-
+                            <th>In Stock</th>
                         </tr>
                         </thead>
 
@@ -54,13 +51,10 @@
                         @foreach($Stocks as $stock)
                             <?php
                             $CODE = \App\Models\Ims\ItemCode::find($stock->item_code_id);
-                            $BRAND = \App\Models\Ims\Brand::find($CODE->brand_id);
-                            ?>
+                            $BRAND = \App\Models\Ims\Brand::find($CODE->brand_id);?>
                             <tr>
                                 <td>{!! $CODE->name !!}</td>
                                 <td>{!! $BRAND->name !!}</td>
-                                <td>{!! $stock->qty !!}</td>
-                                <td>{!! $stock->open_qty !!}</td>
                                 <td>{!! $stock->tol_qty !!}</td>
                             </tr>
                         @endforeach

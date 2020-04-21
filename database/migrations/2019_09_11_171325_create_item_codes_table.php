@@ -33,7 +33,6 @@ class CreateItemCodesTable extends Migration
             $table->float('unit_price_with_tax');
 
 
-            $table->float('opening_stock_qty')->default(0);
             $table->unsignedInteger('company_id');
             $table->unsignedInteger('company_division_id');
             $table->unsignedInteger('type_measurement_id')->nullable();

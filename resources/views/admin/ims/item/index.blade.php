@@ -48,7 +48,7 @@
                             <th>NBT</th>
                             <th>VAT</th>
                             <th>Unit Price With Taxes (LKR)</th>
-                            <th>Open Stock</th>
+                            <th>In Stock</th>
                             <th><i class="fa fa-cogs"></i></th>
                         </tr>
                         </thead>
@@ -61,6 +61,12 @@
                                         <?php
                                             $brand = \App\Models\Ims\Brand::find($item->brand_id);
                                             if(!empty($brand)){echo $brand->name;}
+
+                                        $STOCKITEM = DB::table('stock_items')
+                                            ->select(DB::raw('sum(stock_items.created_qty) as created_qty, sum(stock_items.tol_qty) as qty,stock_items.item_code_id'))
+                                            ->where(['stock_items.item_code_id'=>$item->id])
+                                            ->groupBy('stock_items.item_code_id')
+                                            ->get();
                                         ?>
                                     </td>
                                     <td>{!! $item->name !!}</td>
@@ -70,7 +76,14 @@
                                     <td>{!! $item->nbt_tax_percentage !!}%</td>
                                     <td>{!! $item->vat_tax_percentage !!}%</td>
                                     <td>{!! $item->unit_price_with_tax !!}</td>
-                                    <td>{!! $item->opening_stock_qty !!}</td>
+                                    <td>
+                                        @if($STOCKITEM->isEmpty())
+                                            0
+                                        @endif
+                                        @foreach($STOCKITEM as $element)
+                                            {{ $element->qty }}
+                                        @endforeach
+                                    </td>
                                     <td><a class="btn btn-sm" href="{!! url('ims/item') !!}/{!! $item->id !!}"><i class="fa fa-paper-plane"></i></a></td>
                                 </tr>
                             @endforeach

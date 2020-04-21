@@ -64,7 +64,8 @@ class ItemController extends Controller
         if($request->vat_tax>0 && $request->vat_tax<=100){
             $UnitPriceWithTax = $UnitPriceWithTax+($UnitPriceWithTax*($request->vat_tax/100));
         }
-        if($request->opening_stock_qty<0){
+        if($request->opening_stock_qty<0)
+        {
             $request->opening_stock_qty = 0;
         }
 
@@ -79,7 +80,6 @@ class ItemController extends Controller
             'nbt_tax_percentage'=>$request->nbt_tax,
             'vat_tax_percentage'=>$request->vat_tax,
             'unit_price_with_tax'=>$UnitPriceWithTax,
-            'opening_stock_qty'=>$request->opening_stock_qty,
             'company_id'=>$Brand->company_id,
             'company_division_id'=>$Brand->company_division_id,
         ]);
@@ -88,28 +88,27 @@ class ItemController extends Controller
         //check for the existing stock or create a new stock
         if( $request->opening_stock_qty>0 )
         {
-            $Stock_Item = StockItem::where('item_code_id',$ItemCode->id)->first();
-
-            if($Stock_Item == null){
-
-                $Stock = Stock::create([
-                    'name'=>'Stock-'.Carbon::now(),
-                    'company_division_id'=>$Brand->company_division_id,
-                    'company_id'=>$Brand->company_id]
-                );
+            try {
+                $Stock = Stock::create(['name'=>'Batch','company_division_id'=>1,'company_id'=>1,'is_open_stock'=>true]);
+                $Stock->name = "Batch :".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Stock->id."-open-stock";
+                $Stock->save();
 
                 StockItem::create([
-                    'stock_id'=>$Stock->id,
-                    'brand_id'=>$ItemCode->brand_id,
-                    'item_code_id'=>$ItemCode->id,
-                    'item_code'=>$ItemCode->name,
-                    'unit_price'=>$UnitPriceWithTax,
-                    'qty'=>0,
-                    'open_qty'=>$request->opening_stock_qty,
-                    'tol_qty'=>$request->opening_stock_qty,
-                    'company_id'=>$Brand->company_id,
-                    'company_division_id'=>$Brand->company_division_id,
+                            'stock_id'=>$Stock->id,
+                            'brand_id'=>$Brand->id,
+                            'item_code_id'=>$ItemCode->id,
+                            'item_code'=>$ItemCode->name,
+                            'unit_price'=>$ItemCode->unit_cost,
+                            'created_qty'=>$request->opening_stock_qty,//to identify the initial qty for bath item
+                            'tol_qty'=>$request->opening_stock_qty,
+                            'company_division_id'=>1,
+                            'company_id'=>1,
                 ]);
+
+            }catch (\Exception $e){
+
+                $ItemCode->delete();
+                dd($e->getMessage());
             }
         }
 

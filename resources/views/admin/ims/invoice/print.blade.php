@@ -1,12 +1,9 @@
 @extends('layouts.print')
 
 @section('main-content')
-
-
     <div class="wrapper">
         <!-- Main content -->
         <section class="invoice">
-
             <!-- title row -->
             <div class="row">
                 <div class="col-xs-12">
@@ -71,9 +68,6 @@
 
             </div>
             <!-- /.row -->
-
-
-
             <!-- Table row -->
             <div class="row">
                 <div class="col-xs-12 table-responsive">
@@ -92,11 +86,11 @@
                         </thead>
                         <tbody>
 
-                        @foreach(\App\Models\FinancialNotes\InvoiceItem::where('invoice_id',$Invoice->id)->get() as $item)
+                        @foreach(\App\Models\Ims\InvoiceItem::where('invoice_id',$Invoice->id)->get() as $item)
                             <tr>
                                 <td>{!! $item->id !!}</td>
-                                <td><?php $Model = \App\Models\ItemCode::find($item->item_code_id); if($Model!=null){echo $Model->name;}?></td>
-                                <td><?php $Brand = \App\Models\Brand::find($item->brand_id); if($Brand!=null){echo $Brand->name;}?></td>
+                                <td><?php $Model = \App\Models\Ims\ItemCode::find($item->item_code_id); if($Model!=null){echo $Model->name;}?></td>
+                                <td><?php $Brand = \App\Models\Ims\Brand::find($item->brand_id); if($Brand!=null){echo $Brand->name;}?></td>
                                 <td>{!! $item->qty !!}</td>
                                 <td>{!! $item->price !!}</td>
                                 <td>{!! $item->value !!}</td>
@@ -170,5 +164,4 @@
         <!-- /.content -->
     </div>
     <!-- ./wrapper -->
-
 @endsection

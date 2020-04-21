@@ -16,6 +16,7 @@ class CreateStocksTable extends Migration
         Schema::create('stocks', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->boolean("is_open_stock")->default(false);
             $table->date('created_date')->default(\Carbon\Carbon::now());
             $table->unsignedInteger('stock_location_id')->nullable();
             $table->unsignedInteger('company_division_id')->nullable();
