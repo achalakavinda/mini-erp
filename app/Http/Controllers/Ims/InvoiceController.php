@@ -133,36 +133,49 @@ class InvoiceController extends Controller
                         $InvoiceItemQty = $item['qty'];
 
                         foreach ( $StockItems as $sItem ) {
-
                             if( $InvoiceItemQty<=0 ){
                                 break;
                             }
-
-                            if( ($sItem->tol_qty - $InvoiceItemQty) > -1 ){
+                            if( $sItem->tol_qty > 0  )
+                            {
                                 $StockItemUpdateObj = StockItem::find($sItem->id);
+
                                 if($StockItemUpdateObj)
                                 {
-                                    $StockItemUpdateObj->tol_qty = $StockItemUpdateObj->tol_qty - $InvoiceItemQty;
-                                    $StockItemUpdateObj->save();
+                                    $StockItemUpdateAmount = $StockItemUpdateObj->tol_qty - $InvoiceItemQty;
+                                    $InvoiceItemQtySave = $StockItemUpdateAmount;
+                                    $qtyRemoveFromStock = $StockItemUpdateAmount;
 
-                                    $InvoiceItem = InvoiceItem::create([
+                                    if($StockItemUpdateAmount>0){
+                                        $qtyRemoveFromStock = $StockItemUpdateObj->tol_qty - $InvoiceItemQty;
+                                    }else if($StockItemUpdateAmount>-1){
+                                        $qtyRemoveFromStock = $StockItemUpdateObj->tol_qty - $InvoiceItemQty;
+                                    }else{// existing item quantity cannot be - value
+                                        $negativeValue = $StockItemUpdateObj->tol_qty - $InvoiceItemQty;
+                                        $InvoiceItemQtySave = $InvoiceItemQty + $negativeValue;
+                                        $qtyRemoveFromStock = $InvoiceItemQtySave;
+                                    }
+
+                                    InvoiceItem::create([
                                         'invoice_id'=>$Invoice->id,
                                         'brand_id'=>$Model->brand_id,
                                         'item_code_id'=>$Model->id,
                                         'stock_item_id'=>$StockItemUpdateObj->id,
                                         'price'=>$item['unit'],
-                                        'qty'=>$InvoiceItemQty,
-                                        'value'=>$InvoiceItemQty*$item['unit'],
+                                        'qty'=>$InvoiceItemQtySave,
+                                        'value'=>$InvoiceItemQtySave*$item['unit'],
                                         'remarks'=>'k',
                                         'company_division_id'=>$this->Company_Division_id
                                     ]);
-                                    $TotalAmount = $TotalAmount + ($item['qty']*$item['unit']);
-                                    $InvoiceItemQty = $InvoiceItemQty - $StockItemUpdateObj->tol_qty;
-                                    break;
+                                    $StockItemUpdateObj->tol_qty = $qtyRemoveFromStock;
+                                    $StockItemUpdateObj->save();
+
+
+
+                                    $TotalAmount = $TotalAmount + ( $InvoiceItemQtySave * $item['unit']) ;
+                                    $InvoiceItemQty = $InvoiceItemQty - $qtyRemoveFromStock;
                                 }
                             }
-
-
                         }
                     }
 
