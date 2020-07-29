@@ -17,9 +17,9 @@
         <a href="{{ url('/ims/brand') }}" class="btn btn-app">
             <i class="main-action-btn-info fa fa-arrow-left"></i> Go Back
         </a>
-        <a href="{{ url('/ims/brand/create') }}" class="btn btn-app">
-            <i class="main-action-btn-info fa fa-refresh"></i> Refresh
-        </a>
+        {{-- <a href="{{ url('/ims/brand/create') }}" class="btn btn-app">
+        <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+        </a> --}}
         <a href="{{ url('/ims/item') }}" class="btn btn-app">
             <i class="main-action-btn-info fa fa-table"></i> Item
         </a>
@@ -36,8 +36,12 @@
 @section('main-content')
 @include('error.error')
 <!-- form start -->
-{!! Form::open(['action'=>'Ims\BrandController@store','class'=>'form-horizontal','id'=>'Form',
-'enctype'=>'multipart/form-data']) !!}
+{!!
+Form::open(['action'=> ['Ims\BrandController@update',
+$Brand->id],'class'=>'form-horizontal','id'=>'Form','enctype'=>'multipart/form-data'])
+!!}
+@csrf
+@method('put')
 <div class="row">
     <div class="col-md-6">
         <!-- general form elements -->
