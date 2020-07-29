@@ -5,7 +5,7 @@
 <!-- Default box -->
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Category/Brand</h3>
+        <h3 class="box-title">Category/Item</h3>
     </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
@@ -14,14 +14,14 @@
         <a onclick="showMegaMenu()" href="#" class="btn btn-app">
             <i class="main-action-btn-info fa fa-list"></i> Quick Menu
         </a>
-        <a href="{{ url('/ims/brand') }}" class="btn btn-app">
+        <a href="{{ url('/ims/item') }}" class="btn btn-app">
             <i class="main-action-btn-info fa fa-arrow-left"></i> Go Back
         </a>
-        {{-- <a href="{{ url('/ims/brand/create') }}" class="btn btn-app">
+        {{-- <a href="{{ url('/ims/item/create') }}" class="btn btn-app">
         <i class="main-action-btn-info fa fa-refresh"></i> Refresh
         </a> --}}
-        <a href="{{ url('/ims/item') }}" class="btn btn-app">
-            <i class="main-action-btn-info fa fa-table"></i> Item
+        <a href="{{ url('/ims/brand') }}" class="btn btn-app">
+            <i class="main-action-btn-info fa fa-table"></i> Brand
         </a>
         <a href="{{ url('/ims/invoice') }}" class="btn btn-app">
             <i class="main-action-btn-info fa fa-table"></i> Invoice
@@ -36,36 +36,36 @@
 @section('main-content')
 @include('error.error')
 <!-- form start -->
-{!!
-Form::open(['action'=> ['Ims\BrandController@update',
-$Brand->id],'class'=>'form-horizontal','id'=>'Form','enctype'=>'multipart/form-data'])
-!!}
-@csrf
-@method('put')
+
 <div class="row">
-    <div class="col-md-6">
+    <div class="col-md-12">
         <!-- general form elements -->
         <div class="box box-primary">
             <div class="box-header with-border">
             </div>
             <!-- /.box-header -->
-            @include('admin.ims.brand._partials.updateForm')
+            {!!
+            Form::open(['action'=> ['Ims\ItemController@update',
+            $Item->id],'class'=>'form-horizontal','id'=>'Form','enctype'=>'multipart/form-data'])
+            !!}
+            @csrf
+            @method('put')
+            @include('error.error')
+            @include('admin.ims.item._partials.updateForm')
+            {!! Form::close() !!}
+
         </div>
+        {!! Form::open([
+        'method' => 'DELETE',
+        'route' => ['item.destroy', $Item->id]
+        ]) !!}
+        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Delete
+        </button>
+        {!! Form::close() !!}
         <!-- /.box -->
     </div>
 
-    @include('admin.ims.brand._partials.extentions.extUpdateForm')
-
 </div>
-<!-- /.row -->
-{!! Form::close() !!}
-{!! Form::open([
-'method' => 'DELETE',
-'route' => ['brand.destroy', $Brand->id]
-]) !!}
-<button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i>Delete
-</button>
-{!! Form::close() !!}
 
 @endsection
 <!-- /main section -->

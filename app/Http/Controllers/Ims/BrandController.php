@@ -123,7 +123,9 @@ class BrandController extends Controller
         $Brand->save();
 
         $image = $request->file('img_url');
-        Storage::deleteDirectory('/images/system/brands/'.$Brand->id.'');
+        if($Brand->img_url != null){
+            Storage::deleteDirectory('/images/system/brands/'.$Brand->id.'');
+        }
         $Store = Storage::put('/images/system/brands/'.$Brand->id.'', $image);
 
         if($Store){
@@ -131,6 +133,7 @@ class BrandController extends Controller
             $Brand->save();
         }
         return redirect()->back();
+
     }
 
     /**
@@ -145,6 +148,9 @@ class BrandController extends Controller
         if($Brand->itemCodes->count() > 0){
             return redirect()->back();
         }else{
+            if($Brand->img_url != null){
+                Storage::deleteDirectory('/images/system/brands/'.$Brand->id.'');
+            }
             $Brand->delete();
             return redirect()->route('brand.index');
         }
