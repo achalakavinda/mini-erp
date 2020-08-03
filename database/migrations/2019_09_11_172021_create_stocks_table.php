@@ -18,13 +18,29 @@ class CreateStocksTable extends Migration
             $table->string('name');
             $table->boolean("is_open_stock")->default(false);
             $table->date('created_date')->default(\Carbon\Carbon::now());
+            $table->unsignedInteger('grn_id')->nullable();
+            $table->unsignedInteger('invoice_id')->nullable();
+
             $table->unsignedInteger('stock_location_id')->nullable();
             $table->unsignedInteger('company_division_id')->nullable();
             $table->unsignedInteger('company_id');
             $table->timestamps();
-            $table->foreign('stock_location_id')->references('id')->on('stock_location')->onDelete('cascade');
-            $table->foreign('company_division_id')->references('id')->on('company_divisions')->onDelete('cascade');
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+
+            $table->foreign('stock_location_id')
+                ->references('id')
+                ->on('stock_location')
+                ->onDelete('cascade');
+
+            $table->foreign('company_division_id')
+                ->references('id')
+                ->on('company_divisions')
+                ->onDelete('cascade');
+
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies')
+                ->onDelete('cascade');
+
         });
     }
 

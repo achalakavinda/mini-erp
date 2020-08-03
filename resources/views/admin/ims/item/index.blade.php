@@ -1,6 +1,6 @@
 @extends('layouts.admin')
-<!-- main header section -->
 @section('main-content-header')
+    <!-- main header section -->
    <!-- Default box -->
    <div class="box">
        <div class="box-header with-border">
@@ -28,10 +28,12 @@
        <!-- /.box-body -->
    </div>
    <!-- /.box -->
+   <!-- /main header section -->
 @endsection
-<!-- /main header section -->
-<!-- main section -->
+
+
 @section('main-content')
+    <!-- main section -->
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
@@ -49,7 +51,7 @@
                             <th>VAT</th>
                             <th>Unit Price With Taxes (LKR)</th>
                             <th>In Stock</th>
-                            <th><i class="fa fa-cogs"></i></th>
+                            <th><i class="fa fa-plane"></i></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -59,14 +61,13 @@
                                     <td>{!! $item->id !!}</td>
                                     <td>
                                         <?php
-                                            $brand = \App\Models\Ims\Brand::find($item->brand_id);
+                                        $brand = \App\Models\Ims\Brand::find($item->brand_id);
                                             if(!empty($brand)){echo $brand->name;}
-
                                         $STOCKITEM = DB::table('stock_items')
-                                            ->select(DB::raw('sum(stock_items.created_qty) as created_qty, sum(stock_items.tol_qty) as qty,stock_items.item_code_id'))
+                                            ->select(DB::raw('sum(stock_items.tol_qty) as qty'))
                                             ->where(['stock_items.item_code_id'=>$item->id])
                                             ->groupBy('stock_items.item_code_id')
-                                            ->get();
+                                            ->first();
                                         ?>
                                     </td>
                                     <td>{!! $item->name !!}</td>
@@ -77,12 +78,11 @@
                                     <td>{!! $item->vat_tax_percentage !!}%</td>
                                     <td>{!! $item->unit_price_with_tax !!}</td>
                                     <td>
-                                        @if($STOCKITEM->isEmpty())
+                                        @if($STOCKITEM)
+                                            {{ $STOCKITEM->qty }}
+                                            @else
                                             0
                                         @endif
-                                        @foreach($STOCKITEM as $element)
-                                            {{ $element->qty }}
-                                        @endforeach
                                     </td>
                                     <td><a class="btn btn-sm" href="{!! url('ims/item') !!}/{!! $item->id !!}"><i class="fa fa-paper-plane"></i></a></td>
                                 </tr>
@@ -98,8 +98,8 @@
         <!-- /.col -->
     </div>
     <!-- /.row -->
+    <!-- /main section -->
 @endsection
-<!-- /main section -->
 @section('js')
     @include('layouts.components.dataTableJs.index')
 @endsection

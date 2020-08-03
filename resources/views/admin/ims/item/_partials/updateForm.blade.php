@@ -1,20 +1,20 @@
 <div class="box-body">
 
-    <div class="col-md-6">
+    <div class="col-md-2 col-sm-3">
         <div class="form-group">
             {!! Form::label("Model") !!}
             {!! Form::text('name',$Item->name,['class'=>'form-control','id'=>'name','placeholder'=>'Model Name']) !!}
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-2 col-sm-3">
         <div class="form-group">
             {!! Form::label("Brand") !!}
             {!! Form::select('brand_id',$Brands,$Item->brand_id,['class'=>'form-control','id'=>'companyId']) !!}
         </div>
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-2 col-sm-3">
         <div class="form-group">
             {!! Form::label("Description") !!}
             {!!
