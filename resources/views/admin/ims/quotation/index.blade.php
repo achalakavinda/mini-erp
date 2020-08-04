@@ -5,17 +5,17 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Invoice</h3>
+            <h3 class="box-title">Quotation</h3>
         </div>
         @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
-            <a onclick="showMegaMenu()" href="#" class="btn">
+            <a onclick="showMegaMenu()" href="#" class="btn btm-menu">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
             </a>
-            <a href="{!! url('ims/invoice') !!}" class="btn">
+            <a href="{!! url('ims/quotation') !!}" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-refresh"></i> Refresh
             </a>
-            <a href="{!! url('ims/invoice/create') !!}" class="btn">
+            <a href="{!! url('ims/quotation/create') !!}" class="btn btn-menu">
                 <i class="main-action-btn-danger fa fa-plus"></i> New
             </a>
         </div>
@@ -36,8 +36,7 @@
                         <thead>
                         <tr>
                             <th>#ID</th>
-                            <th>Invoice No</th>
-                            <th>PO. No</th>
+                            <th>Quotation No</th>
                             <th>Customer</th>
                             <th>Amount</th>
                             <th>Discount</th>
@@ -49,15 +48,13 @@
                         @foreach($Items as $item)
                             <tr>
                                 <td>{!! $item->id !!}</td>
-                                <td>{!! $item->invoice_no !!}</td>
-                                <td>{!! $item->purchase_order !!}</td>
                                 <td><?php $CM = \App\Models\Customer::find($item->customer_id); if($CM!=null){echo $CM->name;}?></td>
                                 <td>{!! $item->amount !!}</td>
                                 <td>{!! $item->discount !!}</td>
                                 <td>{!! $item->total !!}</td>
                                 <td>
-                                    <a style="padding: 10px" href="{!! url('ims/invoice') !!}/{!! $item->id !!}"><i class="fa fa-list"></i></a>
-                                    <a target="_blank" style="padding: 10px" href="{!! url('ims/invoice') !!}/{!! $item->id !!}/print"><i class="fa fa-print"></i></a>
+                                    <a style="padding: 10px" href="{!! url('ims/quotation') !!}/{!! $item->id !!}"><i class="fa fa-list"></i></a>
+                                    <a target="_blank" style="padding: 10px" href="{!! url('ims/quotation') !!}/{!! $item->id !!}/print"><i class="fa fa-print"></i></a>
                                 </td>
                             </tr>
                         @endforeach

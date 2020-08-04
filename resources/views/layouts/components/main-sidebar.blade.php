@@ -136,6 +136,18 @@
                         </ul>
                     </li>
 
+                    <li class="treeview">
+                        <a href="{{ url('ims/quotation') }}"><i class="fa fa-info"></i> <span>Quotation</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                          </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{ url('ims/quotation') }}"><i class="fa fa-table"></i> Quotation</a></li>
+                            <li><a href="{{ url('ims/quotation/create') }}"><i class="fa fa-plus"></i> New</a></li>
+                        </ul>
+                    </li>
+
 
                     <li class="treeview">
                         <a href="{{ url('ims/requisition') }}"><i class="fa fa-info"></i> <span>Requisition</span>

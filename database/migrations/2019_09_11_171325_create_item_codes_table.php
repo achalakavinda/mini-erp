@@ -20,9 +20,17 @@ class CreateItemCodesTable extends Migration
 
 
         Schema::create('item_codes', function (Blueprint $table) {
+
             $table->increments('id');
-            $table->string('name');
             $table->unsignedInteger('brand_id');
+            $table->unsignedInteger('company_id');
+            $table->unsignedInteger('company_division_id');
+            $table->unsignedInteger('type_measurement_id')->nullable();
+
+            $table->enum('type',['product','service'])->default('product');
+
+
+            $table->string('name');
             $table->string('description')->nullable();
             $table->text('thumbnail_url')->default("http://itinerantnotes.com/blog/images/logo.png");
 
@@ -33,15 +41,28 @@ class CreateItemCodesTable extends Migration
             $table->float('unit_price_with_tax');
 
 
-            $table->unsignedInteger('company_id');
-            $table->unsignedInteger('company_division_id');
-            $table->unsignedInteger('type_measurement_id')->nullable();
+            $table->boolean('active')->default(1);
+
+
+
             $table->timestamps();
 
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
-            $table->foreign('type_measurement_id')->references('id')->on('type_measurements');
-            $table->foreign('company_id')->references('id')->on('companies');
-            $table->foreign('company_division_id')->references('id')->on('company_divisions');
+            $table->foreign('brand_id')
+                ->references('id')
+                ->on('brands')
+                ->onDelete('cascade');
+
+            $table->foreign('type_measurement_id')
+                ->references('id')
+                ->on('type_measurements');
+
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies');
+
+            $table->foreign('company_division_id')
+                ->references('id')
+                ->on('company_divisions');
 
         });
     }
