@@ -42,10 +42,6 @@ class SupplierController extends Controller
     {
         $request->validate([
             'name'=>'required',
-            'contact'=>'required|regex:/(0)[0-9]{9}/',
-            'email'=>'required|unique:suppliers|email:rfc,dns',
-            'web_url'=>'required|url',
-            'address'=>'required',
             'company_id'=>'required',
             'company_division_id'=>'required',
 
@@ -100,10 +96,6 @@ class SupplierController extends Controller
     {
         $request->validate([
             'name'=>'required',
-            'contact'=>'required|regex:/(0)[0-9]{9}/',
-            'email'=>'required|unique:suppliers|email:rfc,dns',
-            'web_url'=>'required|url',
-            'address'=>'required',
             'company_id'=>'required',
             'company_division_id'=>'required',
 
@@ -122,7 +114,7 @@ class SupplierController extends Controller
 
 
         return redirect()->back();
-        
+
     }
 
     /**
