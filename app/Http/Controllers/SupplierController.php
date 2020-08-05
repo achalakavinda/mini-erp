@@ -16,7 +16,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        
+        $Suppliers = Supplier::all();
+        return view('admin.supplier.index',compact(['Suppliers']));
     }
 
     /**
@@ -71,7 +72,10 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        //
+        $supplier = Supplier::findorfail($id);
+        $Company = Company::all()->pluck('code','id');
+        $CompanyDivision = CompanyDivision::all()->pluck('code','id');
+        return view('admin.supplier.show',compact(['Company','CompanyDivision','supplier']));
     }
 
     /**
@@ -94,7 +98,31 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'contact'=>'required|regex:/(0)[0-9]{9}/',
+            'email'=>'required|unique:suppliers|email:rfc,dns',
+            'web_url'=>'required|url',
+            'address'=>'required',
+            'company_id'=>'required',
+            'company_division_id'=>'required',
+
+        ]);
+
+        $supplier = Supplier::findorfail($id);
+
+        $supplier->name = $request->name;
+        $supplier->contact = $request->contact;
+        $supplier->email = $request->email;
+        $supplier->web_url = $request->web_url;
+        $supplier->address = $request->address;
+        $supplier->company_id = $request->company_id;
+        $supplier->company_division_id = $request->company_division_id;
+        $supplier->save();
+
+
+        return redirect()->back();
+        
     }
 
     /**
@@ -105,6 +133,8 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $supplier = Supplier::findorfail($id);
+        $supplier->delete();
+        return redirect()->route('supplier.index');
     }
 }
