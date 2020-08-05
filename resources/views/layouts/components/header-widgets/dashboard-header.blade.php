@@ -55,6 +55,7 @@
                 <li><a href="{{ url('ims/item') }}">Item</a></li>
                 <li><a href="{{ url('ims/stock') }}">Stock</a></li>
                 <li><a href="{{ url('ims/invoice') }}">Invoice</a></li>
+                <li><a href="{{ url('ims/quotation') }}">Quotation</a></li>
                 <li><a href="{{ url('ims/requisition') }}">Requisition</a></li>
             </ul>
         </li>

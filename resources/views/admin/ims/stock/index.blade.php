@@ -10,20 +10,20 @@
         <!-- /.box-body -->
 
         <div class="box-body">
-            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+            <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
             </a>
-            <a href="{{ url('/ims/brand') }}" class="btn btn-app">
+            <a href="{{ url('/ims/brand') }}" class="btn btn-menu">
                 <i  class="main-action-btn-info fa fa-refresh"></i> Refresh
             </a>
-            <a href="{{ url('/ims/item') }}" class="btn btn-app">
+            <a href="{{ url('/ims/item') }}" class="btn btn-menu">
                 <i  class="main-action-btn-info fa fa-table"></i> Item
             </a>
-            <a href="{{ url('/ims/invoice') }}" class="btn btn-app">
+            <a href="{{ url('/ims/invoice') }}" class="btn btn-menu">
                 <i  class="main-action-btn-info fa fa-table"></i> Invoice
             </a>
-            <a href="{{ url('/ims/stock/create') }}" class="btn btn-app">
-                <i  class="main-action-btn-info fa fa-plus"></i> New
+            <a href="{{ url('/ims/stock/create') }}" class="btn btn-menu">
+                <i  class="main-action-btn-danger fa fa-plus"></i> New
             </a>
         </div>
         <!-- /.box-body -->
@@ -43,15 +43,16 @@
                         <tr>
                             <th>Code</th>
                             <th>Brand</th>
-                            <th>In Stock</th>
+                            <th>Stock Qty</th>
                         </tr>
                         </thead>
 
                         <tbody>
                         @foreach($Stocks as $stock)
                             <?php
-                            $CODE = \App\Models\Ims\ItemCode::find($stock->item_code_id);
-                            $BRAND = \App\Models\Ims\Brand::find($CODE->brand_id);?>
+                                $CODE = \App\Models\Ims\ItemCode::find($stock->item_code_id);
+                                $BRAND = \App\Models\Ims\Brand::find($CODE->brand_id);
+                            ?>
                             <tr>
                                 <td>{!! $CODE->name !!}</td>
                                 <td>{!! $BRAND->name !!}</td>

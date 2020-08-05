@@ -129,7 +129,7 @@ class InvoiceController extends Controller
                     $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit']) ;
             }
 
-            if($DiscountPercentage!=null){
+            if($DiscountPercentage>0){
                 $TotalSum = $TotalAmount - ($TotalAmount*($DiscountPercentage/100));
             }else{
                 $TotalSum = $TotalAmount;
@@ -147,7 +147,7 @@ class InvoiceController extends Controller
             return redirect(url('ims/invoice/create'))->with(['error'=>$exception->getMessage()]);
         }
 
-        return redirect(url('ims/invoice').'/'.$Invoice->id.'/print');
+        return redirect(url('ims/invoice/'.$Invoice->id));
 
     }
 
@@ -160,7 +160,7 @@ class InvoiceController extends Controller
     public function show($id)
     {
         $Invoice = Invoice::findOrFail($id);
-        return view('admin.invoice.show',compact('Invoice'));
+        return view('admin.ims.invoice.show',compact('Invoice'));
     }
 
     public function print($id)
