@@ -20,7 +20,7 @@ class CreateQuotationItemsTable extends Migration
             $table->foreignId('quotation_id');
             $table->unsignedInteger('company_division_id');
 
-            $table->text('item_code')->nullable();
+            $table->text('item_code');
             $table->double('item_price');
             $table->double('quoted_price');
             $table->double('quoted_discount')->nullable();
