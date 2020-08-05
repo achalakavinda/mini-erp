@@ -6,6 +6,8 @@ use App\Models\Company;
 use App\Models\CompanyDivision;
 use App\Models\Ims\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Image;
 use App\Http\Controllers\Controller;
 
 class BrandController extends Controller
@@ -30,8 +32,8 @@ class BrandController extends Controller
     {
         $Company = Company::all()->pluck('code','id');
         $CompanyDivision = CompanyDivision::all()->pluck('code','id');
-        $Brand = Brand::all()->pluck('name','id');
-        return view('admin.ims.brand.create',compact(['Company','CompanyDivision','Brand']));
+        $Brands = Brand::all()->pluck('name','id');
+        return view('admin.ims.brand.create',compact(['Company','CompanyDivision','Brands']));
     }
 
     /**
@@ -44,18 +46,28 @@ class BrandController extends Controller
         $request->validate([
             'name'=>'required',
             'company_id'=>'required',
-            'company_division_id'=>'required'
+            'company_division_id'=>'required',
+            'description'=>'required',
+            'img_url'=>'required',
+
         ]);
 
         $CompanyDivision = CompanyDivision::findOrFail($request->company_division_id);
 
-        Brand::create([
+        $Brand = Brand::create([
             'name'=>$request->name,
             'company_id'=>$CompanyDivision->company_id,
             'company_division_id'=>$CompanyDivision->id,
             'description'=>$request->description,
-            'img_url'=>asset('storage/img/brand').'/'.$request->img_url,
         ]);
+
+        $image = $request->file('img_url');
+        $Store = Storage::put('/images/system/brands/'.$Brand->id.'', $image);
+
+        if($Store){
+            $Brand->img_url = '/storage/'.$Store;
+            $Brand->save();
+        }
 
         return redirect()->back();
     }
@@ -68,7 +80,11 @@ class BrandController extends Controller
      */
     public function show($id)
     {
-        //
+        $Brand = Brand::findorfail($id);
+        $Company = Company::all()->pluck('code','id');
+        $CompanyDivision = CompanyDivision::all()->pluck('code','id');
+        $Brands = Brand::all()->pluck('name','id');
+        return view('admin.ims.brand.show',compact(['Brand','Company','CompanyDivision','Brands']));
     }
 
     /**
@@ -90,12 +106,34 @@ class BrandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if($request->set_delete && $request->set_delete=="value"){
-            Brand::find($id)->delete();
-            return \redirect()->back();
-        }else{
-            return \redirect()->back();
+        $request->validate([
+            'name'=>'required',
+            'company_id'=>'required',
+            'company_division_id'=>'required',
+            'description'=>'required',
+            'img_url'=>'required',
+        ]);
+
+        $Brand = Brand::findorfail($id);
+
+        $Brand->name = $request->name;
+        $Brand->company_id = $request->company_id;
+        $Brand->company_division_id = $request->company_division_id;
+        $Brand->description = $request->description;
+        $Brand->save();
+
+        $image = $request->file('img_url');
+        if($Brand->img_url != null){
+            Storage::deleteDirectory('/images/system/brands/'.$Brand->id.'');
         }
+        $Store = Storage::put('/images/system/brands/'.$Brand->id.'', $image);
+
+        if($Store){
+            $Brand->img_url = '/storage/'.$Store;
+            $Brand->save();
+        }
+        return redirect()->back();
+
     }
 
     /**
@@ -106,6 +144,15 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $Brand = Brand::findorfail($id);
+        if($Brand->itemCodes->count() > 0){
+            return redirect()->back();
+        }else{
+            if($Brand->img_url != null){
+                Storage::deleteDirectory('/images/system/brands/'.$Brand->id.'');
+            }
+            $Brand->delete();
+            return redirect()->route('brand.index');
+        }
     }
 }

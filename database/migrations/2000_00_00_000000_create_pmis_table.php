@@ -13,6 +13,7 @@ class CreatePmisTable extends Migration
      */
     public function up()
     {
+        //these tables are specific to audit firms
         Schema::create('ca_trainings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');

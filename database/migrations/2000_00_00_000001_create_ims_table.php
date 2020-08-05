@@ -6,6 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateImsTable extends Migration
 {
+    //create meta tables relate to inventory management
     /**
      * Run the migrations.
      *

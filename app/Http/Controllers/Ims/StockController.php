@@ -30,6 +30,7 @@ class StockController extends Controller
             ->select(\DB::raw('sum(stock_items.created_qty) as created_qty, sum(stock_items.tol_qty) as tol_qty,stock_items.item_code_id'))
             ->groupBy('stock_items.item_code_id')
             ->get();
+
         return view('admin.ims.stock.index',compact(['Stocks']));
     }
 
@@ -65,6 +66,7 @@ class StockController extends Controller
                 if( $item['model_id']>0 && $item['qty']>0)
                 {
                     $Model = ItemCode::find($item['model_id']);
+
                     if($Model){
                         $Stock_Item = StockItem::create([
                             'stock_id'=>$Stock->id,
@@ -83,57 +85,6 @@ class StockController extends Controller
 
             }
         }
-
-//        //check for a existing stock item
-//        $Stock_Item = StockItem::where('item_code_id',$request->model_id)->first();
-//        $Model = ItemCode::find($request->model_id);
-//        $Stock = null;
-//
-//        if($Stock_Item == null){//if no item in stock create a stock and stock item
-//            $Stock = Stock::create(['name'=>'Batch','company_division_id'=>1,'company_id'=>1]);
-//            $Stock->name = "Batch :".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Stock->id;
-//            $Stock->save();
-//
-//            $Stock_Item = StockItem::create([
-//                'stock_id'=>$Stock->id,
-//                'brand_id'=>$Model->brand_id,
-//                'item_code_id'=>$Model->id,
-//                'item_code'=>$Model->name,
-//                'unit_price'=>$Model->unit_cost,
-//                'qty'=>$request->qty,
-//                'company_division_id'=>$this->CompanyDivision->id,
-//                'company_id'=>1,
-//            ]);
-//
-//            $Stock_Item->tol_qty = $request->qty+$Stock_Item->open_qty;
-//            $Stock_Item->save();
-//
-//
-//        }else{
-//            //create a new stock item record under the parent stock id
-//            //if unit price are the same update the stock item quantities only
-//            $Stock_Item_Same_Unit = StockItem::where(['item_code_id'=>$request->model_id,'unit_price'=>$Model->unit_cost,'company_division_id'=>$this->CompanyDivision->id])->first();
-//            //if item exist with same unit price update the tuple or else create new tuple
-//            if($Stock_Item_Same_Unit == null)
-//            {
-//                StockItem::create([
-//                    'stock_id'=>$Stock_Item->stock_id,
-//                    'brand_id'=>$Model->brand_id,
-//                    'item_code_id'=>$Model->id,
-//                    'unit_price'=>$Model->unit_cost,
-//                    'qty'=>$request->qty,
-//                    'open_qty'=>0,
-//                    'tol_qty'=>$request->qty,
-//                    'company_division_id'=>$this->CompanyDivision->id,
-//                ]);
-//            }else{
-//                $SUM_TOL_QTY = $Stock_Item_Same_Unit->tol_qty;
-//                $SUM_QTY = $Stock_Item_Same_Unit->qty;
-//                $Stock_Item_Same_Unit->tol_qty = $SUM_TOL_QTY+$request->qty;
-//                $Stock_Item_Same_Unit->qty = $SUM_QTY+$request->qty;
-//                $Stock_Item_Same_Unit->save();
-//            }
-//        }
 
         return redirect('ims/stock');
     }

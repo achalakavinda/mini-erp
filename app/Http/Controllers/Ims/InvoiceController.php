@@ -41,7 +41,7 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        return view('admin.ims.invoice.create');
+        return view('admin.ims.invoice.forms.create');
     }
 
     /**
@@ -56,7 +56,6 @@ class InvoiceController extends Controller
             'order_date' => 'required',
             'company_vat_no' => 'required',
             'dispatched_date' => 'required',
-            'delivery_method_id' => 'required',
             'customer_id' => 'required',
             'row' => 'required',
             'row.*.model_id' => 'required',
@@ -71,7 +70,7 @@ class InvoiceController extends Controller
             'purchase_order'=>$request->purchase_order,
             'invoice_no'=>$request->invoice_no,
             'dispatched_date'=>$request->dispatched_date,
-            'delivery_method_id'=>$request->delivery_method_id,
+            'delivery_method_id'=>1,
             'delivery_address'=>$request->delivery_address,
             'customer_id'=>$request->customer_id,
             'customer_detail'=>$request->customer_detail,
@@ -86,90 +85,51 @@ class InvoiceController extends Controller
             $TotalSum = 0;
             $TotalDiscount = $DiscountPercentage;
 
-            foreach ($request->row as $item){
+            $Stock = Stock::create([
+                'name'=>'Batch',
+                'company_division_id'=>1,
+                'company_id'=>1,
+                'invoice_id'=>$Invoice->id
+            ]);
+
+
+            $Stock->name = "Invoice :".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Stock->id;
+            $Stock->save();
+
+            foreach ($request->row as $item)
+            {
 
                 $Model = ItemCode::find($item['model_id']);
-                $StockItems = StockItem::where('item_code_id',$item['model_id'])->where('tol_qty','>',0)->get();
 
-                if($Model)
-                {
+                    $Stock_Item = StockItem::create([
+                        'stock_id'=>$Stock->id,
+                        'brand_id'=>$Model->brand_id,
+                        'invoice_id'=>$Invoice->id,
+                        'item_code_id'=>$Model->id,
+                        'item_code'=>$Model->name,
+                        'unit_price'=>$item['unit'],
+                        'created_qty'=>-$item['qty'],//to identify the initial qty for bath item
+                        'tol_qty'=>-$item['qty'],
+                        'company_division_id'=>$this->CompanyDivision->id,
+                        'company_id'=>1,
+                    ]);
 
-                    if($StockItems->isEmpty()){
-                        //if no qty in stock item for specific Item create a new Stock, stock item [-qty], invoice item
-                        $Stock = Stock::create(['name'=>'Batch','company_division_id'=>1,'company_id'=>1]);
-                        $Stock->name = "Invoice Batch :".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Stock->id;
-                        $Stock->save();
+                    InvoiceItem::create([
+                        'invoice_id'=>$Invoice->id,
+                        'brand_id'=>$Model->brand_id,
+                        'item_code_id'=>$Model->id,
+                        'stock_item_id'=>$Stock_Item->id,
+                        'price'=>$item['unit'],
+                        'qty'=>$item['qty'],
+                        'value'=>$item['qty']*$item['unit'],
+                        'remarks'=>'k',
+                        'company_division_id'=>$this->Company_Division_id
+                    ]);
 
-                        try{//if any error occurred creating stock and item, revert the stock batch and log error.
-                            $Stock_Item = StockItem::create([
-                                'stock_id'=>$Stock->id,
-                                'brand_id'=>$Model->brand_id,
-                                'item_code_id'=>$Model->id,
-                                'item_code'=>$Model->name,
-                                'unit_price'=>$item['unit'],
-                                'created_qty'=>-$item['qty'],//to identify the initial qty for bath item
-                                'tol_qty'=>-$item['qty'],
-                                'company_division_id'=>$this->CompanyDivision->id,
-                                'company_id'=>1,
-                            ]);
-                            $InvoiceItem = InvoiceItem::create([
-                                'invoice_id'=>$Invoice->id,
-                                'brand_id'=>$Model->brand_id,
-                                'item_code_id'=>$Model->id,
-                                'stock_item_id'=>$Stock_Item->id,
-                                'price'=>$item['unit'],
-                                'qty'=>$item['qty'],
-                                'value'=>$item['qty']*$item['unit'],
-                                'remarks'=>'k',
-                                'company_division_id'=>$this->Company_Division_id
-                            ]);
-                            $TotalAmount = $TotalAmount + ($item['qty']*$item['unit']);
-                        }catch (\Exception $exception){
-                            $Stock->delete();
-                            error_log($exception->getMessage());
-                        }
-                    }else{
-                        //if items are in stock.
-                        $InvoiceItemQty = $item['qty'];
-
-                        foreach ( $StockItems as $sItem ) {
-
-                            if( $InvoiceItemQty<=0 ){
-                                break;
-                            }
-
-                            if( ($sItem->tol_qty - $InvoiceItemQty) > -1 ){
-                                $StockItemUpdateObj = StockItem::find($sItem->id);
-                                if($StockItemUpdateObj)
-                                {
-                                    $StockItemUpdateObj->tol_qty = $StockItemUpdateObj->tol_qty - $InvoiceItemQty;
-                                    $StockItemUpdateObj->save();
-
-                                    $InvoiceItem = InvoiceItem::create([
-                                        'invoice_id'=>$Invoice->id,
-                                        'brand_id'=>$Model->brand_id,
-                                        'item_code_id'=>$Model->id,
-                                        'stock_item_id'=>$StockItemUpdateObj->id,
-                                        'price'=>$item['unit'],
-                                        'qty'=>$InvoiceItemQty,
-                                        'value'=>$InvoiceItemQty*$item['unit'],
-                                        'remarks'=>'k',
-                                        'company_division_id'=>$this->Company_Division_id
-                                    ]);
-                                    $TotalAmount = $TotalAmount + ($item['qty']*$item['unit']);
-                                    $InvoiceItemQty = $InvoiceItemQty - $StockItemUpdateObj->tol_qty;
-                                    break;
-                                }
-                            }
-
-
-                        }
-                    }
-
-                }
+                    $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit']) ;
             }
 
-            if($DiscountPercentage!=null){
+            if($DiscountPercentage>0){
                 $TotalSum = $TotalAmount - ($TotalAmount*($DiscountPercentage/100));
             }else{
                 $TotalSum = $TotalAmount;
@@ -187,7 +147,7 @@ class InvoiceController extends Controller
             return redirect(url('ims/invoice/create'))->with(['error'=>$exception->getMessage()]);
         }
 
-        return redirect(url('ims/invoice').'/'.$Invoice->id.'/print');
+        return redirect(url('ims/invoice/'.$Invoice->id));
 
     }
 
@@ -200,7 +160,7 @@ class InvoiceController extends Controller
     public function show($id)
     {
         $Invoice = Invoice::findOrFail($id);
-        return view('admin.invoice.show',compact('Invoice'));
+        return view('admin.ims.invoice.show',compact('Invoice'));
     }
 
     public function print($id)

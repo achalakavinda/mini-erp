@@ -30,8 +30,8 @@ class ItemController extends Controller
      */
     public function create()
     {
-        $BrandModel = \App\Models\Ims\Brand::all();
-        return view('admin.ims.item.create',compact(['BrandModel']));
+        $Brands = Brand::all()->pluck('name','id');
+        return view('admin.ims.item.create',compact(['Brands']));
     }
 
     /**
@@ -123,7 +123,10 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        //
+        $Brands = Brand::all()->pluck('name','id');
+        $Item = ItemCode::findorfail($id);
+
+        return view('admin.ims.item.show',compact(['Brands','Item']));
     }
 
     /**
@@ -146,7 +149,51 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'brand_id' => 'required',
+            'unit_cost' => 'required',
+            'selling_price'=>'required',
+            'nbt_tax'=>'required',
+            'vat_tax'=>'required',
+            'opening_stock_qty'=>'required'
+        ]);
+
+        $Item = ItemCode::findorfail($id);
+        if($Item->stockItem){
+            dd("You can't edit. Because you have already added this item to stock");
+        }
+        //selling price and price with taxes
+        $SellingPrice = $request->selling_price;
+        $UnitPriceWithTax = $SellingPrice;
+
+        if($request->nbt_tax>0 && $request->nbt_tax<=100){
+            $UnitPriceWithTax = $UnitPriceWithTax+($UnitPriceWithTax*($request->nbt_tax/100));
+        }
+        if($request->vat_tax>0 && $request->vat_tax<=100){
+            $UnitPriceWithTax = $UnitPriceWithTax+($UnitPriceWithTax*($request->vat_tax/100));
+        }
+        if($request->opening_stock_qty<0)
+        {
+            $request->opening_stock_qty = 0;
+        }
+
+        $Brand = Brand::findOrFail($request->brand_id);
+
+        $Item->name = $request->name;
+        $Item->brand_id = $request->brand_id;
+        $Item->description = $request->description;
+        $Item->unit_cost = $request->unit_cost;
+        $Item->selling_price = $SellingPrice;
+        $Item->nbt_tax_percentage = $request->nbt_tax;
+        $Item->vat_tax_percentage = $request->vat_tax;
+        $Item->unit_price_with_tax = $UnitPriceWithTax;
+        $Item->company_id = $Brand->company_id;
+        $Item->company_division_id = $Brand->company_division_id;
+        $Item->save();
+
+
+        return redirect()->back();
     }
 
     /**
@@ -157,6 +204,12 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $Item = ItemCode::findorfail($id);
+        if($Item->stockItem){
+            dd("You can't delete this item. Because this has some stock");
+        }else{
+            $Item->delete();
+            return redirect()->route('item.index');
+        }
     }
 }
