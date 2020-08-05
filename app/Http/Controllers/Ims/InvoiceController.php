@@ -129,7 +129,7 @@ class InvoiceController extends Controller
                     $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit']) ;
             }
 
-            if($DiscountPercentage!=null){
+            if($DiscountPercentage>0){
                 $TotalSum = $TotalAmount - ($TotalAmount*($DiscountPercentage/100));
             }else{
                 $TotalSum = $TotalAmount;

@@ -36,7 +36,7 @@
                         <thead>
                         <tr>
                             <th>#ID</th>
-                            <th>Quotation No</th>
+                            <th>Quoted Date</th>
                             <th>Customer</th>
                             <th>Amount</th>
                             <th>Discount</th>
@@ -48,9 +48,10 @@
                         @foreach($Items as $item)
                             <tr>
                                 <td>{!! $item->id !!}</td>
+                                <td>{!! $item->date !!}</td>
                                 <td><?php $CM = \App\Models\Customer::find($item->customer_id); if($CM!=null){echo $CM->name;}?></td>
                                 <td>{!! $item->amount !!}</td>
-                                <td>{!! $item->discount !!}</td>
+                                <td>{!! $item->discount !!}%</td>
                                 <td>{!! $item->total !!}</td>
                                 <td>
                                     <a style="padding: 10px" href="{!! url('ims/quotation') !!}/{!! $item->id !!}"><i class="fa fa-list"></i></a>

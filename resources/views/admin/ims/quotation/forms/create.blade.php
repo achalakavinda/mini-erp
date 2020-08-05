@@ -68,7 +68,7 @@
                                     <tbody>
                                     <tr>
                                         <td>Date :</td>
-                                        <td><input style="width: 100%" id="OrderDate" name="order_date" type="date" value=""></td>
+                                        <td><input style="width: 100%" id="Date" name="date" type="date" value=""></td>
                                     </tr>
 
                                     <tr>

@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Ims;
 use App\Http\Controllers\Controller;
 use App\Models\CompanyDivision;
 use App\Models\Ims\Invoice;
+use App\Models\Ims\ItemCode;
 use App\Models\Ims\Quotation;
+use App\Models\Ims\QuotationItem;
 use Illuminate\Http\Request;
 
 class QuotationController extends Controller
@@ -48,7 +50,6 @@ class QuotationController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
 
         $request->validate([
             'date' => 'required',
@@ -60,6 +61,8 @@ class QuotationController extends Controller
         ]);
 
         $DiscountPercentage = $request->discount_percentage;
+        $Amount = 0;
+        $TotalAmount = 0;
 
         $Quotation = Quotation::create([
             'date'=>$request->date,
@@ -68,7 +71,51 @@ class QuotationController extends Controller
             'remarks'=>$request->remarks
         ]);
 
+        try {
 
+            foreach ($request->row as $item) {
+
+                $Model = ItemCode::find($item['model_id']);
+
+                if($Model){
+
+                    QuotationItem::create([
+                        'brand_id'=>$Model->brand_id,
+                        'item_code_id'=>$Model->id,
+                        'quotation_id'=>$Quotation->id,
+                        'company_division_id'=>$this->CompanyDivision->id,
+
+                        'item_code'=>$Model->name,
+                        'item_price'=>$Model->unit_cost,
+                        'quoted_price'=>$item['unit'],
+                        'quoted_qty'=>$item['qty'],
+                        'quoted_value'=>$item['unit']*$item['qty']
+                    ]);
+
+                    $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit']) ;
+                }
+            }
+
+            if($DiscountPercentage>0){
+                $Amount = $TotalAmount - ($TotalAmount*($DiscountPercentage/100));
+            }else{
+                $Amount = $TotalAmount;
+                $DiscountPercentage = 0;
+            }
+
+            $Quotation->amount = $TotalAmount;
+            $Quotation->discount = $DiscountPercentage;
+            $Quotation->total = $Amount;
+            $Quotation->save();
+
+
+        }catch (\Exception $exception){
+
+            $Quotation->delete();
+            dd($exception->getMessage());
+        }
+
+        return redirect(url('ims/quotation/'.$Quotation->id));
     }
 
     /**
@@ -79,7 +126,8 @@ class QuotationController extends Controller
      */
     public function show($id)
     {
-        //
+        $Quotation = Quotation::findOrFail($id);
+        return view('admin.ims.quotation.show',compact('Quotation'));
     }
 
     /**
