@@ -57,3 +57,7 @@ Route::get('/item-code-for-purchase-requisitions/{id}',function ($id){
 Route::get('/customer-for-invoices/{id}',function ($id){
     return \App\Models\Customer::find($id);
 });
+
+Route::get('/supplier-for-invoices/{id}',function ($id){
+    return \App\Models\Supplier::find($id);
+});

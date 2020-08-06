@@ -19,7 +19,7 @@ class CreateGrnsTable extends Migration
             $table->unsignedInteger('supplier_id');
             $table->unsignedInteger('created_by');
 
-            $table->text('code')->unique(); //create unique code.example GRN-2012-12-04-{grn_id}
+            $table->text('code'); //create unique code.example GRN-2012-12-04-{grn_id}
             $table->date('created_date')->default(\Carbon\Carbon::now());
             $table->boolean('posted_to_stock')->default(false);
             $table->boolean('posted_to_so')->default(false);
