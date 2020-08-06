@@ -6,7 +6,7 @@
             <div class="box-header with-border">
                 <h3 class="box-title">Dashboard</h3>
             </div>
-            @include('admin.header-widgets.dashboard-header')
+            @include('admin.components.header-widgets.dashboard-header')
         </div>
         <div class="box">
                 <div style="padding: 10px" class="row">

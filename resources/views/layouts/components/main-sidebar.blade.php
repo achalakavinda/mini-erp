@@ -125,6 +125,19 @@
                     </li><!-- /stock -->
 
                     <li class="treeview">
+                        <a href="{{ url('ims/grn') }}"><i class="fa fa-info"></i> <span>GRN</span>
+                            <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                          </span>
+                        </a>
+
+                        <ul class="treeview-menu">
+                            <li><a href="{{ url('ims/grn') }}"><i class="fa fa-table"></i> GRN</a></li>
+                            <li><a href="{{ url('ims/grn/create') }}"><i class="fa fa-plus"></i> New</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="treeview">
                         <a href="{{ url('ims/invoice') }}"><i class="fa fa-info"></i> <span>Invoice</span>
                             <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
@@ -142,6 +155,7 @@
                             <i class="fa fa-angle-left pull-right"></i>
                           </span>
                         </a>
+
                         <ul class="treeview-menu">
                             <li><a href="{{ url('ims/quotation') }}"><i class="fa fa-table"></i> Quotation</a></li>
                             <li><a href="{{ url('ims/quotation/create') }}"><i class="fa fa-plus"></i> New</a></li>
