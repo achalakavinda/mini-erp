@@ -19,7 +19,7 @@ class CreateSalesOrdersTable extends Migration
             $table->unsignedInteger('customer_id');
             $table->unsignedInteger('company_division_id')->nullable();
 
-            $table->text('code')->unique(); //create unique code.example SO-2012-12-04-{so_id}
+            $table->text('code'); //create unique code.example SO-2012-12-04-{so_id}
             $table->date('date')->default(\Carbon\Carbon::now());
             $table->text('remarks')->nullable();
             $table->double('amount')->default(0);
