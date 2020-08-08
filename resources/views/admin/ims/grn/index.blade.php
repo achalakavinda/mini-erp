@@ -1,5 +1,4 @@
 @extends('layouts.admin')
-
 @section('main-content-header')
     <!-- main header section -->
     <!-- Default box -->
@@ -69,7 +68,6 @@
     <!-- /.row -->
     <!-- /main section -->
 @endsection
-
 @section('js')
     @include('layouts.components.dataTableJs.index')
 @endsection

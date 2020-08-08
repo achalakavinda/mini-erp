@@ -8,7 +8,6 @@
         </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
-
         <div class="box-body">
             <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
@@ -29,10 +28,11 @@
     <!-- /.box -->
     <!-- /main header section -->
 @endsection
+
 @section('main-content')
     <!-- main section -->
     <div class="row">
-        {!!  Form::open(['action'=>'Ims\GrnController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])   !!}
+
 
         <div class="col-md-12">
         @include('error.error')
@@ -40,6 +40,7 @@
             <div class="box box-primary">
                 <!-- form start -->
                 <div class="box-body">
+                    {!!  Form::open(['action'=>'Ims\GrnController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])   !!}
                     <!-- invoice date -->
                     <div class="col-md-12">
 
@@ -112,18 +113,18 @@
 
                                             <td>
                                                 <input disabled onkeyup="calTol({{ $count }})" id="qty{{ $count }}"
-                                                       type="number" name="row[{{ $count }}][qty]" style="width: 100%"
+                                                       type="number" name="row[{{ $count }}][qty]" style="width: 100%; text-align: right"
                                                        value="{{ $item->created_qty }}">
                                             </td>
                                             <td>
-                                                <input disabled id="price{{ $count }}" type="number" readonly
-                                                       name="row[{{ $count }}][unit]" value="{{ $item->unit_price }}"
-                                                       style="width: 100%">
+                                                <input  disabled id="price{{ $count }}" type="text" readonly
+                                                       name="row[{{ $count }}][unit]" value="{{ number_format($item->unit_price,2) }}"
+                                                       style="width: 100%;text-align: right">
                                             </td>
                                             <td>
-                                                <input disabled id="tol{{ $count }}" type="number" readonly
-                                                       name="row[{{ $count }}][tol]" style="width: 100%"
-                                                       value="{{ $item->created_qty * $item->unit_price }}">
+                                                <input disabled id="tol{{ $count }}" type="text" readonly
+                                                       name="row[{{ $count }}][tol]" style="width: 100%;text-align: right"
+                                                       value="{{ number_format(($item->created_qty * $item->unit_price),2) }}">
                                             </td>
                                         {{--                                            <td>--}}
                                         {{--                                                <a  style="cursor: pointer" type="button" onclick="rowRemove('.tr_{{ $count }}')"><i
@@ -150,23 +151,33 @@
                         <div class="row">
                             <!-- accepted payments column -->
                             <div class="col-xs-8">
-
                             </div>
                             <!-- /.col -->
-
                         </div>
                         <!-- /.row -->
                     </div>
+                    {!! Form::close() !!}
                 </div>
+
+                @if(!$Grn->posted_to_stock)
+                    {!!  Form::open(['action'=>'Ims\GrnController@postToStock','style'=>'display:none','id'=>'postToStock'])   !!}
+                        @csrf()
+                        <input type="number" value="{{ $Grn->id }}" name="grn_id">
+                    {{ Form::close() }}
+                @endif
+
                 <div style="height: 100px" class="box-footer">
-                    <button disabled style="position: absolute;right: 10px;width: 100px" type="submit"
-                            class="btn btn-primary">Edit</button>
-                    <a style="position: absolute;right: 120px;width: 100px" href="#" class="btn btn-primary">Post to
-                        Stock</a>
+                    @if(!$Grn->posted_to_stock)
+                        <button  disabled style="width: 100px;margin: 2px" type="submit"
+                                class="btn btn-primary pull-right">Edit</button>
+                        <button style="width: 100px;margin: 2px" onclick="Onclick()" class="btn btn-primary  pull-right">Post to
+                            Stock</button>
+                    @endif
+                    <a style="width: 100px;margin: 2px" target="_blank" href="{{ url('ims/grn/'.$Grn->id.'/print') }}" class="btn btn-primary  pull-right">Print <span class="fa fa-print"></span></a>
                 </div>
+
             </div>
         </div>
-        {!! Form::close() !!}
     </div>
     <!-- /.row -->
     <!-- /main section -->
@@ -241,6 +252,10 @@
 
         });
 
+        function Onclick() {
+            $('#postToStock').submit();
+        }
+
         function rowRemove(value) {
             $(value).remove();
         }
@@ -262,6 +277,5 @@
                 $('#total').val(subtotal);
             }
         }
-
     </script>
 @endsection

@@ -8,29 +8,29 @@ $ItemCode = \App\Models\Ims\ItemCode::all()->pluck('name','id');
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Dashboard / Models / Create</h3>
+            <h3 class="box-title">Add Item</h3>
         </div>
 
         @include('layouts.components.header-widgets.dashboard-header')
          <!-- /.box-body -->
         <div class="box-body">
-            <a href="{{ url('/ims/stock') }}" class="btn btn-app">
+            <a href="{{ url('/ims/stock') }}" class="btn btn-menu">
                 <i  class="main-action-btn-info fa fa-close"></i> Cancel
             </a>
 
-            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+            <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
             </a>
-            <a href="{{ url('/ims/brand') }}" class="btn btn-app">
+            <a href="{{ url('/ims/brand') }}" class="btn btn-menu">
                 <i  class="main-action-btn-info fa fa-refresh"></i> Refresh
             </a>
-            <a href="{{ url('/ims/item') }}" class="btn btn-app">
+            <a href="{{ url('/ims/item') }}" class="btn btn-menu">
                 <i  class="main-action-btn-info fa fa-table"></i> Item
             </a>
-            <a href="{{ url('/ims/invoice') }}" class="btn btn-app">
+            <a href="{{ url('/ims/invoice') }}" class="btn btn-menu">
                 <i  class="main-action-btn-info fa fa-table"></i> Invoice
             </a>
-            <a href="{{ url('/ims/stock/create') }}" class="btn btn-app">
+            <a href="{{ url('/ims/stock/create') }}" class="btn btn-menu">
                 <i  class="main-action-btn-info fa fa-plus"></i> New
             </a>
         </div>
@@ -100,6 +100,7 @@ $ItemCode = \App\Models\Ims\ItemCode::all()->pluck('name','id');
                 $.ajax('{!! url('api/item-code-for-invoices') !!}/'+SelecTModelId, {
                     type: 'GET',  // http method
                     success: function (data, status, xhr) {
+                        let tolal = $('#qty').val()*data.item.unit_price_with_tax;
                         if(data.item){
                             table.append('<tr class="tr_'+count+'">\n' +
                                 '                        <td>'+RawCount+'<input style="display:none" name="row['+count+'][insert]" type="checkbox" checked></td>\n' +
@@ -111,10 +112,10 @@ $ItemCode = \App\Models\Ims\ItemCode::all()->pluck('name','id');
                                 '                            <input  type="number" name="row['+count+'][qty]" value="'+$('#qty').val()+'" placeholder="In Stock '+data.qty+'" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input  type="number" readonly name="row['+count+'][unit]" value="'+data.item.unit_price_with_tax+'" class="form-control">\n' +
+                                '                            <input  type="number" readonly name="row['+count+'][unit_price]" value="'+data.item.unit_price_with_tax+'" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input  type="number" readonly name="row['+count+'][tol]" class="form-control">\n' +
+                                '                            <input  type="number" readonly name="row['+count+'][tol]" class="form-control" value="'+tolal+'">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <a style="cursor: pointer" type="button" onclick="rowRemove(\'.tr_'+count+'\','+count+')"><i class="fa fa-remove"></i></a>\n' +

@@ -176,7 +176,7 @@
                                 '                            <input onkeyup="calTol('+(count+1)+')" id="qty'+count+'"  type="number" name="row['+count+'][qty]" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input onkeyup="calTol('+(count+1)+')" id="price'+count+'"  type="number"  name="row['+count+'][unit]" value="'+data.item.unit_price_with_tax+'" style="width: 100%">\n' +
+                                '                            <input onkeyup="calTol('+(count+1)+')" id="price'+count+'"  type="number"  name="row['+count+'][unit_price]" value="'+data.item.unit_price_with_tax+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input id="tol'+count+'"  type="number" readonly name="row['+count+'][tol]" style="width: 100%">\n' +
@@ -224,7 +224,5 @@
                 $('#total').val(subtotal);
             }
         }
-
     </script>
-
 @endsection

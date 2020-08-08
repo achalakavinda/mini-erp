@@ -14,6 +14,7 @@ class CreateGrnItemsTable extends Migration
     public function up()
     {
         Schema::create('grn_items', function (Blueprint $table) {
+
             $table->id();
             $table->foreignId('grn_id');
             $table->unsignedInteger('brand_id');
@@ -21,8 +22,10 @@ class CreateGrnItemsTable extends Migration
             $table->unsignedInteger('company_division_id');
 
             $table->string('item_code');//store stock item name, history log
+            $table->double('item_unit_cost_from_table')->default(0);//store the value on item code table
             $table->double('unit_price')->default(0);//stock added unit price
             $table->double('created_qty')->default(0);//item created quantity
+            $table->double('total')->default(0);
 
             $table->timestamps();
 
