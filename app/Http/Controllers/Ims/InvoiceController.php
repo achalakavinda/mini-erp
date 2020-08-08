@@ -86,14 +86,14 @@ class InvoiceController extends Controller
             $TotalDiscount = $DiscountPercentage;
 
             $Stock = Stock::create([
-                'name'=>'Batch',
+                'code'=>'Batch',
                 'company_division_id'=>1,
                 'company_id'=>1,
                 'invoice_id'=>$Invoice->id
             ]);
 
 
-            $Stock->name = "Invoice :".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Stock->id;
+            $Stock->code = "Invoice :".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Stock->id;
             $Stock->save();
 
             foreach ($request->row as $item)
@@ -104,12 +104,13 @@ class InvoiceController extends Controller
                     $Stock_Item = StockItem::create([
                         'stock_id'=>$Stock->id,
                         'brand_id'=>$Model->brand_id,
-                        'invoice_id'=>$Invoice->id,
+                        'invoice_item_id'=>$Invoice->id,
                         'item_code_id'=>$Model->id,
                         'item_code'=>$Model->name,
-                        'unit_price'=>$item['unit'],
+                        'unit_price'=>$item['unit_price'],
                         'created_qty'=>-$item['qty'],//to identify the initial qty for bath item
                         'tol_qty'=>-$item['qty'],
+                        'total'=>-$item['qty']*$item['unit_price'],
                         'company_division_id'=>$this->CompanyDivision->id,
                         'company_id'=>1,
                     ]);
@@ -119,14 +120,14 @@ class InvoiceController extends Controller
                         'brand_id'=>$Model->brand_id,
                         'item_code_id'=>$Model->id,
                         'stock_item_id'=>$Stock_Item->id,
-                        'price'=>$item['unit'],
+                        'unit_price'=>$item['unit_price'],
                         'qty'=>$item['qty'],
-                        'value'=>$item['qty']*$item['unit'],
+                        'total'=>$item['qty']*$item['unit_price'],
                         'remarks'=>'k',
                         'company_division_id'=>$this->Company_Division_id
                     ]);
 
-                    $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit']) ;
+                    $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit_price']) ;
             }
 
             if($DiscountPercentage>0){
@@ -140,6 +141,9 @@ class InvoiceController extends Controller
             $Invoice->discount = $DiscountPercentage;
             $Invoice->total = $TotalSum;
             $Invoice->save();
+
+            $Stock->total = -$TotalSum;
+            $Stock->save();
 
         } catch (\Exception $exception){
             $Invoice->delete();

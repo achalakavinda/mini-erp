@@ -44,13 +44,11 @@
 
 @section('js')
     <script>
-
         var table = $('#invoiceItemTable');
         var count = 0;
         var RawCount = 1;
 
         $( document ).ready(function() {
-
             $('#CustomerId').click(function() {
                 var customer_id =$('#CustomerId').val();
                 $.ajax('{!! url('api/customer-for-invoices') !!}/'+customer_id, {
@@ -74,8 +72,6 @@
                     success: function (data, status, xhr) {
 
                         if(data.item){
-                            console.log(data);
-
                             table.append('<tr class="tr_'+count+'">\n' +
                                 '                        <td>'+RawCount+'<input style="display:none" name="row['+count+'][insert]" type="checkbox" checked></td>\n' +
                                 '                        <td>\n' +
@@ -86,7 +82,7 @@
                                 '                            <input  type="number" name="row['+count+'][qty]" placeholder="In Stock '+data.qty+' items" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input  type="number" readonly name="row['+count+'][unit]" value="'+data.item.unit_price_with_tax+'" class="form-control">\n' +
+                                '                            <input  type="number" readonly name="row['+count+'][unit_price]" value="'+data.item.unit_price_with_tax+'" class="form-control">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input  type="number" readonly name="row['+count+'][tol]" class="form-control">\n' +
