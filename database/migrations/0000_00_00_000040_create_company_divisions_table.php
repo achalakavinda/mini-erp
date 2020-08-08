@@ -20,8 +20,23 @@ class CreateCompanyDivisionsTable extends Migration
             $table->string('name');
             $table->unsignedInteger('company_id');
             $table->timestamps();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies')
+                ->onDelete('cascade');
         });
+
+        DB::table('company_divisions')->insert([
+            [
+                'id'=>1,
+                'code' => 'AAA0001',
+                'name' => 'Master - Division',
+                'company_id'=>1,
+                'created_at' =>\Carbon\Carbon::now(),
+                'updated_at' =>\Carbon\Carbon::now()
+            ]
+        ]);
 
     }
 

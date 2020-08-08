@@ -27,11 +27,13 @@ class StockController extends Controller
     public function index()
     {
         $Stocks = \DB::table('stock_items')
-            ->select(\DB::raw('sum(stock_items.created_qty) as created_qty, sum(stock_items.tol_qty) as tol_qty,stock_items.item_code_id'))
+            ->select(\DB::raw('sum(stock_items.created_qty) as created_qty, sum(stock_items.tol_qty) as tol_qty, sum(stock_items.total) as total,stock_items.item_code_id'))
             ->groupBy('stock_items.item_code_id')
             ->get();
 
-        return view('admin.ims.stock.index',compact(['Stocks']));
+        $StockBatch = Stock::all();
+
+        return view('admin.ims.stock.index',compact(['Stocks','StockBatch']));
     }
 
     /**
@@ -53,12 +55,20 @@ class StockController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'row'=>'required'
+            'row'=>'required',
+            'row.*.model_id' => 'required',
+            'row.*.qty' => 'required',
+            'row.*.unit_price' => 'required'
         ]);
 
-        $Stock = Stock::create(['name'=>'Batch','company_division_id'=>1,'company_id'=>1]);
-        $Stock->name = "Batch :".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Stock->id;
-        $Stock->save();
+        $Total = 0;
+
+        $Stock = Stock::create(
+            [
+                'code'=>'Batch',
+                'company_division_id'=>1,
+                'company_id'=>1
+            ]);
 
         foreach ($request->row as $item)
         {
@@ -66,25 +76,33 @@ class StockController extends Controller
                 if( $item['model_id']>0 && $item['qty']>0)
                 {
                     $Model = ItemCode::find($item['model_id']);
-
-                    if($Model){
-                        $Stock_Item = StockItem::create([
+                    if($Model)
+                    {
+                     StockItem::create([
                             'stock_id'=>$Stock->id,
                             'brand_id'=>$Model->brand_id,
                             'item_code_id'=>$Model->id,
                             'item_code'=>$Model->name,
-                            'unit_price'=>$Model->unit_cost,
+                            'item_unit_cost_from_table'=>$Model->unit_cost,
+                            'unit_price'=>$item['unit_price'],
                             'created_qty'=>$item['qty'],//to identify the initial qty for bath item
                             'tol_qty'=>$item['qty'],
                             'company_division_id'=>$this->CompanyDivision->id,
                             'company_id'=>1,
+                            'total'=> $item['qty'] * $item['unit_price']
                         ]);
+                        $Total = $Total + ($item['qty']*$item['unit_price']);
                     }
                 }
             }catch (\Exception $e){
-
+                $Stock->delete();
+                dd($e->getMessage());
             }
         }
+
+        $Stock->code = "Stock :".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Stock->id;
+        $Stock->total = $Total;
+        $Stock->save();
 
         return redirect('ims/stock');
     }

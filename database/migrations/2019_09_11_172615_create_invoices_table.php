@@ -14,12 +14,12 @@ class CreateInvoicesTable extends Migration
     public function up()
     {
         Schema::create('invoices', function (Blueprint $table) {
-            $table->increments('id');
 
-            $table->date('order_date')->default(\Carbon\Carbon::now());
-            $table->string('purchase_order')->nullable();
+            $table->increments('id');
             $table->string('invoice_no');
-            $table->date('dispatched_date');
+            $table->date('order_date')->default(\Carbon\Carbon::now());
+            $table->date('dispatched_date')->default(\Carbon\Carbon::now());
+            $table->string('purchase_order')->nullable();
             $table->unsignedInteger('delivery_method_id');
             $table->text('delivery_address')->nullable();
             $table->unsignedInteger('customer_id');
@@ -29,10 +29,17 @@ class CreateInvoicesTable extends Migration
             $table->double('amount')->default(0);
             $table->double('discount')->default(0);
             $table->double('total')->default(0);
+
             $table->timestamps();
 
-            $table->foreign('customer_id')->references('id')->on('customers')->onDelete('cascade');
-            $table->foreign('company_division_id')->references('id')->on('company_divisions')->onDelete('cascade');
+            $table->foreign('customer_id')
+                ->references('id')
+                ->on('customers');
+
+            $table->foreign('company_division_id')
+                ->references('id')
+                ->on('company_divisions')
+                ->onDelete('cascade');
 
         });
     }

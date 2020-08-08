@@ -19,6 +19,16 @@ class CreateCompaniesTable extends Migration
             $table->string('code')->unique();
             $table->timestamps();
         });
+
+        DB::table('companies')->insert([
+            [
+                'id'=>1,
+                'name' => 'Master Company',
+                'code' => 'Master-Company',
+                'created_at' =>\Carbon\Carbon::now(),
+                'updated_at' =>\Carbon\Carbon::now()
+            ]
+        ]);
     }
 
     /**

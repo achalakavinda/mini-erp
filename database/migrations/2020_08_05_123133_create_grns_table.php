@@ -16,27 +16,28 @@ class CreateGrnsTable extends Migration
         Schema::create('grns', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('company_division_id')->nullable();
-            $table->unsignedInteger('company_id');
+            $table->unsignedInteger('supplier_id')->nullable();
             $table->unsignedInteger('created_by');
 
-            $table->string('name');
+            $table->text('code'); //create unique code.example GRN-2012-12-04-{grn_id}
             $table->date('created_date')->default(\Carbon\Carbon::now());
             $table->boolean('posted_to_stock')->default(false);
+            $table->boolean('posted_to_so')->default(false);
+            $table->double('total')->default(0);
+            $table->boolean('commit')->default(false);
 
             $table->foreign('company_division_id')
                 ->references('id')
                 ->on('company_divisions')
                 ->onDelete('cascade');
 
-            $table->foreign('company_id')
+            $table->foreign('supplier_id')
                 ->references('id')
-                ->on('companies')
-                ->onDelete('cascade');
+                ->on('suppliers');
 
             $table->foreign('created_by')
                 ->references('id')
-                ->on('users')
-                ->onDelete('cascade');
+                ->on('users');
 
             $table->timestamps();
         });

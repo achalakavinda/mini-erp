@@ -15,22 +15,21 @@ class CreateInvoiceItemsTable extends Migration
     {
         /**
          *  For one invoice there can be multiple invoice items
-         *  when the invoice quantity value is more than a single stock item, we need to create multiple to link with the
-         *  next stock item batch
-         *  ex: invoice item qty -> 10
-         *  stock item batch 1 -> 5 , batch 2 -> 5  = two records in invoice items.
-         *
         */
+
         Schema::create('invoice_items', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('invoice_id');
             $table->unsignedInteger('brand_id');
             $table->unsignedInteger('item_code_id');//use to map invoice to specific stock item
             $table->unsignedInteger('stock_item_id');
-            $table->double('price');
+
+            $table->double('unit_price');
+            $table->double('unit_discount')->default(0);
             $table->double('qty');
-            $table->double('value');
-            $table->text('remarks');
+            $table->double('total');
+
+            $table->text('remarks')->nullable();
             $table->unsignedInteger('company_division_id');
             $table->timestamps();
 

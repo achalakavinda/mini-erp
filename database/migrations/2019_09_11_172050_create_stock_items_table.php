@@ -14,17 +14,21 @@ class CreateStockItemsTable extends Migration
     public function up()
     {
         Schema::create('stock_items', function (Blueprint $table) {
+
             $table->increments('id');
             $table->unsignedInteger('stock_id')->nullable();
+            $table->unsignedInteger('grn_item_id')->nullable();
+            $table->unsignedInteger('invoice_item_id')->nullable();
             $table->unsignedInteger('brand_id');
             $table->unsignedInteger('item_code_id');
-            $table->unsignedInteger('grn_id')->nullable();
-            $table->unsignedInteger('invoice_id')->nullable();
+            $table->boolean('commit')->default(true);
 
             $table->string('item_code');//store stock item name, history log
-            $table->double('unit_price')->default(0);//stock added unit price
+            $table->double('item_unit_cost_from_table')->default(0);//store the value on item code table
+            $table->double('unit_price')->default(0);//keep the unit price entered through the stock insert
             $table->double('created_qty')->default(0);//item created quantity
             $table->double('tol_qty')->default(0);//use this if create quantity, remove when realizing a invoice
+            $table->double('total')->default(0);//use this if create quantity, remove when realizing a invoice
 
 
             $table->boolean("is_open_stock")->default(false);

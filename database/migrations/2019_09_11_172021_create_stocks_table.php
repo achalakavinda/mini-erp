@@ -15,15 +15,19 @@ class CreateStocksTable extends Migration
     {
         Schema::create('stocks', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->boolean("is_open_stock")->default(false);
-            $table->date('created_date')->default(\Carbon\Carbon::now());
             $table->unsignedInteger('grn_id')->nullable();
             $table->unsignedInteger('invoice_id')->nullable();
-
             $table->unsignedInteger('stock_location_id')->nullable();
-            $table->unsignedInteger('company_division_id')->nullable();
             $table->unsignedInteger('company_id');
+            $table->unsignedInteger('company_division_id');
+
+
+            $table->string('code');
+            $table->boolean("is_open_stock")->default(false);
+            $table->date('created_date')->default(\Carbon\Carbon::now());
+            $table->double('total')->nullable();
+            $table->boolean('commit')->default(false);
+
             $table->timestamps();
 
             $table->foreign('stock_location_id')

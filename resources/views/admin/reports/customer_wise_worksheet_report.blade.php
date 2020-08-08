@@ -28,7 +28,7 @@ $ImportTitle = \Carbon\Carbon::now()." Customer wise Work Report";
         <div class="box-header with-border">
             <h3 class="box-title">Work Sheet Report</h3>
         </div>
-    @include('admin.header-widgets.dashboard-header')
+    @include('admin.components.header-widgets.dashboard-header')
     @include('admin.reports.shortcuts.index')
     <!-- /.box-body -->
     </div>
