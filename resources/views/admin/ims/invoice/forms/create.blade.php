@@ -115,7 +115,13 @@
                                     <tfoot>
                                     <tr>
                                         <th>No</th>
-                                        <th>{!! Form::select('model_select_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ModelSelectId','class'=>'form-control']) !!}</th>
+                                        <th>
+                                            <select id="ModelSelectId" class="form-control" name="model_select_id">
+                                                @foreach(\App\Models\Ims\ItemCode::all() as $option)
+                                                    <option value="{{ $option->id }}">{{ $option->name }} @if( $option->description!=null ) - {{ $option->description }}  @endif</option>
+                                                @endforeach
+                                            </select>
+                                        </th>
                                         <th><button id="addNewItem" type="button" style="width: 100%" class="btn">Add</button></th>
                                     </tr>
                                     </tfoot>
