@@ -24,6 +24,7 @@ class CreateInvoiceItemsTable extends Migration
             $table->unsignedInteger('item_code_id');//use to map invoice to specific stock item
             $table->unsignedInteger('stock_item_id');
 
+            $table->double('item_unit_cost_from_table');
             $table->double('unit_price');
             $table->double('unit_discount')->default(0);
             $table->double('qty');

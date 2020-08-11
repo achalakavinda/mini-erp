@@ -107,6 +107,7 @@ class InvoiceController extends Controller
                         'invoice_item_id'=>$Invoice->id,
                         'item_code_id'=>$Model->id,
                         'item_code'=>$Model->name,
+                        'item_unit_cost_from_table'=>$Model->unit_cost,
                         'unit_price'=>$item['unit_price'],
                         'created_qty'=>-$item['qty'],//to identify the initial qty for bath item
                         'tol_qty'=>-$item['qty'],
@@ -120,6 +121,7 @@ class InvoiceController extends Controller
                         'brand_id'=>$Model->brand_id,
                         'item_code_id'=>$Model->id,
                         'stock_item_id'=>$Stock_Item->id,
+                        'item_unit_cost_from_table'=>$Model->unit_cost,
                         'unit_price'=>$item['unit_price'],
                         'qty'=>$item['qty'],
                         'total'=>$item['qty']*$item['unit_price'],
