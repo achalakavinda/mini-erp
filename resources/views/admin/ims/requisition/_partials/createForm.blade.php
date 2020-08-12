@@ -1,35 +1,37 @@
 <div class="box-body">
 
     <div class="col-md-12">
-            <!-- requisition date -->
-            <div class="col-md-6">
-                <div class="form-group">
-                    {!! Form::label('Requisition Date') !!}
-                    {!! Form::date('date',\Carbon\Carbon::now(),['id'=>'RequisitionDate','class'=>'form-control']) !!}
-                </div>
-            </div>  <!-- /requisition date -->
-
-            <!-- purchase requisitions number-->
-            <div class="col-md-6">
-                <div class="form-group">
-                    {!! Form::label('PR. No') !!}
-                    {!! Form::text('purchase_requisitions',null,['id'=>'PurchaseRequisition','class'=>'form-control']) !!}
-                </div>
-            </div>  <!-- /purchase requisitions number -->
-
-
-            <!-- requisition item -->
-            <div class="col-md-12">
-                <div class="form-group">
-                    {!! Form::label('Select Item') !!}
-                    {!! Form::select('item_code_id',\App\Models\ItemCode::all()->pluck('name','id'),null,['id'=>'ItemCodeId','class'=>'form-control']) !!}
-                </div>
-            </div>  <!-- /requisition item -->
-            <div class="col-md-12">
-                <div class="form-group">
-                    <button id="addNewItem" type="button" class="btn btn-success btn-sm">Add</button>
-                </div>
+        <!-- requisition date -->
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('Requisition Date') !!}
+                {!! Form::date('date',\Carbon\Carbon::now(),['id'=>'RequisitionDate','class'=>'form-control']) !!}
             </div>
+        </div> <!-- /requisition date -->
+
+        <!-- purchase requisitions number-->
+        <div class="col-md-6">
+            <div class="form-group">
+                {!! Form::label('PR. No') !!}
+                {!! Form::text('purchase_requisitions',null,['id'=>'PurchaseRequisition','class'=>'form-control']) !!}
+            </div>
+        </div> <!-- /purchase requisitions number -->
+
+
+        <!-- requisition item -->
+        <div class="col-md-12">
+            <div class="form-group">
+                {!! Form::label('Select Item') !!}
+                {!!
+                Form::select('item_code_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ItemCodeId','class'=>'form-control'])
+                !!}
+            </div>
+        </div> <!-- /requisition item -->
+        <div class="col-md-12">
+            <div class="form-group">
+                <button id="addNewItem" type="button" class="btn btn-success btn-sm">Add</button>
+            </div>
+        </div>
     </div>
 
     <!-- requisition item table -->
@@ -37,15 +39,15 @@
 
         <table id="requisitionItemTable" class="table table-responsive table-bordered table-striped">
             <thead>
-            <tr>
-                <th>Item Code</th>
-                <th>Item Description</th>
-                <th>Price (LKR)</th>
-                <th>Quantity</th>
-                <th>Value</th>
-                <th>Stock in Hand</th>
-                <th><i class="fa fa-remove"></i></th>
-            </tr>
+                <tr>
+                    <th>Item Code</th>
+                    <th>Item Description</th>
+                    <th>Price (LKR)</th>
+                    <th>Quantity</th>
+                    <th>Value</th>
+                    <th>Stock in Hand</th>
+                    <th><i class="fa fa-remove"></i></th>
+                </tr>
             </thead>
             <tbody>
 
@@ -53,7 +55,7 @@
             </tbody>
         </table>
     </div><!-- requisition item table -->
-    <hr/>
+    <hr />
 </div>
 <!-- /.box-body -->
 
@@ -62,9 +64,8 @@
 </div>
 
 @section('js')
-    <script>
-
-        var table = $('#requisitionItemTable');
+<script>
+    var table = $('#requisitionItemTable');
         var count = 0;
         var RawCount = 1;
 
@@ -126,6 +127,6 @@
             alert(value);
             $(value).remove();
         }
-    </script>
+</script>
 
 @endsection

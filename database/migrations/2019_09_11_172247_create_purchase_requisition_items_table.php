@@ -20,8 +20,8 @@ class CreatePurchaseRequisitionItemsTable extends Migration
             $table->unsignedInteger('item_code_id');
             $table->double('price');
             $table->double('qty');
-            $table->double('value');
-            $table->text('remarks');
+            $table->double('value')->nullable();
+            $table->text('remarks')->nullable();
             $table->double('stock_in_hand');
             $table->unsignedInteger('company_division_id');
             $table->timestamps();
