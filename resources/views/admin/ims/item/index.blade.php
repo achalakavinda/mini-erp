@@ -1,34 +1,35 @@
 @extends('layouts.admin')
+
 @section('main-content-header')
     <!-- main header section -->
-   <!-- Default box -->
-   <div class="box">
-       <div class="box-header with-border">
-           <h3 class="box-title">Item</h3>
-       </div>
-   @include('layouts.components.header-widgets.dashboard-header')
-   <!-- /.box-body -->
-       <div class="box-body">
-           <a onclick="showMegaMenu()" href="#" class="btn btn-app">
-               <i class="main-action-btn-info fa fa-list"></i> Quick Menu
-           </a>
-           <a href="{{ url('/ims/item') }}" class="btn btn-app">
-               <i  class="main-action-btn-info fa fa-refresh"></i> Refresh
-           </a>
-           <a href="{{ url('/ims/brand') }}" class="btn btn-app">
-               <i  class="main-action-btn-info fa fa-table"></i> Brand
-           </a>
-           <a href="{{ url('/ims/invoice') }}" class="btn btn-app">
-               <i  class="main-action-btn-info fa fa-table"></i> Invoice
-           </a>
-           <a href="{{ url('/ims/item/create') }}" class="btn btn-app">
-               <i  class="main-action-btn-danger fa fa-plus"></i> New
-           </a>
-       </div>
-       <!-- /.box-body -->
-   </div>
-   <!-- /.box -->
-   <!-- /main header section -->
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Item/Code</h3>
+        </div>
+    @include('layouts.components.header-widgets.dashboard-header')
+    <!-- /.box-body -->
+        <div class="box-body">
+            <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{{ url('/ims/item') }}" class="btn btn-menu">
+                <i  class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
+            <a href="{{ url('/ims/brand') }}" class="btn btn-menu">
+                <i  class="main-action-btn-info fa fa-table"></i> Brand
+            </a>
+            <a href="{{ url('/ims/invoice') }}" class="btn btn-menu">
+                <i  class="main-action-btn-info fa fa-table"></i> Invoice
+            </a>
+            <a href="{{ url('/ims/item/create') }}" class="btn btn-menu">
+                <i  class="main-action-btn-danger fa fa-plus"></i> New
+            </a>
+        </div>
+        <!-- /.box-body -->
+    </div>
+    <!-- /.box -->
+    <!-- /main header section -->
 @endsection
 
 
@@ -56,37 +57,37 @@
                         </thead>
                         <tbody>
 
-                            @foreach($Items as $item)
-                                <tr>
-                                    <td>{!! $item->id !!}</td>
-                                    <td>
-                                        <?php
-                                        $brand = \App\Models\Ims\Brand::find($item->brand_id);
-                                            if(!empty($brand)){echo $brand->name;}
-                                        $STOCKITEM = DB::table('stock_items')
-                                            ->select(DB::raw('sum(stock_items.tol_qty) as qty'))
-                                            ->where(['stock_items.item_code_id'=>$item->id])
-                                            ->groupBy('stock_items.item_code_id')
-                                            ->first();
-                                        ?>
-                                    </td>
-                                    <td>{!! $item->name !!}</td>
-                                    <td>{!! $item->description !!}</td>
-                                    <td>{!! $item->unit_cost !!}</td>
-                                    <td>{!! $item->selling_price !!}</td>
-                                    <td>{!! $item->nbt_tax_percentage !!}%</td>
-                                    <td>{!! $item->vat_tax_percentage !!}%</td>
-                                    <td>{!! $item->unit_price_with_tax !!}</td>
-                                    <td>
-                                        @if($STOCKITEM)
-                                            {{ $STOCKITEM->qty }}
-                                            @else
-                                            0
-                                        @endif
-                                    </td>
-                                    <td><a class="btn btn-sm" href="{!! url('ims/item') !!}/{!! $item->id !!}"><i class="fa fa-paper-plane"></i></a></td>
-                                </tr>
-                            @endforeach
+                        @foreach($Items as $item)
+                            <tr>
+                                <td>{!! $item->id !!}</td>
+                                <td>
+                                    <?php
+                                    $brand = \App\Models\Ims\Brand::find($item->brand_id);
+                                    if(!empty($brand)){echo $brand->name;}
+                                    $STOCKITEM = DB::table('stock_items')
+                                        ->select(DB::raw('sum(stock_items.tol_qty) as qty'))
+                                        ->where(['stock_items.item_code_id'=>$item->id])
+                                        ->groupBy('stock_items.item_code_id')
+                                        ->first();
+                                    ?>
+                                </td>
+                                <td>{!! $item->name !!}</td>
+                                <td>{!! $item->description !!}</td>
+                                <td style="text-align: right">{!! number_format($item->unit_cost,2) !!}</td>
+                                <td style="text-align: right">{!! number_format($item->selling_price,2) !!}</td>
+                                <td style="text-align: right">{!! $item->nbt_tax_percentage !!}%</td>
+                                <td style="text-align: right">{!! $item->vat_tax_percentage !!}%</td>
+                                <td style="text-align: right">{!! number_format($item->unit_price_with_tax,2) !!}</td>
+                                <td style="text-align: right">
+                                    @if($STOCKITEM)
+                                        {{ $STOCKITEM->qty }}
+                                    @else
+                                        0
+                                    @endif
+                                </td>
+                                <td><a class="btn btn-sm" href="{!! url('ims/item') !!}/{!! $item->id !!}"><i class="fa fa-paper-plane"></i></a></td>
+                            </tr>
+                        @endforeach
 
                         </tbody>
                     </table>

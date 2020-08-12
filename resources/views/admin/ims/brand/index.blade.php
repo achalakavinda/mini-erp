@@ -1,74 +1,77 @@
 @extends('layouts.admin')
-<!-- main header section -->
+
 @section('main-content-header')
-<!-- Default box -->
-<div class="box">
-    <div class="box-header with-border">
-        <h3 class="box-title">Category Table</h3>
-    </div>
+    <!-- main header section -->
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Brand/Category</h3>
+        </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
 
-    <div class="box-body">
-        <a onclick="showMegaMenu()" href="#" class="btn btn-app">
-            <i class="main-action-btn-info fa fa-list"></i> Quick Menu
-        </a>
-        <a href="{{ url('/ims/brand') }}" class="btn btn-app">
-            <i class="main-action-btn-info fa fa-refresh"></i> Refresh
-        </a>
-        <a href="{{ url('/ims/item') }}" class="btn btn-app">
-            <i class="main-action-btn-info fa fa-table"></i> Item
-        </a>
-        <a href="{{ url('/ims/invoice') }}" class="btn btn-app">
-            <i class="main-action-btn-info fa fa-table"></i> Invoice
-        </a>
-        <a href="{{ url('/ims/brand/create') }}" class="btn btn-app">
-            <i class="main-action-btn-danger fa fa-plus"></i> New
-        </a>
+        <div class="box-body">
+            <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{{ url('/ims/brand') }}" class="btn btn-menu">
+                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
+            <a href="{{ url('/ims/item') }}" class="btn btn-menu">
+                <i class="main-action-btn-info fa fa-table"></i> Item
+            </a>
+            <a href="{{ url('/ims/invoice') }}" class="btn btn-menu">
+                <i class="main-action-btn-info fa fa-table"></i> Invoice
+            </a>
+            <a href="{{ url('/ims/brand/create') }}" class="btn btn-menu">
+                <i class="main-action-btn-danger fa fa-plus"></i> New
+            </a>
+
+        </div>
     </div>
-</div>
-<!-- /.box -->
+    <!-- /.box -->
+    <!-- /main header section -->
 @endsection
-<!-- /main header section -->
-<!-- main section -->
+
 @section('main-content')
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box">
-            <!-- /.box-header -->
-            <div style="overflow: auto" class="box-body">
-                <table id="table" class="table table-responsive table-bordered table-striped">
-                    <thead>
+    <!-- main section -->
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <!-- /.box-header -->
+                <div style="overflow: auto" class="box-body">
+                    <table id="table" class="table table-responsive table-bordered table-striped">
+                        <thead>
                         <tr>
                             <th>#ID</th>
                             <th>Name</th>
                             <th><i class="fa fa-cogs"></i></th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         @foreach($Brands as $brand)
-                        <tr>
-                            <td>{!! $brand->id !!}</td>
-                            <td>{!! $brand->name !!}</td>
-                            <td>
-                                <a href="{!! url('ims/brand') !!}/{!! $brand->id !!}"><i
-                                        class="fa fa-paper-plane"></i></a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>{!! $brand->id !!}</td>
+                                <td>{!! $brand->name !!}</td>
+                                <td>
+                                    <a href="{!! url('ims/brand') !!}/{!! $brand->id !!}"><i
+                                            class="fa fa-paper-plane"></i></a>
+                                </td>
+                            </tr>
                         @endforeach
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
             </div>
-            <!-- /.box-body -->
+            <!-- /.box -->
         </div>
-        <!-- /.box -->
+        <!-- /.col -->
     </div>
-    <!-- /.col -->
-</div>
-<!-- /.row -->
+    <!-- /.row -->
+    <!-- /main section -->
 @endsection
-<!-- /main section -->
 
 @section('js')
-@include('layouts.components.dataTableJs.index')
+    @include('layouts.components.dataTableJs.index')
 @endsection
