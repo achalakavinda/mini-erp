@@ -7,11 +7,19 @@
     <div class="box-header with-border">
         <h3 class="box-title">Dashboard / Requisition</h3>
     </div>
-    <div class="box-body">
-        <a href="{{ url('ims/purchase-requisition') }}" class="btn btn-success"> Requisition <i
-                class="fa fa-backward"></i> </a>
-    </div>
+    @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
+    <div class="box-body">
+        <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+        </a>
+        <a href="{{ url('/ims/purchase-requisition') }}" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-list"></i> Requisition
+        </a>
+        <a href="{{ url('/ims/purchase-requisition/create') }}" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+        </a>
+    </div>
 </div>
 <!-- /.box -->
 @endsection

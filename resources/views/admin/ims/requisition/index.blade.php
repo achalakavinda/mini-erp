@@ -7,11 +7,19 @@
     <div class="box-header with-border">
         <h3 class="box-title">Dashboard / Requisition</h3>
     </div>
-    <div class="box-body">
-        <a href="{{ url('/ims/purchase-requisition/create') }}" class="btn btn-success">Requisition <i
-                class="fa fa-plus"></i> </a>
-    </div>
+    @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
+    <div class="box-body">
+        <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+        </a>
+        <a href="{{ url('/ims/purchase-requisition') }}" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+        </a>
+        <a href="{{ url('/ims/purchase-requisition/create') }}" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-plus"></i> New
+        </a>
+    </div>
 </div>
 <!-- /.box -->
 @endsection
@@ -46,8 +54,9 @@
                             <td><?php $User = \App\Models\User::find($requisition->user_id); if($User!=null){echo $User->name;}?>
                             </td>
                             <td>{!! $requisition->purchaseRequisitionStatus->name !!}</td>
-                            <td><a href="{!! url('ims/purchase-requisition') !!}/{!! $requisition->id !!}"
-                                    class="btn btn-sm btn-danger">view</a> </td>
+                            <td><a style="padding: 10px"
+                                    href="{!! url('ims/purchase-requisition') !!}/{!! $requisition->id !!}"><i
+                                        class="fa fa-list"></i></a></td>
                         </tr>
                         @endforeach
                     </tbody>
