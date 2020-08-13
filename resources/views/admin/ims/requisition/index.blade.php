@@ -8,7 +8,8 @@
         <h3 class="box-title">Dashboard / Requisition</h3>
     </div>
     <div class="box-body">
-        <a href="{{ url('/requisition/create') }}" class="btn btn-success">Requisition <i class="fa fa-plus"></i> </a>
+        <a href="{{ url('/ims/purchase-requisition/create') }}" class="btn btn-success">Requisition <i
+                class="fa fa-plus"></i> </a>
     </div>
     <!-- /.box-body -->
 </div>
@@ -44,8 +45,8 @@
                             <td>{!! $requisition->date !!}</td>
                             <td><?php $User = \App\Models\User::find($requisition->user_id); if($User!=null){echo $User->name;}?>
                             </td>
-                            <td>{!! $requisition->purchase_requisition_status_id !!}</td>
-                            <td><a href="{!! url('ims/requisition') !!}/{!! $requisition->id !!}"
+                            <td>{!! $requisition->purchaseRequisitionStatus->name !!}</td>
+                            <td><a href="{!! url('ims/purchase-requisition') !!}/{!! $requisition->id !!}"
                                     class="btn btn-sm btn-danger">view</a> </td>
                         </tr>
                         @endforeach

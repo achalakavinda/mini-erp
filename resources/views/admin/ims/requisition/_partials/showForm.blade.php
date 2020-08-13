@@ -1,7 +1,7 @@
 <div class="box-body">
 
     <!-- requisition date -->
-    <div class="col-md-12">
+    <div class="col-md-4">
         <div class="form-group">
             {!! Form::label('Requision Date') !!}
             {!!
@@ -10,8 +10,8 @@
         </div>
     </div> <!-- /requisition date -->
 
-    <!-- invoice purchase order -->
-    <div class="col-md-12">
+
+    <div class="col-md-4">
         <div class="form-group">
             {!! Form::label('Requested By') !!}
             {!!
@@ -19,9 +19,51 @@
             \App\Models\User::find($Requisition->user_id)->name,['readonly','id'=>'PurchaseOrder','class'=>'form-control'])
             !!}
         </div>
-    </div> <!-- /invoice purchase order -->
+    </div>
 
+    @if ($Requisition->purchase_requisition_status_id == 1)
+    <!-- PO number-->
+    <div class="col-md-4">
+        <div class="form-group">
+            {!! Form::label('PO. No') !!}
+            {!! Form::text('po_id',null,['id'=>'po_id','class'=>'form-control']) !!}
+        </div>
+    </div> <!-- /PO number -->
 
+    <!--Location-->
+    <div class="col-md-4">
+        <div class="form-group">
+            {!! Form::label('Location') !!}
+            {!! Form::text('location',null,['id'=>'location','class'=>'form-control']) !!}
+        </div>
+    </div> <!-- Location -->
+
+    <!--Delivery Address-->
+    <div class="col-md-4">
+        <div class="form-group">
+            {!! Form::label('Delivery Address') !!}
+            {!! Form::text('delivery_address',null,['id'=>'delivery_address','class'=>'form-control']) !!}
+        </div>
+    </div> <!-- Delivery Address -->
+
+    <!--Delivery Date-->
+    <div class="col-md-4">
+        <div class="form-group">
+            {!! Form::label('Delivery Date') !!}
+            {!! Form::date('delivery_date',\Carbon\Carbon::now(),['id'=>'delivery_date','class'=>'form-control']) !!}
+        </div>
+    </div> <!-- Delivery Date -->
+
+    <!--Supplier-->
+    <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label('Supplier') !!}
+            {!!
+            Form::select('supplier_id',\App\Models\Ims\Supplier::all()->pluck('name','id'),null,['id'=>'SupplierId'])
+            !!}
+        </div>
+    </div> <!-- Supplier -->
+    @endif
     <!-- invoice item table -->
     <div class="col-md-12">
 

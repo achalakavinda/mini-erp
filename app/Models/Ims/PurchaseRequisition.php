@@ -8,4 +8,12 @@ class PurchaseRequisition extends Model
 {
     protected $guarded = ['id'];
 
+    public  function items(){
+        return $this->hasMany('App\Models\Ims\PurchaseRequisitionItem');
+    }
+
+    public  function purchaseRequisitionStatus(){
+        return $this->belongsTo('App\Models\Ims\PurchaseRequisitionStatus');
+    }
+
 }

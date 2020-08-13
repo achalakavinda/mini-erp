@@ -8,7 +8,8 @@
         <h3 class="box-title">Dashboard / Requisition</h3>
     </div>
     <div class="box-body">
-        <a href="{{ url('ims/requisition') }}" class="btn btn-success"> Requisition <i class="fa fa-backward"></i> </a>
+        <a href="{{ url('ims/purchase-requisition') }}" class="btn btn-success"> Requisition <i
+                class="fa fa-backward"></i> </a>
     </div>
     <!-- /.box-body -->
 </div>

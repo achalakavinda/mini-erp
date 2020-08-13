@@ -18,6 +18,7 @@ class CreatePurchaseOrdersTable extends Migration
 
             $table->date('create_date')->default(\Carbon\Carbon::now());
             $table->unsignedInteger('po_id')->nullable();
+            $table->unsignedInteger('purchase_requisition_id');
             $table->text('location')->nullable();
             $table->text('delivery_address')->nullable();
             $table->date('delivery_date')->default(\Carbon\Carbon::now());
@@ -30,6 +31,7 @@ class CreatePurchaseOrdersTable extends Migration
             $table->unsignedInteger('company_division_id')->nullable();
 
             $table->timestamps();
+            $table->foreign('purchase_requisition_id')->references('id')->on('purchase_requisitions')->onDelete('cascade');
             $table->foreign('company_division_id')->references('id')->on('company_divisions')->onDelete('cascade');
 
         });

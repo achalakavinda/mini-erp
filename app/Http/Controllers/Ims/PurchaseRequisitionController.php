@@ -10,6 +10,10 @@ use App\Http\Controllers\Controller;
 use App\Models\CompanyDivision;
 use App\Models\Ims\PurchaseRequisition;
 use App\Models\Ims\PurchaseRequisitionItem;
+use App\Models\Ims\CompanyPurchaseOrder;
+use App\Models\Ims\CompanyPurchaseOrderItem;
+use App\Models\Ims\Grn;
+use App\Models\Ims\GrnItem;
 use App\Models\Ims\ItemCode;
 use Illuminate\Http\Request;
 
@@ -64,6 +68,7 @@ class PurchaseRequisitionController extends Controller
             'date'=>$date,
             'company_division_id'=>$this->CompanyDivision->id,
             'user_id'=> auth()->user()->id,
+            'purchase_requisition_status_id'=> 1
         ]);
 
         try {
@@ -92,7 +97,7 @@ class PurchaseRequisitionController extends Controller
             $PurchaseRequisition->delete();
             dd($exception->getMessage());
         }
-        return redirect(url('ims/requisition/'.$PurchaseRequisition->id));
+        return redirect(url('ims/purchase-requisition/'.$PurchaseRequisition->id));
     }
 
     /**
@@ -142,6 +147,98 @@ class PurchaseRequisitionController extends Controller
     }
 
     public function postToPurchase(Request $request){
+
+        $PurchaseRequisition = PurchaseRequisition::findOrFail($request->requisition_id);
+
+
+        $CompanyPurchaseOrder = CompanyPurchaseOrder::create(
+            [
+                'po_id'=>$request->po_id,
+                'purchase_requisition_id'=>$PurchaseRequisition->id,
+                'location'=>$request->location,
+                'delivery_address'=>$request->delivery_address,
+                'delivery_date'=>$request->delivery_date,
+                'supplier_id'=>$request->supplier_id,
+            ]);
+
+        try {
+
+            foreach ($PurchaseRequisition->items as $item)
+            {
+                $Model = PurchaseRequisitionItem::find($item->item_code_id);
+                if($Model)
+                {
+                    CompanyPurchaseOrderItem::create([
+                        'company_purchase_order_id'=>$CompanyPurchaseOrder->id,
+                        'brand_id'=>$Model->brand_id,
+                        'item_code_id'=>$Model->item_code_id,
+                        'price'=>$Model->price,
+                        'qty'=>$Model->qty,
+                        'company_division_id'=>$Model->company_division_id,
+                    ]);
+                }
+            }
+
+            $PurchaseRequisition->purchase_requisition_status_id = 2;
+            $PurchaseRequisition->save();
+            
+        }catch (\Exception $e){
+            $CompanyPurchaseOrder->delete();
+            dd($e->getMessage());
+        }
+
+        return redirect('/ims/purchase-requisition');
+    }
+
+    public function postToGRN(Request $request){
+        
+        $PurchaseRequisition = PurchaseRequisition::findOrFail($request->requisition_id);
+        $CompanyPurchaseOrder = CompanyPurchaseOrder::findOrFail($PurchaseRequisition->id);
+
+        $Grn = Grn::create([
+            'supplier_id'=>$CompanyPurchaseOrder->supplier_id,
+            'company_division_id'=>$this->CompanyDivision->id,
+            'created_date'=> Carbon::now(),
+            'created_by'=>auth()->user()->id,
+            'code'=>'GRN'
+        ]);
+
+        $TotalAmount = 0;
+        
+        try {
+
+            foreach ($PurchaseRequisition->items as $item) {
+
+                $Model = ItemCode::find($item->item_code_id);
+
+                if($Model){
+
+                    GrnItem::create([
+                        'brand_id'=>$Model->brand_id,
+                        'item_code_id'=>$Model->id,
+                        'grn_id'=>$Grn->id,
+                        'company_division_id'=>$this->CompanyDivision->id,
+                        'item_code'=>$Model->name,
+                        'item_unit_cost_from_table'=>$Model->unit_cost,
+                        'unit_price'=>$item->price,
+                        'created_qty'=>$item->qty,
+                        'total'=>$item->qty * $item->price
+                    ]);
+
+                    $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit_price'] ) ;
+                }
+            }
+
+
+            $Grn->code = "GRN-".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Grn->id;
+            $Grn->total = $TotalAmount;
+            $Grn->save();
+
+        }catch (\Exception $exception){
+            $Grn->delete();
+            dd($exception->getMessage());
+        }
+        return redirect(url('ims/grn/'.$Grn->id));
         
     }
 }
