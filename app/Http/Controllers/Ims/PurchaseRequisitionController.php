@@ -229,7 +229,9 @@ class PurchaseRequisitionController extends Controller
                 }
             }
 
-
+            $PurchaseRequisition->purchase_requisition_status_id = 3;
+            $PurchaseRequisition->save();
+            
             $Grn->code = "GRN-".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Grn->id;
             $Grn->total = $TotalAmount;
             $Grn->save();
