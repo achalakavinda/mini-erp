@@ -8,7 +8,6 @@
         </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
-
         <div class="box-body">
             <a onclick="showMegaMenu()" href="#" class="btn btn-app">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
@@ -116,5 +115,4 @@
             $(value).remove();
         }
     </script>
-
 @endsection

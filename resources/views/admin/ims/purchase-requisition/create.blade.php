@@ -41,7 +41,7 @@
             Form::open(['action'=>'Ims\PurchaseRequisitionController@store','class'=>'form-horizontal','id'=>'Form'])
             !!}
             @include('error.error')
-            @include('admin.ims.requisition._partials.createForm')
+            @include('admin.ims.purchase-requisition._partials.createForm')
             {!! Form::close() !!}
         </div>
         <!-- /.box -->

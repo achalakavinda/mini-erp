@@ -5,7 +5,7 @@
 <!-- Default box -->
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Dashboard / Requisition</h3>
+        <h3 class="box-title">Purchase Requisition</h3>
     </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
@@ -30,12 +30,9 @@
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">#Requisitions</h3>
-            </div>
             <!-- /.box-header -->
             <div style="overflow: auto" class="box-body">
-                <table id="dataTable" class="table table-responsive table-bordered table-striped">
+                <table id="table" class="table table-responsive table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Requisition ID</th>
@@ -75,23 +72,5 @@
 
 
 @section('js')
-
-<style type="text/css" href="{!! asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') !!}">
-</style>
-<style type="text/css">
-    .dataTables_filter {
-        float: right;
-    }
-</style>
-<script type="text/javascript" src="{!! asset('bower_components/datatables.net/js/jquery.dataTables.min.js') !!}">
-</script>
-<script type="text/javascript" src="{!! asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') !!}">
-</script>
-
-<script type="text/javascript">
-    $('#dataTable').DataTable({
-            "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-        });
-</script>
-
+    @include('layouts.components.dataTableJs.index')
 @endsection

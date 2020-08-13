@@ -42,15 +42,16 @@
         <li class="col-md-2">
             <ul>
                 <li class="list-header">Inventory Reports</li>
-                <li><a href="{{ url('ims/invoice') }}">Invoices</a></li>
                 <li><a href="{{ url('ims/quotation') }}">Quotations</a></li>
-                {{--                <li><a href="{{ url('ims/sales-order') }}">Sales Orders</a>
-        </li>--}}
-        <li><a href="{{ url('ims/purchase-requisition') }}">Purchase Requisitions</a></li>
-        {{--                <li><a href="{{ url('ims/purchase-order') }}">Purchase Orders</a></li>--}}
-        <li><a href="{{ url('ims/grn') }}">Goods Received Note</a></li>
-    </ul>
-    </li>
+                <li><a href="{{ url('ims/sales-order') }}">Sales Orders</a></li>
+                <li><a href="{{ url('ims/invoice') }}">Invoices</a></li>
+                <hr/>
+                <li><a href="{{ url('ims/purchase-requisition') }}">Purchase Requisitions</a></li>
+                <li><a href="{{ url('ims/purchase-order') }}">Purchase Orders</a></li>
+                <li><a href="{{ url('ims/grn') }}">Goods Received Note</a></li>
+                <li><a href="{{ url('ims/stock') }}">Stock</a></li>
+            </ul>
+        </li>
 
 
 

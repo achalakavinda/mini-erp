@@ -35,7 +35,7 @@ class PurchaseRequisitionController extends Controller
     public function index()
     {
         $PurchaseRequisition = PurchaseRequisition::all();
-        return view('admin.ims.requisition.index',compact(['PurchaseRequisition']));
+        return view('admin.ims.purchase-requisition.index',compact(['PurchaseRequisition']));
     }
 
     /**
@@ -45,7 +45,7 @@ class PurchaseRequisitionController extends Controller
      */
     public function create()
     {
-        return view('admin.ims.requisition.create');
+        return view('admin.ims.purchase-requisition.create');
     }
 
     /**
@@ -109,7 +109,7 @@ class PurchaseRequisitionController extends Controller
     public function show($id)
     {
         $Requisition = PurchaseRequisition::findOrFail($id);
-        return view('admin.ims.requisition.show',compact('Requisition'));
+        return view('admin.ims.purchase-requisition.show',compact('Requisition'));
     }
 
     /**
@@ -181,7 +181,7 @@ class PurchaseRequisitionController extends Controller
 
             $PurchaseRequisition->purchase_requisition_status_id = 2;
             $PurchaseRequisition->save();
-            
+
         }catch (\Exception $e){
             $CompanyPurchaseOrder->delete();
             dd($e->getMessage());
@@ -191,7 +191,7 @@ class PurchaseRequisitionController extends Controller
     }
 
     public function postToGRN(Request $request){
-        
+
         $PurchaseRequisition = PurchaseRequisition::findOrFail($request->requisition_id);
         $CompanyPurchaseOrder = CompanyPurchaseOrder::findOrFail($PurchaseRequisition->id);
 
@@ -204,7 +204,7 @@ class PurchaseRequisitionController extends Controller
         ]);
 
         $TotalAmount = 0;
-        
+
         try {
 
             foreach ($PurchaseRequisition->items as $item) {
@@ -231,7 +231,7 @@ class PurchaseRequisitionController extends Controller
 
             $PurchaseRequisition->purchase_requisition_status_id = 3;
             $PurchaseRequisition->save();
-            
+
             $Grn->code = "GRN-".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Grn->id;
             $Grn->total = $TotalAmount;
             $Grn->save();
@@ -241,6 +241,6 @@ class PurchaseRequisitionController extends Controller
             dd($exception->getMessage());
         }
         return redirect(url('ims/grn/'.$Grn->id));
-        
+
     }
 }

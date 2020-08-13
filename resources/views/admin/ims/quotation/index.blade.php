@@ -16,7 +16,13 @@
                 <i class="main-action-btn-info fa fa-refresh"></i> Refresh
             </a>
             <a href="{!! url('ims/quotation/create') !!}" class="btn btn-menu">
-                <i class="main-action-btn-danger fa fa-plus"></i> New
+                <i class="main-action-btn-info fa fa-plus"></i> New Quotation
+            </a>
+            <a href="{!! url('ims/sales-order/create') !!}" class="btn btn-menu">
+                <i class="main-action-btn-info fa fa-plus"></i> New Sales Order
+            </a>
+            <a href="{!! url('ims/invoice/create') !!}" class="btn btn-menu">
+                <i class="main-action-btn-info fa fa-plus"></i> New Invoice
             </a>
         </div>
         <!-- /.box-body -->
@@ -50,9 +56,9 @@
                                 <td>{!! $item->id !!}</td>
                                 <td>{!! $item->date !!}</td>
                                 <td><?php $CM = \App\Models\Customer::find($item->customer_id); if($CM!=null){echo $CM->name;}?></td>
-                                <td>{!! $item->amount !!}</td>
+                                <td>{!! number_format($item->amount,2) !!}</td>
                                 <td>{!! $item->discount !!}%</td>
-                                <td>{!! $item->total !!}</td>
+                                <td>{!! number_format($item->total,2) !!}</td>
                                 <td>
                                     <a style="padding: 10px" href="{!! url('ims/quotation') !!}/{!! $item->id !!}"><i class="fa fa-list"></i></a>
                                     <a target="_blank" style="padding: 10px" href="{!! url('ims/quotation') !!}/{!! $item->id !!}/print"><i class="fa fa-print"></i></a>

@@ -39,7 +39,7 @@
             ['Ims\PurchaseRequisitionController@postToPurchase'],'class'=>'form-horizontal','id'=>'postToPurchase']) !!}
             <input type="hidden" value="{{ $Requisition->id }}" name="requisition_id">
             @include('error.error')
-            @include('admin.ims.requisition._partials.showForm')
+            @include('admin.ims.purchase-requisition._partials.showForm')
             {!! Form::close() !!}
 
             @if($Requisition->purchase_requisition_status_id == 2)

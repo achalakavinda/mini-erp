@@ -4,7 +4,7 @@
 <!-- Default box -->
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Sales Orders</h3>
+        <h3 class="box-title">Sales Order</h3>
     </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
@@ -13,15 +13,15 @@
         <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
             <i class="main-action-btn-info fa fa-list"></i> Quick Menu
         </a>
-        <a href="{{ url('/ims/sales-orders/create') }}" class="btn btn-menu">
+        <a href="{{ url('/ims/sales-order/create') }}" class="btn btn-menu">
             <i class="main-action-btn-info fa fa-refresh"></i> Refresh
         </a>
         <a href="{{ url('/ims/item') }}" class="btn btn-menu">
             <i class="main-action-btn-info fa fa-table"></i> Item
         </a>
 
-        <a href="{{ url('/ims/sales-orders/create') }}" class="btn btn-menu">
-            <i class="main-action-btn-info fa fa-plus"></i> New
+        <a href="{{ url('/ims/sales-order/create') }}" class="btn btn-menu">
+            <i class="main-action-btn-danger fa fa-plus"></i> New
         </a>
     </div>
     <!-- /.box-body -->
@@ -34,7 +34,7 @@
 @section('main-content')
 <div class="row">
     {!!
-    Form::open(['action'=>'Ims\SalesOrdersController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])
+    Form::open(['action'=>'Ims\SalesOrderController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])
     !!}
 
     <div class="col-md-12">
@@ -51,9 +51,9 @@
                         <div class="col-xs-12">
                             <h4>
                                 Customer: {!!
-                                Form::select('customer_id',\App\Models\Customer::all()->pluck('name','id'),$SalesOrder->customer_id,['id'=>'CustomerId','disabled'])
+                                Form::select('customer_id',\App\Models\Customer::all()->pluck('name','id'),null,['id'=>'CustomerId'])
                                 !!}
-                                <small class="pull-right">Date: {{ $SalesOrder->created_at }}</small>
+                                <small class="pull-right">Date: 2/10/2014</small>
                             </h4>
                         </div>
                         <!-- /.col -->
@@ -71,14 +71,13 @@
                             <table style="width: 100%">
                                 <tbody>
                                     <tr>
-                                        <td>Order Date :</td>
-                                        <td><input disabled style="width: 100%" id="Date" name="date" type="date"
-                                                value="{{ $SalesOrder->date }}"></td>
+                                        <td>Date :</td>
+                                        <td><input style="width: 100%" id="Date" name="date" type="date" value=""></td>
                                     </tr>
 
                                     <tr>
                                         <td>Our Vat No: </td>
-                                        <td><input disabled style="width: 100%" id="CompanyVatNo" readonly=""
+                                        <td><input style="width: 100%" id="CompanyVatNo" readonly=""
                                                 name="company_vat_no" type="text" value="174928878-7000"></td>
                                     </tr>
                                 </tbody>
@@ -103,48 +102,14 @@
                                 <tbody>
                                 </tbody>
                                 <tfoot>
-                                    <?php $count = 1 ;?>
-                                    @foreach($SalesOrder->items as $item)
-                                    <tr class="tr_{{ $count }}">
-                                        <td>{{ $count }} <input style="display:none" name="row[{{ $count }}][insert]"
-                                                type="checkbox" checked></td>
-                                        <td>
-                                            <input style="display:none" type="number" value="{{ $item->item_code_id }}"
-                                                name="row[{{ $count }}][model_id]">
-                                            <input disabled type="text" name="row[{{ $count }}][model_name]"
-                                                value="{{ $item->item_code }}" style="width: 100%">
-                                        </td>
-
-                                        <td>
-                                            <input disabled onkeyup="calTol({{ $count }})" id="qty{{ $count }}"
-                                                type="number" name="row[{{ $count }}][qty]" style="width: 100%"
-                                                value="{{ $item->qty }}">
-                                        </td>
-                                        <td>
-                                            <input disabled id="price{{ $count }}" type="number" readonly
-                                                name="row[{{ $count }}][unit]" value="{{ $item->unit_price }}"
-                                                style="width: 100%">
-                                        </td>
-                                        <td>
-                                            <input disabled id="tol{{ $count }}" type="number" readonly
-                                                name="row[{{ $count }}][tol]" style="width: 100%"
-                                                value="{{ $item->total }}">
-                                        </td>
-                                        {{--                                            <td>--}}
-                                        {{--                                                <a  style="cursor: pointer" type="button" onclick="rowRemove('.tr_{{ $count }}')"><i
-                                            class="fa fa-remove"></i></a>--}}
-                                        {{--                                            </td>--}}
-                                        <tr />
-
-                                        <?php $count ++ ;?>
-                                        @endforeach
-
-                                        {{--                                    <tr>--}}
-                                        {{--                                        <th>No</th>--}}
-                                        {{--                                        <th>{!! Form::select('model_select_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ModelSelectId','class'=>'form-control']) !!}</th>--}}
-                                        {{--                                        <th>--}}
-                                        {{--                                            <button id="addNewItem" type="button" style="width: 100%" class="btn">Add</button></th>--}}
-                                        {{--                                    </tr>--}}
+                                    <tr>
+                                        <th>No</th>
+                                        <th>{!!
+                                            Form::select('model_select_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ModelSelectId','class'=>'form-control'])
+                                            !!}</th>
+                                        <th><button id="addNewItem" type="button" style="width: 100%"
+                                                class="btn">Add</button></th>
+                                    </tr>
                                 </tfoot>
                             </table>
                         </div>
@@ -163,19 +128,16 @@
                                 <table class="table">
                                     <tr>
                                         <th style="width:50%">Subtotal:</th>
-                                        <td><input disabled style="width: 100%" id="subtotal" name="subtotal"
-                                                type="text" value="{{ $SalesOrder->amount }}"></td>
+                                        <td><input style="width: 100%" id="subtotal" name="subtotal" type="text"></td>
                                     </tr>
                                     <tr>
                                         <th>Discount:</th>
-                                        <td><input disabled style="width: 80%" id="discountpercentage"
-                                                name="discount_percentage" type="text"
-                                                value="{{ $SalesOrder->discount }}">%</td>
+                                        <td><input style="width: 80%" id="discountpercentage" name="discount_percentage"
+                                                type="text">%</td>
                                     </tr>
                                     <tr>
                                         <th>Total:</th>
-                                        <td><input disabled style="width: 100%" id="total" name="total" type="text"
-                                                value="{{ $SalesOrder->total }}"></td>
+                                        <td><input style="width: 100%" id="total" name="total" type="text"></td>
                                     </tr>
                                 </table>
                             </div>
@@ -186,11 +148,8 @@
                 </div>
             </div>
             <div style="height: 100px" class="box-footer">
-                <button disabled style="position: absolute;right: 10px;width: 100px" type="submit"
-                    class="btn btn-primary">Edit</button>
-                <a style="position: absolute;right: 120px;width: 100px" target="_blank" href="#"
-                    class="btn btn-primary">Add to
-                    Stock</a>
+                <button style="position: absolute;right: 10px;width: 20%" type="submit"
+                    class="btn btn-primary">Post</button>
             </div>
         </div>
     </div>
@@ -236,13 +195,13 @@
                                 '                        <td>'+RawCount+'<input style="display:none" name="row['+count+'][insert]" type="checkbox" checked></td>\n' +
                                 '                        <td>\n' +
                                 '                            <input style="display:none" type="number" value="'+SelecTModelId+'" name="row['+count+'][model_id]" >\n' +
-                                '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'" style="width: 100%">\n' +
+                                '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+' | Unit Price : '+data.item.unit_price_with_tax+'/=" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input onkeyup="calTol('+(count+1)+')" id="qty'+count+'"  type="number" name="row['+count+'][qty]" placeholder="In Stock '+data.qty+' items" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input id="price'+count+'"  type="number" readonly name="row['+count+'][unit]" value="'+data.item.unit_price_with_tax+'" style="width: 100%">\n' +
+                                '                            <input onkeyup="calTol('+(count+1)+')" id="price'+count+'"  type="number"  name="row['+count+'][unit]" value="'+data.item.unit_price_with_tax+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input id="tol'+count+'"  type="number" readonly name="row['+count+'][tol]" style="width: 100%">\n' +
