@@ -193,6 +193,21 @@
                                     New</a></li>
                         </ul>
                     </li>
+
+                    <li class="treeview">
+                        <a href="{{ url('ims/company-purchase-order') }}"><i class="fa fa-info"></i>
+                            <span>Company Purchase Order</span>
+                            <span class="pull-right-container">
+                                <i class="fa fa-angle-left pull-right"></i>
+                            </span>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="{{ url('ims/company-purchase-order') }}"><i class="fa fa-table"></i>
+                                    Company Purchase Order</a></li>
+                            <li><a href="{{ url('ims/company-purchase-order/create') }}"><i class="fa fa-plus"></i>
+                                    New</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </li><!-- /inventory block -->
 

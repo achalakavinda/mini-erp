@@ -18,7 +18,7 @@ class CreatePurchaseOrdersTable extends Migration
 
             $table->date('create_date')->default(\Carbon\Carbon::now());
             $table->unsignedInteger('po_id')->nullable();
-            $table->unsignedInteger('purchase_requisition_id');
+            $table->unsignedInteger('purchase_requisition_id')->nullable();
             $table->text('location')->nullable();
             $table->text('delivery_address')->nullable();
             $table->date('delivery_date')->default(\Carbon\Carbon::now());

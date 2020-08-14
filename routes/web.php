@@ -92,7 +92,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('/item','Ims\ItemController');
 
         Route::resource('/purchase-requisition','Ims\PurchaseRequisitionController');
-        Route::resource('/purchase-order','Ims\PurchaseOrderController');
+        Route::resource('/company-purchase-order','Ims\CompanyPurchaseOrderController');
         Route::resource('/grn','Ims\GrnController');
 
         Route::resource('/stock','Ims\StockController');
@@ -105,6 +105,7 @@ Route::group(['middleware' => ['auth']], function () {
         //sub routes
         Route::post('/purchase-requisition/post-to-purchase','Ims\PurchaseRequisitionController@postToPurchase');
         Route::post('/purchase-requisition/post-to-grn','Ims\PurchaseRequisitionController@postToGRN');
+        Route::post('/company-purchase-order/post-to-grn','Ims\CompanyPurchaseOrderController@postToGRN');
         Route::post('/grn/post-to-stock','Ims\GrnController@postToStock');
 
 
