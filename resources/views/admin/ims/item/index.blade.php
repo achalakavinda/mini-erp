@@ -5,7 +5,7 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Item/Code</h3>
+            <h3 class="box-title">Inventory Item</h3>
         </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
@@ -23,7 +23,7 @@
                 <i  class="main-action-btn-info fa fa-table"></i> Invoice
             </a>
             <a href="{{ url('/ims/item/create') }}" class="btn btn-menu">
-                <i  class="main-action-btn-danger fa fa-plus"></i> New
+                <i  class="main-action-btn-info fa fa-plus"></i> New Item
             </a>
         </div>
         <!-- /.box-body -->
@@ -43,13 +43,17 @@
                         <thead>
                         <tr>
                             <th>#ID</th>
-                            <th>Company</th>
+                            <th>Brand</th>
+                            <th>Category</th>
                             <th>Item</th>
-                            <th>Description</th>
                             <th>Unit Cost (LKR)</th>
                             <th>Selling Price (LKR)</th>
-                            <th>NBT</th>
-                            <th>VAT</th>
+                            <th>Market Price (LKR)</th>
+                            <th>Min Price (LKR)</th>
+                            <th>Max Price (LKR)</th>
+
+                            <th>NBT %</th>
+                            <th>VAT %</th>
                             <th>Unit Price With Taxes (LKR)</th>
                             <th>In Stock</th>
                             <th><i class="fa fa-plane"></i></th>
@@ -58,23 +62,27 @@
                         <tbody>
 
                         @foreach($Items as $item)
+                            <?php
+                            $brand = \App\Models\Ims\Brand::find($item->brand_id);
+                            $category = \App\Models\Ims\Category::find($item->category_id);
+                            $STOCKITEM = DB::table('stock_items')
+                                ->select(DB::raw('sum(stock_items.tol_qty) as qty'))
+                                ->where(['stock_items.item_code_id'=>$item->id])
+                                ->groupBy('stock_items.item_code_id')
+                                ->first();
+                            ?>
                             <tr>
                                 <td>{!! $item->id !!}</td>
-                                <td>
-                                    <?php
-                                    $brand = \App\Models\Ims\Brand::find($item->brand_id);
-                                    if(!empty($brand)){echo $brand->name;}
-                                    $STOCKITEM = DB::table('stock_items')
-                                        ->select(DB::raw('sum(stock_items.tol_qty) as qty'))
-                                        ->where(['stock_items.item_code_id'=>$item->id])
-                                        ->groupBy('stock_items.item_code_id')
-                                        ->first();
-                                    ?>
-                                </td>
-                                <td>{!! $item->name !!}</td>
-                                <td>{!! $item->description !!}</td>
+                                <td>{!! $brand?$brand->name:''; !!}</td>
+                                <td>{!! $category?$category->name:''; !!}</td>
+                                <td>{!! $item->name !!} {{ $item->description?' - '.$item->description:'' }}</td>
+
                                 <td style="text-align: right">{!! number_format($item->unit_cost,2) !!}</td>
                                 <td style="text-align: right">{!! number_format($item->selling_price,2) !!}</td>
+                                <td style="text-align: right">{!! number_format($item->market_price,2) !!}</td>
+                                <td style="text-align: right">{!! number_format($item->min_price,2) !!}</td>
+                                <td style="text-align: right">{!! number_format($item->max_price,2) !!}</td>
+
                                 <td style="text-align: right">{!! $item->nbt_tax_percentage !!}%</td>
                                 <td style="text-align: right">{!! $item->vat_tax_percentage !!}%</td>
                                 <td style="text-align: right">{!! number_format($item->unit_price_with_tax,2) !!}</td>

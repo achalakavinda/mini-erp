@@ -17,12 +17,12 @@ class CreateInvoicesTable extends Migration
 
             $table->increments('id');
             $table->string('invoice_no');
-            $table->date('order_date')->default(\Carbon\Carbon::now());
-            $table->date('dispatched_date')->default(\Carbon\Carbon::now());
+            $table->date('order_date')->nullable()->default(\Carbon\Carbon::now());
+            $table->date('dispatched_date')->nullable()->default(\Carbon\Carbon::now());
             $table->string('purchase_order')->nullable();
             $table->unsignedInteger('delivery_method_id');
             $table->text('delivery_address')->nullable();
-            $table->unsignedInteger('customer_id');
+            $table->unsignedInteger('customer_id')->nullable();
             $table->text('customer_detail')->nullable();
             $table->text('special_remarks')->nullable();
             $table->unsignedInteger('company_division_id')->nullable();

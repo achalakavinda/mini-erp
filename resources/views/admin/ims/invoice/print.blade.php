@@ -196,7 +196,7 @@
                 @foreach(\App\Models\Ims\InvoiceItem::where('invoice_id',$Invoice->id)->get() as $item)
                     <tr>
                         <th scope="row">1</th>
-                        <td class="item">{{ $item->itemCode->name }} {{ $item->itemCode->description?' - '.$item->itemCode->description:'' }}</td>
+                        <td class="item">{{ $item->ItemCode?$item->ItemCode->brand?$item->ItemCode->brand->name.' - ':'':'' }}{{ $item->ItemCode?$item->ItemCode->category?$item->ItemCode->category->name.' - ':'':'' }}{{ $item->ItemCode?$item->ItemCode->name:'' }} {{ $item->ItemCode?$item->ItemCode->description?' - '.$item->ItemCode->description:'':'' }}</td>
                         <td class="text-right">{{ $item->qty }}</td>
                         <td class="text-right"> {{ number_format($item->unit_price,2) }} LKR</td>
                         <td class="text-right">{{ number_format($item->total,2) }} <span class="currency">LKR</span></td>

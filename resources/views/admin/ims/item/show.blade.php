@@ -36,15 +36,7 @@
 
 @section('main-content')
     <!-- main section -->
-    @include('error.error')
-    <!-- form start -->
-
     <div class="row">
-        <div class="col-md-12">
-            <!-- general form elements -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                </div>
                 <!-- /.box-header -->
                 {!!  Form::open(['action'=> ['Ims\ItemController@update',$Item->id],'class'=>'form-horizontal','id'=>'Form','enctype'=>'multipart/form-data']) !!}
                 @csrf
@@ -52,8 +44,6 @@
                 @include('error.error')
                 @include('admin.ims.item._partials.updateForm')
                 {!! Form::close() !!}
-
-            </div>
 {{--            {!! Form::open([--}}
 {{--        'method' => 'DELETE',--}}
 {{--        'route' => ['item.destroy', $Item->id]--}}
@@ -63,7 +53,5 @@
         {!! Form::close() !!}
         <!-- /.box -->
     </div>
-
-</div>
     <!-- /main section -->
 @endsection

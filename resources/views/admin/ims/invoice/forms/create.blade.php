@@ -118,7 +118,7 @@
                                         <th>
                                             <select id="ModelSelectId" class="form-control" name="model_select_id">
                                                 @foreach(\App\Models\Ims\ItemCode::all() as $option)
-                                                    <option value="{{ $option->id }}">{{ $option->name }} @if( $option->description!=null ) - {{ $option->description }}  @endif</option>
+                                                    <option value="{{ $option->id }}">{{ $option->brand?$option->brand->name.' - ':'' }} {{ $option->category?$option->category->name.' - ':'' }} {{ $option->name }} @if( $option->description!=null ) - {{ $option->description }}  @endif</option>
                                                 @endforeach
                                             </select>
                                         </th>

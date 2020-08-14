@@ -71,6 +71,7 @@ class BrandController extends Controller
         if($request->parent_brand_id>0){
             $parentBrand = Brand::find($request->parent_brand_id);
             if($parentBrand){
+                $Brand->name = $parentBrand->name.' - '.$request->name;
                 $Brand->parent_id = $parentBrand->id;
                 $Brand->level = $parentBrand->level+1;
                 $Brand->save();
@@ -155,14 +156,20 @@ class BrandController extends Controller
     public function destroy($id)
     {
         $Brand = Brand::findorfail($id);
-        if($Brand->itemCodes->count() > 0){
-            return redirect()->back();
-        }else{
-            if($Brand->img_url != null){
-                Storage::deleteDirectory('/images/system/brands/'.$Brand->id.'');
-            }
-            $Brand->delete();
-            return redirect()->route('brand.index');
+        if($Brand->img_url != null){
+            Storage::deleteDirectory('/images/system/brands/'.$Brand->id.'');
         }
+        $Brand->delete();
+        return redirect()->route('brand.index');
+
+//        if($Brand->itemCodes->count() > 0){
+//
+//        }else{
+//            if($Brand->img_url != null){
+//                Storage::deleteDirectory('/images/system/brands/'.$Brand->id.'');
+//            }
+//            $Brand->delete();
+//            return redirect()->route('brand.index');
+//        }
     }
 }

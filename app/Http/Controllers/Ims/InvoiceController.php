@@ -53,10 +53,7 @@ class InvoiceController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'order_date' => 'required',
             'company_vat_no' => 'required',
-            'dispatched_date' => 'required',
-            'customer_id' => 'required',
             'row' => 'required',
             'row.*.model_id' => 'required',
             'row.*.model_name' => 'required',

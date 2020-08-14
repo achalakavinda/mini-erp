@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Ims;
 
 use App\Models\Ims\Brand;
+use App\Models\Ims\Category;
 use App\Models\Ims\ItemCode;
 use App\Models\Ims\Stock;
 use App\Models\Ims\StockItem;
@@ -31,7 +32,8 @@ class ItemController extends Controller
     public function create()
     {
         $Brands = Brand::all()->pluck('name','id');
-        return view('admin.ims.item.create',compact(['Brands']));
+        $Categories = Category::all()->pluck('name','id');
+        return view('admin.ims.item.create',compact(['Brands','Categories']));
     }
 
     /**
@@ -44,26 +46,29 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required',
             'brand_id' => 'required',
+            'category_id' => 'required',
             'unit_cost' => 'required',
-            'selling_price'=>'required',
-            'nbt_tax'=>'required',
-            'vat_tax'=>'required',
-            'opening_stock_qty'=>'required'
+            'selling_price'=>'required'
         ]);
 
         //selling price and price with taxes
         $SellingPrice = $request->selling_price;
         $UnitPriceWithTax = $SellingPrice;
 
-        if($request->nbt_tax>0 && $request->nbt_tax<=100){
+        if($request->nbt_tax>0 && $request->nbt_tax<=100)
+        {
             $UnitPriceWithTax = $UnitPriceWithTax+($UnitPriceWithTax*($request->nbt_tax/100));
         }
-        if($request->vat_tax>0 && $request->vat_tax<=100){
+
+        if($request->vat_tax>0 && $request->vat_tax<=100)
+        {
             $UnitPriceWithTax = $UnitPriceWithTax+($UnitPriceWithTax*($request->vat_tax/100));
         }
+
         if($request->opening_stock_qty<0)
         {
             $request->opening_stock_qty = 0;
@@ -71,9 +76,12 @@ class ItemController extends Controller
 
         $Brand = Brand::findOrFail($request->brand_id);
 
+
+
         $ItemCode = ItemCode::create([
             'name'=>$request->name,
             'brand_id'=>$request->brand_id,
+            'category_id'=>$request->category_id,
             'description'=>$request->description,
             'unit_cost'=>$request->unit_cost,
             'selling_price'=>$SellingPrice,
@@ -82,6 +90,10 @@ class ItemController extends Controller
             'unit_price_with_tax'=>$UnitPriceWithTax,
             'company_id'=>$Brand->company_id,
             'company_division_id'=>$Brand->company_division_id,
+
+            'market_price'=>$request->market_price,
+            'min_price'=>$request->min_price,
+            'max_price'=>$request->max_price,
         ]);
 
         //if open stock is available you need to add it to stock
@@ -89,8 +101,8 @@ class ItemController extends Controller
         if( $request->opening_stock_qty>0 )
         {
             try {
-                $Stock = Stock::create(['name'=>'Batch','company_division_id'=>1,'company_id'=>1,'is_open_stock'=>true]);
-                $Stock->name = "Batch :".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Stock->id."-open-stock";
+                $Stock = Stock::create(['code'=>'Batch','company_division_id'=>1,'company_id'=>1,'is_open_stock'=>true]);
+                $Stock->code = "Batch :".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Stock->id."-open-stock";
                 $Stock->save();
 
                 StockItem::create([
@@ -124,9 +136,9 @@ class ItemController extends Controller
     public function show($id)
     {
         $Brands = Brand::all()->pluck('name','id');
+        $Categories = Category::all()->pluck('name','id');
         $Item = ItemCode::findorfail($id);
-
-        return view('admin.ims.item.show',compact(['Brands','Item']));
+        return view('admin.ims.item.show',compact(['Brands','Item','Categories']));
     }
 
     /**
@@ -151,18 +163,12 @@ class ItemController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'brand_id' => 'required',
             'unit_cost' => 'required',
-            'selling_price'=>'required',
-            'nbt_tax'=>'required',
-            'vat_tax'=>'required',
-            'opening_stock_qty'=>'required'
+            'selling_price'=>'required'
         ]);
 
         $Item = ItemCode::findorfail($id);
-        if($Item->stockItem){
-            dd("You can't edit. Because you have already added this item to stock");
-        }
+
         //selling price and price with taxes
         $SellingPrice = $request->selling_price;
         $UnitPriceWithTax = $SellingPrice;
@@ -182,6 +188,7 @@ class ItemController extends Controller
 
         $Item->name = $request->name;
         $Item->brand_id = $request->brand_id;
+        $Item->category_id = $request->category_id;
         $Item->description = $request->description;
         $Item->unit_cost = $request->unit_cost;
         $Item->selling_price = $SellingPrice;

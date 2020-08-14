@@ -84,22 +84,32 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 
-    Route::prefix('ims')->group(function () {
+    Route::prefix('ims')->group(function ()
+    {
         Route::get('/','Ims\ImsController@index');
-        Route::get('/invoice/{id}/print','Ims\InvoiceController@print');
         Route::resource('/brand','Ims\BrandController');
+        Route::resource('/category','Ims\CategoryController');
         Route::resource('/item','Ims\ItemController');
-        Route::resource('/invoice','Ims\InvoiceController');
-        Route::resource('/quotation','Ims\QuotationController');
-        Route::resource('/sales-order','Ims\SalesOrderController');
-        Route::resource('/grn','Ims\GrnController');
+
         Route::resource('/purchase-requisition','Ims\PurchaseRequisitionController');
         Route::resource('/purchase-order','Ims\PurchaseOrderController');
+        Route::resource('/grn','Ims\GrnController');
+
+        Route::resource('/stock','Ims\StockController');
+
+        Route::resource('/quotation','Ims\QuotationController');
+        Route::resource('/sales-order','Ims\SalesOrderController');
+
+        Route::resource('/invoice','Ims\InvoiceController');
+
+        //sub routes
         Route::post('/purchase-requisition/post-to-purchase','Ims\PurchaseRequisitionController@postToPurchase');
         Route::post('/purchase-requisition/post-to-grn','Ims\PurchaseRequisitionController@postToGRN');
         Route::post('/grn/post-to-stock','Ims\GrnController@postToStock');
-        Route::resource('/sales-orders','Ims\SalesOrdersController');
-        Route::resource('/stock','Ims\StockController');
+
+
+        //print routes
+        Route::get('/invoice/{id}/print','Ims\InvoiceController@print');
     });
 
     Route::group(['middleware' => ['permission:Settings']], function () {

@@ -119,7 +119,7 @@
                                             <td>{{ $count }} <input style="display:none" name="row[{{ $count }}][insert]" type="checkbox" checked></td>
                                             <td>
                                                 <input style="display:none" type="number" value="{{ $item->item_code_id }}" name="row[{{ $count }}][model_id]" va>
-                                                <input disabled type="text" name="row[{{ $count }}][model_name]" value="{{ $item->ItemCode?$item->ItemCode->name:'' }} {{ $item->ItemCode?' - '.$item->ItemCode->description:'' }}" style="width: 100%">
+                                                <input disabled type="text" name="row[{{ $count }}][model_name]" value="{{ $item->ItemCode?$item->ItemCode->brand?$item->ItemCode->brand->name.' - ':'':'' }}{{ $item->ItemCode?$item->ItemCode->category?$item->ItemCode->category->name.' - ':'':'' }}{{ $item->ItemCode?$item->ItemCode->name:'' }} {{ $item->ItemCode?$item->ItemCode->description?' - '.$item->ItemCode->description:'':'' }}" style="width: 100%">
                                             </td>
 
                                             <td>

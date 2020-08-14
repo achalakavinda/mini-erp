@@ -5,7 +5,7 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Brand</h3>
+            <h3 class="box-title">Category</h3>
         </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
@@ -14,7 +14,7 @@
             <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
             </a>
-            <a href="{{ url('/ims/brand') }}" class="btn btn-menu">
+            <a href="{{ url('/ims/category') }}" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-refresh"></i> Refresh
             </a>
             <a href="{{ url('/ims/item') }}" class="btn btn-menu">
@@ -23,7 +23,7 @@
             <a href="{{ url('/ims/invoice') }}" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-table"></i> Invoice
             </a>
-            <a href="{{ url('/ims/brand/create') }}" class="btn btn-menu">
+            <a href="{{ url('/ims/category/create') }}" class="btn btn-menu">
                 <i class="main-action-btn-danger fa fa-plus"></i> New
             </a>
 
@@ -49,12 +49,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($Brands as $brand)
+                        @foreach($Categories as $category)
                             <tr>
-                                <td>{!! $brand->id !!}</td>
-                                <td>{!! $brand->name !!}</td>
+                                <td>{!! $category->id !!}</td>
+                                <td>{!! $category->name !!}</td>
                                 <td>
-                                    <a href="{!! url('ims/brand') !!}/{!! $brand->id !!}"><i
+                                    <a href="{!! url('ims/category') !!}/{!! $category->id !!}"><i
                                             class="fa fa-paper-plane"></i></a>
                                 </td>
                             </tr>
