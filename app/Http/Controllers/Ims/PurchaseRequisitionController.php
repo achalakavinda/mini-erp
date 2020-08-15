@@ -178,6 +178,7 @@ class PurchaseRequisitionController extends Controller
             }
 
             $PurchaseRequisition->total = $total;
+            $PurchaseRequisition->supplier_id = $request->supplier_id;
             $PurchaseRequisition->save();
 
         } catch (\Exception $e){

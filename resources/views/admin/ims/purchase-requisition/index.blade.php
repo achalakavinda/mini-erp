@@ -37,8 +37,10 @@
                         <tr>
                             <th>#Code</th>
                             <th>Date</th>
-                            <th>Requested By</th>
+                            <th>Supplier</th>
+                            <th>Created By</th>
                             <th>Status</th>
+                            <th>Total</th>
                             <th><i class="fa fa-cogs"></i></th>
                         </tr>
                         </thead>
@@ -47,9 +49,11 @@
                             <tr>
                                 <td>{!! $requisition->code !!}</td>
                                 <td>{!! $requisition->date !!}</td>
+                                <td></td>
                                 <td><?php $User = \App\Models\User::find($requisition->created_by); if($User!=null){echo $User->name;}?>
                                 </td>
                                 <td>{!! $requisition->purchaseRequisitionStatus->name !!}</td>
+                                <td style="text-align: right">{!! number_format($requisition->total,2) !!}</td>
                                 <td>
                                     <a style="padding: 10px" href="{!! url('ims/purchase-requisition') !!}/{!! $requisition->id !!}"><i class="fa fa-list"></i></a>
                                     <a style="padding: 10px" href="{!! url('ims/purchase-requisition/'.$requisition->id.'/print') !!}"><i class="fa fa-print"></i></a>

@@ -23,8 +23,8 @@
                     <i class="main-action-btn-info fa fa-save"></i> Post To Purchase
                 </a>
                 {!! Form::open(['action'=>'Ims\PurchaseRequisitionController@postToPurchase','style'=>'display:none','id'=>'postToPurchase']) !!}
-                    @csrf()
-                    <input type="hidden" value="{{ $Requisition->id }}" name="requisition_id">
+                @csrf()
+                <input type="hidden" value="{{ $Requisition->id }}" name="requisition_id">
                 {{ Form::close() }}
             @endif
         </div>
@@ -42,6 +42,7 @@
             <div class="box box-primary">
                 <!-- form start -->
                 <div class="box-body">
+
                     <div class="col-md-12">
                         <div class="col-md-8"></div>
                         <!-- requisition date -->
@@ -49,6 +50,22 @@
                             <div class="form-group">
                                 <label for="Requisition Date">Requisition Date</label>
                                 <input id="RequisitionDate" class="form-control" name="date" type="date" value="{{$Requisition->date}}">
+                            </div>
+                        </div> <!-- /requisition date -->
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="col-md-8"></div>
+                        <!-- requisition date -->
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="Requisition Date">Supplier</label>
+                                <select name="supplier_id" class="form-control">
+                                    <option value="">Select a Supplier</option>
+                                    @foreach(\App\Models\Ims\Supplier::all() as $supplier)
+                                        <option @if($Requisition->supplier_id === $supplier->id) selected @endif value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div> <!-- /requisition date -->
                     </div>
@@ -93,21 +110,24 @@
                                 <?php $count++?>
                             @endforeach
                             </tbody>
-                            <tfoot>
-                            <tr>
-                                <th>
-                                    <!-- requisition item -->
-                                    <div class="col-md-12">
-                                        <div class="form-group">
-                                            {!!  Form::select('item_code_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ItemCodeId','class'=>'form-control']) !!}
-                                        </div>
-                                    </div> <!-- /requisition item -->
-                                </th>
-                                <th>
-                                    <button id="addNewItem" style="width: 100%" type="button" class="btn">Add</button>
-                                </th>
-                            </tr>
-                            </tfoot>
+                            @if (!$Requisition->posted_to_po)
+                                <tfoot>
+                                <tr>
+                                    <th>
+                                        <!-- requisition item -->
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                {!!  Form::select('item_code_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ItemCodeId','class'=>'form-control']) !!}
+                                            </div>
+                                        </div> <!-- /requisition item -->
+                                    </th>
+                                    <th>
+                                        <button id="addNewItem" style="width: 100%" type="button" class="btn">Add</button>
+                                    </th>
+                                </tr>
+                                </tfoot>
+                            @endif
+
                         </table>
                     </div><!-- requisition item table -->
                     <hr />
@@ -115,7 +135,10 @@
                 <!-- /.box-body -->
                 <div class="box-footer">
                     <button type="button" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-print"></i> Print</button>
-                    <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i> Update</button>
+                    @if (!$Requisition->posted_to_po)
+                        <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i> Update</button>
+                    @endif
+
                 </div>
             </div>
             <!-- /.box -->

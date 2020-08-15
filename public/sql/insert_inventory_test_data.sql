@@ -230,3 +230,18 @@ INSERT INTO `item_codes` (`id`, `brand_id`, `company_id`, `company_division_id`,
 (202, 17, 1, 1, NULL, 'product', 'XP-2040', 'sample description', 'http://itinerantnotes.com/blog/images/logo.png', 79552.58, 79552.58, 0.00, 0.00, 79552.58, 1, '2018-12-06 18:00:56', '2018-12-06 18:00:56');
 
 
+--
+-- Dumping data for table `suppliers`
+--
+
+INSERT INTO `suppliers` (`id`, `name`, `address`, `contact`, `email`, `active`, `web_url`, `company_id`, `company_division_id`, `created_at`, `updated_at`) VALUES
+(1, 'SRI LANKA TELECOM', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:12', '2020-08-15 05:40:12'),
+(2, 'JAT HOLDINGS', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:26', '2020-08-15 05:40:26'),
+(3, 'DISTILLERIES COMPANY OF SRI LANKA', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:31', '2020-08-15 05:40:31'),
+(4, 'COMMERCIAL BANK OF CEYLON', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:37', '2020-08-15 05:40:37'),
+(5, 'DIALOG TELEKOM', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:42', '2020-08-15 05:40:42'),
+(6, 'HATTON NATIONAL BANK', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:47', '2020-08-15 05:40:47'),
+(7, 'LANKA IOC', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:52', '2020-08-15 05:40:52'),
+(8, 'CARSON CUMBERBATCH', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:58', '2020-08-15 05:40:58'),
+(9, 'AITKEN SPENCE & COMPANY', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:41:27', '2020-08-15 05:41:27'),
+(10, 'CARGILLS (CEYLON)', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:41:33', '2020-08-15 05:41:33');
