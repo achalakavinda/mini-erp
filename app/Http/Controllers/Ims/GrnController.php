@@ -139,11 +139,11 @@ class GrnController extends Controller
                         'item_code'=>$Model->name,
                         'item_unit_cost_from_table'=>$Model->unit_cost,
                         'unit_price'=>$item->unit_price,
-                        'created_qty'=>$item->created_qty,//to identify the initial qty for bath item
-                        'tol_qty'=>$item->created_qty,
+                        'created_qty'=>$item->qty,//to identify the initial qty for bath item
+                        'tol_qty'=>$item->qty,
                         'company_division_id'=>$this->CompanyDivision->id,
                         'company_id'=>1,
-                        'total'=> $item->created_qty * $item->unit_price
+                        'total'=> $item->qty * $item->unit_price
                     ]);
                     $Total = $Total + ($item->created_qty * $item->unit_price);
                 }

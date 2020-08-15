@@ -146,15 +146,19 @@ class CompanyPurchaseOrderController extends Controller
         //
     }
 
+
     public function postToGRN(Request $request){
+
         $CompanyPurchaseOrder = CompanyPurchaseOrder::findOrFail($request->CompanyPurchaseOrder_id);
-    
+
+
         $Grn = Grn::create([
             'supplier_id'=>$CompanyPurchaseOrder->supplier_id,
             'company_division_id'=>$this->CompanyDivision->id,
-            'created_date'=> Carbon::now(),
             'created_by'=>auth()->user()->id,
-            'code'=>'GRN'
+            'company_purchase_order_id'=>$CompanyPurchaseOrder->id,
+            'code'=>'GRN',
+            'date'=> Carbon::now()
         ]);
 
         $TotalAmount = 0;
@@ -164,34 +168,40 @@ class CompanyPurchaseOrderController extends Controller
             foreach ($CompanyPurchaseOrder->items as $item) {
 
                 $Model = ItemCode::find($item->item_code_id);
+                $PurchaseOrderItem = CompanyPurchaseOrderItem::find($item->id);
 
-                if($Model){
+                if($Model && $PurchaseOrderItem){
 
                     GrnItem::create([
-                        'brand_id'=>$Model->brand_id,
-                        'item_code_id'=>$Model->id,
                         'grn_id'=>$Grn->id,
+                        'item_code_id'=>$Model->id,
                         'company_division_id'=>$this->CompanyDivision->id,
+                        'company_purchase_order_item_id'=>$PurchaseOrderItem->id,
                         'item_code'=>$Model->name,
                         'item_unit_cost_from_table'=>$Model->unit_cost,
-                        'unit_price'=>$item->price,
-                        'created_qty'=>$item->qty,
-                        'total'=>$item->qty * $item->price
+                        'unit_price'=>$PurchaseOrderItem->unit_price,
+                        'qty'=>$PurchaseOrderItem->qty,
+                        'remarks'=>$PurchaseOrderItem->remarks
                     ]);
 
-                    $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit_price'] ) ;
+                    $TotalAmount = $TotalAmount + ( $PurchaseOrderItem->qty * $PurchaseOrderItem->unit_price ) ;
                 }
             }
 
+            $CompanyPurchaseOrder->commit = true;
+            $CompanyPurchaseOrder->posted_to_grn = true;
+            $CompanyPurchaseOrder->save();
 
-            $Grn->code = "GRN-".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Grn->id;
+            $Grn->code = "GRN-PO-".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Grn->id;
             $Grn->total = $TotalAmount;
             $Grn->save();
+
 
         }catch (\Exception $exception){
             $Grn->delete();
             dd($exception->getMessage());
         }
+
         return redirect(url('ims/grn/'.$Grn->id));
     }
 }

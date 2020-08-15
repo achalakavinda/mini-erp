@@ -217,7 +217,7 @@ class PurchaseRequisitionController extends Controller
         $CompanyPurchaseOrder = CompanyPurchaseOrder::create(
             [
                 'purchase_requisition_id'=>$PurchaseRequisition->id,
-                'supplier_id'=>$request->supplier_id,
+                'supplier_id'=>$PurchaseRequisition->supplier_id,
                 'company_division_id'=>$PurchaseRequisition->company_division_id,
                 'created_by'=>Auth::id()
             ]);

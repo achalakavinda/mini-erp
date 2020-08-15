@@ -18,6 +18,7 @@ class CreateGrnsTable extends Migration
             $table->unsignedInteger('company_division_id')->nullable();
             $table->unsignedInteger('supplier_id')->nullable();
             $table->unsignedInteger('created_by');
+            $table->unsignedInteger('company_purchase_order_id')->nullable();
 
             $table->text('code'); //create unique code.example GRN-2012-12-04-{grn_id}
             $table->date('date')->default(\Carbon\Carbon::now());
