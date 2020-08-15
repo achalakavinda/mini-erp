@@ -20,13 +20,13 @@ use Illuminate\Http\Request;
 class PurchaseRequisitionController extends Controller
 {
     public $Company_Division_id = 1;
-
     public $CompanyDivision;
 
     public function __construct()
     {
         $this->CompanyDivision = CompanyDivision::get()->first();
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -59,6 +59,7 @@ class PurchaseRequisitionController extends Controller
         $request->validate([
             'row' => 'required',
             'row.*.item_code_id' => 'required',
+            'row.*.unit_price' => 'required',
             'row.*.qty' => 'required',
         ]);
 
@@ -67,13 +68,17 @@ class PurchaseRequisitionController extends Controller
         $PurchaseRequisition = PurchaseRequisition::create([
             'date'=>$date,
             'company_division_id'=>$this->CompanyDivision->id,
-            'user_id'=> auth()->user()->id,
+            'supplier_id'=>$request->supplier_id,
+            'created_by'=> auth()->user()->id,
             'purchase_requisition_status_id'=> 1
         ]);
 
         try {
 
-            foreach ($request->row as $item) {
+            $total = 0;
+
+            foreach ($request->row as $item)
+            {
 
                 $Model = ItemCode::find($item['item_code_id']);
 
@@ -81,23 +86,32 @@ class PurchaseRequisitionController extends Controller
 
                     PurchaseRequisitionItem::create([
                         'purchase_requisition_id'=>$PurchaseRequisition->id,
-                        'brand_id'=>$Model->brand_id,
                         'item_code_id'=>$Model->id,
-                        'price'=>$item['unit'],
-                        'qty'=>$item['qty'],
-                        'stock_in_hand'=>$item['stock_in_hand'],
+                        'item_code'=>$Model->name,
                         'company_division_id'=>$this->CompanyDivision->id,
+                        'item_unit_cost_from_table'=>$Model->unit_cost,
+                        'unit_price'=>$item['unit_price'],
+                        'qty'=>$item['qty'],
+                        'remarks'=>$item['remark']?$item['remark']:null
+
                     ]);
+
+                    $total = $total + ($item['unit_price']*$item['qty']);
 
                 }
             }
 
+            $PurchaseRequisition->code = 'COM-PR-'.Carbon::now()->format('y').Carbon::now()->format('m').Carbon::now()->format('d').'-'.$PurchaseRequisition->id;
+            $PurchaseRequisition->total = $total;
+            $PurchaseRequisition->save();
 
         }catch (\Exception $exception){
             $PurchaseRequisition->delete();
             dd($exception->getMessage());
         }
-        return redirect(url('ims/purchase-requisition/'.$PurchaseRequisition->id));
+
+        return redirect('ims/purchase-requisition');
+
     }
 
     /**

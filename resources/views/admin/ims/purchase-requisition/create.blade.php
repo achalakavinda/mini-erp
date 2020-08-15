@@ -2,52 +2,164 @@
 
 <!-- main header section -->
 @section('main-content-header')
-<!-- Default box -->
-<div class="box">
-    <div class="box-header with-border">
-        <h3 class="box-title">Dashboard / Requisition</h3>
-    </div>
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Dashboard / Requisition</h3>
+        </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
-    <div class="box-body">
-        <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
-            <i class="main-action-btn-info fa fa-list"></i> Quick Menu
-        </a>
-        <a href="{{ url('/ims/purchase-requisition') }}" class="btn btn-menu">
-            <i class="main-action-btn-info fa fa-list"></i> Requisition
-        </a>
-        <a href="{{ url('/ims/purchase-requisition/create') }}" class="btn btn-menu">
-            <i class="main-action-btn-info fa fa-refresh"></i> Refresh
-        </a>
+        <div class="box-body">
+            <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{{ url('/ims/purchase-requisition') }}" class="btn btn-menu">
+                <i class="main-action-btn-info fa fa-list"></i> Requisition
+            </a>
+            <a href="{{ url('/ims/purchase-requisition/create') }}" class="btn btn-menu">
+                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
+        </div>
     </div>
-</div>
-<!-- /.box -->
+    <!-- /.box -->
 @endsection
 <!-- /main header section -->
 
 <!-- main section -->
 @section('main-content')
-<div class="row">
-    <div class="col-md-12">
+    <div class="row">
+        {!! Form::open(['action'=>'Ims\PurchaseRequisitionController@store','class'=>'form-horizontal','id'=>'Form']) !!}
+        <div class="col-md-12">
+        @include('error.error')
         <!-- general form elements -->
-        <div class="box box-primary">
-            <div class="box-header with-border">
+            <div class="box box-primary">
+                <!-- form start -->
+                <div class="box-body">
 
+                    <div class="col-md-12">
+                        <!-- requisition date -->
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                {!! Form::label('Requisition Date') !!}
+                                {!! Form::date('date',\Carbon\Carbon::now(),['id'=>'RequisitionDate','class'=>'form-control']) !!}
+                            </div>
+                        </div> <!-- /requisition date -->
+                    </div>
+
+                    <!-- requisition item table -->
+                    <div class="col-md-12">
+
+                        <table id="requisitionItemTable" class="table table-responsive table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Item Code</th>
+                                <th>Remark</th>
+                                <th>QTY</th>
+                                <th>Unit Price (LKR)</th>
+                                <th>Total (LKR)</th>
+                                <th><i class="fa fa-remove"></i></th>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>
+                                        <!-- requisition item -->
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                {!!  Form::select('item_code_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ItemCodeId','class'=>'form-control']) !!}
+                                            </div>
+                                        </div> <!-- /requisition item -->
+                                    </th>
+                                    <th>
+                                            <button id="addNewItem" style="width: 100%" type="button" class="btn">Add</button>
+                                    </th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div><!-- requisition item table -->
+                    <hr />
+                </div>
+                <!-- /.box-body -->
+                <div class="box-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
             </div>
-            <!-- /.box-header -->
-            <!-- form start -->
-
-            {!!
-            Form::open(['action'=>'Ims\PurchaseRequisitionController@store','class'=>'form-horizontal','id'=>'Form'])
-            !!}
-            @include('error.error')
-            @include('admin.ims.purchase-requisition._partials.createForm')
-            {!! Form::close() !!}
+            <!-- /.box -->
         </div>
-        <!-- /.box -->
+        {!! Form::close() !!}
     </div>
-</div>
-<!-- /.row -->
-
+    <!-- /.row -->
 @endsection
 <!-- /main section -->
+
+@section('js')
+    <script>
+        var table = $('#requisitionItemTable');
+        var count = 0;
+        var RawCount = 1;
+
+        $( document ).ready(function() {
+
+            $('#addNewItem').click(function() {
+                var SelecTItemId = $('#ItemCodeId').val();
+                var SelecTModelName = $('#ItemCodeId option:selected').text();
+
+                $.ajax('{!! url('api/item-code-for-purchase-requisitions') !!}/'+SelecTItemId, {
+                    type: 'GET',  // http method
+                    success: function (data, status, xhr) {
+
+                        if(data.item){
+                            table.append('<tr class="tr_'+count+'">\n' +
+                                '                        <td>\n' +
+                                '                            <input style="display:none" type="number" value="'+SelecTItemId+'" name="row['+count+'][item_code_id]" class="form-control">\n' +
+                                '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'" class="form-control">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input  type="text" name="row['+count+'][remark]" class="form-control">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input id="qty'+count+'"  type="number" onkeyup="calTol('+(count+1)+')" name="row['+count+'][qty]" class="form-control">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input id="price'+count+'"  type="number" onkeyup="calTol('+(count+1)+')" name="row['+count+'][unit_price]" value="'+data.item.unit_price_with_tax+'" class="form-control">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input id="tol'+count+'"  type="number" readonly name="row['+count+'][total]" class="form-control">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <a style="cursor: pointer" type="button" onclick="rowRemove(\'.tr_'+count+'\')"><i class="fa fa-remove"></i></a>\n' +
+                                '                        </td>\n' +
+                                '                    <tr/>');
+                            count++;
+                            RawCount++;
+                            $('#ItemCodeId option:selected').remove();
+                        }else{
+                            alert('Empty Items');
+                        }
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                        alert(errorMessage);
+                    }
+                });
+            });
+
+        });
+
+        function rowRemove(value) {
+            alert(value);
+            $(value).remove();
+        }
+
+        function calTol(count) {
+            let total = 0;
+            let discount = 0;
+            let subtotal = 0;
+            for(let i=0; i<count; i++){
+                $('#tol'+i).val($("#price"+i).val() * $("#qty"+i).val());
+                subtotal = subtotal+parseFloat($('#tol'+i).val());
+            }
+        }
+    </script>
+
+@endsection

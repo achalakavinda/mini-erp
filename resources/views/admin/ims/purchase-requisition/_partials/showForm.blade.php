@@ -16,7 +16,7 @@
             {!! Form::label('Requested By') !!}
             {!!
             Form::text('user_id',$User =
-            \App\Models\User::find($Requisition->user_id)->name,['readonly','id'=>'PurchaseOrder','class'=>'form-control'])
+            \App\Models\User::find($Requisition->created_by)->name,['readonly','id'=>'PurchaseOrder','class'=>'form-control'])
             !!}
         </div>
     </div>
@@ -78,7 +78,6 @@
                 </tr>
             </thead>
             <tbody>
-
                 @foreach(\App\Models\Ims\PurchaseRequisitionItem::where('purchase_requisition_id',$Requisition->id)->get()
                 as $item)
                 <tr>
@@ -95,8 +94,5 @@
             </tbody>
         </table>
     </div><!-- requisition item table -->
-
-
-
 </div>
 <!-- /.box-body -->

@@ -18,16 +18,48 @@ class CreatePurchaseRequisitionsTable extends Migration
             $table->string('name');
         });
 
+        DB::table('purchase_requisition_status')->insert([
+            [
+                'id'=>1,
+                'name'=>'Pending'
+            ],
+            [
+                'id'=>2,
+                'name'=>'Approved'
+            ],
+            [
+                'id'=>3,
+                'name'=>'Posted to Purchase Order'
+            ]
+        ]);
+
         Schema::create('purchase_requisitions', function (Blueprint $table) {
+
             $table->increments('id');
-            $table->date('date')->default(\Carbon\Carbon::now());
             $table->unsignedInteger('company_division_id')->nullable();
-            $table->unsignedInteger('user_id');
             $table->unsignedInteger('purchase_requisition_status_id')->nullable();
+            $table->unsignedInteger('supplier_id')->nullable();
+            $table->unsignedInteger('created_by');
+
+
+            $table->text('code')->nullable();
+            $table->date('date')->default(\Carbon\Carbon::now());
+            $table->boolean('posted_to_po')->default(false);
+            $table->double('total')->default(0);
+            $table->boolean('commit')->default(false);
+
             $table->timestamps();
 
-            $table->foreign('company_division_id')->references('id')->on('company_divisions')->onDelete('cascade');
-            $table->foreign('purchase_requisition_status_id')->references('id')->on('purchase_requisition_status')->onDelete('cascade');
+
+
+            $table->foreign('company_division_id')
+                ->references('id')
+                ->on('company_divisions')
+                ->onDelete('cascade');
+
+            $table->foreign('purchase_requisition_status_id')
+                ->references('id')
+                ->on('purchase_requisition_status');
         });
     }
 

@@ -48,7 +48,7 @@
                 <li><a href="{{ url('ims/invoice') }}">Invoices</a></li>
                 <hr/>
                 <li><a href="{{ url('ims/purchase-requisition') }}">Purchase Requisitions</a></li>
-                <li><a href="{{ url('ims/purchase-order') }}">Purchase Orders</a></li>
+                <li><a href="{{ url('ims/company-purchase-order') }}">Purchase Orders</a></li>
                 <li><a href="{{ url('ims/grn') }}">Goods Received Note</a></li>
                 <li><a href="{{ url('ims/stock') }}">Stock</a></li>
             </ul>
