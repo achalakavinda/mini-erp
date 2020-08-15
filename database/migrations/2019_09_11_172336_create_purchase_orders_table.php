@@ -14,31 +14,37 @@ class CreatePurchaseOrdersTable extends Migration
     public function up()
     {
         Schema::create('company_purchase_orders', function (Blueprint $table) {
+
             $table->increments('id');
-
-            $table->date('create_date')->default(\Carbon\Carbon::now());
-            $table->unsignedInteger('po_id')->nullable();
             $table->unsignedInteger('purchase_requisition_id')->nullable();
-            $table->text('location')->nullable();
-            $table->text('delivery_address')->nullable();
-            $table->date('delivery_date')->default(\Carbon\Carbon::now());
-
             $table->unsignedInteger('supplier_id')->nullable();
-            $table->string('supplier_name')->nullable();
-            $table->string('supplier_quote_no')->nullable();
-            $table->string('department')->nullable();
-            $table->string('project_code')->nullable();
-            $table->unsignedInteger('company_division_id')->nullable();
+            $table->unsignedInteger('company_division_id');
+            $table->unsignedInteger('created_by');
+
+            $table->text('code')->nullable();
+            $table->date('date')->default(\Carbon\Carbon::now());
+            $table->boolean('posted_to_grn')->default(false);
+            $table->double('total')->default(0);
+            $table->boolean('commit')->default(false);
+            $table->longText('remarks')->nullable();
 
             $table->timestamps();
-            $table->foreign('purchase_requisition_id')->references('id')->on('purchase_requisitions')->onDelete('cascade');
-            $table->foreign('company_division_id')->references('id')->on('company_divisions')->onDelete('cascade');
+
+            $table->foreign('purchase_requisition_id')
+                ->references('id')
+                ->on('purchase_requisitions')
+                ->onDelete('cascade');
+
+            $table->foreign('company_division_id')
+                ->references('id')
+                ->on('company_divisions')
+                ->onDelete('cascade');
 
         });
 
         Schema::create('customer_purchase_orders', function (Blueprint $table) {
-            $table->increments('id');
 
+            $table->increments('id');
             $table->date('create_date')->default(\Carbon\Carbon::now());
             $table->unsignedInteger('po_id')->nullable();
             $table->text('location')->nullable();

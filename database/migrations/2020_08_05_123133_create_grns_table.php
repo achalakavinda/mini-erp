@@ -20,11 +20,11 @@ class CreateGrnsTable extends Migration
             $table->unsignedInteger('created_by');
 
             $table->text('code'); //create unique code.example GRN-2012-12-04-{grn_id}
-            $table->date('created_date')->default(\Carbon\Carbon::now());
+            $table->date('date')->default(\Carbon\Carbon::now());
             $table->boolean('posted_to_stock')->default(false);
-            $table->boolean('posted_to_so')->default(false);
             $table->double('total')->default(0);
             $table->boolean('commit')->default(false);
+            $table->longText('remarks')->nullable();
 
             $table->foreign('company_division_id')
                 ->references('id')

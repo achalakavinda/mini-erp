@@ -74,16 +74,12 @@ class PurchaseRequisitionController extends Controller
         ]);
 
         try {
-
             $total = 0;
-
             foreach ($request->row as $item)
             {
-
                 $Model = ItemCode::find($item['item_code_id']);
 
                 if($Model && $item['qty'] ){
-
                     PurchaseRequisitionItem::create([
                         'purchase_requisition_id'=>$PurchaseRequisition->id,
                         'item_code_id'=>$Model->id,
@@ -93,11 +89,9 @@ class PurchaseRequisitionController extends Controller
                         'unit_price'=>$item['unit_price'],
                         'qty'=>$item['qty'],
                         'remarks'=>$item['remark']?$item['remark']:null
-
                     ]);
 
                     $total = $total + ($item['unit_price']*$item['qty']);
-
                 }
             }
 
@@ -105,13 +99,13 @@ class PurchaseRequisitionController extends Controller
             $PurchaseRequisition->total = $total;
             $PurchaseRequisition->save();
 
-        }catch (\Exception $exception){
+        }catch (\Exception $exception)
+        {
             $PurchaseRequisition->delete();
             dd($exception->getMessage());
         }
 
         return redirect('ims/purchase-requisition');
-
     }
 
     /**
@@ -146,7 +140,51 @@ class PurchaseRequisitionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        $request->validate([
+            'row' => 'required',
+            'row.*.item_code_id' => 'required',
+            'row.*.unit_price' => 'required',
+            'row.*.qty' => 'required',
+        ]);
+
+        $PurchaseRequisition = PurchaseRequisition::findOrFail($id);
+
+        if($PurchaseRequisition->posted_to_po){
+            $CompanyPurchaseOrder = CompanyPurchaseOrder::where('purchase_requisition_id',$PurchaseRequisition->id)->first();
+            return '<a href="'.url('/ims/company-purchase-order/'.$CompanyPurchaseOrder->id).'"/> you already have created a Purchase Order</a>';
+        }
+
+        try {
+            $total = 0;
+            $PurchaseRequisition->items()->delete();
+            foreach ($request->row as $item) {
+                $Model = ItemCode::find($item['item_code_id']);
+
+                if($Model && $item['qty'] ){
+                    PurchaseRequisitionItem::create([
+                        'purchase_requisition_id'=>$PurchaseRequisition->id,
+                        'item_code_id'=>$Model->id,
+                        'item_code'=>$Model->name,
+                        'company_division_id'=>$this->CompanyDivision->id,
+                        'item_unit_cost_from_table'=>$Model->unit_cost,
+                        'unit_price'=>$item['unit_price'],
+                        'qty'=>$item['qty'],
+                        'remarks'=>$item['remark']?$item['remark']:null
+                    ]);
+
+                    $total = $total + ($item['unit_price']*$item['qty']);
+                }
+            }
+
+            $PurchaseRequisition->total = $total;
+            $PurchaseRequisition->save();
+
+        } catch (\Exception $e){
+
+        }
+
+        return redirect('ims/purchase-requisition/'.$PurchaseRequisition->id);
     }
 
     /**
@@ -160,101 +198,123 @@ class PurchaseRequisitionController extends Controller
         //
     }
 
+    /**
+     * post company purchase requisition to company purchase orders.
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
     public function postToPurchase(Request $request){
 
         $PurchaseRequisition = PurchaseRequisition::findOrFail($request->requisition_id);
 
+        if($PurchaseRequisition->posted_to_po){
+            $CompanyPurchaseOrder = CompanyPurchaseOrder::where('',$PurchaseRequisition->id)->first();
+            dd('<a href="'.url('/ims/company-purchase-order/'.$CompanyPurchaseOrder->id).'"/> you already have created a Purchase Order</a>');
+        }
 
         $CompanyPurchaseOrder = CompanyPurchaseOrder::create(
             [
-                'po_id'=>$request->po_id,
                 'purchase_requisition_id'=>$PurchaseRequisition->id,
-                'location'=>$request->location,
-                'delivery_address'=>$request->delivery_address,
-                'delivery_date'=>$request->delivery_date,
                 'supplier_id'=>$request->supplier_id,
+                'company_division_id'=>$PurchaseRequisition->company_division_id,
+                'created_by'=>Auth::id()
             ]);
 
         try {
+            $total = 0;
 
             foreach ($PurchaseRequisition->items as $item)
             {
-                $Model = PurchaseRequisitionItem::find($item->item_code_id);
-                if($Model)
+                $Model = ItemCode::find($item->item_code_id);
+                $PurchaseRequisitionItem = PurchaseRequisitionItem::find($item->id);
+
+                if($Model && $PurchaseRequisitionItem)
                 {
                     CompanyPurchaseOrderItem::create([
-                        'company_purchase_order_id'=>$CompanyPurchaseOrder->id,
-                        'brand_id'=>$Model->brand_id,
-                        'item_code_id'=>$Model->item_code_id,
-                        'price'=>$Model->price,
-                        'qty'=>$Model->qty,
                         'company_division_id'=>$Model->company_division_id,
+                        'company_purchase_order_id'=>$CompanyPurchaseOrder->id,
+                        'purchase_requisition_item_id'=>$PurchaseRequisitionItem->id,
+                        'item_code_id'=>$Model->id,
+                        'item_code'=>$Model->name,
+                        'item_unit_cost_from_table'=>$Model->unit_cost,
+                        'unit_price'=>$PurchaseRequisitionItem->unit_price,
+                        'qty'=>$PurchaseRequisitionItem->qty,
+                        'remarks'=>$PurchaseRequisitionItem->remarks,
                     ]);
+
+                    $total = $total + ($PurchaseRequisitionItem->qty*$PurchaseRequisitionItem->unit_price);
                 }
             }
 
             $PurchaseRequisition->purchase_requisition_status_id = 2;
+            $PurchaseRequisition->posted_to_po = true;
+            $PurchaseRequisition->commit = true;
             $PurchaseRequisition->save();
+
+            $CompanyPurchaseOrder->code = 'COM-PO-PPR-'.Carbon::now()->format('y').Carbon::now()->format('m').Carbon::now()->format('d').'-'.$CompanyPurchaseOrder->id;
+            $CompanyPurchaseOrder->total = $total;
+            $CompanyPurchaseOrder->save();
 
         }catch (\Exception $e){
             $CompanyPurchaseOrder->delete();
             dd($e->getMessage());
         }
 
-        return redirect('/ims/purchase-requisition');
+        return redirect('/ims/company-purchase-order/'.$CompanyPurchaseOrder->id);
     }
 
-    public function postToGRN(Request $request){
+    public function postToGRN(Request $request)
+    {
 
-        $PurchaseRequisition = PurchaseRequisition::findOrFail($request->requisition_id);
-        $CompanyPurchaseOrder = CompanyPurchaseOrder::findOrFail($PurchaseRequisition->id);
 
-        $Grn = Grn::create([
-            'supplier_id'=>$CompanyPurchaseOrder->supplier_id,
-            'company_division_id'=>$this->CompanyDivision->id,
-            'created_date'=> Carbon::now(),
-            'created_by'=>auth()->user()->id,
-            'code'=>'GRN'
-        ]);
-
-        $TotalAmount = 0;
-
-        try {
-
-            foreach ($PurchaseRequisition->items as $item) {
-
-                $Model = ItemCode::find($item->item_code_id);
-
-                if($Model){
-
-                    GrnItem::create([
-                        'brand_id'=>$Model->brand_id,
-                        'item_code_id'=>$Model->id,
-                        'grn_id'=>$Grn->id,
-                        'company_division_id'=>$this->CompanyDivision->id,
-                        'item_code'=>$Model->name,
-                        'item_unit_cost_from_table'=>$Model->unit_cost,
-                        'unit_price'=>$item->price,
-                        'created_qty'=>$item->qty,
-                        'total'=>$item->qty * $item->price
-                    ]);
-
-                    $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit_price'] ) ;
-                }
-            }
-
-            $PurchaseRequisition->purchase_requisition_status_id = 3;
-            $PurchaseRequisition->save();
-
-            $Grn->code = "GRN-".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Grn->id;
-            $Grn->total = $TotalAmount;
-            $Grn->save();
-
-        }catch (\Exception $exception){
-            $Grn->delete();
-            dd($exception->getMessage());
-        }
-        return redirect(url('ims/grn/'.$Grn->id));
+//        $PurchaseRequisition = PurchaseRequisition::findOrFail($request->requisition_id);
+//        $CompanyPurchaseOrder = CompanyPurchaseOrder::findOrFail($PurchaseRequisition->id);
+//
+//        $Grn = Grn::create([
+//            'supplier_id'=>$CompanyPurchaseOrder->supplier_id,
+//            'company_division_id'=>$this->CompanyDivision->id,
+//            'created_date'=> Carbon::now(),
+//            'created_by'=>auth()->user()->id,
+//            'code'=>'GRN'
+//        ]);
+//
+//        $TotalAmount = 0;
+//
+//        try {
+//            foreach ($PurchaseRequisition->items as $item) {
+//
+//                $Model = ItemCode::find($item->item_code_id);
+//
+//                if($Model){
+//
+//                    GrnItem::create([
+//                        'brand_id'=>$Model->brand_id,
+//                        'item_code_id'=>$Model->id,
+//                        'grn_id'=>$Grn->id,
+//                        'company_division_id'=>$this->CompanyDivision->id,
+//                        'item_code'=>$Model->name,
+//                        'item_unit_cost_from_table'=>$Model->unit_cost,
+//                        'unit_price'=>$item->price,
+//                        'created_qty'=>$item->qty,
+//                        'total'=>$item->qty * $item->price
+//                    ]);
+//                    $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit_price'] ) ;
+//                }
+//            }
+//
+//            $PurchaseRequisition->purchase_requisition_status_id = 3;
+//            $PurchaseRequisition->save();
+//
+//            $Grn->code = "GRN-".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Grn->id;
+//            $Grn->total = $TotalAmount;
+//            $Grn->save();
+//
+//        }catch (\Exception $exception){
+//            $Grn->delete();
+//            dd($exception->getMessage());
+//        }
+//        return redirect(url('ims/grn/'.$Grn->id));
 
     }
 }

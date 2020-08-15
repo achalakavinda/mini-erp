@@ -12,13 +12,8 @@ class TestDataSeeder extends Seeder
     public function run()
     {
 
-        DB::unprepared(file_get_contents('public/sql/sky-intl.sql'));
-//        DB::unprepared(file_get_contents('public/sql/data_insert.sql'));
-
-
-
-
-
+//        DB::unprepared(file_get_contents('public/sql/sky-intl.sql'));
+        DB::unprepared(file_get_contents('public/sql/data_insert.sql'));
 
 //        $ProjectInsertQuery = "
 //        INSERT INTO `projects` (`id`, `customer_id`, `customer_name`, `sector_id`, `sector_name`, `job_type_id`, `job_type_name`, `code`, `quoted_price`, `budget_number_of_hrs`, `budget_cost_by_work`, `budget_cost_by_overhead`, `budget_revenue`, `actual_number_of_hrs`, `actual_cost_by_work`, `actual_cost_by_overhead`, `actual_revenue`, `invoicing_amount`, `receipt_amount`, `cost_variance`, `recovery_ratio`, `profit_ratio`, `close`, `invoiced`, `status_id`, `remarks`, `created_at`, `updated_at`, `created_by_id`, `updated_by_id`) VALUES

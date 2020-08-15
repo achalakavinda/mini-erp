@@ -47,6 +47,7 @@ class CreatePurchaseRequisitionsTable extends Migration
             $table->boolean('posted_to_po')->default(false);
             $table->double('total')->default(0);
             $table->boolean('commit')->default(false);
+            $table->longText('remarks')->nullable();
 
             $table->timestamps();
 
