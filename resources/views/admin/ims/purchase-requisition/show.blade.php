@@ -88,20 +88,20 @@
                             @foreach($Requisition->items as $item)
                                 <tr class="tr_{{ $count }}">
                                     <td>
-                                        <input style="display:none" type="number" value="{{ $item->id }}" name="row[{{ $count }}][item_code_id]" class="form-control">
-                                        <input readonly="" type="text" name="row[{{ $count }}][model_name]" value="{{ $item->item_code }}" class="form-control">
+                                        <input style="display:none" type="number" value="{{ $item->id }}" name="row[{{ $count }}][item_code_id]">
+                                        <input style="width: 100%" readonly="" type="text" name="row[{{ $count }}][model_name]" value="{{ $item->item_code }}">
                                     </td>
                                     <td>
-                                        <input type="text" name="row[{{ $count }}][remark]" value="{{ $item->remarks }}" class="form-control">
+                                        <input style="width: 100%" type="text" name="row[{{ $count }}][remark]" value="{{ $item->remarks }}">
                                     </td>
                                     <td>
-                                        <input style="text-align: right" id="qty{{ $count }}" type="number" onkeyup="calTol({{ $count+1 }})" name="row[{{ $count }}][qty]" value="{{ $item->qty }}" class="form-control">
+                                        <input style="text-align: right; width: 100%" id="qty{{ $count }}" type="number" onkeyup="calTol({{ $count+1 }})" name="row[{{ $count }}][qty]" value="{{ $item->qty }}">
                                     </td>
                                     <td>
-                                        <input style="text-align: right" id="price{{ $count }}" type="number" onkeyup="calTol({{ $count+1 }})" name="row[{{ $count }}][unit_price]" value="{{ $item->unit_price }}" class="form-control">
+                                        <input style="text-align: right; width: 100%" id="price{{ $count }}" type="number" onkeyup="calTol({{ $count+1 }})" name="row[{{ $count }}][unit_price]" value="{{ $item->unit_price }}">
                                     </td>
                                     <td>
-                                        <input  style="text-align: right" id="tol{{ $count }}" type="number" readonly="" name="row[{{ $count }}][total]" value="{{ $item->qty*$item->unit_price }}" class="form-control">
+                                        <input  style="text-align: right;width: 100%" id="tol{{ $count }}" type="number" readonly="" name="row[{{ $count }}][total]" value="{{ $item->qty*$item->unit_price }}">
                                     </td>
                                     <td>
                                         <a style="cursor: pointer" type="button" onclick="rowRemove('.tr_{{ $count }}')"><i class="fa fa-remove"></i></a>
@@ -177,20 +177,20 @@
                         if(data.item){
                             table.append('<tr class="tr_'+count+'">\n' +
                                 '                        <td>\n' +
-                                '                            <input style="display:none" type="number" value="'+SelecTItemId+'" name="row['+count+'][item_code_id]" class="form-control">\n' +
-                                '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'" class="form-control">\n' +
+                                '                            <input style="display:none" type="number" value="'+SelecTItemId+'" name="row['+count+'][item_code_id]">\n' +
+                                '                            <input style="width: 100%" readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input  type="text" name="row['+count+'][remark]" class="form-control">\n' +
+                                '                            <input style="width: 100%"  type="text" name="row['+count+'][remark]">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input style="text-align: right" id="qty'+count+'"  type="number" onkeyup="calTol('+(RawCount)+')" name="row['+count+'][qty]" class="form-control">\n' +
+                                '                            <input style="text-align: right; width: 100%" id="qty'+count+'"  type="number" onkeyup="calTol('+(RawCount)+')" name="row['+count+'][qty]">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input style="text-align: right" id="price'+count+'"  type="number" onkeyup="calTol('+(RawCount)+')" name="row['+count+'][unit_price]" value="'+data.item.unit_price_with_tax+'" class="form-control">\n' +
+                                '                            <input style="text-align: right; width: 100%" id="price'+count+'"  type="number" onkeyup="calTol('+(RawCount)+')" name="row['+count+'][unit_price]" value="'+data.item.unit_price_with_tax+'">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input style="text-align: right" id="tol'+count+'"  type="number" readonly name="row['+count+'][total]" class="form-control">\n' +
+                                '                            <input style="text-align: right; width: 100%" id="tol'+count+'"  type="number" readonly name="row['+count+'][total]">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <a style="cursor: pointer" type="button" onclick="rowRemove(\'.tr_'+count+'\')"><i class="fa fa-remove"></i></a>\n' +
