@@ -122,7 +122,7 @@
                                 '                            <input style="width: 100%" readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input  style="width: 100%" type="text" name="row['+count+'][remark]" class="form-control">\n' +
+                                '                            <input  style="width: 100%" type="text" name="row['+count+'][remark]">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input id="qty'+count+'"  style="width: 100%" type="number" onkeyup="calTol('+(count+1)+')" name="row['+count+'][qty]">\n' +

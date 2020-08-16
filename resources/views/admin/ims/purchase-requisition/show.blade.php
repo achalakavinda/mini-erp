@@ -29,6 +29,11 @@
         <input type="hidden" value="{{ $Requisition->id }}" name="requisition_id">
         {{ Form::close() }}
         @endif
+
+{{--        {!! Form::open(['method' => 'DELETE','route' => ['purchase-requisition.destroy', $Requisition->id]]) !!}--}}
+{{--        <button type="submit" class="btn btn-app pull-right" style="color: #ff0000"><i style="color: #ff0000"--}}
+{{--                                                                                       class="fa fa-recycle"></i> Delete</button>--}}
+{{--        {!! Form::close() !!}--}}
     </div>
 </div>
 <!-- /.box -->
@@ -152,13 +157,6 @@
             <!-- /.box-body -->
             <div class="box-footer">
                 @if (!$Requisition->posted_to_po)
-
-                {!! Form::open(['method' => 'DELETE','route' => ['purchase-requisition.destroy', $Requisition->id]])
-                !!}
-                <button type="submit" class="btn btn-app pull-right" style="color: #ff0000"><i style="color: #ff0000"
-                        class="fa fa-recycle"></i> Delete</button>
-                {!! Form::close() !!}
-
                 <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
                     Update</button>
 
