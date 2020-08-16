@@ -20,9 +20,9 @@ class CreateInvoiceItemsTable extends Migration
         Schema::create('invoice_items', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('invoice_id');
-            $table->unsignedInteger('brand_id');
-            $table->unsignedInteger('item_code_id');//use to map invoice to specific stock item
-            $table->unsignedInteger('stock_item_id');
+            $table->unsignedInteger('item_code_id');
+            $table->unsignedInteger('stock_item_id');//use to map invoice to specific stock item
+            $table->unsignedInteger('company_division_id');
 
             $table->double('item_unit_cost_from_table');
             $table->double('unit_price');
@@ -31,17 +31,11 @@ class CreateInvoiceItemsTable extends Migration
             $table->double('total');
 
             $table->text('remarks')->nullable();
-            $table->unsignedInteger('company_division_id');
             $table->timestamps();
 
             $table->foreign('invoice_id')
                 ->references('id')
                 ->on('invoices')
-                ->onDelete('cascade');
-
-            $table->foreign('brand_id')
-                ->references('id')
-                ->on('brands')
                 ->onDelete('cascade');
 
             $table->foreign('company_division_id')

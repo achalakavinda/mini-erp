@@ -47,10 +47,15 @@
                         <!-- title row -->
                         <div class="row">
                             <div class="col-xs-12">
-                                <h4 >
-                                    Customer: {!! Form::select('customer_id',\App\Models\Customer::all()->pluck('name','id'),null,['id'=>'CustomerId']) !!}
-                                    <small class="pull-right">Date: 2/10/2014</small>
-                                </h4>
+                                <p>
+                                    <select id="CustomerId" name="customer_id" class="ui search dropdown">
+                                        <option value=""> Choose a customer </option>
+                                        @foreach(\App\Models\Customer::all() as $customer)
+                                            <option value="{{ $customer->id }}"> {{ $customer->name }}  </option>
+                                            @endforeach
+                                    </select>
+                                    <i class="pull-right">Date: {{ \Carbon\Carbon::now() }}</i>
+                                </p>
                             </div>
                             <!-- /.col -->
                         </div>
@@ -116,11 +121,7 @@
                                     <tr>
                                         <th>No</th>
                                         <th>
-                                            <select id="ModelSelectId" class="form-control" name="model_select_id">
-                                                @foreach(\App\Models\Ims\ItemCode::all() as $option)
-                                                    <option value="{{ $option->id }}">{{ $option->brand?$option->brand->name.' - ':'' }} {{ $option->category?$option->category->name.' - ':'' }} {{ $option->name }} @if( $option->description!=null ) - {{ $option->description }}  @endif</option>
-                                                @endforeach
-                                            </select>
+                                            @include('layouts.selectors.ims.item-dropdown.index')
                                         </th>
                                         <th><button id="addNewItem" type="button" style="width: 100%" class="btn">Add</button></th>
                                     </tr>
@@ -173,7 +174,6 @@
 
 @section('js')
     <script>
-
         var table = $('#invoiceItemTable');
         var count = 0;
         var RawCount = 1;
@@ -264,5 +264,4 @@
         }
 
     </script>
-
 @endsection

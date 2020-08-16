@@ -8,6 +8,7 @@ use App\Models\Ims\Invoice;
 use App\Models\Ims\ItemCode;
 use App\Models\Ims\Quotation;
 use App\Models\Ims\QuotationItem;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class QuotationController extends Controller
@@ -39,7 +40,7 @@ class QuotationController extends Controller
      */
     public function create()
     {
-        return view('admin.ims.quotation.forms.create');
+        return view('admin.ims.quotation.create');
     }
 
     /**
@@ -52,8 +53,6 @@ class QuotationController extends Controller
     {
 
         $request->validate([
-            'date' => 'required',
-            'customer_id' => 'required',
             'row' => 'required',
             'row.*.model_id' => 'required',
             'row.*.qty' => 'required',
@@ -63,11 +62,15 @@ class QuotationController extends Controller
         $DiscountPercentage = $request->discount_percentage;
         $Amount = 0;
         $TotalAmount = 0;
+        $date = $request->date?$request->date:Carbon::now();
+
 
         $Quotation = Quotation::create([
-            'date'=>$request->date,
-            'customer_id'=>$request->customer_id,
             'company_division_id'=>$this->CompanyDivision->id,
+            'customer_id'=>$request->customer_id,
+            'created_by'=>\Auth::id(),
+            'code'=>'Quo',
+            'date'=>$date,
             'remarks'=>$request->remarks
         ]);
 
@@ -80,16 +83,14 @@ class QuotationController extends Controller
                 if($Model){
 
                     QuotationItem::create([
-                        'brand_id'=>$Model->brand_id,
-                        'item_code_id'=>$Model->id,
                         'quotation_id'=>$Quotation->id,
+                        'item_code_id'=>$Model->id,
                         'company_division_id'=>$this->CompanyDivision->id,
 
                         'item_code'=>$Model->name,
-                        'item_price'=>$Model->unit_cost,
+                        'item_unit_cost_from_table'=>$Model->unit_cost,
                         'quoted_price'=>$item['unit'],
-                        'quoted_qty'=>$item['qty'],
-                        'quoted_value'=>$item['unit']*$item['qty']
+                        'quoted_qty'=>$item['qty']
                     ]);
 
                     $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit']) ;
@@ -110,7 +111,6 @@ class QuotationController extends Controller
 
 
         }catch (\Exception $exception){
-
             $Quotation->delete();
             dd($exception->getMessage());
         }

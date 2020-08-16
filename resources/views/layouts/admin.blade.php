@@ -39,6 +39,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+
+    {!! Html::style('admin/css/semantic.min.css') !!}
 </head>
 
 
@@ -79,12 +81,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 {!! Html::script('admin/bower_components/bootstrap/dist/js/bootstrap.min.js') !!}
 <!-- AdminLTE App -->
 {!! Html::script('admin/js/adminlte.min.js') !!}
-
-
+{!! Html::script('admin/js/semantic.min.js') !!}
 
 @yield('js')
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
+@stack('js-stack')
 </body>
 </html>

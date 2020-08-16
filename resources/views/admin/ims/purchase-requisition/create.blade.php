@@ -71,7 +71,7 @@
                                     <div class="col-md-12">
                                         <div class="form-group">
                                             {!!
-                                            Form::select('item_code_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ItemCodeId','class'=>'form-control'])
+                                            Form::select('item_code_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ItemCodeId','class'=>'form-control ui search dropdown'])
                                             !!}
                                         </div>
                                     </div> <!-- /requisition item -->
@@ -100,6 +100,7 @@
 <!-- /main section -->
 
 @section('js')
+    @include('layouts.components.sematic-ui.dropdown')
 <script>
     var table = $('#requisitionItemTable');
         var count = 0;
