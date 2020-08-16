@@ -19,7 +19,7 @@ class CreateGrnItemsTable extends Migration
             $table->foreignId('grn_id');
             $table->unsignedInteger('item_code_id');
             $table->unsignedInteger('company_division_id');
-            $table->unsignedInteger('company_purchase_order_item_id');
+            $table->unsignedInteger('company_purchase_order_item_id')->nullable();
 
             $table->string('item_code');//store stock item name, history log
             $table->double('item_unit_cost_from_table')->default(0);//store the value on item code table
