@@ -196,7 +196,10 @@ class PurchaseRequisitionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $PurchaseRequisition = PurchaseRequisition::findOrFail($id);
+        $PurchaseRequisition->delete();
+        return redirect('ims/purchase-requisition/');
+
     }
 
     /**
