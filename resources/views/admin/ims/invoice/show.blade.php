@@ -119,17 +119,17 @@
                                             <td>{{ $count }} <input style="display:none" name="row[{{ $count }}][insert]" type="checkbox" checked></td>
                                             <td>
                                                 <input style="display:none" type="number" value="{{ $item->item_code_id }}" name="row[{{ $count }}][model_id]" va>
-                                                <input disabled type="text" name="row[{{ $count }}][model_name]" value="{{ $item->ItemCode?$item->ItemCode->name:'' }}" style="width: 100%">
+                                                <input disabled type="text" name="row[{{ $count }}][model_name]" value="{{ $item->ItemCode?$item->ItemCode->brand?$item->ItemCode->brand->name.' - ':'':'' }}{{ $item->ItemCode?$item->ItemCode->category?$item->ItemCode->category->name.' - ':'':'' }}{{ $item->ItemCode?$item->ItemCode->name:'' }} {{ $item->ItemCode?$item->ItemCode->description?' - '.$item->ItemCode->description:'':'' }}" style="width: 100%">
                                             </td>
 
                                             <td>
                                                 <input disabled onkeyup="calTol({{ $count }})" id="qty{{ $count }}"  type="number" name="row[{{ $count }}][qty]" style="width: 100%" value="{{ $item->qty }}">
                                             </td>
                                             <td>
-                                                <input disabled id="price{{ $count }}"  type="number" readonly name="row[{{ $count }}][unit]" value="{{ $item->price }}" style="width: 100%">
+                                                <input disabled id="price{{ $count }}"  type="text" readonly name="row[{{ $count }}][unit]" value="{{ $item->unit_price }}" style="width: 100%">
                                             </td>
                                             <td>
-                                                <input disabled id="tol{{ $count }}"  type="number" readonly name="row[{{ $count }}][tol]" style="width: 100%" value="{{ $item->value }}">
+                                                <input disabled id="tol{{ $count }}"  type="text" readonly name="row[{{ $count }}][tol]" style="width: 100%" value="{{ $item->total }}">
                                             </td>
 {{--                                            <td>--}}
 {{--                                                <a  style="cursor: pointer" type="button" onclick="rowRemove('.tr_{{ $count }}')"><i class="fa fa-remove"></i></a>--}}

@@ -4,7 +4,7 @@
 <!-- Default box -->
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Sales Orders</h3>
+        <h3 class="box-title">Sales Order</h3>
     </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
@@ -13,14 +13,14 @@
         <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
             <i class="main-action-btn-info fa fa-list"></i> Quick Menu
         </a>
-        <a href="{{ url('/ims/sales-orders/create') }}" class="btn btn-menu">
+        <a href="{{ url('/ims/sales-order/create') }}" class="btn btn-menu">
             <i class="main-action-btn-info fa fa-refresh"></i> Refresh
         </a>
         <a href="{{ url('/ims/item') }}" class="btn btn-menu">
             <i class="main-action-btn-info fa fa-table"></i> Item
         </a>
 
-        <a href="{{ url('/ims/sales-orders/create') }}" class="btn btn-menu">
+        <a href="{{ url('/ims/sales-order/create') }}" class="btn btn-menu">
             <i class="main-action-btn-info fa fa-plus"></i> New
         </a>
     </div>

@@ -32,8 +32,6 @@
 @section('main-content')
     <!-- main section -->
     <div class="row">
-
-
         <div class="col-md-12">
         @include('error.error')
         <!-- general form elements -->
@@ -68,14 +66,12 @@
                                     <tbody>
                                     <tr>
                                         <td>Order Date :</td>
-                                        <td><input disabled style="width: 100%" id="Date" name="date" type="date"
-                                                   value="{{ $Grn->created_date }}"></td>
+                                        <td><input disabled style="width: 100%" id="Date" name="date" type="date" value="{{ $Grn->created_date }}"></td>
                                     </tr>
 
                                     <tr>
                                         <td>Our Vat No: </td>
-                                        <td><input disabled style="width: 100%" id="CompanyVatNo" readonly=""
-                                                   name="company_vat_no" type="text" value="174928878-7000"></td>
+                                        <td><input disabled style="width: 100%" id="CompanyVatNo" readonly="" name="company_vat_no" type="text" value="174928878-7000"></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -114,7 +110,7 @@
                                             <td>
                                                 <input disabled onkeyup="calTol({{ $count }})" id="qty{{ $count }}"
                                                        type="number" name="row[{{ $count }}][qty]" style="width: 100%; text-align: right"
-                                                       value="{{ $item->created_qty }}">
+                                                       value="{{ $item->qty }}">
                                             </td>
                                             <td>
                                                 <input  disabled id="price{{ $count }}" type="text" readonly
@@ -124,7 +120,7 @@
                                             <td>
                                                 <input disabled id="tol{{ $count }}" type="text" readonly
                                                        name="row[{{ $count }}][tol]" style="width: 100%;text-align: right"
-                                                       value="{{ number_format(($item->created_qty * $item->unit_price),2) }}">
+                                                       value="{{ number_format(($item->qty * $item->unit_price),2) }}">
                                             </td>
                                         {{--                                            <td>--}}
                                         {{--                                                <a  style="cursor: pointer" type="button" onclick="rowRemove('.tr_{{ $count }}')"><i

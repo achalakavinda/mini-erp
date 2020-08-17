@@ -19,7 +19,6 @@ class CreateStockItemsTable extends Migration
             $table->unsignedInteger('stock_id')->nullable();
             $table->unsignedInteger('grn_item_id')->nullable();
             $table->unsignedInteger('invoice_item_id')->nullable();
-            $table->unsignedInteger('brand_id');
             $table->unsignedInteger('item_code_id');
             $table->boolean('commit')->default(true);
 
@@ -35,11 +34,6 @@ class CreateStockItemsTable extends Migration
             $table->unsignedInteger('company_division_id');
             $table->unsignedInteger('company_id');
             $table->timestamps();
-
-            $table->foreign('brand_id')
-                ->references('id')
-                ->on('brands')
-                ->onDelete('cascade');
 
             $table->foreign('company_division_id')
                 ->references('id')

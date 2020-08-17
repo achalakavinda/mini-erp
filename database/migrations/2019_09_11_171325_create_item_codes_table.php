@@ -22,7 +22,8 @@ class CreateItemCodesTable extends Migration
         Schema::create('item_codes', function (Blueprint $table) {
 
             $table->increments('id');
-            $table->unsignedInteger('brand_id');
+            $table->unsignedInteger('brand_id')->nullable();
+            $table->foreignId('category_id')->nullable();
             $table->unsignedInteger('company_id');
             $table->unsignedInteger('company_division_id');
             $table->unsignedInteger('type_measurement_id')->nullable();
@@ -36,14 +37,16 @@ class CreateItemCodesTable extends Migration
 
             $table->float('unit_cost');
             $table->float('selling_price');
+
             $table->float('nbt_tax_percentage')->default(0);
             $table->float('vat_tax_percentage')->default(0);
             $table->float('unit_price_with_tax');
 
+            $table->float('market_price')->nullable();
+            $table->float('min_price')->nullable();
+            $table->float('max_price')->nullable();
 
             $table->boolean('active')->default(1);
-
-
 
             $table->timestamps();
 

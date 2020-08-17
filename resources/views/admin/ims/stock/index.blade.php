@@ -60,7 +60,11 @@
                                         <a target="_blank" href="{{ url('ims/grn/'.$stock->grn_id) }}">View</a>
                                     @endif
                                 </td>
-                                <td>{!! $stock->invoice_id !!}</td>
+                                <td>
+                                    @if($stock->invoice_id)
+                                        <a target="_blank" href="{{ url('ims/invoice/'.$stock->invoice_id) }}">View</a>
+                                    @endif
+                                </td>
                                 <td style="text-align: right">{!! number_format($stock->total, 2) !!}/=</td>
                                 <?php $total = $total + $stock->total;?>
                             </tr>

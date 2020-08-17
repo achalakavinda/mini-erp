@@ -15,17 +15,15 @@ class CreateQuotationItemsTable extends Migration
     {
         Schema::create('quotation_items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('brand_id');
-            $table->unsignedInteger('item_code_id');
             $table->foreignId('quotation_id');
+            $table->unsignedInteger('item_code_id');
             $table->unsignedInteger('company_division_id');
 
             $table->text('item_code');
-            $table->double('item_price');
+            $table->double('item_unit_cost_from_table')->default(0);//value on item code table
             $table->double('quoted_price');
             $table->double('quoted_discount')->nullable();
             $table->double('quoted_qty');
-            $table->double('quoted_value');
             $table->text('remarks')->nullable();
 
             $table->timestamps();
@@ -33,11 +31,6 @@ class CreateQuotationItemsTable extends Migration
             $table->foreign('quotation_id')
                 ->references('id')
                 ->on('quotations')
-                ->onDelete('cascade');
-
-            $table->foreign('brand_id')
-                ->references('id')
-                ->on('brands')
                 ->onDelete('cascade');
 
             $table->foreign('item_code_id')

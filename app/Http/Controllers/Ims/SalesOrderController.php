@@ -10,7 +10,7 @@ use App\Models\Ims\SalesOrder;
 use App\Models\Ims\SalesOrderItem;
 use Illuminate\Http\Request;
 
-class SalesOrdersController extends Controller
+class SalesOrderController extends Controller
 {
     public $Company_Division_id = 1;
 
@@ -28,7 +28,7 @@ class SalesOrdersController extends Controller
     public function index()
     {
         $Items = SalesOrder::all();
-        return view('admin.ims.sales-orders.index',compact(['Items']));
+        return view('admin.ims.sales-order.index',compact(['Items']));
     }
 
     /**
@@ -38,7 +38,7 @@ class SalesOrdersController extends Controller
      */
     public function create()
     {
-        return view('admin.ims.sales-orders.create');
+        return view('admin.ims.sales-order.create');
     }
 
     /**
@@ -113,7 +113,7 @@ class SalesOrdersController extends Controller
             dd($exception->getMessage());
         }
 
-        return redirect(url('ims/sales-orders/'.$SalesOrder->id));
+        return redirect(url('ims/sales-order/'.$SalesOrder->id));
     }
 
     /**
@@ -125,7 +125,7 @@ class SalesOrdersController extends Controller
     public function show($id)
     {
         $SalesOrder = SalesOrder::findOrFail($id);
-        return view('admin.ims.sales-orders.show',compact('SalesOrder'));
+        return view('admin.ims.sale-order.show',compact('SalesOrder'));
     }
 
     /**

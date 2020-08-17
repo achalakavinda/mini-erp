@@ -15,14 +15,19 @@ class CreateQuotationsTable extends Migration
     {
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
-            $table->date('date')->default(\Carbon\Carbon::now());
-            $table->unsignedInteger('customer_id');
             $table->unsignedInteger('company_division_id')->nullable();
+            $table->unsignedInteger('customer_id')->nullable();
+            $table->unsignedInteger('created_by');
 
+            $table->string('code');
+            $table->date('date')->default(\Carbon\Carbon::now());
             $table->text('remarks')->nullable();
             $table->double('amount')->default(0);
             $table->double('discount')->default(0);
             $table->double('total')->default(0);
+            $table->boolean('commit')->default(false);
+            $table->boolean('posted_to_sales_order')->default(false);
+            $table->boolean('posted_to_invoice')->default(false);
 
             $table->timestamps();
 

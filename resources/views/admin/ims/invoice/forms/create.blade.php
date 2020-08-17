@@ -47,10 +47,15 @@
                         <!-- title row -->
                         <div class="row">
                             <div class="col-xs-12">
-                                <h4 >
-                                    Customer: {!! Form::select('customer_id',\App\Models\Customer::all()->pluck('name','id'),null,['id'=>'CustomerId']) !!}
-                                    <small class="pull-right">Date: 2/10/2014</small>
-                                </h4>
+                                <p>
+                                    <select id="CustomerId" name="customer_id" class="ui search dropdown">
+                                        <option value=""> Choose a customer </option>
+                                        @foreach(\App\Models\Customer::all() as $customer)
+                                            <option value="{{ $customer->id }}"> {{ $customer->name }}  </option>
+                                            @endforeach
+                                    </select>
+                                    <i class="pull-right">Date: {{ \Carbon\Carbon::now() }}</i>
+                                </p>
                             </div>
                             <!-- /.col -->
                         </div>
@@ -115,7 +120,9 @@
                                     <tfoot>
                                     <tr>
                                         <th>No</th>
-                                        <th>{!! Form::select('model_select_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ModelSelectId','class'=>'form-control']) !!}</th>
+                                        <th>
+                                            @include('layouts.selectors.ims.item-dropdown.index')
+                                        </th>
                                         <th><button id="addNewItem" type="button" style="width: 100%" class="btn">Add</button></th>
                                     </tr>
                                     </tfoot>
@@ -167,7 +174,6 @@
 
 @section('js')
     <script>
-
         var table = $('#invoiceItemTable');
         var count = 0;
         var RawCount = 1;
@@ -208,7 +214,7 @@
                                 '                            <input onkeyup="calTol('+(count+1)+')" id="qty'+count+'"  type="number" name="row['+count+'][qty]" placeholder="In Stock '+data.qty+' items" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input id="price'+count+'"  type="number" readonly name="row['+count+'][unit]" value="'+data.item.unit_price_with_tax+'" style="width: 100%">\n' +
+                                '                            <input id="price'+count+'"  type="number" readonly name="row['+count+'][unit_price]" value="'+data.item.unit_price_with_tax+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input id="tol'+count+'"  type="number" readonly name="row['+count+'][tol]" style="width: 100%">\n' +
@@ -258,5 +264,4 @@
         }
 
     </script>
-
 @endsection

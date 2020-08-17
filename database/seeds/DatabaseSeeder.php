@@ -16,8 +16,9 @@ class DatabaseSeeder extends Seeder
             GeneralLedgerSeeder::class,
             Important::class,
             RolesAndPermissionsSeeder::class,
+            RequisitionStatusSeeder::class,
             TestDataSeeder::class,
-            InventorySeeder::class
+            InventorySeeder::class,
         ]);
 
 

@@ -80,7 +80,6 @@ class StockController extends Controller
                     {
                      StockItem::create([
                             'stock_id'=>$Stock->id,
-                            'brand_id'=>$Model->brand_id,
                             'item_code_id'=>$Model->id,
                             'item_code'=>$Model->name,
                             'item_unit_cost_from_table'=>$Model->unit_cost,

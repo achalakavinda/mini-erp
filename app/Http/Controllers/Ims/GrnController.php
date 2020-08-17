@@ -59,20 +59,18 @@ class GrnController extends Controller
             'row.*.qty' => 'required',
             'row.*.unit_price' => 'required'
         ]);
-
-        $TotalAmount = 0;
         $date = $request->date? $request->date : Carbon::now();
 
         $Grn = Grn::create([
-            'supplier_id'=>$request->supplier_id,
             'company_division_id'=>$this->CompanyDivision->id,
-            'created_date'=> $date,
+            'supplier_id'=>$request->supplier_id,
             'created_by'=>auth()->user()->id,
-            'code'=>'GRN'
+            'code'=>'GRN',
+            'date'=> $date,
         ]);
 
         try {
-
+            $TotalAmount = 0;
             foreach ($request->row as $item) {
 
                 $Model = ItemCode::find($item['model_id']);
@@ -80,15 +78,13 @@ class GrnController extends Controller
                 if($Model && $item['qty'] && $item['unit_price'] ){
 
                     GrnItem::create([
-                        'brand_id'=>$Model->brand_id,
-                        'item_code_id'=>$Model->id,
                         'grn_id'=>$Grn->id,
+                        'item_code_id'=>$Model->id,
                         'company_division_id'=>$this->CompanyDivision->id,
                         'item_code'=>$Model->name,
                         'item_unit_cost_from_table'=>$Model->unit_cost,
                         'unit_price'=>$item['unit_price'],
-                        'created_qty'=>$item['qty'],
-                        'total'=>$item['qty'] * $item['unit_price']
+                        'qty'=>$item['qty'],
                     ]);
 
                     $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit_price'] ) ;
@@ -134,16 +130,15 @@ class GrnController extends Controller
                     StockItem::create([
                         'stock_id'=>$Stock->id,
                         'grn_item_id'=>$item->id,
-                        'brand_id'=>$Model->brand_id,
                         'item_code_id'=>$Model->id,
                         'item_code'=>$Model->name,
                         'item_unit_cost_from_table'=>$Model->unit_cost,
                         'unit_price'=>$item->unit_price,
-                        'created_qty'=>$item->created_qty,//to identify the initial qty for bath item
-                        'tol_qty'=>$item->created_qty,
+                        'created_qty'=>$item->qty,//to identify the initial qty for bath item
+                        'tol_qty'=>$item->qty,
                         'company_division_id'=>$this->CompanyDivision->id,
                         'company_id'=>1,
-                        'total'=> $item->created_qty * $item->unit_price
+                        'total'=> $item->qty * $item->unit_price
                     ]);
                     $Total = $Total + ($item->created_qty * $item->unit_price);
                 }

@@ -2,8 +2,12 @@
     <div class="col-md-12">
         <div class="form-group">
             {!! Form::label("Parent Brand") !!}
-            {!! Form::select('parent_brand_id',$Brands,null
-            ,['class'=>'form-control','id'=>'companyId']) !!}
+            <select class="form-control" id="companyId" name="parent_brand_id">
+                <option value="null">Select a Parent</option>
+                @foreach($Brands as $item)
+                    <option value="{{ $item->id }}">{{ $item->name }}</option>
+                @endforeach
+            </select>
         </div>
     </div>
 

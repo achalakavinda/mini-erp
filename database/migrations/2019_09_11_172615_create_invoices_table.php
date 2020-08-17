@@ -16,19 +16,22 @@ class CreateInvoicesTable extends Migration
         Schema::create('invoices', function (Blueprint $table) {
 
             $table->increments('id');
-            $table->string('invoice_no');
-            $table->date('order_date')->default(\Carbon\Carbon::now());
-            $table->date('dispatched_date')->default(\Carbon\Carbon::now());
-            $table->string('purchase_order')->nullable();
-            $table->unsignedInteger('delivery_method_id');
-            $table->text('delivery_address')->nullable();
-            $table->unsignedInteger('customer_id');
-            $table->text('customer_detail')->nullable();
-            $table->text('special_remarks')->nullable();
             $table->unsignedInteger('company_division_id')->nullable();
-            $table->double('amount')->default(0);
+            $table->unsignedInteger('customer_id')->nullable();
+
+            $table->string('code');
+            $table->date('date')->default(\Carbon\Carbon::now());
+            $table->date('order_date')->nullable()->default(\Carbon\Carbon::now());
+            $table->date('dispatched_date')->nullable()->default(\Carbon\Carbon::now());
+            $table->string('purchase_order')->nullable();
+
+            $table->text('delivery_address')->nullable();
+            $table->text('remarks')->nullable();
+
+            $table->double('amount')->default(0);//store total amount without discount
             $table->double('discount')->default(0);
-            $table->double('total')->default(0);
+            $table->double('total')->default(0);//total with discount
+            $table->double('payment')->default(0);//total with discount
 
             $table->timestamps();
 

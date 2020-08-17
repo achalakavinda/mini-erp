@@ -32,7 +32,7 @@ class BrandController extends Controller
     {
         $Company = Company::all()->pluck('code','id');
         $CompanyDivision = CompanyDivision::all()->pluck('code','id');
-        $Brands = Brand::all()->pluck('name','id');
+        $Brands = Brand::all();
         return view('admin.ims.brand.create',compact(['Company','CompanyDivision','Brands']));
     }
 
@@ -46,10 +46,7 @@ class BrandController extends Controller
         $request->validate([
             'name'=>'required',
             'company_id'=>'required',
-            'company_division_id'=>'required',
-            'description'=>'required',
-            'img_url'=>'required',
-
+            'company_division_id'=>'required'
         ]);
 
         $CompanyDivision = CompanyDivision::findOrFail($request->company_division_id);
@@ -58,16 +55,30 @@ class BrandController extends Controller
             'name'=>$request->name,
             'company_id'=>$CompanyDivision->company_id,
             'company_division_id'=>$CompanyDivision->id,
-            'description'=>$request->description,
+            'description'=>$request->description
         ]);
 
-        $image = $request->file('img_url');
-        $Store = Storage::put('/images/system/brands/'.$Brand->id.'', $image);
+        if($request->file('img_url')){
+            $image = $request->file('img_url');
+            $Store = Storage::put('/images/system/brands/'.$Brand->id.'', $image);
 
-        if($Store){
-            $Brand->img_url = '/storage/'.$Store;
-            $Brand->save();
+            if($Store){
+                $Brand->img_url = '/storage/'.$Store;
+                $Brand->save();
+            }
         }
+
+        if($request->parent_brand_id>0){
+            $parentBrand = Brand::find($request->parent_brand_id);
+            if($parentBrand){
+                $Brand->name = $parentBrand->name.' - '.$request->name;
+                $Brand->parent_id = $parentBrand->id;
+                $Brand->level = $parentBrand->level+1;
+                $Brand->save();
+            }
+        }
+
+
 
         return redirect()->back();
     }
@@ -83,7 +94,7 @@ class BrandController extends Controller
         $Brand = Brand::findorfail($id);
         $Company = Company::all()->pluck('code','id');
         $CompanyDivision = CompanyDivision::all()->pluck('code','id');
-        $Brands = Brand::all()->pluck('name','id');
+        $Brands = Brand::all();
         return view('admin.ims.brand.show',compact(['Brand','Company','CompanyDivision','Brands']));
     }
 
@@ -145,14 +156,20 @@ class BrandController extends Controller
     public function destroy($id)
     {
         $Brand = Brand::findorfail($id);
-        if($Brand->itemCodes->count() > 0){
-            return redirect()->back();
-        }else{
-            if($Brand->img_url != null){
-                Storage::deleteDirectory('/images/system/brands/'.$Brand->id.'');
-            }
-            $Brand->delete();
-            return redirect()->route('brand.index');
+        if($Brand->img_url != null){
+            Storage::deleteDirectory('/images/system/brands/'.$Brand->id.'');
         }
+        $Brand->delete();
+        return redirect()->route('brand.index');
+
+//        if($Brand->itemCodes->count() > 0){
+//
+//        }else{
+//            if($Brand->img_url != null){
+//                Storage::deleteDirectory('/images/system/brands/'.$Brand->id.'');
+//            }
+//            $Brand->delete();
+//            return redirect()->route('brand.index');
+//        }
     }
 }
