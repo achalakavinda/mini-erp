@@ -54,6 +54,13 @@
             </ul>
         </li>
 
+        <li class="col-md-2">
+            <ul>
+                <li class="list-header">Accounting</li>
+                <li><a href="{{ url('accounting/payment') }}">Payments</a></li>
+            </ul>
+        </li>
+
 
 
     <li class="col-md-2">

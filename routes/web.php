@@ -113,6 +113,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/invoice/{id}/print','Ims\InvoiceController@print');
     });
 
+    Route::prefix('accounting')->group(function ()
+    {
+        Route::resource('/payment','Accounting\PaymentController');
+    });
+
     Route::group(['middleware' => ['permission:Settings']], function () {
         Route::get('settings','SettingController@index');
         Route::prefix('settings')->group(function () {
