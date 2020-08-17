@@ -1,50 +1,30 @@
 <div class="box-body">
 
     <div class="col-md-12">
-        <!--Supplier ID -->
-        <div class="col-md-12">
-            <div class="form-group">
-                <h4>
-                    Supplier: {!!
-                    Form::select('supplier_id',\App\Models\Ims\Supplier::all()->pluck('name','id'),null,['id'=>'SupplierId'])
-                    !!}
-                    <small class="pull-right">Date: 2/10/2014</small>
-                </h4>
-            </div>
-        </div> <!-- Supplier ID -->
 
-        <div class="col-md-6">
+        <div class="col-md-8"></div>
+        <!--Date-->
+        <div class="col-md-4">
             <div class="form-group">
-                {!! Form::label('PO. No') !!}
-                {!! Form::text('po_id',null,['id'=>'po_id','class'=>'form-control']) !!}
-            </div>
-        </div> <!-- /PO number -->
-
-        <!--Location-->
-        <div class="col-md-6">
-            <div class="form-group">
-                {!! Form::label('Location') !!}
-                {!! Form::text('location',null,['id'=>'location','class'=>'form-control']) !!}
-            </div>
-        </div> <!-- Location -->
-
-        <!--Delivery Address-->
-        <div class="col-md-6">
-            <div class="form-group">
-                {!! Form::label('Delivery Address') !!}
-                {!! Form::text('delivery_address',null,['id'=>'delivery_address','class'=>'form-control']) !!}
-            </div>
-        </div> <!-- Delivery Address -->
-
-        <!--Delivery Date-->
-        <div class="col-md-6">
-            <div class="form-group">
-                {!! Form::label('Delivery Date') !!}
-                {!! Form::date('delivery_date',\Carbon\Carbon::now(),['id'=>'delivery_date','class'=>'form-control'])
+                {!! Form::label('Date') !!}
+                {!! Form::date('date',\Carbon\Carbon::now(),['id'=>'date','class'=>'form-control'])
                 !!}
             </div>
-        </div> <!-- Delivery Date -->
+        </div>
+        <!--Date -->
 
+        <div class="col-md-8"></div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="Requisition Date">Supplier</label>
+                <select name="supplier_id" class="form-control" id="SupplierId">
+                    <option value="">Select a Supplier</option>
+                    @foreach(\App\Models\Ims\Supplier::all() as $supplier)
+                    <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+        </div>
 
     </div>
 
@@ -56,6 +36,7 @@
                     <tr style="text-align: center">
                         <th>No</th>
                         <th>Item</th>
+                        <th>Remarks</th>
                         <th>QTY</th>
                         <th>Unit Price (LKR)</th>
                         <th>Total (LKR)</th>
@@ -95,7 +76,8 @@
 <!-- /.box-body -->
 
 <div class="box-footer">
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
+        Submit</button>
 </div>
 
 @section('js')
@@ -135,6 +117,9 @@
                                 '                        <td>\n' +
                                 '                            <input style="display:none" type="number" value="'+SelecTModelId+'" name="row['+count+'][model_id]" >\n' +
                                 '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+' | Unit Price : '+data.item.unit_price_with_tax+'/=" style="width: 100%">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input  style="width: 100%" type="text" name="row['+count+'][remark]">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input onkeyup="calTol('+(count+1)+')" id="qty'+count+'"  type="number" name="row['+count+'][qty]" style="width: 100%">\n' +

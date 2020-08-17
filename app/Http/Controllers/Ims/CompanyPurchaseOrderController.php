@@ -61,18 +61,17 @@ class CompanyPurchaseOrderController extends Controller
             'row.*.unit_price' => 'required'
         ]);
 
-        $date = $request->delivery_date? $request->delivery_date : Carbon::now();
+        $date = $request->date? $request->date : Carbon::now();
 
         $CompanyPurchaseOrder = CompanyPurchaseOrder::create([
-            'po_id'=>$request->po_id,
-            'location'=>$request->location,
-            'delivery_address'=>$request->delivery_address,
-            'delivery_date'=>$date,
             'supplier_id'=>$request->supplier_id,
+            'company_division_id'=>$this->CompanyDivision->id,
+            'created_by'=> auth()->user()->id,
+            'date'=>$date,
         ]);
 
         try {
-
+            $total = 0;
             foreach ($request->row as $item) {
 
                 $Model = ItemCode::find($item['model_id']);
@@ -80,18 +79,23 @@ class CompanyPurchaseOrderController extends Controller
                 if($Model && $item['qty']){
 
                     CompanyPurchaseOrderItem::create([
-                        'company_purchase_order_id'=>$CompanyPurchaseOrder->id,
-                        'brand_id'=>$Model->brand_id,
-                        'item_code_id'=>$Model->id,
-                        'price'=>$Model->unit_cost,
-                        'qty'=>$item['qty'],
                         'company_division_id'=>$Model->company_division_id,
+                        'company_purchase_order_id'=>$CompanyPurchaseOrder->id,
+                        'item_code_id'=>$Model->id,
+                        'item_code'=>$Model->name,
+                        'item_unit_cost_from_table'=>$Model->unit_cost,
+                        'unit_price'=>$item['unit_price'],
+                        'qty'=>$item['qty'],
+                        'remarks'=>$item['remark']?$item['remark']:null
                     ]);
+
+                    $total = $total + ($item['unit_price']*$item['qty']);
 
                 }
             }
-
-
+            $CompanyPurchaseOrder->code = 'COM-PO-'.Carbon::now()->format('y').Carbon::now()->format('m').Carbon::now()->format('d').'-'.$CompanyPurchaseOrder->id;
+            $CompanyPurchaseOrder->total = $total;
+            $CompanyPurchaseOrder->save();
 
         }catch (\Exception $exception){
             $CompanyPurchaseOrder->delete();
