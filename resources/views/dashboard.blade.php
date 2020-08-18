@@ -97,43 +97,91 @@
             <!-- /.box -->
         </div>
 
-
         <div class="col-md-6">
-            <!-- BAR CHART -->
             <div class="box box-success" style="min-height: 400px">
                 <div class="box-header with-border">
-                    <h3 class="box-title">Distribution</h3>
+                    <h3 class="box-title">Today's Sales Orders [ {{ \Carbon\Carbon::now() }} ] <a href="{{ url('ims/sales-order') }}">view more</a> </h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                         </button>
                     </div>
                 </div>
-                <div class="box-body chart-responsive">
-                    <div class="chart" id="bar-chart" style="height: 300px;"></div>
+                <div style="overflow: auto" class="box-body">
+                    <table id="table1" class="table table-responsive table-bordered table-striped">
+                        <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th><span class="fa fa-paper-plane"></span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $total = 0;?>
+                        @foreach(\App\Models\Ims\SalesOrder::all() as $sales)
+                            <tr>
+                                <td>{!! $sales->code !!}</td>
+                                <td>{!! $sales->customer?$sales->customer->name:'' !!}</td>
+                                <td>{!! $sales->date !!}</td>
+                                <td>@if($sales->posted_to_invoice) Dispatched/Post to Invoice @else <span style="color: red">Pending</span> @endif</td>
+                                <td style="text-align: right">{!! number_format($sales->total, 2) !!}/=</td>
+                                <td ><a href="{{ url('ims/sales-order/'.$sales->id) }}"><span class="fa fa-paper-plane"></span></a> </td>
+                                <?php $total = $total + $sales->total;?>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th colspan="4" style="text-align: right">Total Inventory :</th>
+                            <th style="text-align: right">{{ number_format($total, 2) }}/=</th>
+                        </tr>
+                        </tfoot>
+                    </table>
                 </div>
                 <!-- /.box-body -->
             </div>
             <!-- /.box -->
         </div>
 
-        <div class="col-md-6">
-            <!-- DONUT CHART -->
-            <div class="box box-success" style="min-height: 400px">
-                <div class="box-header with-border">
-                    <h3 class="box-title">Industry Category</h3>
 
-                    <div class="box-tools pull-right">
-                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="box-body chart-responsive">
-                    <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
-                </div>
-                <!-- /.box-body -->
-            </div>
-            <!-- /.box -->
-        </div>
+{{--        <div class="col-md-6">--}}
+{{--            <!-- BAR CHART -->--}}
+{{--            <div class="box box-success" style="min-height: 400px">--}}
+{{--                <div class="box-header with-border">--}}
+{{--                    <h3 class="box-title">Distribution</h3>--}}
+{{--                    <div class="box-tools pull-right">--}}
+{{--                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>--}}
+{{--                        </button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="box-body chart-responsive">--}}
+{{--                    <div class="chart" id="bar-chart" style="height: 300px;"></div>--}}
+{{--                </div>--}}
+{{--                <!-- /.box-body -->--}}
+{{--            </div>--}}
+{{--            <!-- /.box -->--}}
+{{--        </div>--}}
+
+{{--        <div class="col-md-6">--}}
+{{--            <!-- DONUT CHART -->--}}
+{{--            <div class="box box-success" style="min-height: 400px">--}}
+{{--                <div class="box-header with-border">--}}
+{{--                    <h3 class="box-title">Industry Category</h3>--}}
+
+{{--                    <div class="box-tools pull-right">--}}
+{{--                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>--}}
+{{--                        </button>--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--                <div class="box-body chart-responsive">--}}
+{{--                    <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>--}}
+{{--                </div>--}}
+{{--                <!-- /.box-body -->--}}
+{{--            </div>--}}
+{{--            <!-- /.box -->--}}
+{{--        </div>--}}
         <!-- /.col -->
 
 
@@ -150,51 +198,20 @@
 @endsection
 
 @section('js')
-    {!! Html::script('admin/bower_components/raphael/raphael.min.js') !!}
-    {!! Html::script('admin/bower_components/morris.js/morris.min.js') !!}
+{{--    {!! Html::script('admin/bower_components/raphael/raphael.min.js') !!}--}}
+{{--    {!! Html::script('admin/bower_components/morris.js/morris.min.js') !!}--}}
     @include('layouts.components.dataTableJs.index')
     <script>
         $(document).ready(function () {
 
             showMegaMenu();
 
-            //DONUT CHART
-            var donut = new Morris.Donut({
-                element: 'sales-chart',
-                resize: true,
-                data: [
-                    {label: "Finance, Insurance & Real", value: 1},
-                    {label: "Agriculture, Fishing & Forestry", value: 30},
-                    {label: "Construction", value: 24},
-                    {label: "Manufacturing", value: 16},
-                    {label: "Transportation & Communication", value: 12},
-                    {label: "Wholesale", value: 4},
-                    {label: "Estate Retail", value: 13},
-                ],
-                hideHover: 'auto'
-            });
+            $(function () {
+                $('#table1').DataTable({
+                    "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
+                });
+            })
 
-            //BAR CHART
-            var bar = new Morris.Bar({
-                element: 'bar-chart',
-                resize: true,
-                data: [
-                    {y: 'External Audit', a: 1172246, b: 1053782},
-                    {y: 'Tax Compliance', a: 849425, b: 802471},
-                    {y: 'BPO', a: 526788, b: 409788},
-                    {y: 'Company Secretarial', a: 463052, b: 378198},
-                    {y: 'Internal Audit', a: 17053, b: 1179436},
-                    {y: 'Winidng Up', a: 142548, b: 168268},
-                    {y: 'Advisory', a: 533568, b: 313203},
-                    {y: 'Others', a: 42305, b: 33818},
-                    {y: 'Feasibility', a: 23684, b: 184061},
-                ],
-                barColors: ['#00a65a', '#f56954'],
-                xkey: 'y',
-                ykeys: ['a', 'b'],
-                labels: ['Actual', 'Budget'],
-                hideHover: 'auto'
-            });
         })
     </script>
 @endsection

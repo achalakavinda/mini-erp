@@ -16,7 +16,7 @@ class CreateSalesOrdersTable extends Migration
         Schema::create('sales_orders', function (Blueprint $table) {
             $table->id();
             $table->foreignId('quotation_id')->nullable();
-            $table->unsignedInteger('customer_id');
+            $table->unsignedInteger('customer_id')->nullable();
             $table->unsignedInteger('company_division_id')->nullable();
 
             $table->text('code'); //create unique code.example SO-2012-12-04-{so_id}

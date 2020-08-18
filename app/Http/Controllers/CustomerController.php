@@ -48,8 +48,7 @@ class CustomerController extends Controller
     {
         User::CheckPermission([config('constant.Permission_Customer_Creation')]);
         $request->validate([
-           'name'=>'required',
-           'file_no'=>'required'
+           'name'=>'required'
         ]);
 
         $Customer = null;
@@ -59,6 +58,7 @@ class CustomerController extends Controller
             $Customer = Customer::create([
                 'name'=>$request->name,
                 'code'=>$request->code,
+                'dob'=>$request->dob,
                 'contact'=>$request->contact,
                 'contact_1'=>$request->contact_1,
                 'contact_2'=>$request->contact_2,
@@ -73,6 +73,8 @@ class CustomerController extends Controller
                 'date_of_incorporation'=>$request->date_of_incorporation,
                 'tin_no'=>$request->tin_no,
                 'vat_no'=>$request->vat_no,
+                'nic'=>$request->nic,
+                'passport'=>$request->passport,
                 'ceo'=>$request->ceo,
                 'ceo_contact'=>$request->ceo_contact,
                 'ceo_email'=>$request->ceo_email,
@@ -88,7 +90,6 @@ class CustomerController extends Controller
 
             if($request->service_id){
                 foreach ($request->service_id as $item){
-
                     CusService::create([
                         'customer_id'=> $Customer->id,
                         'service_id'=>$item
@@ -147,7 +148,6 @@ class CustomerController extends Controller
 
         $request->validate([
             'name'=>'required',
-            'code'=>'required'
         ]);
 
         try{
@@ -163,11 +163,17 @@ class CustomerController extends Controller
                 $Customer->address_1=$request->address_1;
                 $Customer->address_2=$request->address_2;
                 $Customer->address_3=$request->address_3;
+                $Customer->contact_1=$request->contact_1;
+                $Customer->contact_2=$request->contact_2;
+                $Customer->contact_3=$request->contact_3;
                 $Customer->fax_number=$request->fax_number;
                 $Customer->secretary_id=$request->secretary_id;
                 $Customer->date_of_incorporation=$request->date_of_incorporation;
                 $Customer->tin_no=$request->tin_no;
                 $Customer->vat_no=$request->vat_no;
+                $Customer->nic = $request->nic;
+                $Customer->passport=$request->passport;
+                $Customer->dob=$request->dob;
                 $Customer->ceo=$request->ceo;
                 $Customer->ceo_contact=$request->ceo_contact;
                 $Customer->ceo_email=$request->ceo_email;

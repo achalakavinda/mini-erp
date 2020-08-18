@@ -16,13 +16,15 @@ class CreateCustomersTable extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+
             $table->string('code')->nullable();
             $table->string('contact')->nullable();
+            $table->date('dob')->nullable();
             $table->string('contact_1')->nullable();
             $table->string('contact_2')->nullable();
             $table->string('contact_3')->nullable();
             $table->string('email')->nullable();
-            $table->string('file_no')->unique();
+            $table->string('file_no')->nullable();
             $table->text('address_1')->nullable();
             $table->text('address_2')->nullable();
             $table->text('address_3')->nullable();
@@ -31,6 +33,8 @@ class CreateCustomersTable extends Migration
             $table->text('date_of_incorporation')->nullable();
             $table->string('tin_no')->nullable();
             $table->string('vat_no')->nullable();
+            $table->string('nic')->nullable();
+            $table->string('passport')->nullable();
             $table->string('ceo')->nullable();
             $table->string('ceo_contact')->nullable();
             $table->string('ceo_email')->nullable();
@@ -46,9 +50,31 @@ class CreateCustomersTable extends Migration
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
 
-            $table->foreign('secretary_id')->references('id')->on('customer_secretaries')->onDelete('cascade');
-            $table->foreign('service_id')->references('id')->on('customer_services')->onDelete('cascade');
-            $table->foreign('sector_id')->references('id')->on('customer_sectors')->onDelete('cascade');
+
+            $table->string('userdef1')->nullable();
+            $table->string('userdef2')->nullable();
+            $table->string('userdef3')->nullable();
+            $table->string('userdef4')->nullable();
+            $table->string('userdef5')->nullable();
+            $table->string('userdef6')->nullable();
+            $table->string('userdef7')->nullable();
+            $table->string('userdef8')->nullable();
+            $table->string('userdef9')->nullable();
+
+            $table->foreign('secretary_id')
+                ->references('id')
+                ->on('customer_secretaries')
+                ->onDelete('cascade');
+
+            $table->foreign('service_id')
+                ->references('id')
+                ->on('customer_services')
+                ->onDelete('cascade');
+
+            $table->foreign('sector_id')
+                ->references('id')
+                ->on('customer_sectors')
+                ->onDelete('cascade');
         });
 
     }
