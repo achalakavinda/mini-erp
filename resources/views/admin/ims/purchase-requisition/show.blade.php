@@ -30,10 +30,10 @@
         {{ Form::close() }}
         @endif
 
-{{--        {!! Form::open(['method' => 'DELETE','route' => ['purchase-requisition.destroy', $Requisition->id]]) !!}--}}
-{{--        <button type="submit" class="btn btn-app pull-right" style="color: #ff0000"><i style="color: #ff0000"--}}
-{{--                                                                                       class="fa fa-recycle"></i> Delete</button>--}}
-{{--        {!! Form::close() !!}--}}
+        {{--        {!! Form::open(['method' => 'DELETE','route' => ['purchase-requisition.destroy', $Requisition->id]]) !!}--}}
+        {{--        <button type="submit" class="btn btn-app pull-right" style="color: #ff0000"><i style="color: #ff0000"--}}
+        {{--                                                                                       class="fa fa-recycle"></i> Delete</button>--}}
+        {{--        {!! Form::close() !!}--}}
     </div>
 </div>
 <!-- /.box -->
@@ -137,9 +137,7 @@
                                     <!-- requisition item -->
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            {!!
-                                            Form::select('item_code_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ItemCodeId','class'=>'form-control'])
-                                            !!}
+                                            @include('layouts.selectors.ims.item-dropdown.index')
                                         </div>
                                     </div> <!-- /requisition item -->
                                 </th>
@@ -192,8 +190,8 @@
         $( document ).ready(function() {
 
             $('#addNewItem').click(function() {
-                var SelecTItemId = $('#ItemCodeId').val();
-                var SelecTModelName = $('#ItemCodeId option:selected').text();
+                var SelecTItemId = $('#ModelSelectId').val();
+                var SelecTModelName = $('#ModelSelectId option:selected').text();
                 $('#postToPurchaseBtn').fadeOut();
 
                 $.ajax('{!! url('api/item-code-for-purchase-requisitions') !!}/'+SelecTItemId, {

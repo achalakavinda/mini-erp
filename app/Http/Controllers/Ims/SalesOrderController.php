@@ -63,9 +63,11 @@ class SalesOrderController extends Controller
         $DiscountPercentage = $request->discount_percentage;
         $Amount = 0;
         $TotalAmount = 0;
-
+        $date = $request->date? $request->date : Carbon::now();
+        
         $SalesOrder = SalesOrder::create([
             'customer_id'=>$request->customer_id,
+            'date'=>$date,
             'company_division_id'=>$this->CompanyDivision->id,
             'code'=>'SO',
             'remarks'=>$request->remarks
@@ -166,6 +168,7 @@ class SalesOrderController extends Controller
         $DiscountPercentage = $request->discount_percentage;
         $Amount = 0;
         $TotalAmount = 0;
+        $date = $request->date? $request->date : Carbon::now();
 
         try {
             
@@ -200,6 +203,7 @@ class SalesOrderController extends Controller
             }
 
             $SalesOrder->customer_id = $request->customer_id;
+            $SalesOrder->date = $date;
             $SalesOrder->company_division_id = $this->CompanyDivision->id;
             $SalesOrder->remarks = $request->remarks;
             $SalesOrder->code = "SO-".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$SalesOrder->id;

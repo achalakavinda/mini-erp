@@ -136,7 +136,59 @@ class CompanyPurchaseOrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'row' => 'required',
+            'row.*.model_id' => 'required',
+            'row.*.qty' => 'required',
+            'row.*.unit_price' => 'required'
+        ]);
+
+        $CompanyPurchaseOrder = CompanyPurchaseOrder::findOrFail($id);
+
+        if($CompanyPurchaseOrder->posted_to_grn){
+            return '<a href="'.url('/ims/company-purchase-order/'.$CompanyPurchaseOrder->id).'"/> you already have created a GRN</a>';
+        }
+
+        $date = $request->date? $request->date : Carbon::now();
+
+        try {
+            $total = 0;
+            $CompanyPurchaseOrder->items()->delete();
+            foreach ($request->row as $item) {
+
+                $Model = ItemCode::find($item['model_id']);
+
+                if($Model && $item['qty']){
+
+                    CompanyPurchaseOrderItem::create([
+                        'company_division_id'=>$Model->company_division_id,
+                        'company_purchase_order_id'=>$CompanyPurchaseOrder->id,
+                        'item_code_id'=>$Model->id,
+                        'item_code'=>$Model->name,
+                        'item_unit_cost_from_table'=>$Model->unit_cost,
+                        'unit_price'=>$item['unit_price'],
+                        'qty'=>$item['qty'],
+                        'remarks'=>$item['remark']?$item['remark']:null
+                    ]);
+
+                    $total = $total + ($item['unit_price']*$item['qty']);
+
+                }
+            }
+
+            $CompanyPurchaseOrder->supplier_id = $request->supplier_id;
+            $CompanyPurchaseOrder->company_division_id = $this->CompanyDivision->id;
+            $CompanyPurchaseOrder->created_by = auth()->user()->id;
+            $CompanyPurchaseOrder->date = $date;
+            $CompanyPurchaseOrder->code = 'COM-PO-'.Carbon::now()->format('y').Carbon::now()->format('m').Carbon::now()->format('d').'-'.$CompanyPurchaseOrder->id;
+            $CompanyPurchaseOrder->total = $total;
+            $CompanyPurchaseOrder->save();
+
+        }catch (\Exception $exception){
+            $CompanyPurchaseOrder->delete();
+            dd($exception->getMessage());
+        }
+        return redirect(url('ims/company-purchase-order/'.$CompanyPurchaseOrder->id));
     }
 
     /**
@@ -154,7 +206,7 @@ class CompanyPurchaseOrderController extends Controller
     public function postToGRN(Request $request){
 
         $CompanyPurchaseOrder = CompanyPurchaseOrder::findOrFail($request->CompanyPurchaseOrder_id);
-
+        
 
         $Grn = Grn::create([
             'supplier_id'=>$CompanyPurchaseOrder->supplier_id,
