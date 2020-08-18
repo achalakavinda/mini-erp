@@ -70,9 +70,7 @@
                                     <!-- requisition item -->
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            {!!
-                                            Form::select('item_code_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ItemCodeId','class'=>'form-control ui search dropdown'])
-                                            !!}
+                                            @include('layouts.selectors.ims.item-dropdown.index')
                                         </div>
                                     </div> <!-- /requisition item -->
                                 </th>
@@ -100,7 +98,7 @@
 <!-- /main section -->
 
 @section('js')
-    @include('layouts.components.sematic-ui.dropdown')
+@include('layouts.components.sematic-ui.dropdown')
 <script>
     var table = $('#requisitionItemTable');
         var count = 0;
@@ -109,8 +107,8 @@
         $( document ).ready(function() {
 
             $('#addNewItem').click(function() {
-                var SelecTItemId = $('#ItemCodeId').val();
-                var SelecTModelName = $('#ItemCodeId option:selected').text();
+                var SelecTItemId = $('#ModelSelectId').val();
+                var SelecTModelName = $('#ModelSelectId option:selected').text();
 
                 $.ajax('{!! url('api/item-code-for-purchase-requisitions') !!}/'+SelecTItemId, {
                     type: 'GET',  // http method

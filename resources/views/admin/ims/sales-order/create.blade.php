@@ -50,43 +50,43 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <h4>
-                                Customer: {!!
-                                Form::select('customer_id',\App\Models\Customer::all()->pluck('name','id'),null,['id'=>'CustomerId'])
-                                !!}
                                 <small class="pull-right">Date: 2/10/2014</small>
                             </h4>
                         </div>
                         <!-- /.col -->
                     </div>
                     <!-- info row -->
-
-                    <div class="row invoice-info">
-                        <div class="col-sm-4 invoice-col">
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Customer">Customer</label>
+                            <select name="customer_id" class="form-control">
+                                <option value="">Select a Customer</option>
+                                @foreach(\App\Models\Customer::all() as $customer)
+                                <option value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4 invoice-col">
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4 invoice-col">
-                            <table style="width: 100%">
-                                <tbody>
-                                    <tr>
-                                        <td>Date :</td>
-                                        <td><input style="width: 100%" id="Date" name="date" type="date" value=""></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Our Vat No: </td>
-                                        <td><input style="width: 100%" id="CompanyVatNo" readonly=""
-                                                name="company_vat_no" type="text" value="174928878-7000"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.col -->
                     </div>
-                    <!-- /.row -->
-                    <!-- Table row -->
+
+                    <div class="col-md-8"></div>
+                    <!-- date -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="sales order Date">Order Date</label>
+                            <input id="date" class="form-control" name="date" type="date" value="">
+                        </div>
+                    </div> <!-- /date -->
+
+                    <div class="col-md-8"></div>
+                    <!-- date -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="sales Order vat">Our Vat No</label>
+                            <input disabled style="width: 100%" id="CompanyVatNo" readonly="" name="company_vat_no"
+                                type="text" value="174928878-7000">
+                        </div>
+                    </div>
                     <div style="margin-top: 20px" class="row">
                         <div class="col-xs-12">
                             <table id="invoiceItemTable" class="table table-bordered">
@@ -147,9 +147,9 @@
                     <!-- /.row -->
                 </div>
             </div>
-            <div style="height: 100px" class="box-footer">
-                <button style="position: absolute;right: 10px;width: 20%" type="submit"
-                    class="btn btn-primary">Post</button>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
+                    Submit</button>
             </div>
         </div>
     </div>
