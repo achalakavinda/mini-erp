@@ -140,7 +140,7 @@ class GrnController extends Controller
                         'company_id'=>1,
                         'total'=> $item->qty * $item->unit_price
                     ]);
-                    $Total = $Total + ($item->created_qty * $item->unit_price);
+                    $Total = $Total + ($item->qty * $item->unit_price);
                 }
             }
 
