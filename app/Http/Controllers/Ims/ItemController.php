@@ -107,7 +107,6 @@ class ItemController extends Controller
 
                 StockItem::create([
                             'stock_id'=>$Stock->id,
-                            'brand_id'=>$Brand->id,
                             'item_code_id'=>$ItemCode->id,
                             'item_code'=>$ItemCode->name,
                             'unit_price'=>$ItemCode->unit_cost,

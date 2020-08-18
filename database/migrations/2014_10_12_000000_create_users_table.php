@@ -68,6 +68,13 @@ class CreateUsersTable extends Migration
                 'email' => 'admin@test.com',
                 'password' => bcrypt('admin123'),
                 'date_joined'=>\Carbon\Carbon::now()
+            ],
+            [
+                'id'=>2,
+                'name' => 'system admin',
+                'email' => 'systemadmin@test.com',
+                'password' => bcrypt('sysadmin123'),
+                'date_joined'=>\Carbon\Carbon::now()
             ]
         ]);
     }

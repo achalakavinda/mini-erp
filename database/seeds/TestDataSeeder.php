@@ -12,7 +12,7 @@ class TestDataSeeder extends Seeder
     public function run()
     {
 
-        DB::unprepared(file_get_contents('public/sql/sky-intl.sql'));
+//        DB::unprepared(file_get_contents('public/sql/sky-intl.sql'));
 //        DB::unprepared(file_get_contents('public/sql/data_insert.sql'));
 
 //        $ProjectInsertQuery = "
