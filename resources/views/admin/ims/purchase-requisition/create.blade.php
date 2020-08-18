@@ -47,6 +47,18 @@
                             !!}
                         </div>
                     </div> <!-- /requisition date -->
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="GRN Date">Supplier</label>
+                            <select name="supplier_id" class="form-control">
+                                <option value="">Select a Supplier</option>
+                                @foreach(\App\Models\Ims\Supplier::all() as $supplier)
+                                <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- requisition item table -->
