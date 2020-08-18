@@ -55,7 +55,7 @@
                             <td>{!! $item->discount !!}%</td>
                             <td>{!! $item->total !!}</td>
                             <td>
-                                <a style="padding: 10px" href="{!! url('ims/sales-orders') !!}/{!! $item->id !!}"><i
+                                <a style="padding: 10px" href="{!! url('ims/sales-order') !!}/{!! $item->id !!}"><i
                                         class="fa fa-list"></i></a>
                             </td>
                         </tr>

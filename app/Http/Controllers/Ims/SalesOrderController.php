@@ -54,8 +54,6 @@ class SalesOrderController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'date' => 'required',
-            'customer_id' => 'required',
             'row' => 'required',
             'row.*.model_id' => 'required',
             'row.*.qty' => 'required',
@@ -88,7 +86,7 @@ class SalesOrderController extends Controller
                         'company_division_id'=>$this->CompanyDivision->id,
 
                         'item_code'=>$Model->name,
-                        'unit_price'=>$Model->unit_cost,
+                        'unit_price'=>$item['unit'],
                         'qty'=>$item['qty'],
                         'total'=>$item['unit']*$item['qty']
                     ]);
@@ -152,7 +150,72 @@ class SalesOrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'row' => 'required',
+            'row.*.model_id' => 'required',
+            'row.*.qty' => 'required',
+            'row.*.unit' => 'required',
+        ]);
+
+        $SalesOrder = SalesOrder::findOrFail($id);
+
+        if($SalesOrder->posted_to_invoice){
+            return '<a href="'.url('/ims/sales-order/'.$SalesOrder->id).'"/> you already have created an Invoice</a>';
+        }
+
+        $DiscountPercentage = $request->discount_percentage;
+        $Amount = 0;
+        $TotalAmount = 0;
+
+        try {
+            
+            $SalesOrder->items()->delete();
+            foreach ($request->row as $item) {
+
+                $Model = ItemCode::find($item['model_id']);
+
+                if($Model){
+
+                    SalesOrderItem::create([
+                        'brand_id'=>$Model->brand_id,
+                        'item_code_id'=>$Model->id,
+                        'sales_order_id'=>$SalesOrder->id,
+                        'company_division_id'=>$this->CompanyDivision->id,
+
+                        'item_code'=>$Model->name,
+                        'unit_price'=>$item['unit'],
+                        'qty'=>$item['qty'],
+                        'total'=>$item['unit']*$item['qty']
+                    ]);
+
+                    $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit']) ;
+                }
+            }
+
+            if($DiscountPercentage>0){
+                $Amount = $TotalAmount - ($TotalAmount*($DiscountPercentage/100));
+            }else{
+                $Amount = $TotalAmount;
+                $DiscountPercentage = 0;
+            }
+
+            $SalesOrder->customer_id = $request->customer_id;
+            $SalesOrder->company_division_id = $this->CompanyDivision->id;
+            $SalesOrder->remarks = $request->remarks;
+            $SalesOrder->code = "SO-".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$SalesOrder->id;
+            $SalesOrder->amount = $TotalAmount;
+            $SalesOrder->discount = $DiscountPercentage;
+            $SalesOrder->total = $Amount;
+            $SalesOrder->save();
+
+
+        }catch (\Exception $exception){
+
+            $SalesOrder->delete();
+            dd($exception->getMessage());
+        }
+
+        return redirect(url('ims/sales-order/'.$SalesOrder->id));
     }
 
     /**

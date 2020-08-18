@@ -54,9 +54,8 @@
 <!-- main section -->
 @section('main-content')
 <div class="row">
-    {!!
-    Form::open(['action'=>'Ims\QuotationController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])
-    !!}
+    {!! Form::model($Quotation, ['method' => 'PATCH', 'action' => ['Ims\QuotationController@update',
+    $Quotation->id],'class'=>'form-horizontal']) !!}
 
     <div class="col-md-12">
         @include('error.error')
@@ -71,150 +70,171 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <h4>
-                                Customer: {!!
-                                Form::select('customer_id',\App\Models\Customer::all()->pluck('name','id'),$Quotation->customer_id,['id'=>'CustomerId','disabled'])
-                                !!}
                                 <small class="pull-right">Date: {{ $Quotation->created_at }}</small>
                             </h4>
                         </div>
                         <!-- /.col -->
                     </div>
                     <!-- info row -->
-
-                    <div class="row invoice-info">
-                        <div class="col-sm-4 invoice-col">
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4 invoice-col">
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4 invoice-col">
-                            <table style="width: 100%">
-                                <tbody>
-                                    <tr>
-                                        <td>Order Date :</td>
-                                        <td><input disabled style="width: 100%" id="Date" name="date" type="date"
-                                                value="{{ $Quotation->date }}"></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Our Vat No: </td>
-                                        <td><input disabled style="width: 100%" id="CompanyVatNo" readonly=""
-                                                name="company_vat_no" type="text" value="174928878-7000"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.col -->
+                    <div class="col-md-8">
                     </div>
-                    <!-- /.row -->
-                    <!-- Table row -->
-                    <div style="margin-top: 20px" class="row">
-                        <div class="col-xs-12">
-                            <table id="invoiceItemTable" class="table table-bordered">
-                                <thead>
-                                    <tr style="text-align: center">
-                                        <th>No</th>
-                                        <th>Item</th>
-                                        <th>QTY</th>
-                                        <th>Unit Price (LKR)</th>
-                                        <th>Total (LKR)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                                <tfoot>
-                                    <?php $count = 1 ;?>
-                                    @foreach($Quotation->items as $item)
-                                    <tr class="tr_{{ $count }}">
-                                        <td>{{ $count }} <input style="display:none" name="row[{{ $count }}][insert]"
-                                                type="checkbox" checked></td>
-                                        <td>
-                                            <input style="display:none" type="number" value="{{ $item->item_code_id }}"
-                                                name="row[{{ $count }}][model_id]">
-                                            <input disabled type="text" name="row[{{ $count }}][model_name]"
-                                                value="{{ $item->item_code }}" style="width: 100%">
-                                        </td>
-
-                                        <td>
-                                            <input disabled onkeyup="calTol({{ $count }})" id="qty{{ $count }}"
-                                                type="number" name="row[{{ $count }}][qty]" style="width: 100%"
-                                                value="{{ $item->quoted_qty }}">
-                                        </td>
-                                        <td>
-                                            <input disabled id="price{{ $count }}" type="number" readonly
-                                                name="row[{{ $count }}][unit]" value="{{ $item->quoted_price }}"
-                                                style="width: 100%">
-                                        </td>
-                                        <td>
-                                            <input disabled id="tol{{ $count }}" type="number" readonly
-                                                name="row[{{ $count }}][tol]" style="width: 100%"
-                                                value="{{ $item->quoted_value }}">
-                                        </td>
-                                        {{--                                            <td>--}}
-                                        {{--                                                <a  style="cursor: pointer" type="button" onclick="rowRemove('.tr_{{ $count }}')"><i
-                                            class="fa fa-remove"></i></a>--}}
-                                        {{--                                            </td>--}}
-                                        <tr />
-
-                                        <?php $count ++ ;?>
-                                        @endforeach
-
-                                        {{--                                    <tr>--}}
-                                        {{--                                        <th>No</th>--}}
-                                        {{--                                        <th>{!! Form::select('model_select_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ModelSelectId','class'=>'form-control']) !!}</th>--}}
-                                        {{--                                        <th>--}}
-                                        {{--                                            <button id="addNewItem" type="button" style="width: 100%" class="btn">Add</button></th>--}}
-                                        {{--                                    </tr>--}}
-                                </tfoot>
-                            </table>
+                    <!-- date -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Qoutation Date">Order Date</label>
+                            <input id="date" class="form-control" name="date" type="date" value="{{$Quotation->date}}">
                         </div>
-                        <!-- /.col -->
+                    </div> <!-- /date -->
+
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Customer">Customer</label>
+                            <select name="customer_id" class="form-control">
+                                <option value="">Select a Customer</option>
+                                @foreach(\App\Models\Customer::all() as $customer)
+                                <option @if($Quotation->customer_id === $customer->id) selected @endif
+                                    value="{{ $customer->id }}">{{ $customer->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    <!-- /.row -->
-
-                    <div class="row">
-                        <!-- accepted payments column -->
-                        <div class="col-xs-8">
-
+                    <!-- info row -->
+                    <div class="col-md-8"></div>
+                    <!-- date -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Requisition Date">Our Vat No</label>
+                            <input disabled style="width: 100%" id="CompanyVatNo" readonly="" name="company_vat_no"
+                                type="text" value="174928878-7000">
                         </div>
-                        <!-- /.col -->
-                        <div class="col-xs-4">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <tr>
-                                        <th style="width:50%">Subtotal:</th>
-                                        <td><input disabled style="width: 100%" id="subtotal" name="subtotal"
-                                                type="text" value="{{ $Quotation->amount }}"></td>
-                                    </tr>
-                                    <tr>
-                                        <th>Discount:</th>
-                                        <td><input disabled style="width: 80%" id="discountpercentage"
-                                                name="discount_percentage" type="text"
-                                                value="{{ $Quotation->discount }}">%</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Total:</th>
-                                        <td><input disabled style="width: 100%" id="total" name="total" type="text"
-                                                value="{{ $Quotation->total }}"></td>
-                                    </tr>
-                                </table>
-                            </div>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
+                    </div> <!-- /date -->
                 </div>
-            </div>
-            <div style="height: 100px" class="box-footer">
-                <button disabled style="position: absolute;right: 10px;width: 100px" type="submit"
-                    class="btn btn-primary">Edit</button>
-                <a style="position: absolute;right: 120px;width: 100px" target="_blank"
-                    href="{{ url('ims/quotation') }}/{{ $Quotation->id }}/print" class="btn btn-primary">Print</a>
+
+                <!-- Table row -->
+                <div style="margin-top: 20px" class="row">
+                    <div class="col-xs-12">
+                        <table id="invoiceItemTable" class="table table-bordered">
+                            <thead>
+                                <tr style="text-align: center">
+                                    <th>Item</th>
+                                    <th>QTY</th>
+                                    <th>Unit Price (LKR)</th>
+                                    <th>Total (LKR)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $count = 0 ;?>
+                                @foreach($Quotation->items as $item)
+                                <tr class="tr_{{ $count }}">
+                                    <td>
+                                        <input style="display:none" type="number" value="{{ $item->item_code_id }}"
+                                            name="row[{{ $count }}][model_id]">
+                                        <input style="width: 100%" readonly="" type="text"
+                                            name="row[{{ $count }}][model_name]" value="{{ $item->item_code }}">
+                                    </td>
+
+                                    <td>
+                                        <input onkeyup="calTol({{ $count }})" id="qty{{ $count }}" type="number"
+                                            name="row[{{ $count }}][qty]" style="width: 100%"
+                                            value="{{ $item->quoted_qty }}">
+                                    </td>
+                                    <td>
+                                        <input id="price{{ $count }}" type="number" name="row[{{ $count }}][unit]"
+                                            value="{{ $item->quoted_price }}" style="width: 100%">
+                                    </td>
+                                    <td>
+                                        <input id="tol{{ $count }}" type="number" readonly name="row[{{ $count }}][tol]"
+                                            style="width: 100%" value="{{ $item->quoted_price * $item->quoted_qty }}">
+                                    </td>
+                                    {{--                                            <td>--}}
+                                    {{--                                                <a  style="cursor: pointer" type="button" onclick="rowRemove('.tr_{{ $count }}')"><i
+                                        class="fa fa-remove"></i></a>--}}
+                                    {{--                                            </td>--}}
+                                    <tr />
+
+                                    <?php $count ++ ;?>
+                                    @endforeach
+
+                                    {{--                                    <tr>--}}
+                                    {{--                                        <th>No</th>--}}
+                                    {{--                                        <th>{!! Form::select('model_select_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ModelSelectId','class'=>'form-control']) !!}</th>--}}
+                                    {{--                                        <th>--}}
+                                    {{--                                            <button id="addNewItem" type="button" style="width: 100%" class="btn">Add</button></th>--}}
+                                    {{--                                    </tr>--}}
+                            </tbody>
+                            @if (!$Quotation->posted_to_sales_order && !$Quotation->posted_to_invoice)
+                            <tfoot>
+                                <tr>
+                                    <th>
+                                        <!-- requisition item -->
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                @include('layouts.selectors.ims.item-dropdown.index')
+                                            </div>
+                                        </div> <!-- /requisition item -->
+                                    </th>
+                                    <th>
+                                        <button id="addNewItem" style="width: 100%" type="button"
+                                            class="btn">Add</button>
+                                    </th>
+                                </tr>
+                            </tfoot>
+                            @endif
+                        </table>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+
+                <div class="row">
+                    <!-- accepted payments column -->
+                    <div class="col-xs-8">
+
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-xs-4">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <th style="width:50%">Subtotal:</th>
+                                    <td><input disabled style="width: 100%" id="subtotal" name="subtotal" type="text"
+                                            value="{{ $Quotation->amount }}"></td>
+                                </tr>
+                                <tr>
+                                    <th>Discount:</th>
+                                    <td><input disabled style="width: 80%" id="discountpercentage"
+                                            name="discount_percentage" type="text" value="{{ $Quotation->discount }}">%
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Total:</th>
+                                    <td><input disabled style="width: 100%" id="total" name="total" type="text"
+                                            value="{{ $Quotation->total }}"></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
             </div>
         </div>
+        <div class="box-footer">
+            @if (!$Quotation->posted_to_sales_order && !$Quotation->posted_to_invoice)
+            <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
+                Update</button>
+
+            @endif
+            <button type="button" class="btn btn-app pull-right" target="_blank"
+                href="{{ url('ims/quotation') }}/{{ $Quotation->id }}/print"><i style="color: #00a157"
+                    class="fa fa-print"></i>
+                Print</button>
+
+        </div>
     </div>
-    {!! Form::close() !!}
+</div>
+{!! Form::close() !!}
 </div>
 <!-- /.row -->
 <!-- /main section -->
@@ -234,8 +254,8 @@
             }
     }
     var table = $('#invoiceItemTable');
-        var count = 0;
-        var RawCount = 1;
+        var count = parseInt({{ $count }});
+        var RawCount = parseInt({{ $count+1 }});
 
         $( document ).ready(function() {
 
@@ -256,6 +276,8 @@
             $('#addNewItem').click(function() {
                 var SelecTModelId = $('#ModelSelectId').val();
                 var SelecTModelName = $('#ModelSelectId option:selected').text();
+                $('#postToSalesOrdersBtn').fadeOut();
+                $('#postToInvoiceBtn').fadeOut();
 
                 $.ajax('{!! url('api/item-code-for-invoices') !!}/'+SelecTModelId, {
                     type: 'GET',  // http method
@@ -264,16 +286,15 @@
                         if(data.item){
 
                             table.append('<tr class="tr_'+count+'">\n' +
-                                '                        <td>'+RawCount+'<input style="display:none" name="row['+count+'][insert]" type="checkbox" checked></td>\n' +
                                 '                        <td>\n' +
                                 '                            <input style="display:none" type="number" value="'+SelecTModelId+'" name="row['+count+'][model_id]" >\n' +
                                 '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input onkeyup="calTol('+(count+1)+')" id="qty'+count+'"  type="number" name="row['+count+'][qty]" placeholder="In Stock '+data.qty+' items" style="width: 100%">\n' +
+                                '                            <input onkeyup="calTol('+(RawCount)+')" id="qty'+count+'"  type="number" name="row['+count+'][qty]" placeholder="In Stock '+data.qty+' items" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input id="price'+count+'"  type="number" readonly name="row['+count+'][unit]" value="'+data.item.unit_price_with_tax+'" style="width: 100%">\n' +
+                                '                            <input id="price'+count+'" onkeyup="calTol('+(RawCount)+')" type="number" name="row['+count+'][unit]" value="'+data.item.unit_price_with_tax+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input id="tol'+count+'"  type="number" readonly name="row['+count+'][tol]" style="width: 100%">\n' +

@@ -7,8 +7,8 @@
         <!-- /.box-header -->
         <!-- form start -->
         <div class="box-body">
-                <table id="invoiceItemTable" class="table table-responsive table-bordered table-striped">
-                    <thead>
+            <table id="invoiceItemTable" class="table table-responsive table-bordered table-striped">
+                <thead>
                     <tr>
                         <th>Item</th>
                         <th>Model</th>
@@ -17,14 +17,16 @@
                         <th>Total</th>
                         <th><i class="fa fa-remove"></i></th>
                     </tr>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
         </div>
-    <!-- /.box-body -->
-    <div class="box-footer">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
+                Submit</button>
+
+        </div>
     </div>
 </div>
