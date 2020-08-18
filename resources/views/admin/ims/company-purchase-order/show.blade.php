@@ -53,7 +53,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="PO Date">Date</label>
-                            <input id="PODate" class="form-control" name="date" type="date"
+                            <input id="date" class="form-control" name="date" type="date"
                                 value="{{$CompanyPurchaseOrder->date}}">
                         </div>
                     </div>
