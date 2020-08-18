@@ -192,7 +192,57 @@ class GrnController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'row' => 'required',
+            'row.*.model_id' => 'required',
+            'row.*.qty' => 'required',
+            'row.*.unit_price' => 'required'
+        ]);
 
+        $Grn = Grn::findOrFail($id);
+        
+        if($Grn->posted_to_stock){
+            return '<a href="'.url('/ims/grn/'.$Grn->id).'"/> you already have created a Stock</a>';
+        }
+        
+        $date = $request->date? $request->date : Carbon::now();
+
+        try {
+            $TotalAmount = 0;
+            $Grn->items()->delete();
+            foreach ($request->row as $item) {
+
+                $Model = ItemCode::find($item['model_id']);
+
+                if($Model && $item['qty'] && $item['unit_price'] ){
+
+                    GrnItem::create([
+                        'grn_id'=>$Grn->id,
+                        'item_code_id'=>$Model->id,
+                        'company_division_id'=>$this->CompanyDivision->id,
+                        'item_code'=>$Model->name,
+                        'item_unit_cost_from_table'=>$Model->unit_cost,
+                        'unit_price'=>$item['unit_price'],
+                        'qty'=>$item['qty'],
+                    ]);
+
+                    $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit_price'] ) ;
+                }
+            }
+            
+            $Grn->company_division_id = $this->CompanyDivision->id;
+            $Grn->supplier_id = $request->supplier_id;
+            $Grn->created_by = auth()->user()->id;
+            $Grn->date = $date;
+            $Grn->code = "GRN-".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$Grn->id;
+            $Grn->total = $TotalAmount;
+            $Grn->save();
+
+        }catch (\Exception $exception){
+            $Grn->delete();
+            dd($exception->getMessage());
+        }
+        return redirect(url('ims/grn/'.$Grn->id));
     }
 
     /**

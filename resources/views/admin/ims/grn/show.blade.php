@@ -23,9 +23,13 @@
             <i class="main-action-btn-info fa fa-plus"></i> New
         </a>
         @if (!$Grn->posted_to_stock)
-        <a onclick="Onclick()" id="postToPurchaseBtn" class="btn btn-menu">
+        <a onclick="Onclick()" id="postToStockBtn" class="btn btn-menu">
             <i class="main-action-btn-info fa fa-save"></i> Post To Stock
         </a>
+        {!! Form::open(['action'=>'Ims\GrnController@postToStock','style'=>'display:none','id'=>'postToStock']) !!}
+        @csrf()
+        <input type="number" value="{{ $Grn->id }}" name="grn_id">
+        {{ Form::close() }}
         @endif
     </div>
     <!-- /.box-body -->
@@ -37,15 +41,14 @@
 @section('main-content')
 <!-- main section -->
 <div class="row">
+    {!! Form::model($Grn, ['method' => 'PATCH', 'action' => ['Ims\GrnController@update',
+    $Grn->id],'class'=>'form-horizontal']) !!}
     <div class="col-md-12">
         @include('error.error')
         <!-- general form elements -->
         <div class="box box-primary">
             <!-- form start -->
             <div class="box-body">
-                {!!
-                Form::open(['action'=>'Ims\GrnController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])
-                !!}
                 <!-- invoice date -->
                 <div class="col-md-12">
 
@@ -53,64 +56,60 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <h4>
-                                Supplier: {!!
-                                Form::select('supplier_id',\App\Models\Ims\Supplier::all()->pluck('name','id'),$Grn->supplier_id,['id'=>'SupplierId','disabled'])
-                                !!}
                                 <small class="pull-right">Date: {{ $Grn->created_at }}</small>
                             </h4>
                         </div>
                         <!-- /.col -->
                     </div>
                     <!-- info row -->
-
-                    <div class="row invoice-info">
-                        <div class="col-sm-4 invoice-col">
+                    <div class="col-md-8"></div>
+                    <!-- PO date -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Grn Date">Date</label>
+                            <input id="date" class="form-control" name="date" type="date" value="{{$Grn->date}}">
                         </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4 invoice-col">
-                        </div>
-                        <!-- /.col -->
-                        <div class="col-sm-4 invoice-col">
-                            <table style="width: 100%">
-                                <tbody>
-                                    <tr>
-                                        <td>Order Date :</td>
-                                        <td><input disabled style="width: 100%" id="Date" name="date" type="date"
-                                                value="{{ $Grn->created_date }}"></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Our Vat No: </td>
-                                        <td><input disabled style="width: 100%" id="CompanyVatNo" readonly=""
-                                                name="company_vat_no" type="text" value="174928878-7000"></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- /.col -->
                     </div>
-                    <!-- /.row -->
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="GRN Date">Supplier</label>
+                            <select name="supplier_id" class="form-control">
+                                <option value="">Select a Supplier</option>
+                                @foreach(\App\Models\Ims\Supplier::all() as $supplier)
+                                <option @if($Grn->supplier_id === $supplier->id) selected @endif
+                                    value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-8"></div>
+                    <!-- date -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Requisition Date">Our Vat No</label>
+                            <input disabled style="width: 100%" id="CompanyVatNo" readonly="" name="company_vat_no"
+                                type="text" value="174928878-7000">
+                        </div>
+                    </div>
+
                     <!-- Table row -->
                     <div style="margin-top: 20px" class="row">
                         <div class="col-xs-12">
                             <table id="invoiceItemTable" class="table table-bordered">
                                 <thead>
                                     <tr style="text-align: center">
-                                        <th>No</th>
                                         <th>Item</th>
                                         <th>QTY</th>
                                         <th>Unit Price (LKR)</th>
                                         <th>Total (LKR)</th>
+                                        <th><i class="fa fa-remove"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                </tbody>
-                                <tfoot>
                                     <?php $count = 1 ;?>
                                     @foreach($Grn->items as $item)
                                     <tr class="tr_{{ $count }}">
-                                        <td>{{ $count }} <input style="display:none" name="row[{{ $count }}][insert]"
-                                                type="checkbox" checked></td>
                                         <td>
                                             <input style="display:none" type="number" value="{{ $item->item_code_id }}"
                                                 name="row[{{ $count }}][model_id]">
@@ -119,20 +118,23 @@
                                         </td>
 
                                         <td>
-                                            <input disabled onkeyup="calTol({{ $count }})" id="qty{{ $count }}"
-                                                type="number" name="row[{{ $count }}][qty]"
-                                                style="width: 100%; text-align: right" value="{{ $item->qty }}">
+                                            <input onkeyup="calTol({{ $count }})" id="qty{{ $count }}" type="number"
+                                                name="row[{{ $count }}][qty]" style="width: 100%; text-align: right"
+                                                value="{{ $item->qty }}">
                                         </td>
                                         <td>
-                                            <input disabled id="price{{ $count }}" type="text" readonly
-                                                name="row[{{ $count }}][unit]"
-                                                value="{{ number_format($item->unit_price,2) }}"
-                                                style="width: 100%;text-align: right">
+                                            <input id="price{{ $count }}" type="number"
+                                                name="row[{{ $count }}][unit_price]" value="{{ $item->unit_price }}"
+                                                style="width: 100%; text-align: right">
                                         </td>
                                         <td>
                                             <input disabled id="tol{{ $count }}" type="text" readonly
                                                 name="row[{{ $count }}][tol]" style="width: 100%;text-align: right"
                                                 value="{{ number_format(($item->qty * $item->unit_price),2) }}">
+                                        </td>
+                                        <td>
+                                            <a style="cursor: pointer" type="button"
+                                                onclick="rowRemove('.tr_{{ $count }}')"><i class="fa fa-remove"></i></a>
                                         </td>
                                         {{--                                            <td>--}}
                                         {{--                                                <a  style="cursor: pointer" type="button" onclick="rowRemove('.tr_{{ $count }}')"><i
@@ -149,7 +151,25 @@
                                         {{--                                        <th>--}}
                                         {{--                                            <button id="addNewItem" type="button" style="width: 100%" class="btn">Add</button></th>--}}
                                         {{--                                    </tr>--}}
+                                </tbody>
+                                @if (!$Grn->posted_to_stock)
+                                <tfoot>
+                                    <tr>
+                                        <th>
+                                            <!-- requisition item -->
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    @include('layouts.selectors.ims.item-dropdown.index')
+                                                </div>
+                                            </div> <!-- /requisition item -->
+                                        </th>
+                                        <th>
+                                            <button id="addNewItem" style="width: 100%" type="button"
+                                                class="btn">Add</button>
+                                        </th>
+                                    </tr>
                                 </tfoot>
+                                @endif
                             </table>
                         </div>
                         <!-- /.col -->
@@ -164,20 +184,12 @@
                     </div>
                     <!-- /.row -->
                 </div>
-                {!! Form::close() !!}
-            </div>
 
-            @if(!$Grn->posted_to_stock)
-            {!! Form::open(['action'=>'Ims\GrnController@postToStock','style'=>'display:none','id'=>'postToStock']) !!}
-            @csrf()
-            <input type="number" value="{{ $Grn->id }}" name="grn_id">
-            {{ Form::close() }}
-            @endif
+            </div>
 
             <div style="height: 100px" class="box-footer">
                 @if(!$Grn->posted_to_stock)
-                <button disabled type="submit" class="btn btn-app pull-right"><i style="color: #00a157"
-                        class="fa fa-save"></i>
+                <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
                     Update</button>
                 @endif
                 <button target="_blank" type="button" href="{{ url('ims/grn/'.$Grn->id.'/print') }}"
@@ -187,6 +199,7 @@
 
         </div>
     </div>
+    {!! Form::close() !!}
 </div>
 <!-- /.row -->
 <!-- /main section -->
@@ -217,6 +230,7 @@
             $('#addNewItem').click(function() {
                 var SelecTModelId = $('#ModelSelectId').val();
                 var SelecTModelName = $('#ModelSelectId option:selected').text();
+                $('#postToStockBtn').fadeOut();
 
                 $.ajax('{!! url('api/item-code-for-invoices') !!}/'+SelecTModelId, {
                     type: 'GET',  // http method
@@ -225,7 +239,6 @@
                         if(data.item){
 
                             table.append('<tr class="tr_'+count+'">\n' +
-                                '                        <td>'+RawCount+'<input style="display:none" name="row['+count+'][insert]" type="checkbox" checked></td>\n' +
                                 '                        <td>\n' +
                                 '                            <input style="display:none" type="number" value="'+SelecTModelId+'" name="row['+count+'][model_id]" >\n' +
                                 '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'" style="width: 100%">\n' +
@@ -234,7 +247,7 @@
                                 '                            <input onkeyup="calTol('+(count+1)+')" id="qty'+count+'"  type="number" name="row['+count+'][qty]" placeholder="In Stock '+data.qty+' items" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input id="price'+count+'"  type="number" readonly name="row['+count+'][unit]" value="'+data.item.unit_price_with_tax+'" style="width: 100%">\n' +
+                                '                            <input id="price'+count+'"  type="number" readonly name="row['+count+'][unit_price]" value="'+data.item.unit_price_with_tax+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input id="tol'+count+'"  type="number" readonly name="row['+count+'][tol]" style="width: 100%">\n' +

@@ -1,93 +1,97 @@
 @extends('layouts.admin')
 @section('main-content-header')
-    <!-- main header section -->
-    <!-- Default box -->
-    <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">Goods Received Note</h3>
-        </div>
+<!-- main header section -->
+<!-- Default box -->
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Goods Received Note</h3>
+    </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
 
-        <div class="box-body">
-            <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
-                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
-            </a>
-            <a href="{{ url('/ims/grn/create') }}" class="btn btn-menu">
-                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
-            </a>
-            <a href="{{ url('/ims/item') }}" class="btn btn-menu">
-                <i class="main-action-btn-info fa fa-table"></i> Item
-            </a>
+    <div class="box-body">
+        <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+        </a>
+        <a href="{{ url('/ims/grn/create') }}" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+        </a>
+        <a href="{{ url('/ims/item') }}" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-table"></i> Item
+        </a>
 
-            <a href="{{ url('/ims/grn/create') }}" class="btn btn-menu">
-                <i class="main-action-btn-danger fa fa-plus"></i> New
-            </a>
-        </div>
-        <!-- /.box-body -->
+        <a href="{{ url('/ims/grn/create') }}" class="btn btn-menu">
+            <i class="main-action-btn-danger fa fa-plus"></i> New
+        </a>
     </div>
-    <!-- /.box -->
-    <!-- /main header section -->
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->
+<!-- /main header section -->
 @endsection
 
 
 @section('main-content')
-    <!-- main section -->
-    <div class="row">
-        {!! Form::open(['action'=>'Ims\GrnController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl']) !!}
+<!-- main section -->
+<div class="row">
+    {!!
+    Form::open(['action'=>'Ims\GrnController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])
+    !!}
 
-        <div class="col-md-12">
+    <div class="col-md-12">
         @include('error.error')
         <!-- general form elements -->
-            <div class="box box-primary">
-                <!-- form start -->
-                <div class="box-body">
-                    <!-- invoice date -->
-                    <div class="col-md-12">
+        <div class="box box-primary">
+            <!-- form start -->
+            <div class="box-body">
+                <!-- invoice date -->
+                <div class="col-md-12">
 
-                        <!-- title row -->
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <h4>
-                                    Supplier: {!! Form::select('supplier_id',\App\Models\Ims\Supplier::all()->pluck('name','id'),null,['id'=>'SupplierId']) !!}
-                                    <small class="pull-right">Date: 2/10/2014</small>
-                                </h4>
-                            </div>
-                            <!-- /.col -->
+                    <!-- title row -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <h4>
+                                <small class="pull-right">Date: 2/10/2014</small>
+                            </h4>
                         </div>
-                        <!-- info row -->
-
-                        <div class="row invoice-info">
-                            <div class="col-sm-4 invoice-col">
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-4 invoice-col">
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-4 invoice-col">
-                                <table style="width: 100%">
-                                    <tbody>
-                                    <tr>
-                                        <td>Date :</td>
-                                        <td><input style="width: 100%" id="Date" name="date" type="date" value=""></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Our Vat No: </td>
-                                        <td><input style="width: 100%" id="CompanyVatNo" readonly=""
-                                                   name="company_vat_no" type="text" value="174928878-7000"></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.col -->
+                        <!-- /.col -->
+                    </div>
+                    <!-- info row -->
+                    <div class="col-md-8"></div>
+                    <!-- PO date -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Grn Date">Date</label>
+                            <input id="date" class="form-control" name="date" type="date" value="">
                         </div>
-                        <!-- /.row -->
-                        <!-- Table row -->
-                        <div style="margin-top: 20px" class="row">
-                            <div class="col-xs-12">
-                                <table id="invoiceItemTable" class="table table-bordered">
-                                    <thead>
+                    </div>
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="GRN Date">Supplier</label>
+                            <select name="supplier_id" class="form-control">
+                                <option value="">Select a Supplier</option>
+                                @foreach(\App\Models\Ims\Supplier::all() as $supplier)
+                                <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-8"></div>
+                    <!-- date -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Requisition Date">Our Vat No</label>
+                            <input disabled style="width: 100%" id="CompanyVatNo" readonly="" name="company_vat_no"
+                                type="text" value="174928878-7000">
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                    <!-- Table row -->
+                    <div style="margin-top: 20px" class="row">
+                        <div class="col-xs-12">
+                            <table id="invoiceItemTable" class="table table-bordered">
+                                <thead>
                                     <tr style="text-align: center">
                                         <th>No</th>
                                         <th>Item</th>
@@ -95,48 +99,48 @@
                                         <th>Unit Price (LKR)</th>
                                         <th>Total (LKR)</th>
                                     </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                    <tfoot>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
                                     <tr>
                                         <th>No</th>
-                                        <th>{!! Form::select('model_select_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ModelSelectId','class'=>'form-control']) !!}</th>
+                                        <th> @include('layouts.selectors.ims.item-dropdown.index')</th>
                                         <th><button id="addNewItem" type="button" style="width: 100%"
-                                                    class="btn">Add</button></th>
+                                                class="btn">Add</button></th>
                                     </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            <!-- /.col -->
+                                </tfoot>
+                            </table>
                         </div>
-                        <!-- /.row -->
-
-                        <div class="row">
-                            <!-- accepted payments column -->
-                            <div class="col-xs-8">
-
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                        <!-- /.row -->
+                        <!-- /.col -->
                     </div>
-                </div>
-                <div style="height: 100px" class="box-footer">
-                    <button style="position: absolute;right: 10px;width: 20%" type="submit"
-                            class="btn btn-primary">Post</button>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <!-- accepted payments column -->
+                        <div class="col-xs-8">
+
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
                 </div>
             </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
+                    Save</button>
+            </div>
         </div>
-        {!! Form::close() !!}
     </div>
-    <!-- /.row -->
-    <!-- /main section -->
+    {!! Form::close() !!}
+</div>
+<!-- /.row -->
+<!-- /main section -->
 @endsection
 
 @section('js')
-    <script>
-        var table = $('#invoiceItemTable');
+<script>
+    var table = $('#invoiceItemTable');
         var count = 0;
         var RawCount = 1;
 
@@ -224,5 +228,5 @@
                 $('#total').val(subtotal);
             }
         }
-    </script>
+</script>
 @endsection
