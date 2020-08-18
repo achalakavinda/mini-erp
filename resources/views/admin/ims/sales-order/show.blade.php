@@ -23,6 +23,17 @@
         <a href="{{ url('/ims/sales-order/create') }}" class="btn btn-menu">
             <i class="main-action-btn-info fa fa-plus"></i> New
         </a>
+        @if (!$SalesOrder->posted_to_invoice)
+        <a onclick="postToInvoice()" id="postToInvoiceBtn" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-save"></i> Post To Invoice
+        </a>
+        {!!
+        Form::open(['action'=>'Ims\SalesOrderController@postToInvoice','style'=>'display:none','id'=>'postToInvoice'])
+        !!}
+        @csrf()
+        <input type="hidden" value="{{ $SalesOrder->id }}" name="sales_order_id">
+        {{ Form::close() }}
+        @endif
     </div>
     <!-- /.box-body -->
 </div>
@@ -34,7 +45,7 @@
 @section('main-content')
 <div class="row">
     {!!
-    Form::open(['action'=>'Ims\SalesOrdersController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])
+    Form::open(['action'=>'Ims\SalesOrderController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])
     !!}
 
     <div class="col-md-12">
@@ -188,9 +199,6 @@
             <div style="height: 100px" class="box-footer">
                 <button disabled style="position: absolute;right: 10px;width: 100px" type="submit"
                     class="btn btn-primary">Edit</button>
-                <a style="position: absolute;right: 120px;width: 100px" target="_blank" href="#"
-                    class="btn btn-primary">Add to
-                    Stock</a>
             </div>
         </div>
     </div>
@@ -202,6 +210,11 @@
 
 @section('js')
 <script>
+    function postToInvoice() {
+            if(confirm("Are you want post quotation to create an Invoice")){
+                $('#postToInvoice').submit();
+            }
+    }
     var table = $('#invoiceItemTable');
         var count = 0;
         var RawCount = 1;

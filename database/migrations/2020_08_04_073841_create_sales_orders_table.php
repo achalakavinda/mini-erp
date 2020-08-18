@@ -25,6 +25,7 @@ class CreateSalesOrdersTable extends Migration
             $table->double('amount')->default(0);
             $table->double('discount')->default(0);
             $table->double('total')->default(0);
+            $table->boolean('posted_to_invoice')->default(false);
 
             $table->timestamps();
 

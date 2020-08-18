@@ -104,9 +104,9 @@
                                 <tfoot>
                                     <tr>
                                         <th>No</th>
-                                        <th>{!!
-                                            Form::select('model_select_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ModelSelectId','class'=>'form-control'])
-                                            !!}</th>
+                                        <th>
+                                            @include('layouts.selectors.ims.item-dropdown.index')
+                                        </th>
                                         <th><button id="addNewItem" type="button" style="width: 100%"
                                                 class="btn">Add</button></th>
                                     </tr>

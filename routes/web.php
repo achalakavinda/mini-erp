@@ -107,6 +107,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/purchase-requisition/post-to-grn','Ims\PurchaseRequisitionController@postToGRN');
         Route::post('/company-purchase-order/post-to-grn','Ims\CompanyPurchaseOrderController@postToGRN');
         Route::post('/grn/post-to-stock','Ims\GrnController@postToStock');
+        Route::post('/quotation/post-to-sales-orders','Ims\QuotationController@postToSalesOrders');
+        Route::post('/quotation/post-to-invoice','Ims\QuotationController@postToInvoice');
+        Route::post('/sales-order/post-to-invoice','Ims\SalesOrderController@postToInvoice');
 
 
         //print routes
