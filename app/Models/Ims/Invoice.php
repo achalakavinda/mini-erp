@@ -15,4 +15,8 @@ class Invoice extends Model
     public  function customer(){
         return $this->belongsTo('App\Models\Customer','customer_id');
     }
+
+    public  function paymentStatus(){
+        return $this->belongsTo('App\Models\Ims\InvoicePaymentStatus','invoice_payment_status_id');
+    }
 }
