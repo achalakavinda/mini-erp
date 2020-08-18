@@ -95,7 +95,8 @@ class QuotationController extends Controller
                         'item_code'=>$Model->name,
                         'item_unit_cost_from_table'=>$Model->unit_cost,
                         'quoted_price'=>$item['unit'],
-                        'quoted_qty'=>$item['qty']
+                        'quoted_qty'=>$item['qty'],
+                        'remarks'=>$item['remark']?$item['remark']:null
                     ]);
 
                     $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit']) ;
@@ -192,7 +193,8 @@ class QuotationController extends Controller
                         'item_code'=>$Model->name,
                         'item_unit_cost_from_table'=>$Model->unit_cost,
                         'quoted_price'=>$item['unit'],
-                        'quoted_qty'=>$item['qty']
+                        'quoted_qty'=>$item['qty'],
+                        'remarks'=>$item['remark']?$item['remark']:null
                     ]);
 
                     $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit']) ;

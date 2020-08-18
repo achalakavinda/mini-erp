@@ -118,6 +118,7 @@
                             <thead>
                                 <tr style="text-align: center">
                                     <th>Item</th>
+                                    <th>Remark</th>
                                     <th>QTY</th>
                                     <th>Unit Price (LKR)</th>
                                     <th>Total (LKR)</th>
@@ -133,7 +134,10 @@
                                         <input style="width: 100%" readonly="" type="text"
                                             name="row[{{ $count }}][model_name]" value="{{ $item->item_code }}">
                                     </td>
-
+                                    <td>
+                                        <input style="width: 100%" type="text" name="row[{{ $count }}][remark]"
+                                            value="{{ $item->remarks }}">
+                                    </td>
                                     <td>
                                         <input onkeyup="calTol({{ $count }})" id="qty{{ $count }}" type="number"
                                             name="row[{{ $count }}][qty]" style="width: 100%"
@@ -289,6 +293,9 @@
                                 '                        <td>\n' +
                                 '                            <input style="display:none" type="number" value="'+SelecTModelId+'" name="row['+count+'][model_id]" >\n' +
                                 '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'" style="width: 100%">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input style="width: 100%"  type="text" name="row['+count+'][remark]">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input onkeyup="calTol('+(RawCount)+')" id="qty'+count+'"  type="number" name="row['+count+'][qty]" placeholder="In Stock '+data.qty+' items" style="width: 100%">\n' +

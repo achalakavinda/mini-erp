@@ -90,7 +90,8 @@ class SalesOrderController extends Controller
                         'item_code'=>$Model->name,
                         'unit_price'=>$item['unit'],
                         'qty'=>$item['qty'],
-                        'total'=>$item['unit']*$item['qty']
+                        'total'=>$item['unit']*$item['qty'],
+                        'remarks'=>$item['remark']?$item['remark']:null
                     ]);
 
                     $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit']) ;
@@ -188,7 +189,8 @@ class SalesOrderController extends Controller
                         'item_code'=>$Model->name,
                         'unit_price'=>$item['unit'],
                         'qty'=>$item['qty'],
-                        'total'=>$item['unit']*$item['qty']
+                        'total'=>$item['unit']*$item['qty'],
+                        'remarks'=>$item['remark']?$item['remark']:null
                     ]);
 
                     $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit']) ;

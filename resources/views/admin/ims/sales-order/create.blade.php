@@ -94,6 +94,7 @@
                                     <tr style="text-align: center">
                                         <th>No</th>
                                         <th>Item</th>
+                                        <th>Remark</th>
                                         <th>QTY</th>
                                         <th>Unit Price (LKR)</th>
                                         <th>Total (LKR)</th>
@@ -196,6 +197,9 @@
                                 '                        <td>\n' +
                                 '                            <input style="display:none" type="number" value="'+SelecTModelId+'" name="row['+count+'][model_id]" >\n' +
                                 '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+' | Unit Price : '+data.item.unit_price_with_tax+'/=" style="width: 100%">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input  style="width: 100%" type="text" name="row['+count+'][remark]">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input onkeyup="calTol('+(count+1)+')" id="qty'+count+'"  type="number" name="row['+count+'][qty]" placeholder="In Stock '+data.qty+' items" style="width: 100%">\n' +

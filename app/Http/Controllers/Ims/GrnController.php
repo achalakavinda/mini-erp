@@ -85,6 +85,7 @@ class GrnController extends Controller
                         'item_unit_cost_from_table'=>$Model->unit_cost,
                         'unit_price'=>$item['unit_price'],
                         'qty'=>$item['qty'],
+                        'remarks'=>$item['remark']?$item['remark']:null
                     ]);
 
                     $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit_price'] ) ;
@@ -224,6 +225,7 @@ class GrnController extends Controller
                         'item_unit_cost_from_table'=>$Model->unit_cost,
                         'unit_price'=>$item['unit_price'],
                         'qty'=>$item['qty'],
+                        'remarks'=>$item['remark']?$item['remark']:null
                     ]);
 
                     $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit_price'] ) ;
