@@ -118,7 +118,7 @@
                                         $size = $S? $S->code:'';
                                     }
                                     if($CODE->color_id){
-                                        $C = \App\Models\Ims\Color::find($CODE->size_id);
+                                        $C = \App\Models\Ims\Color::find($CODE->color_id);
                                         $color = $C? $C->code:'';
                                     }
                                 }
