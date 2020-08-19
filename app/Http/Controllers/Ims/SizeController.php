@@ -80,7 +80,7 @@ class SizeController extends Controller
         $Size = Size::findOrFail($id);
 
         if($Size->items->count() > 0){
-            return redirect()->back()->with(['error'=>'error','message'=>'There are already created items for this size']);
+            return redirect()->back()->with(['created'=>'error','message'=>'There are already created items for this size']);
         }
         $Size->code = $request->code;
         $Size->description = $request->description;

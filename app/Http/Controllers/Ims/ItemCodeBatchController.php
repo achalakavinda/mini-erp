@@ -80,7 +80,7 @@ class ItemCodeBatchController extends Controller
         $ItemCodeBatch = ItemCodeBatch::findOrFail($id);
 
         if($ItemCodeBatch->items->count() > 0){
-            return redirect()->back()->with(['error'=>'error','message'=>'There are already created items for this Batch']);
+            return redirect()->back()->with(['created'=>'error','message'=>'There are already created items for this Batch']);
         }
         $ItemCodeBatch->code = $request->code;
         $ItemCodeBatch->description = $request->description;

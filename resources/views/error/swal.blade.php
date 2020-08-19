@@ -3,23 +3,10 @@
     $( document ).ready(function() {
             Swal.fire({
                 position: 'top-end',
-                type: 'success',
+                type: '{!! session('created') !!}',
                 title: '{!! session('message') !!}',
                 showConfirmButton: false,
-                timer: 1500
-            });
-        });
-</script>
-@endif
-
-@if(session('error') && session('message'))
-<script>
-    $( document ).ready(function() {
-            Swal.fire({
-                position: 'top-end',
-                type: 'error',
-                title: '{!! session('message') !!}',
-                showConfirmButton: true,
+                timer: 2000
             });
         });
 </script>

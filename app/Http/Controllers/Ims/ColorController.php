@@ -81,7 +81,7 @@ class ColorController extends Controller
         $Color = Color::findOrFail($id);
 
         if($Color->items->count() > 0){
-            return redirect()->back()->with(['error'=>'error','message'=>'There are already created items for this color']);
+            return redirect()->back()->with(['created'=>'error','message'=>'There are already created items for this color']);
         }
         $Color->code = $request->code;
         $Color->description = $request->description;
