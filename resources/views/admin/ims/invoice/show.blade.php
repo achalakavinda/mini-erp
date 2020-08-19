@@ -77,21 +77,15 @@
                                     </tr>
 
                                     <tr>
-                                        <td>PO.No : </td>
+                                        <td>Courier Service : </td>
                                         <td><input disabled style="width: 100%" id="PurchaseOrder" name="purchase_order"
-                                                type="text" value="{{ $Invoice->purchase_order }}"></td>
+                                                type="text" value="{{ $Invoice->userdef1 }}"></td>
                                     </tr>
 
                                     <tr>
                                         <td>Invoice No: </td>
                                         <td><input disabled style="width: 100%" id="InvoiceNo" name="invoice_no"
-                                                type="text" value="{{ $Invoice->invoice_no }}"></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Our Vat No: </td>
-                                        <td><input disabled style="width: 100%" id="CompanyVatNo" readonly=""
-                                                name="company_vat_no" type="text" value="174928878-7000"></td>
+                                                type="text" value="{{ $Invoice->code }}"></td>
                                     </tr>
 
                                     <tr>
@@ -129,9 +123,12 @@
                                                 type="checkbox" checked></td>
                                         <td>
                                             <input style="display:none" type="number" value="{{ $item->item_code_id }}"
-                                                name="row[{{ $count }}][model_id]" va>
+                                                name="row[{{ $count }}][model_id]" >
+                                            <?php
+                                                $ItemCode = \App\Models\Ims\ItemCode::find($item->item_code_id);
+                                            ?>
                                             <input disabled type="text" name="row[{{ $count }}][model_name]"
-                                                value="{{ $item->ItemCode?$item->ItemCode->brand?$item->ItemCode->brand->name.' - ':'':'' }}{{ $item->ItemCode?$item->ItemCode->category?$item->ItemCode->category->name.' - ':'':'' }}{{ $item->ItemCode?$item->ItemCode->name:'' }} {{ $item->ItemCode?$item->ItemCode->description?' - '.$item->ItemCode->description:'':'' }}"
+                                                value="@if($ItemCode) {{ $ItemCode->name }} {{ $ItemCode->size?' - '.$ItemCode->size->code:'' }}  {{ $ItemCode->color?' - '.$ItemCode->color->code:'' }} @endif"
                                                 style="width: 100%">
                                         </td>
 

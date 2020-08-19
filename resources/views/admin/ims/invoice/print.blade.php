@@ -172,7 +172,7 @@
         </div>
         <div class="col-3">
             <h5 class="almost-gray">Invoice number:</h5>
-            <p class="gray-ish">#000{{ $Invoice->id }}</p>
+            <p class="gray-ish">{{ $Invoice->code }}</p>
 
             <h5 class="almost-gray">Date of Issue:</h5>
             <p class="gray-ish">{{ $Invoice->dispatched_date }}</p>
@@ -180,7 +180,7 @@
         </div>
         <div class="col-6 text-right total-field">
             <h4 class="almost-gray">Invoice Total</h4>
-            <h1 class="gray-ish">{{ number_format($Invoice->total,2) }} <span class="curency">RS</span></h1>
+            <h1 class="gray-ish">{{ number_format($Invoice->total,2) }} <span class="curency">RS/=</span></h1>
             {{--            <h5 class="almost-gray due-date">Due Date: 01 / 01 / 20 20</h5>--}}
         </div>
     </div>
@@ -198,20 +198,21 @@
                     </tr>
                 </thead>
                 <tbody>
+                <?php $countt = 1?>
                     @foreach(\App\Models\Ims\InvoiceItem::where('invoice_id',$Invoice->id)->get() as $item)
                     <tr>
-                        <th scope="row">1</th>
+                        <th scope="row">{{ $countt }}</th>
                         <td class="item">
-                            {{ $item->ItemCode?$item->ItemCode->brand?$item->ItemCode->brand->name.' - ':'':'' }}{{ $item->ItemCode?$item->ItemCode->category?$item->ItemCode->category->name.' - ':'':'' }}{{ $item->ItemCode?$item->ItemCode->name:'' }}
-                            {{ $item->ItemCode?$item->ItemCode->description?' - '.$item->ItemCode->description:'':'' }}
+                            <?php $ItemCode = \App\Models\Ims\ItemCode::find($item->item_code_id)?>
+                            @if($ItemCode) {{ $ItemCode->name }} {{ $ItemCode->size?' - '.$ItemCode->size->code:'' }}  {{ $ItemCode->color?' - '.$ItemCode->color->code:'' }} @endif
                         </td>
                         <td class="text-right">{{ $item->qty }}</td>
                         <td class="text-right"> {{ number_format($item->unit_price,2) }} LKR</td>
                         <td class="text-right">{{ number_format($item->total,2) }} <span class="currency">LKR</span>
                         </td>
+                        <?php $countt++?>
                     </tr>
                     @endforeach
-
                 </tbody>
             </table>
         </div>
@@ -226,11 +227,11 @@
         <div class="offset-1 col-5 mb-3 pr-4 sub-table">
             <table class="table table-borderless">
                 <tbody>
-                    <tr>
-                        <th scope="row gray-ish">Subtotal</th>
-                        <td class="text-right">{{ number_format($Invoice->amount,2) }} <span class="currency ">
-                                RS</span></td>
-                    </tr>
+{{--                    <tr>--}}
+{{--                        <th scope="row gray-ish">Subtotal</th>--}}
+{{--                        <td class="text-right">{{ number_format($Invoice->amount,2) }} <span class="currency ">--}}
+{{--                                RS/=</span></td>--}}
+{{--                    </tr>--}}
                     {{-- <tr>
                             <th scope="row gray-ish">Discounts</th>
                             <td class="text-right">{{ $Invoice->discount}}<span class="currency"> %</span></td>
@@ -240,7 +241,7 @@
                             <h4>Total</h4>
                         </th>
                         <td class="text-right">
-                            <h4><span class="currency">RS </span>{{ number_format($Invoice->total,2) }}</h4>
+                            <h4><span class="currency">RS </span>{{ number_format($Invoice->total,2) }}/=</h4>
                         </td>
                     </tr>
                 </tbody>

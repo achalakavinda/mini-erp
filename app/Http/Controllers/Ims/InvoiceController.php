@@ -133,7 +133,7 @@ class InvoiceController extends Controller
                 $DiscountPercentage = 0;
             }
 
-            $Invoice->code = "Inv-".Carbon::now()->year."-".Carbon::now()->month."-".Carbon::now()->day."-000".$Invoice->id."C-000".$Invoice->customer_id;
+            $Invoice->code = "Inv-".Carbon::now()->year."-".Carbon::now()->month."-".Carbon::now()->day."-000".$Invoice->id."C".$Invoice->customer_id;
             $Invoice->amount = $TotalAmount;
             $Invoice->discount = $DiscountPercentage;
             $Invoice->total = $TotalSum;

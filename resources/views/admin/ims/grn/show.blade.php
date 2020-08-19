@@ -110,12 +110,15 @@
                                 <tbody>
                                     <?php $count = 1 ;?>
                                     @foreach($Grn->items as $item)
+                                        <?php
+                                            $ItemCode = \App\Models\Ims\ItemCode::find($item->item_code_id);
+                                        ?>
                                     <tr class="tr_{{ $count }}">
                                         <td>
                                             <input style="display:none" type="number" value="{{ $item->item_code_id }}"
                                                 name="row[{{ $count }}][model_id]">
                                             <input disabled type="text" name="row[{{ $count }}][model_name]"
-                                                value="{{ $item->item_code }}" style="width: 100%">
+                                                value="{{ $item->item_code }} @if($ItemCode) {{ $ItemCode->size?' - '.$ItemCode->size->code:'' }}  {{ $ItemCode->color?' - '.$ItemCode->color->code:'' }} @endif" style="width: 100%">
                                         </td>
                                         <td>
                                             <input style="width: 100%" type="text" name="row[{{ $count }}][remark]"
