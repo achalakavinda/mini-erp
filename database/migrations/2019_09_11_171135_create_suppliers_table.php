@@ -25,7 +25,16 @@ class CreateSuppliersTable extends Migration
             $table->unsignedInteger('company_division_id');
             $table->timestamps();
 
-
+            $table->string('userdef1')->nullable();
+            $table->string('userdef2')->nullable();
+            $table->string('userdef3')->nullable();
+            $table->string('userdef4')->nullable();
+            $table->string('userdef5')->nullable();
+            $table->string('userdef6')->nullable();
+            $table->string('userdef7')->nullable();
+            $table->string('userdef8')->nullable();
+            $table->string('userdef9')->nullable();
+            
             $table->foreign('company_id')->references('id')->on('companies');
             $table->foreign('company_division_id')->references('id')->on('company_divisions');
 

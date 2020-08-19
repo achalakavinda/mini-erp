@@ -17,6 +17,7 @@ class CreateQuotationItemsTable extends Migration
             $table->id();
             $table->foreignId('quotation_id');
             $table->unsignedInteger('item_code_id');
+            $table->unsignedInteger('company_id')->nullable();
             $table->unsignedInteger('company_division_id');
 
             $table->text('item_code');
@@ -28,6 +29,16 @@ class CreateQuotationItemsTable extends Migration
 
             $table->timestamps();
 
+            $table->string('userdef1')->nullable();
+            $table->string('userdef2')->nullable();
+            $table->string('userdef3')->nullable();
+            $table->string('userdef4')->nullable();
+            $table->string('userdef5')->nullable();
+            $table->string('userdef6')->nullable();
+            $table->string('userdef7')->nullable();
+            $table->string('userdef8')->nullable();
+            $table->string('userdef9')->nullable();
+
             $table->foreign('quotation_id')
                 ->references('id')
                 ->on('quotations')
@@ -38,6 +49,10 @@ class CreateQuotationItemsTable extends Migration
                 ->on('item_codes')
                 ->onDelete('cascade');
 
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies');
+                
             $table->foreign('company_division_id')
                 ->references('id')
                 ->on('company_divisions')

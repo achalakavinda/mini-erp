@@ -17,6 +17,7 @@ class CreateSalesOrdersTable extends Migration
             $table->id();
             $table->foreignId('quotation_id')->nullable();
             $table->unsignedInteger('customer_id')->nullable();
+            $table->unsignedInteger('company_id')->nullable();
             $table->unsignedInteger('company_division_id')->nullable();
 
             $table->text('code'); //create unique code.example SO-2012-12-04-{so_id}
@@ -29,10 +30,24 @@ class CreateSalesOrdersTable extends Migration
 
             $table->timestamps();
 
+            $table->string('userdef1')->nullable();
+            $table->string('userdef2')->nullable();
+            $table->string('userdef3')->nullable();
+            $table->string('userdef4')->nullable();
+            $table->string('userdef5')->nullable();
+            $table->string('userdef6')->nullable();
+            $table->string('userdef7')->nullable();
+            $table->string('userdef8')->nullable();
+            $table->string('userdef9')->nullable();
+
             $table->foreign('customer_id')
                 ->references('id')
                 ->on('customers')
                 ->onDelete('cascade');
+
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies');
 
             $table->foreign('company_division_id')
                 ->references('id')
