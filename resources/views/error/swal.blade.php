@@ -1,6 +1,6 @@
 @if(session('created') && session('message'))
-    <script>
-        $( document ).ready(function() {
+<script>
+    $( document ).ready(function() {
             Swal.fire({
                 position: 'top-end',
                 type: 'success',
@@ -9,5 +9,18 @@
                 timer: 1500
             });
         });
-    </script>
+</script>
+@endif
+
+@if(session('error') && session('message'))
+<script>
+    $( document ).ready(function() {
+            Swal.fire({
+                position: 'top-end',
+                type: 'error',
+                title: '{!! session('message') !!}',
+                showConfirmButton: true,
+            });
+        });
+</script>
 @endif

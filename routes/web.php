@@ -90,6 +90,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('/brand','Ims\BrandController');
         Route::resource('/category','Ims\CategoryController');
         Route::resource('/item','Ims\ItemController');
+        Route::resource('/color','Ims\ColorController');
+        Route::resource('/size','Ims\SizeController');
+        Route::resource('/item-code-batch','Ims\ItemCodeBatchController');
 
         Route::resource('/purchase-requisition','Ims\PurchaseRequisitionController');
         Route::resource('/company-purchase-order','Ims\CompanyPurchaseOrderController');
