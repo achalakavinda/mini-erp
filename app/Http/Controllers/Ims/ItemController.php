@@ -56,7 +56,6 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required',
             'brand_id' => 'required',
-            'category_id' => 'required',
             'unit_cost' => 'required',
             'selling_price'=>'required'
         ]);
@@ -225,12 +224,12 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        $Item = ItemCode::findorfail($id);
-        if($Item->stockItem){
-            dd("You can't delete this item. Because this has some stock");
-        }else{
-            $Item->delete();
-            return redirect()->route('item.index');
-        }
+//        $Item = ItemCode::findorfail($id);
+//        if($Item->stockItem){
+//            dd("You can't delete this item. Because this has some stock");
+//        }else{
+//            $Item->delete();
+//            return redirect()->route('item.index');
+//        }
     }
 }

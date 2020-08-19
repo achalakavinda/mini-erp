@@ -43,15 +43,16 @@
                         <thead>
                         <tr>
                             <th>#ID</th>
+                            <th>Item</th>
                             <th>Brand</th>
                             <th>Category</th>
-                            <th>Item</th>
+                            <th>Color</th>
+                            <th>Size</th>
                             <th>Unit Cost (LKR)</th>
                             <th>Selling Price (LKR)</th>
                             <th>Market Price (LKR)</th>
                             <th>Min Price (LKR)</th>
                             <th>Max Price (LKR)</th>
-
                             <th>NBT %</th>
                             <th>VAT %</th>
                             <th>Unit Price With Taxes (LKR)</th>
@@ -65,6 +66,8 @@
                             <?php
                             $brand = \App\Models\Ims\Brand::find($item->brand_id);
                             $category = \App\Models\Ims\Category::find($item->category_id);
+                            $color = \App\Models\Ims\Color::find($item->color_id);
+                            $size = \App\Models\Ims\Size::find($item->size_id);
                             $STOCKITEM = DB::table('stock_items')
                                 ->select(DB::raw('sum(stock_items.tol_qty) as qty'))
                                 ->where(['stock_items.item_code_id'=>$item->id])
@@ -73,10 +76,11 @@
                             ?>
                             <tr>
                                 <td>{!! $item->id !!}</td>
+                                <td>{!! $item->name !!} {{ $item->description?' - '.$item->description:'' }}</td>
                                 <td>{!! $brand?$brand->name:''; !!}</td>
                                 <td>{!! $category?$category->name:''; !!}</td>
-                                <td>{!! $item->name !!} {{ $item->description?' - '.$item->description:'' }}</td>
-
+                                <td>{!! $color?$color->code:''; !!}</td>
+                                <td>{!! $size?$size->code:''; !!}</td>
                                 <td style="text-align: right">{!! number_format($item->unit_cost,2) !!}</td>
                                 <td style="text-align: right">{!! number_format($item->selling_price,2) !!}</td>
                                 <td style="text-align: right">{!! number_format($item->market_price,2) !!}</td>

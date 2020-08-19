@@ -17,7 +17,7 @@ class CreateColorsTable extends Migration
             $table->increments('id');
             $table->foreignId('parent_id')->nullable();
             $table->integer('level')->default(0);
-            $table->text('code')->unique();
+            $table->string('code')->unique();
             $table->string('description')->nullable();
             $table->unsignedInteger('company_id')->nullable();
             $table->unsignedInteger('company_division_id')->nullable();
