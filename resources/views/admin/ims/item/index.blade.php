@@ -114,5 +114,44 @@
     <!-- /main section -->
 @endsection
 @section('js')
-    @include('layouts.components.dataTableJs.index')
+    <link media="all" type="text/css" rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
+    <link media="all" type="text/css" rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
+    <style>
+        #table_wrapper{
+            display: none;
+        }
+    </style>
+
+    {!! Html::style('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') !!}
+    {!! Html::script('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') !!}
+    {!! Html::script('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') !!}
+
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.html5.min.js"></script>
+
+    <script type="text/javascript">
+        'use strict'
+        $(function () {
+            var name = "Item Report - {{ \Carbon\Carbon::now() }}"
+            $('#table').DataTable({
+                responsive: true,
+                "dom": 'Blfrtip',
+                "lengthMenu": [[ 50, -1], [ 50, "All"]],     // page length options
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        title: name
+                    }
+                ]
+            })
+
+            $('#loader').hide();
+            $('#table_wrapper').fadeIn();
+            $('#table').fadeIn();
+        })
+    </script>
 @endsection
