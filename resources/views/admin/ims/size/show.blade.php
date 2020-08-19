@@ -62,7 +62,6 @@
         </div>
     </div>
     {!! Form::close() !!}
-    {!! Form::close() !!}
     {!! Form::open(['method' => 'DELETE','route' => ['size.destroy', $Size->id],'id'=> 'deleteForm']) !!}
     {!! Form::close() !!}
 
