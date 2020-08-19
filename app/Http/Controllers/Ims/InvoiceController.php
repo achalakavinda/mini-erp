@@ -72,6 +72,7 @@ class InvoiceController extends Controller
             'purchase_order'=>$request->purchase_order,
             'delivery_address'=>$request->delivery_address,
             'remarks'=>$request->special_remarks,
+            'userdef1' => $request->courier_service
         ]);
 
         try{
@@ -132,6 +133,7 @@ class InvoiceController extends Controller
                 $DiscountPercentage = 0;
             }
 
+            $Invoice->code = "Inv-".Carbon::now()->year."-".Carbon::now()->month."-".Carbon::now()->day."-000".$Invoice->id."C-000".$Invoice->customer_id;
             $Invoice->amount = $TotalAmount;
             $Invoice->discount = $DiscountPercentage;
             $Invoice->total = $TotalSum;

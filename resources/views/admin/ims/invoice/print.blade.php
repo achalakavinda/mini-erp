@@ -1,22 +1,24 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.2/css/bootstrap.min.css">
     <style>
         @page {
             bleed: 1cm;
             size: A4 portrait;
-            size: auto; /* auto is the initial value */
+            size: auto;
+            /* auto is the initial value */
             margin-bottom: 50pt;
             margin-top: 0cm;
             font-size: 12pt;
 
-        #content,
-        #page {
-            width: 100%;
-            margin: 0;
-            float: none;
-        }
+            #content,
+            #page {
+                width: 100%;
+                margin: 0;
+                float: none;
+            }
         }
 
         @media print {
@@ -34,12 +36,12 @@
                 page-break-inside: auto;
             }
 
-            tr.last-row {
+            /* tr.last-row {
                 background-color: #555 !important;
-            }
+            } */
 
-            tr.last-row > th,
-            tr.last-row > td {
+            tr.last-row>th,
+            tr.last-row>td {
                 background-color: unset !important;
             }
 
@@ -77,27 +79,29 @@
         }
 
         div.invoice-header {
-            background-color: #444;
-            color: white;
-            border-bottom: 3px solid rgb(255, 77, 77);
+            /* background-color: #444; */
+            /* color: white; */
+            /* border-bottom: 3px solid rgb(255, 77, 77); */
+            border-bottom: 3px solid rgb(0, 0, 0);
         }
 
-        div.invoice-header > div > p {
+        div.invoice-header>div>p {
             font-size: 1.2rem;
             font-weight: 350;
         }
 
-        div.invoice-header > div > h1 {
+        div.invoice-header>div>h1 {
             font-size: 4rem;
         }
 
         div.invoice-table {
-            border-top: 3px solid rgb(255, 77, 77);
+            /* border-top: 3px solid rgb(255, 77, 77); */
+            border-top: 3px solid rgb(0, 0, 0);
         }
 
-        div.invoice-table > table.table > thead,
-        div.invoice-table > table.table > thead.thead > tr,
-        div.invoice-table > table.table > thead.thead > tr > th {
+        div.invoice-table>table.table>thead,
+        div.invoice-table>table.table>thead.thead>tr,
+        div.invoice-table>table.table>thead.thead>tr>th {
             border-top: none;
         }
 
@@ -112,20 +116,21 @@
         }
 
         div.sub-table {
-            border-left: 3px solid rgb(255, 77, 77);
+            /* border-left: 3px solid rgb(255, 77, 77); */
+            border-left: 3px solid rgb(0, 0, 0);
             padding-left: 0;
         }
 
-        div.sub-table > table {
+        div.sub-table>table {
             padding-bottom: 0;
             margin-bottom: 0;
         }
 
         tr.last-row {
             margin-top: 25px;
-            background-color: #555;
-            color: white;
-            border-top: 3px solid rgb(255, 77, 77);
+            /* background-color: #555; */
+            /* color: white; */
+            border-top: 3px solid rgb(0, 0, 0);
         }
 
         p.footer {
@@ -134,28 +139,27 @@
             background-color: #333;
             color: white;
             padding-top: 15px;
-            border-top: 3px solid red;
+            border-top: 3px solid black;
         }
-
     </style>
 </head>
+
 <body onload="window.print();">
-<div class="container">
-    <div class="row invoice-header px-3 py-2">
-        <div class="col-4">
-            <p>{{ $Invoice->customer?$Invoice->customer->name:'' }}</p>
-            <h1>INVOICE</h1>
-        </div>
-        <div class="col-4 text-left">
-            <p>071 467 2127</p>
-            <p>info@conceptangles.com</p>
-            <p>https://conceptangles.com/</p>
-        </div>
-        <div class="col-4 text-left">
-            <p>{{ $Invoice->customer?$Invoice->customer->address_1:'' }}</p>
+    <div class="container">
+        <div class="row invoice-header px-3 py-2">
+            <div class="col-4">
+
+                <img width="50%" src="{{asset('img/dress.jpeg')}}" alt="dress img">
+            </div>
+            <div class="col-4 text-left">
+                <p>076 138 9946</p>
+                <p>dressonline.lk@gmail.com</p>
+            </div>
+            {{-- <div class="col-4 text-left">
+                <p>{{ $Invoice->customer?$Invoice->customer->address_1:'' }}</p>
             <p>VAT ID / PID</p>
             <p>{{ $Invoice->customer?$Invoice->customer->vat_no:'' }}</p>
-        </div>
+        </div> --}}
     </div>
 
     <div class="invoice-content row px-5 pt-5">
@@ -163,11 +167,12 @@
             <h5 class="almost-gray mb-3">Invoiced to:</h5>
             <p class="gray-ish">{{ $Invoice->customer?$Invoice->customer->name:'' }}</p>
             <p class="gray-ish">{{ $Invoice->customer?$Invoice->customer->address_1:'' }}</p>
-            <p class="gray-ish">VAT ID: {{ $Invoice->customer?$Invoice->customer->vat_no:'' }}</p>
+            <h5 class="almost-gray">Courier Service:</h5>
+            <p class="gray-ish">{{ $Invoice->userdef1?$Invoice->userdef1:'' }}</p>
         </div>
         <div class="col-3">
             <h5 class="almost-gray">Invoice number:</h5>
-            <p class="gray-ish">#{{ $Invoice->invoice_no }}</p>
+            <p class="gray-ish">#000{{ $Invoice->id }}</p>
 
             <h5 class="almost-gray">Date of Issue:</h5>
             <p class="gray-ish">{{ $Invoice->dispatched_date }}</p>
@@ -176,7 +181,7 @@
         <div class="col-6 text-right total-field">
             <h4 class="almost-gray">Invoice Total</h4>
             <h1 class="gray-ish">{{ number_format($Invoice->total,2) }} <span class="curency">RS</span></h1>
-{{--            <h5 class="almost-gray due-date">Due Date: 01 / 01 / 20 20</h5>--}}
+            {{--            <h5 class="almost-gray due-date">Due Date: 01 / 01 / 20 20</h5>--}}
         </div>
     </div>
 
@@ -184,24 +189,28 @@
         <div class="col-10 offset-1 invoice-table pt-1">
             <table class="table table-hover">
                 <thead class="thead splitForPrint">
-                <tr>
-                    <th scope="col gray-ish">NO.</th>
-                    <th scope="col gray-ish">Item</th>
-                    <th scope="col gray-ish" class="text-right">Qty.</th>
-                    <th scope="col gray-ish" class="text-right">U. Price</th>
-                    <th class="text-right" scope="col gray-ish">Amount</th>
-                </tr>
+                    <tr>
+                        <th scope="col gray-ish">NO.</th>
+                        <th scope="col gray-ish">Item</th>
+                        <th scope="col gray-ish" class="text-right">Qty.</th>
+                        <th scope="col gray-ish" class="text-right">U. Price</th>
+                        <th class="text-right" scope="col gray-ish">Amount</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @foreach(\App\Models\Ims\InvoiceItem::where('invoice_id',$Invoice->id)->get() as $item)
+                    @foreach(\App\Models\Ims\InvoiceItem::where('invoice_id',$Invoice->id)->get() as $item)
                     <tr>
                         <th scope="row">1</th>
-                        <td class="item">{{ $item->ItemCode?$item->ItemCode->brand?$item->ItemCode->brand->name.' - ':'':'' }}{{ $item->ItemCode?$item->ItemCode->category?$item->ItemCode->category->name.' - ':'':'' }}{{ $item->ItemCode?$item->ItemCode->name:'' }} {{ $item->ItemCode?$item->ItemCode->description?' - '.$item->ItemCode->description:'':'' }}</td>
+                        <td class="item">
+                            {{ $item->ItemCode?$item->ItemCode->brand?$item->ItemCode->brand->name.' - ':'':'' }}{{ $item->ItemCode?$item->ItemCode->category?$item->ItemCode->category->name.' - ':'':'' }}{{ $item->ItemCode?$item->ItemCode->name:'' }}
+                            {{ $item->ItemCode?$item->ItemCode->description?' - '.$item->ItemCode->description:'':'' }}
+                        </td>
                         <td class="text-right">{{ $item->qty }}</td>
                         <td class="text-right"> {{ number_format($item->unit_price,2) }} LKR</td>
-                        <td class="text-right">{{ number_format($item->total,2) }} <span class="currency">LKR</span></td>
+                        <td class="text-right">{{ number_format($item->total,2) }} <span class="currency">LKR</span>
+                        </td>
                     </tr>
-                @endforeach
+                    @endforeach
 
                 </tbody>
             </table>
@@ -217,30 +226,31 @@
         <div class="offset-1 col-5 mb-3 pr-4 sub-table">
             <table class="table table-borderless">
                 <tbody>
-                <tr>
-                    <th scope="row gray-ish">Subtotal</th>
-                    <td class="text-right">{{ number_format($Invoice->amount,2) }} <span class="currency "> RS</span></td>
-                </tr>
-                <tr>
-                    <th scope="row gray-ish">Discounts</th>
-                    <td class="text-right">{{ $Invoice->discount}}<span class="currency"> %</span></td>
-                </tr>
-                <tr class="last-row">
-                    <th scope="row">
-                        <h4>Total</h4>
-                    </th>
-                    <td class="text-right">
-                        <h4><span class="currency">RS </span>{{ number_format($Invoice->total,2) }}</h4>
-                    </td>
-                </tr>
+                    <tr>
+                        <th scope="row gray-ish">Subtotal</th>
+                        <td class="text-right">{{ number_format($Invoice->amount,2) }} <span class="currency ">
+                                RS</span></td>
+                    </tr>
+                    {{-- <tr>
+                            <th scope="row gray-ish">Discounts</th>
+                            <td class="text-right">{{ $Invoice->discount}}<span class="currency"> %</span></td>
+                    </tr> --}}
+                    <tr class="last-row">
+                        <th scope="row">
+                            <h4>Total</h4>
+                        </th>
+                        <td class="text-right">
+                            <h4><span class="currency">RS </span>{{ number_format($Invoice->total,2) }}</h4>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
     <p class="text-center pb-3"><em> </em></p>
-</div>
-<script>
-    /**
+    </div>
+    <script>
+        /**
      * PDF page settings.
      * Must have the correct values for the script to work.
      * All numbers must be in inches (as floats)!
@@ -458,6 +468,7 @@
     // restore body's padding
     $body.css("padding-left", 0);
     $body.css("padding-right", 0);
-</script>
+    </script>
 </body>
+
 </html>

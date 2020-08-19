@@ -1,112 +1,90 @@
 @extends('layouts.admin')
 @section('main-content-header')
-    <!-- main header section -->
-    <!-- Default box -->
-    <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">Post Invoice</h3>
-        </div>
+<!-- main header section -->
+<!-- Default box -->
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Post Invoice</h3>
+    </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
 
-        <div class="box-body">
-            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
-                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
-            </a>
-            <a href="{{ url('/ims/invoice/create') }}" class="btn btn-app">
-                <i  class="main-action-btn-info fa fa-refresh"></i> Refresh
-            </a>
-            <a href="{{ url('/ims/item') }}" class="btn btn-app">
-                <i  class="main-action-btn-info fa fa-table"></i> Item
-            </a>
+    <div class="box-body">
+        <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+            <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+        </a>
+        <a href="{{ url('/ims/invoice/create') }}" class="btn btn-app">
+            <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+        </a>
+        <a href="{{ url('/ims/item') }}" class="btn btn-app">
+            <i class="main-action-btn-info fa fa-table"></i> Item
+        </a>
 
-            <a href="{{ url('/ims/invoice/create') }}" class="btn btn-app">
-                <i  class="main-action-btn-info fa fa-plus"></i> New
-            </a>
-        </div>
-        <!-- /.box-body -->
+        <a href="{{ url('/ims/invoice/create') }}" class="btn btn-app">
+            <i class="main-action-btn-info fa fa-plus"></i> New
+        </a>
     </div>
-    <!-- /.box -->
-    <!-- /main header section -->
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->
+<!-- /main header section -->
 @endsection
 
 <!-- main section -->
 @section('main-content')
-    <div class="row">
-        {!! Form::open(['action'=>'Ims\InvoiceController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl']) !!}
+<div class="row">
+    {!!
+    Form::open(['action'=>'Ims\InvoiceController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])
+    !!}
 
-        <div class="col-md-12">
+    <div class="col-md-12">
         @include('error.error')
-            <!-- general form elements -->
-            <div class="box box-primary">
-                <!-- form start -->
-                <div class="box-body">
-                    <!-- invoice date -->
-                    <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box box-primary">
+            <!-- form start -->
+            <div class="box-body">
+                <!-- invoice date -->
+                <div class="col-md-12">
 
-                        <!-- title row -->
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <p>
-                                    <select id="CustomerId" name="customer_id" class="ui search dropdown">
-                                        <option value=""> Choose a customer </option>
-                                        @foreach(\App\Models\Customer::all() as $customer)
-                                            <option value="{{ $customer->id }}"> {{ $customer->name }}  </option>
-                                            @endforeach
-                                    </select>
-                                    <i class="pull-right">Date: {{ \Carbon\Carbon::now() }}</i>
-                                </p>
-                            </div>
-                            <!-- /.col -->
+                    <!-- title row -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <p>
+                                <select id="CustomerId" name="customer_id" class="ui search dropdown">
+                                    <option value=""> Choose a customer </option>
+                                    @foreach(\App\Models\Customer::all() as $customer)
+                                    <option value="{{ $customer->id }}"> {{ $customer->name }} </option>
+                                    @endforeach
+                                </select>
+                                <i class="pull-right">Date: {{ \Carbon\Carbon::now() }}</i>
+                            </p>
                         </div>
-                        <!-- info row -->
-
-                        <div class="row invoice-info">
-                            <div class="col-sm-4 invoice-col">
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-4 invoice-col">
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-sm-4 invoice-col">
-                                <table style="width: 100%">
-                                    <tbody>
-                                    <tr>
-                                        <td>Order Date :</td>
-                                        <td><input style="width: 100%" id="OrderDate" name="order_date" type="date" value=""></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>PO.No : </td>
-                                        <td><input style="width: 100%" id="PurchaseOrder" name="purchase_order" type="text"></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Invoice No: </td>
-                                        <td><input  style="width: 100%"  id="InvoiceNo" name="invoice_no" type="text" value="JAT/AV/18/663"></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Our Vat No: </td>
-                                        <td><input style="width: 100%" id="CompanyVatNo" readonly="" name="company_vat_no" type="text" value="174928878-7000"></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Dispatch Date:  </td>
-                                        <td><input style="width: 100%" id="DispatchedDate" name="dispatched_date" type="date" value="2020-08-03"></td>
-                                    </tr>
-
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.col -->
+                        <!-- /.col -->
+                    </div>
+                    <!-- info row -->
+                    <div class="col-md-8"></div>
+                    <!-- Issued date -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Grn Date">Issued Date</label>
+                            <input id="date" class="form-control" name="order_date" type="date" value="">
                         </div>
-                        <!-- /.row -->
-                        <!-- Table row -->
-                        <div style="margin-top: 20px" class="row">
-                            <div class="col-xs-12">
-                                <table id="invoiceItemTable" class="table table-bordered">
-                                    <thead>
+                    </div>
+
+                    <div class="col-md-8"></div>
+                    <!-- date -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="Requisition Date">Courier Service</label>
+                            <input style="width: 100%" id="courier_service" name="courier_service" type="text" value="">
+                        </div>
+                    </div>
+
+                    <!-- Table row -->
+                    <div style="margin-top: 20px" class="row">
+                        <div class="col-xs-12">
+                            <table id="invoiceItemTable" class="table table-bordered">
+                                <thead>
                                     <tr style="text-align: center">
                                         <th>No</th>
                                         <th>Item</th>
@@ -114,67 +92,71 @@
                                         <th>Unit Price (LKR)</th>
                                         <th>Total (LKR)</th>
                                     </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                    <tfoot>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                                <tfoot>
                                     <tr>
                                         <th>No</th>
                                         <th>
                                             @include('layouts.selectors.ims.item-dropdown.index')
                                         </th>
-                                        <th><button id="addNewItem" type="button" style="width: 100%" class="btn">Add</button></th>
+                                        <th><button id="addNewItem" type="button" style="width: 100%"
+                                                class="btn">Add</button></th>
                                     </tr>
-                                    </tfoot>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+
+                    <div class="row">
+                        <!-- accepted payments column -->
+                        <div class="col-xs-8">
+
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-xs-4">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tr>
+                                        <th style="width:50%">Subtotal:</th>
+                                        <td><input style="width: 100%" id="subtotal" name="subtotal" type="text"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>Discount:</th>
+                                        <td><input style="width: 80%" id="discountpercentage" name="discount_percentage"
+                                                type="text">%</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total:</th>
+                                        <td><input style="width: 100%" id="total" name="total" type="text"></td>
+                                    </tr>
                                 </table>
                             </div>
-                            <!-- /.col -->
                         </div>
-                        <!-- /.row -->
-
-                        <div class="row">
-                            <!-- accepted payments column -->
-                            <div class="col-xs-8">
-
-                            </div>
-                            <!-- /.col -->
-                            <div class="col-xs-4">
-                                <div class="table-responsive">
-                                    <table class="table">
-                                        <tr>
-                                            <th style="width:50%">Subtotal:</th>
-                                            <td><input style="width: 100%" id="subtotal" name="subtotal" type="text"></td>
-                                        </tr>
-                                        <tr>
-                                            <th>Discount:</th>
-                                            <td><input style="width: 80%" id="discountpercentage" name="discount_percentage" type="text">%</td>
-                                        </tr>
-                                        <tr>
-                                            <th>Total:</th>
-                                            <td><input style="width: 100%" id="total" name="total" type="text"></td>
-                                        </tr>
-                                    </table>
-                                </div>
-                            </div>
-                            <!-- /.col -->
-                        </div>
-                        <!-- /.row -->
+                        <!-- /.col -->
                     </div>
-                </div>
-                <div style="height: 100px" class="box-footer">
-                    <button style="position: absolute;right: 10px;width: 20%" type="submit" class="btn btn-primary">Post</button>
+                    <!-- /.row -->
                 </div>
             </div>
+            <div class="box-footer">
+
+                <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
+                    Post</button>
+            </div>
         </div>
-        {!! Form::close() !!}
     </div>
-    <!-- /.row -->
-    <!-- /main section -->
+    {!! Form::close() !!}
+</div>
+<!-- /.row -->
+<!-- /main section -->
 @endsection
 
 @section('js')
-    <script>
-        var table = $('#invoiceItemTable');
+<script>
+    var table = $('#invoiceItemTable');
         var count = 0;
         var RawCount = 1;
 
@@ -226,7 +208,6 @@
 
                             count++;
                             RawCount++;
-                            $('#ModelSelectId option:selected').remove();
 
                         }else{
                             alert('Empty Items');
@@ -263,5 +244,5 @@
             }
         }
 
-    </script>
+</script>
 @endsection
