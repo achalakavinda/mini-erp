@@ -301,7 +301,6 @@
 
                             count++;
                             RawCount++;
-                            $('#ModelSelectId option:selected').remove();
 
                         }else{
                             alert('Empty Items');

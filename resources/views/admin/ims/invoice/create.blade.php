@@ -1,50 +1,52 @@
 @extends('layouts.admin')
 @section('main-content-header')
-    <!-- main header section -->
-    <!-- Default box -->
-    <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">Post Invoice</h3>
-        </div>
+<!-- main header section -->
+<!-- Default box -->
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Post Invoice</h3>
+    </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
 
-        <div class="box-body">
-            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
-                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
-            </a>
-            <a href="{{ url('/ims/invoice/create') }}" class="btn btn-app">
-                <i  class="main-action-btn-info fa fa-refresh"></i> Refresh
-            </a>
-            <a href="{{ url('/ims/item') }}" class="btn btn-app">
-                <i  class="main-action-btn-info fa fa-table"></i> Item
-            </a>
+    <div class="box-body">
+        <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+            <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+        </a>
+        <a href="{{ url('/ims/invoice/create') }}" class="btn btn-app">
+            <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+        </a>
+        <a href="{{ url('/ims/item') }}" class="btn btn-app">
+            <i class="main-action-btn-info fa fa-table"></i> Item
+        </a>
 
-            <a href="{{ url('/ims/invoice/create') }}" class="btn btn-app">
-                <i  class="main-action-btn-info fa fa-plus"></i> New
-            </a>
-        </div>
-        <!-- /.box-body -->
+        <a href="{{ url('/ims/invoice/create') }}" class="btn btn-app">
+            <i class="main-action-btn-info fa fa-plus"></i> New
+        </a>
     </div>
-    <!-- /.box -->
-    <!-- /main header section -->
+    <!-- /.box-body -->
+</div>
+<!-- /.box -->
+<!-- /main header section -->
 @endsection
 
 <!-- main section -->
 @section('main-content')
-    <div class="row">
-                {!! Form::open(['action'=>'Ims\InvoiceController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl']) !!}
-                @include('error.error')
-                @include('admin.ims.invoice._partials.createForm')
-                {!! Form::close() !!}
-    </div>
-    <!-- /.row -->
-    <!-- /main section -->
+<div class="row">
+    {!!
+    Form::open(['action'=>'Ims\InvoiceController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])
+    !!}
+    @include('error.error')
+    @include('admin.ims.invoice._partials.createForm')
+    {!! Form::close() !!}
+</div>
+<!-- /.row -->
+<!-- /main section -->
 @endsection
 
 @section('js')
-    <script>
-        var table = $('#invoiceItemTable');
+<script>
+    var table = $('#invoiceItemTable');
         var count = 0;
         var RawCount = 1;
 
@@ -93,7 +95,6 @@
                                 '                    <tr/>');
                             count++;
                             RawCount++;
-                            $('#ModelSelectId option:selected').remove();
 
                         }else{
                             alert('Empty Items');
@@ -111,6 +112,6 @@
         function rowRemove(value) {
             $(value).remove();
         }
-    </script>
+</script>
 
 @endsection

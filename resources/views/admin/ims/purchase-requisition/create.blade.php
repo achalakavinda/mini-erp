@@ -150,7 +150,6 @@
                                 '                    <tr/>');
                             count++;
                             RawCount++;
-                            $('#ItemCodeId option:selected').remove();
                         }else{
                             alert('Empty Items');
                         }
