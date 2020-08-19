@@ -15,8 +15,13 @@ class CreateColorsTable extends Migration
     {
         Schema::create('colors', function (Blueprint $table) {
             $table->increments('id');
-            $table->text('code')->nullable();
+            $table->foreignId('parent_id')->nullable();
+            $table->integer('level')->default(0);
+            $table->text('code')->unique();
             $table->string('description')->nullable();
+            $table->unsignedInteger('company_id')->nullable();
+            $table->unsignedInteger('company_division_id')->nullable();
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }

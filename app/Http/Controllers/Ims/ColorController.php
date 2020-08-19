@@ -37,13 +37,17 @@ class ColorController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'code'=>'required'
+        ]);
+
         Color::create([
             'code'=>$request->code,
             'description'=>$request->description
         ]);
 
         return redirect()->route('color.index');
-        
+
     }
 
     /**
@@ -78,6 +82,10 @@ class ColorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $request->validate([
+            'code'=>'required'
+        ]);
+
         $Color = Color::findOrFail($id);
 
         if($Color->items->count() > 0){
@@ -99,7 +107,7 @@ class ColorController extends Controller
     public function destroy($id)
     {
         $Color = Color::findOrFail($id);
-        
+
         if($Color->items->count() > 0){
             return redirect()->back()->with(['created'=>'error','message'=>'There are already created items for this color']);
         }

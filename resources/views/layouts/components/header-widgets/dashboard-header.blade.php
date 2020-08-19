@@ -35,6 +35,8 @@
                 <li class="list-header">Inventory</li>
                 <li><a href="{{ url('ims/brand') }}">Brand</a></li>
                 <li><a href="{{ url('ims/category') }}">Category</a></li>
+                <li><a href="{{ url('ims/color') }}">Color</a></li>
+                <li><a href="{{ url('ims/size') }}">Size</a></li>
                 <li><a href="{{ url('ims/item') }}">Item</a></li>
                 <li><a href="{{ url('ims/stock') }}">Stock</a></li>
             </ul>
