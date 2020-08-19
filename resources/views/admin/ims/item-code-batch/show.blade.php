@@ -63,7 +63,11 @@
         </div>
     </div>
     {!! Form::close() !!}
-
+    {!! Form::close() !!}
+    {!! Form::close() !!}
+    {!! Form::open(['method' => 'DELETE','route' => ['item-code-batch.destroy', $ItemCodeBatch->id],'id'=>
+    'deleteForm']) !!}
+    {!! Form::close() !!}
 
 </div>
 <!-- /.row -->
@@ -74,7 +78,7 @@
 @include('error.swal')
 <script>
     function Onclick() {
-            
+        $('#deleteForm').submit();
     }
     $('#ShowAdvance').on('click',function () {
                     $('#AdvanceForm').fadeIn('slow');

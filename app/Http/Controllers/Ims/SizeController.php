@@ -97,6 +97,13 @@ class SizeController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $Size = Size::findOrFail($id);
+        
+        if($Size->items->count() > 0){
+            return redirect()->back()->with(['created'=>'error','message'=>'There are already created items for this size']);
+        }
+
+        $Size->delete();
+        return redirect()->route('size.index')->with(['created'=>'success','message'=>'Successfully Deleted!']);
     }
 }

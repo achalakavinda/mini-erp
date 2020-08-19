@@ -98,6 +98,13 @@ class ColorController extends Controller
      */
     public function destroy($id)
     {
-        dd($id);
+        $Color = Color::findOrFail($id);
+        
+        if($Color->items->count() > 0){
+            return redirect()->back()->with(['created'=>'error','message'=>'There are already created items for this color']);
+        }
+
+        $Color->delete();
+        return redirect()->route('color.index')->with(['created'=>'success','message'=>'Successfully Deleted!']);
     }
 }

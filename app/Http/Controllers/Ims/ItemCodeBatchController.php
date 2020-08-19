@@ -97,6 +97,13 @@ class ItemCodeBatchController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $ItemCodeBatch = ItemCodeBatch::findOrFail($id);
+        
+        if($ItemCodeBatch->items->count() > 0){
+            return redirect()->back()->with(['created'=>'error','message'=>'There are already created items for this Batch']);
+        }
+
+        $ItemCodeBatch->delete();
+        return redirect()->route('color.index')->with(['created'=>'success','message'=>'Successfully Deleted!']);
     }
 }

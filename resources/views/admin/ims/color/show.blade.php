@@ -62,6 +62,8 @@
         </div>
     </div>
     {!! Form::close() !!}
+    {!! Form::open(['method' => 'DELETE','route' => ['color.destroy', $Color->id],'id'=> 'deleteForm']) !!}
+    {!! Form::close() !!}
 
 
 </div>
@@ -73,7 +75,7 @@
 @include('error.swal')
 <script>
     function Onclick() {
-            
+        $('#deleteForm').submit();
     }
     $('#ShowAdvance').on('click',function () {
                     $('#AdvanceForm').fadeIn('slow');
