@@ -155,12 +155,12 @@ class BrandController extends Controller
      */
     public function destroy($id)
     {
-        $Brand = Brand::findorfail($id);
-        if($Brand->img_url != null){
-            Storage::deleteDirectory('/images/system/brands/'.$Brand->id.'');
-        }
-        $Brand->delete();
-        return redirect()->route('brand.index');
+//        $Brand = Brand::findorfail($id);
+//        if($Brand->img_url != null){
+//            Storage::deleteDirectory('/images/system/brands/'.$Brand->id.'');
+//        }
+//        $Brand->delete();
+//        return redirect()->route('brand.index');
 
 //        if($Brand->itemCodes->count() > 0){
 //

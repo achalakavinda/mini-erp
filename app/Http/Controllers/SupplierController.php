@@ -125,8 +125,8 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        $supplier = Supplier::findorfail($id);
-        $supplier->delete();
-        return redirect()->route('supplier.index');
+//        $supplier = Supplier::findorfail($id);
+//        $supplier->delete();
+//        return redirect()->route('supplier.index');
     }
 }

@@ -17,10 +17,13 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $role_admin = Role::create(['name' => config('constant.ROLE_SUPER_ADMIN') ]);
         $role_staff = Role::create(['name' => config('constant.ROLE_SUPER_STAFF') ]);
+        $role_inventory = Role::create(['name' => 'INVENTORY ONLY' ]);
+
 
         //permission default
         $permission = Permission::create(['name' => config('constant.Permission_Dashboard')]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
 
         $permission = Permission::create(['name' => config('constant.Permission_Project')]);
         $role_admin->givePermissionTo($permission);
@@ -94,12 +97,16 @@ class RolesAndPermissionsSeeder extends Seeder
 
         $permission = Permission::create(['name' => config('constant.Permission_Customer') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Customer_Registry') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Customer_Creation') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Customer_Update') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
 
         $permission = Permission::create(['name' => config('constant.Permission_Profile') ]);
         $role_admin->givePermissionTo($permission);
@@ -171,6 +178,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $role_admin->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Customer_Show')]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Holidays_Show')]);
         $role_admin->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Attendance_Show')]);
@@ -186,62 +194,90 @@ class RolesAndPermissionsSeeder extends Seeder
         //Inventory permissions
         $permission = Permission::create(['name' => config('constant.Permission_Supplier') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Supplier_Registry') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Supplier_Show') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Supplier_Creation') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Supplier_Update') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
 
         $permission = Permission::create(['name' => config('constant.Permission_Brand') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Brand_Registry') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Brand_Show') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Brand_Creation') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Brand_Update') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
 
         $permission = Permission::create(['name' => config('constant.Permission_Item') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Item_Registry') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Item_Show') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Item_Creation') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Item_Update') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
 
         $permission = Permission::create(['name' => config('constant.Permission_Stock') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Stock_Registry') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Stock_Show') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Stock_Creation') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Stock_Update') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
 
         $permission = Permission::create(['name' => config('constant.Permission_Inventory') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Inventory_Registry') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Inventory_Show') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Inventory_Creation') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Inventory_Update') ]);
         $role_admin->givePermissionTo($permission);
+        $role_inventory->givePermissionTo($permission);
 
 
 
         $user = \App\Models\User::where('email','admin@test.com')->first();
+        $user->assignRole( config('constant.ROLE_SUPER_ADMIN') );
+
+        $user = \App\Models\User::where('email','systemadmin@test.com')->first();
         $user->assignRole( config('constant.ROLE_SUPER_ADMIN') );
     }
 }

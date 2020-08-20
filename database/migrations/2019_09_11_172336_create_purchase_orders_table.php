@@ -13,11 +13,32 @@ class CreatePurchaseOrdersTable extends Migration
      */
     public function up()
     {
+        Schema::create('company_purchase_order_status', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('code');
+        });
+
+        DB::table('company_purchase_order_status')->insert([
+            [
+                'id'=>1,
+                'code'=>'Pending'
+            ],
+            [
+                'id'=>2,
+                'code'=>'Approved'
+            ],
+            [
+                'id'=>3,
+                'code'=>'Posted to GRN'
+            ]
+        ]);
+
         Schema::create('company_purchase_orders', function (Blueprint $table) {
 
             $table->increments('id');
             $table->unsignedInteger('purchase_requisition_id')->nullable();
             $table->unsignedInteger('supplier_id')->nullable();
+            $table->unsignedInteger('company_id')->nullable();
             $table->unsignedInteger('company_division_id');
             $table->unsignedInteger('created_by');
 
@@ -30,15 +51,27 @@ class CreatePurchaseOrdersTable extends Migration
 
             $table->timestamps();
 
+            $table->string('userdef1')->nullable();
+            $table->string('userdef2')->nullable();
+            $table->string('userdef3')->nullable();
+            $table->string('userdef4')->nullable();
+            $table->string('userdef5')->nullable();
+            $table->string('userdef6')->nullable();
+            $table->string('userdef7')->nullable();
+            $table->string('userdef8')->nullable();
+            $table->string('userdef9')->nullable();
+
             $table->foreign('purchase_requisition_id')
                 ->references('id')
-                ->on('purchase_requisitions')
-                ->onDelete('cascade');
+                ->on('purchase_requisitions');
+
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies');
 
             $table->foreign('company_division_id')
                 ->references('id')
-                ->on('company_divisions')
-                ->onDelete('cascade');
+                ->on('company_divisions');
 
         });
 
@@ -59,7 +92,7 @@ class CreatePurchaseOrdersTable extends Migration
             $table->unsignedInteger('company_division_id')->nullable();
 
             $table->timestamps();
-            $table->foreign('company_division_id')->references('id')->on('company_divisions')->onDelete('cascade');
+            $table->foreign('company_division_id')->references('id')->on('company_divisions');
 
         });
     }
@@ -73,5 +106,6 @@ class CreatePurchaseOrdersTable extends Migration
     {
         Schema::dropIfExists('company_purchase_orders');
         Schema::dropIfExists('customer_purchase_orders');
+        Schema::dropIfExists('company_purchase_order_status');
     }
 }

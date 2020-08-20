@@ -7,6 +7,9 @@ use App\Models\Ims\Category;
 use App\Models\Ims\ItemCode;
 use App\Models\Ims\Stock;
 use App\Models\Ims\StockItem;
+use App\Models\Ims\Color;
+use App\Models\Ims\Size;
+use App\Models\Ims\ItemCodeBatch;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -33,7 +36,10 @@ class ItemController extends Controller
     {
         $Brands = Brand::all()->pluck('name','id');
         $Categories = Category::all()->pluck('name','id');
-        return view('admin.ims.item.create',compact(['Brands','Categories']));
+        $ItemCodeBatches = ItemCodeBatch::all()->pluck('code','id');
+        $Colors = Color::all()->pluck('code','id');
+        $Sizes = Size::all()->pluck('code','id');
+        return view('admin.ims.item.create',compact(['Brands','Categories','ItemCodeBatches','Colors','Sizes']));
     }
 
     /**
@@ -50,7 +56,6 @@ class ItemController extends Controller
         $request->validate([
             'name' => 'required',
             'brand_id' => 'required',
-            'category_id' => 'required',
             'unit_cost' => 'required',
             'selling_price'=>'required'
         ]);
@@ -82,6 +87,9 @@ class ItemController extends Controller
             'name'=>$request->name,
             'brand_id'=>$request->brand_id,
             'category_id'=>$request->category_id,
+            'item_code_batch_id'=>$request->item_code_batch_id,
+            'color_id'=>$request->color_id,
+            'size_id'=>$request->size_id,
             'description'=>$request->description,
             'unit_cost'=>$request->unit_cost,
             'selling_price'=>$SellingPrice,
@@ -107,7 +115,6 @@ class ItemController extends Controller
 
                 StockItem::create([
                             'stock_id'=>$Stock->id,
-                            'brand_id'=>$Brand->id,
                             'item_code_id'=>$ItemCode->id,
                             'item_code'=>$ItemCode->name,
                             'unit_price'=>$ItemCode->unit_cost,
@@ -138,7 +145,10 @@ class ItemController extends Controller
         $Brands = Brand::all()->pluck('name','id');
         $Categories = Category::all()->pluck('name','id');
         $Item = ItemCode::findorfail($id);
-        return view('admin.ims.item.show',compact(['Brands','Item','Categories']));
+        $ItemCodeBatches = ItemCodeBatch::all()->pluck('code','id');
+        $Colors = Color::all()->pluck('code','id');
+        $Sizes = Size::all()->pluck('code','id');
+        return view('admin.ims.item.show',compact(['Brands','Item','Categories','ItemCodeBatches','Colors','Sizes']));
     }
 
     /**
@@ -189,6 +199,9 @@ class ItemController extends Controller
         $Item->name = $request->name;
         $Item->brand_id = $request->brand_id;
         $Item->category_id = $request->category_id;
+        $Item->item_code_batch_id = $request->item_code_batch_id;
+        $Item->color_id = $request->color_id;
+        $Item->size_id = $request->size_id;
         $Item->description = $request->description;
         $Item->unit_cost = $request->unit_cost;
         $Item->selling_price = $SellingPrice;
@@ -211,12 +224,12 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        $Item = ItemCode::findorfail($id);
-        if($Item->stockItem){
-            dd("You can't delete this item. Because this has some stock");
-        }else{
-            $Item->delete();
-            return redirect()->route('item.index');
-        }
+//        $Item = ItemCode::findorfail($id);
+//        if($Item->stockItem){
+//            dd("You can't delete this item. Because this has some stock");
+//        }else{
+//            $Item->delete();
+//            return redirect()->route('item.index');
+//        }
     }
 }

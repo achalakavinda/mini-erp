@@ -21,7 +21,7 @@
         </a>
 
         @if(!$CompanyPurchaseOrder->posted_to_grn)
-        <a onclick="postToGRN()" class="btn btn-menu">
+        <a onclick="postToGRN()" id="postToGRNBtn" class="btn btn-menu">
             <i class="main-action-btn-info fa fa-save"></i> Post to GRN
         </a>
         @endif
@@ -49,7 +49,16 @@
 
                 <div class="col-md-12">
                     <div class="col-md-8"></div>
-                    <!-- requisition date -->
+                    <!-- PO date -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="PO Date">Date</label>
+                            <input id="date" class="form-control" name="date" type="date"
+                                value="{{$CompanyPurchaseOrder->date}}">
+                        </div>
+                    </div>
+                    <!-- PO date -->
+                    <div class="col-md-8"></div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label for="Requisition Date">Supplier</label>
@@ -68,26 +77,28 @@
                     <table id="invoiceItemTable" class="table table-bordered">
                         <thead>
                             <tr style="text-align: center">
-                                <th>No</th>
                                 <th>Item</th>
                                 <th>Remarks</th>
                                 <th>QTY</th>
                                 <th>Unit Price (LKR)</th>
                                 <th>Total (LKR)</th>
+                                <th><i class="fa fa-remove"></i></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php $count = 1 ;?>
                             @foreach($CompanyPurchaseOrder->items as $item)
                             <tr class="tr_{{ $count }}">
-                                <td>{{ $count }} <input style="display:none" name="row[{{ $count }}][insert]"
-                                        type="checkbox" checked></td>
                                 <td>
                                     <input style="display:none" type="number" value="{{ $item->item_code_id }}"
                                         name="row[{{ $count }}][model_id]">
                                     <input type="text" name="row[{{ $count }}][model_name]"
                                         value="<?php $Model = \App\Models\Ims\ItemCode::find($item->item_code_id); if($Model!=null){echo $Model->name;}?>"
                                         style="width: 100%">
+                                </td>
+                                <td>
+                                    <input style="width: 100%" type="text" name="row[{{ $count }}][remark]"
+                                        value="{{ $item->remarks }}">
                                 </td>
 
                                 <td>
@@ -96,33 +107,51 @@
                                         value="{{ $item->qty }}">
                                 </td>
                                 <td>
-                                    <input id="price{{ $count }}" type="text" onkeyup="calTol({{ $count+1 }})"
-                                        name="row[{{ $count }}][unit_price]"
-                                        value="{{ number_format($item->unit_price,2) }}"
-                                        style="width: 100%;text-align: right">
+                                    <input style="text-align: right; width: 100%" id="price{{ $count }}" type="number"
+                                        onkeyup="calTol({{ $count+1 }})" name="row[{{ $count }}][unit_price]"
+                                        value="{{ $item->unit_price }}">
                                 </td>
                                 <td>
                                     <input id="tol{{ $count }}" type="text" readonly name="row[{{ $count }}][total]"
                                         style="width: 100%;text-align: right"
                                         value="{{ number_format(($item->qty * $item->unit_price),2) }}"> </td>
+                                <td>
+                                    <a style="cursor: pointer" type="button" onclick="rowRemove('.tr_{{ $count }}')"><i
+                                            class="fa fa-remove"></i></a>
+                                </td>
                             </tr>
                             <?php $count ++ ;?>
                             @endforeach
                         </tbody>
+                        @if (!$CompanyPurchaseOrder->posted_to_grn)
                         <tfoot>
                             <tr>
-                                <td colspan="4"></td>
-                                <td><input readonly style="width: 100%;text-align: right"
-                                        value="{{ number_format($CompanyPurchaseOrder->total,2) }}"></td>
+                                <th>
+                                    <!-- requisition item -->
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            @include('layouts.selectors.ims.item-dropdown.index')
+                                        </div>
+                                    </div> <!-- /requisition item -->
+                                </th>
+                                <th>
+                                    <button id="addNewItem" style="width: 100%" type="button" class="btn">Add</button>
+                                </th>
                             </tr>
                         </tfoot>
+                        @endif
                     </table>
                 </div>
                 <!-- /.col -->
             </div>
             <!-- /.box-body -->
 
-            <div style="height: 100px" class="box-footer">
+            <div class="box-footer">
+                @if (!$CompanyPurchaseOrder->posted_to_grn)
+                <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
+                    Update</button>
+
+                @endif
                 <a href="{{ url('/ims/company-purchase-order/'.$CompanyPurchaseOrder->id.'/print') }}" target="_blank"
                     class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-print"></i> Print</a>
                 {{--                    <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i> Update</button>--}}
@@ -148,6 +177,69 @@
 <script>
     function postToGRN() {
             $('#postToGRN').submit();
+        }
+        var table = $('#invoiceItemTable');
+        var count = parseInt({{ $count }});
+        var RawCount = parseInt({{ $count+1 }});
+
+        $( document ).ready(function() {
+
+            $('#addNewItem').click(function() {
+                var SelecTItemId = $('#ModelSelectId').val();
+                var SelecTModelName = $('#ModelSelectId option:selected').text();
+                $('#postToGRNBtn').fadeOut();
+
+                $.ajax('{!! url('api/item-code-for-purchase-requisitions') !!}/'+SelecTItemId, {
+                    type: 'GET',  // http method
+                    success: function (data, status, xhr) {
+                        if(data.item){
+                            table.append('<tr class="tr_'+count+'">\n' +
+                                '                        <td>\n' +
+                                '                            <input style="display:none" type="number" value="'+SelecTItemId+'" name="row['+count+'][model_id]">\n' +
+                                '                            <input style="width: 100%" readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input style="width: 100%"  type="text" name="row['+count+'][remark]">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input style="text-align: right; width: 100%" id="qty'+count+'"  type="number" onkeyup="calTol('+(RawCount)+')" name="row['+count+'][qty]">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input style="text-align: right; width: 100%" id="price'+count+'"  type="number" onkeyup="calTol('+(RawCount)+')" name="row['+count+'][unit_price]" value="'+data.item.unit_price_with_tax+'">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input style="text-align: right; width: 100%" id="tol'+count+'"  type="number" readonly name="row['+count+'][total]">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <a style="cursor: pointer" type="button" onclick="rowRemove(\'.tr_'+count+'\')"><i class="fa fa-remove"></i></a>\n' +
+                                '                        </td>\n' +
+                                '                    <tr/>');
+                            count++;
+                            RawCount++;
+                        }else{
+                            alert('Empty Items');
+                        }
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                        alert(errorMessage);
+                    }
+                });
+            });
+
+        });
+
+        function rowRemove(value) {
+            $(value).remove();
+        }
+
+        function calTol(count) {
+            let total = 0;
+            let discount = 0;
+            let subtotal = 0;
+            for(let i=0; i<count; i++){
+                $('#tol'+i).val($("#price"+i).val() * $("#qty"+i).val());
+                subtotal = subtotal+parseFloat($('#tol'+i).val());
+            }
         }
 </script>
 @endsection

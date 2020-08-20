@@ -23,6 +23,27 @@
 
             <div class="col-md-12">
                 <div class="form-group">
+                    <label for="Brand">Item Code Batch</label>
+                    {!!
+                    Form::select('item_code_batch_id',$ItemCodeBatches,null,['class'=>'form-control','id'=>'item_code_batch_id'])
+                    !!}
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Brand">Color</label>
+                    {!! Form::select('color_id',$Colors,null,['class'=>'form-control','id'=>'color_id']) !!}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="Brand">Size</label>
+                    {!! Form::select('size_id',$Sizes,null,['class'=>'form-control','id'=>'size_id']) !!}
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
                     {!! Form::label("Name") !!}
                     {!! Form::text('name',null,['class'=>'form-control','id'=>'name','placeholder'=>'Model Name']) !!}
                 </div>
@@ -31,7 +52,9 @@
             <div class="col-md-12">
                 <div class="form-group">
                     {!! Form::label("Description") !!}
-                    {!! Form::text('description',null,['class'=>'form-control','id'=>'description','placeholder'=>'Description']) !!}
+                    {!!
+                    Form::text('description',null,['class'=>'form-control','id'=>'description','placeholder'=>'Description'])
+                    !!}
                 </div>
             </div>
         </div>
@@ -49,14 +72,17 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {!! Form::label("Unit Cost (LKR)") !!}
-                    {!! Form::number('unit_cost',null,['class'=>'form-control','id'=>'unit_cost','placeholder'=>'Unit Cost (LKR)']) !!}
+                    {!! Form::number('unit_cost',null,['class'=>'form-control','id'=>'unit_cost','placeholder'=>'Unit
+                    Cost (LKR)']) !!}
                 </div>
             </div>
 
             <div class="col-md-6">
                 <div class="form-group">
                     {!! Form::label("Selling Price (LKR)") !!}
-                    {!! Form::number('selling_price',null,['class'=>'form-control','id'=>'SellingPrice','placeholder'=>'Selling Price (LKR)']) !!}
+                    {!!
+                    Form::number('selling_price',null,['class'=>'form-control','id'=>'SellingPrice','placeholder'=>'Selling
+                    Price (LKR)']) !!}
                 </div>
             </div>
 
@@ -92,14 +118,14 @@
             <div class="col-md-6">
                 <div class="form-group">
                     {!! Form::label("Vat Tax Percentage %") !!}
-                    {!! Form::number('vat_tax',0,['class'=>'form-control','id'=>'VatTax'])  !!}
+                    {!! Form::number('vat_tax',0,['class'=>'form-control','id'=>'VatTax']) !!}
                 </div>
             </div>
 
             <div class="col-md-2">
                 <div class="form-group">
                     {!! Form::label("Opening Stock") !!}
-                    {!!  Form::number('opening_stock_qty',0,['class'=>'form-control','id'=>'opening_stock_qty']) !!}
+                    {!! Form::number('opening_stock_qty',0,['class'=>'form-control','id'=>'opening_stock_qty']) !!}
                 </div>
             </div>
         </div>

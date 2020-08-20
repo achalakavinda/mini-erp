@@ -91,6 +91,8 @@
                         <tr>
                             <th>Code</th>
                             <th>Brand</th>
+                            <th>Size</th>
+                            <th>Color</th>
                             <th>Stock Qty</th>
                             <th>Total Inventory</th>
                         </tr>
@@ -100,12 +102,32 @@
                         <?php $total = 0;?>
                         @foreach($Stocks as $stock)
                             <?php
-                            $CODE = \App\Models\Ims\ItemCode::find($stock->item_code_id);
-                            $BRAND = \App\Models\Ims\Brand::find($CODE->brand_id);
+                                $brand = '';
+                                $size = '';
+                                $color = '';
+
+                                $CODE = \App\Models\Ims\ItemCode::find($stock->item_code_id);
+
+                                if($CODE){
+                                    if($CODE->brand_id){
+                                        $B = \App\Models\Ims\Brand::find($CODE->brand_id);
+                                        $brand = $B? $B->name:'';
+                                    }
+                                    if($CODE->size_id){
+                                        $S = \App\Models\Ims\Size::find($CODE->size_id);
+                                        $size = $S? $S->code:'';
+                                    }
+                                    if($CODE->color_id){
+                                        $C = \App\Models\Ims\Color::find($CODE->color_id);
+                                        $color = $C? $C->code:'';
+                                    }
+                                }
                             ?>
                             <tr>
-                                <td>{!! $CODE->name !!}</td>
-                                <td>{!! $BRAND->name !!}</td>
+                                <td>{!! $CODE?$CODE->name:'' !!}</td>
+                                <td>{!! $brand !!}</td>
+                                <td>{!! $size !!}</td>
+                                <td>{!! $color !!}</td>
                                 <td style="text-align: right">{!! $stock->tol_qty !!}</td>
                                 <td style="text-align: right">{!! number_format($stock->total, 2) !!}/=</td>
                                 <?php $total = $total + $stock->total;?>
@@ -115,7 +137,7 @@
 
                         <tfoot>
                         <tr>
-                            <th colspan="3" style="text-align: right"></th>
+                            <th colspan="5" style="text-align: right"></th>
                             <th style="text-align: right">{{ number_format($total, 2) }}/=</th>
                         </tr>
                         </tfoot>

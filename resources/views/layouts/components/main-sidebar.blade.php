@@ -147,9 +147,9 @@
                         </a>
 
                         <ul class="treeview-menu">
-                            <li><a href="{{ url('ims/sales-orders') }}"><i class="fa fa-table"></i> Sales Orders</a>
+                            <li><a href="{{ url('ims/sales-order') }}"><i class="fa fa-table"></i> Sales Orders</a>
                             </li>
-                            <li><a href="{{ url('ims/sales-orders/create') }}"><i class="fa fa-plus"></i> New</a></li>
+                            <li><a href="{{ url('ims/sales-order/create') }}"><i class="fa fa-plus"></i> New</a></li>
                         </ul>
                     </li>
 

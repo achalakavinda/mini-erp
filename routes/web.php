@@ -90,6 +90,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('/brand','Ims\BrandController');
         Route::resource('/category','Ims\CategoryController');
         Route::resource('/item','Ims\ItemController');
+        Route::resource('/color','Ims\ColorController');
+        Route::resource('/size','Ims\SizeController');
+        Route::resource('/item-code-batch','Ims\ItemCodeBatchController');
 
         Route::resource('/purchase-requisition','Ims\PurchaseRequisitionController');
         Route::resource('/company-purchase-order','Ims\CompanyPurchaseOrderController');
@@ -107,10 +110,18 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/purchase-requisition/post-to-grn','Ims\PurchaseRequisitionController@postToGRN');
         Route::post('/company-purchase-order/post-to-grn','Ims\CompanyPurchaseOrderController@postToGRN');
         Route::post('/grn/post-to-stock','Ims\GrnController@postToStock');
+        Route::post('/quotation/post-to-sales-orders','Ims\QuotationController@postToSalesOrders');
+        Route::post('/quotation/post-to-invoice','Ims\QuotationController@postToInvoice');
+        Route::post('/sales-order/post-to-invoice','Ims\SalesOrderController@postToInvoice');
 
 
         //print routes
         Route::get('/invoice/{id}/print','Ims\InvoiceController@print');
+    });
+
+    Route::prefix('accounting')->group(function ()
+    {
+        Route::resource('/payment','Accounting\PaymentController');
     });
 
     Route::group(['middleware' => ['permission:Settings']], function () {

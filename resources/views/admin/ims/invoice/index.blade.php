@@ -35,29 +35,36 @@
                     <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>#ID</th>
                             <th>Invoice No</th>
                             <th>PO. No</th>
                             <th>Customer</th>
-                            <th>Amount</th>
-                            <th>Discount</th>
-                            <th>Total</th>
-                            <th><i class="fa fa-cogs"></i></th>
+                            <th>Payment Status</th>
+                            <th style="text-align: right">Amount</th>
+                            <th style="text-align: right">Discount</th>
+                            <th style="text-align: right">Total</th>
+                            <th style="text-align: right">Received Payment</th>
+                            <th style="text-align: right">Due Amount</th>
+                            <th style="text-align: right"><i class="fa fa-cogs"></i></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($Items as $item)
                             <tr>
-                                <td>{!! $item->id !!}</td>
-                                <td>{!! $item->invoice_no !!}</td>
+                                <td>{!! $item->code !!}</td>
                                 <td>{!! $item->purchase_order !!}</td>
-                                <td><?php $CM = \App\Models\Customer::find($item->customer_id); if($CM!=null){echo $CM->name;}?></td>
-                                <td>{!! $item->amount !!}</td>
-                                <td>{!! $item->discount !!}</td>
-                                <td>{!! $item->total !!}</td>
                                 <td>
-                                    <a style="padding: 10px" href="{!! url('ims/invoice') !!}/{!! $item->id !!}"><i class="fa fa-list"></i></a>
-                                    <a target="_blank" style="padding: 10px" href="{!! url('ims/invoice') !!}/{!! $item->id !!}/print"><i class="fa fa-print"></i></a>
+                                    {{ $item->customer?$item->customer->name:'No Customer' }}
+                                </td>
+                                <td style="color: red;font-weight: bold">{!! $item->paymentStatus?strtoupper($item->paymentStatus->code):'No Payment Status' !!}</td>
+                                <td style="text-align: right"> {!! number_format($item->amount,0) !!}</td>
+                                <td style="text-align: right">{!! $item->discount !!}%</td>
+                                <td style="text-align: right">{!! number_format( $item->total,2) !!}</td>
+                                <td style="text-align: right">{!! number_format(0,2) !!}</td>
+                                <td style="text-align: right">{!! number_format($item->total,2) !!}</td>
+                                <td>
+                                    <a style="padding: 10px" href="{!! url('ims/invoice') !!}/{!! $item->id !!}"><i class="fa fa-list"></i> Edit</a>
+                                    <a style="padding: 10px" href="{!! url('accounting/payment/invoice/'.$item->id) !!}"><i class="fa fa-credit-card"></i> Make a Payment</a>
+                                    <a target="_blank" style="padding: 10px" href="{!! url('ims/invoice') !!}/{!! $item->id !!}/print"><i class="fa fa-print"></i> Print</a>
                                 </td>
                             </tr>
                         @endforeach

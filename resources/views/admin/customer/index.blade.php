@@ -35,20 +35,24 @@
                     <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>Firm File No :</th>
                             <th>Name</th>
                             <th>Contact</th>
+                            <th>NIC/Passport No</th>
+                            <th>Address</th>
                             <th>Email</th>
+                            <th>DOB</th>
                             <th>View</th>
                         </tr>
                         </thead>
                         <tbody>
                             @foreach($Customers as $customer)
                                 <tr>
-                                    <td>{!! $customer->file_no !!}</td>
                                     <td>{!! $customer->name !!}</td>
                                     <td>{!! $customer->contact !!}</td>
+                                    <td>{!! $customer->address_1 !!}</td>
+                                    <td>NIC:@if($customer->nic)  {{ $customer->nic }}@endif <br/> Pass:  @if($customer->passport)  {{ $customer->passport }}@endif </td>
                                     <td>{!! $customer->email !!}</td>
+                                    <td>{!! $customer->dob !!}</td>
                                     <td>
                                         <a href="{!! url('/customer/') !!}/{!! $customer->id !!}"><i class="fa fa-paper-plane"></i></a>
                                     </td>

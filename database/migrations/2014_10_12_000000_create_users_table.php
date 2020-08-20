@@ -56,8 +56,10 @@ class CreateUsersTable extends Migration
 
             $table->rememberToken();
             $table->timestamps();
-            $table->unsignedInteger('created_by')->nullable();
-            $table->unsignedInteger('updated_by')->nullable();
+            $table->unsignedInteger('created_by')
+                ->nullable();
+            $table->unsignedInteger('updated_by')
+                ->nullable();
 
         });
 
@@ -67,6 +69,13 @@ class CreateUsersTable extends Migration
                 'name' => 'admin',
                 'email' => 'admin@test.com',
                 'password' => bcrypt('admin123'),
+                'date_joined'=>\Carbon\Carbon::now()
+            ],
+            [
+                'id'=>2,
+                'name' => 'system admin',
+                'email' => 'systemadmin@test.com',
+                'password' => bcrypt('sysadmin123'),
                 'date_joined'=>\Carbon\Carbon::now()
             ]
         ]);

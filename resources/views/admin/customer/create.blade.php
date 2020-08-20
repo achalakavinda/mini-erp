@@ -1,11 +1,10 @@
 @extends('layouts.admin')
-
-<!-- main header section -->
 @section('main-content-header')
+    <!-- main header section -->
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Customers</h3>
+            <h3 class="box-title">New Customer</h3>
         </div>
         @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
@@ -25,39 +24,26 @@
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
+    <!-- /main header section -->
 @endsection
-<!-- /main header section -->
-<!-- main section -->
+
 @section('main-content')
     <div class="row">
-        <div class="col-md-12">
-            <!-- general form elements -->
-            <div class="box box-primary">
-                <div class="box-header with-border">
-                    <h3 class="box-title">New Company</h3>
-
-                    @include('error.error')
-                </div>
-                <!-- /.box-header -->
-                <!-- form start -->
-                {!! Form::open(['action'=>'CustomerController@store','class'=>'form-horizontal','id'=>'Form']) !!}
-                    @include('admin.customer._partial.createForm')
-                {!! Form::close() !!}
-            </div>
-            <!-- /.box -->
-        </div>
+        @include('error.error')
+        {!! Form::open(['action'=>'CustomerController@store','class'=>'form-horizontal','id'=>'Form']) !!}
+        @include('admin.customer._partial.createFormBasic')
+        {!! Form::close() !!}
     </div>
     <!-- /.row -->
-
 @endsection
-<!-- /main section -->
+
 
 @section('js')
-    @include('error.swal')
-    <script>
-        $('#ShowAdvance').on('click',function () {
-            $('#AdvanceForm').fadeIn('slow');
-            $('#ShowAdvance').hide();
-        })
-    </script>
+            @include('error.swal')
+            <script>
+                $('#ShowAdvance').on('click',function () {
+                    $('#AdvanceForm').fadeIn('slow');
+                    $('#ShowAdvance').hide();
+                })
+            </script>
 @endsection

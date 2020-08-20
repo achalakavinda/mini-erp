@@ -44,7 +44,7 @@ class CreateWorkSheetsTable extends Migration
             $table->text('remark')->nullable();
             $table->timestamps();
 
-            $table->foreign('user_id')->references('id')->on('users')->onDelte('cascade');
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

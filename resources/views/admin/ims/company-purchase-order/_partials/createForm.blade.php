@@ -47,9 +47,7 @@
                 <tfoot>
                     <tr>
                         <th>No</th>
-                        <th>{!!
-                            Form::select('model_select_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ModelSelectId','class'=>'form-control'])
-                            !!}</th>
+                        <th>@include('layouts.selectors.ims.item-dropdown.index')</th>
                         <th><button id="addNewItem" type="button" style="width: 100%" class="btn">Add</button></th>
                     </tr>
                 </tfoot>
@@ -137,7 +135,6 @@
 
                             count++;
                             RawCount++;
-                            $('#ModelSelectId option:selected').remove();
 
                         }else{
                             alert('Empty Items');
@@ -155,6 +152,23 @@
         function rowRemove(value) {
             alert(value);
             $(value).remove();
+        }
+        function calTol(count) {
+            let total = 0;
+            let discount = 0;
+            let subtotal = 0;
+            for(let i=0; i<count; i++){
+                $('#tol'+i).val($("#price"+i).val() * $("#qty"+i).val());
+                subtotal = subtotal+parseFloat($('#tol'+i).val());
+            }
+            $('#subtotal').val(subtotal);
+
+            if(parseFloat($('#discountpercentage').val())>0){
+                let disamount = subtotal*(parseFloat($('#discountpercentage').val())/100);
+                $('#total').val(subtotal-disamount);
+            }else{
+                $('#total').val(subtotal);
+            }
         }
 </script>
 

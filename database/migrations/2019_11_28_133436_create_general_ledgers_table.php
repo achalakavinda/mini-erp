@@ -22,8 +22,8 @@ class CreateGeneralLedgersTable extends Migration
             $table->float('amount')->default(0);
             $table->unsignedInteger('user_id');
 
-            $table->foreign('g_l_code_id')->references('id')->on('g_l_codes')->onDelete('cascade');
-            $table->foreign('journal_code_id')->references('id')->on('journal_codes')->onDelete('cascade');
+            $table->foreign('g_l_code_id')->references('id')->on('g_l_codes');
+            $table->foreign('journal_code_id')->references('id')->on('journal_codes');
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->timestamps();

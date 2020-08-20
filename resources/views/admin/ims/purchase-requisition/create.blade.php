@@ -47,6 +47,18 @@
                             !!}
                         </div>
                     </div> <!-- /requisition date -->
+                    <div class="col-md-8"></div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="GRN Date">Supplier</label>
+                            <select name="supplier_id" class="form-control">
+                                <option value="">Select a Supplier</option>
+                                @foreach(\App\Models\Ims\Supplier::all() as $supplier)
+                                <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                 </div>
 
                 <!-- requisition item table -->
@@ -70,9 +82,7 @@
                                     <!-- requisition item -->
                                     <div class="col-md-12">
                                         <div class="form-group">
-                                            {!!
-                                            Form::select('item_code_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ItemCodeId','class'=>'form-control ui search dropdown'])
-                                            !!}
+                                            @include('layouts.selectors.ims.item-dropdown.index')
                                         </div>
                                     </div> <!-- /requisition item -->
                                 </th>
@@ -100,7 +110,7 @@
 <!-- /main section -->
 
 @section('js')
-    @include('layouts.components.sematic-ui.dropdown')
+@include('layouts.components.sematic-ui.dropdown')
 <script>
     var table = $('#requisitionItemTable');
         var count = 0;
@@ -109,8 +119,8 @@
         $( document ).ready(function() {
 
             $('#addNewItem').click(function() {
-                var SelecTItemId = $('#ItemCodeId').val();
-                var SelecTModelName = $('#ItemCodeId option:selected').text();
+                var SelecTItemId = $('#ModelSelectId').val();
+                var SelecTModelName = $('#ModelSelectId option:selected').text();
 
                 $.ajax('{!! url('api/item-code-for-purchase-requisitions') !!}/'+SelecTItemId, {
                     type: 'GET',  // http method
@@ -140,7 +150,6 @@
                                 '                    <tr/>');
                             count++;
                             RawCount++;
-                            $('#ItemCodeId option:selected').remove();
                         }else{
                             alert('Empty Items');
                         }
