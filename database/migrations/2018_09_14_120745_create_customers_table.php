@@ -63,18 +63,15 @@ class CreateCustomersTable extends Migration
 
             $table->foreign('secretary_id')
                 ->references('id')
-                ->on('customer_secretaries')
-                ->onDelete('cascade');
+                ->on('customer_secretaries');
 
             $table->foreign('service_id')
                 ->references('id')
-                ->on('customer_services')
-                ->onDelete('cascade');
+                ->on('customer_services');
 
             $table->foreign('sector_id')
                 ->references('id')
-                ->on('customer_sectors')
-                ->onDelete('cascade');
+                ->on('customer_sectors');
         });
 
     }

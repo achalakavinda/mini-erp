@@ -30,7 +30,7 @@ class CreateProjectDesignationsTable extends Migration
             $table->unsignedInteger('updated_by_id');
 
             $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('project_designation_id')->references('id')->on('designations')->onDelete('cascade');
+            $table->foreign('project_designation_id')->references('id')->on('designations');
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('created_by_id')->references('id')->on('users');
             $table->foreign('updated_by_id')->references('id')->on('users');

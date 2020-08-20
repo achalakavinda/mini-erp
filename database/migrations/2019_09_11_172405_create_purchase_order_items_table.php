@@ -38,27 +38,24 @@ class CreatePurchaseOrderItemsTable extends Migration
             $table->string('userdef7')->nullable();
             $table->string('userdef8')->nullable();
             $table->string('userdef9')->nullable();
-            
+
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies');
-                
+
             $table->foreign('company_division_id')
                 ->references('id')
-                ->on('company_divisions')
-                ->onDelete('cascade');
+                ->on('company_divisions');
 
             $table->foreign('company_purchase_order_id')
                 ->references('id')
-                ->on('company_purchase_orders')
-                ->onDelete('cascade');
+                ->on('company_purchase_orders');
 
 
 
             $table->foreign('item_code_id')
                 ->references('id')
-                ->on('item_codes')
-                ->onDelete('cascade');
+                ->on('item_codes');
 
         });
 
@@ -75,10 +72,10 @@ class CreatePurchaseOrderItemsTable extends Migration
             $table->unsignedInteger('company_division_id');
             $table->timestamps();
 
-            $table->foreign('customer_purchase_order_id')->references('id')->on('customer_purchase_orders')->onDelete('cascade');
-            $table->foreign('brand_id')->references('id')->on('brands')->onDelete('cascade');
-            $table->foreign('company_division_id')->references('id')->on('company_divisions')->onDelete('cascade');
-            $table->foreign('item_code_id')->references('id')->on('item_codes')->onDelete('cascade');
+            $table->foreign('customer_purchase_order_id')->references('id')->on('customer_purchase_orders');
+            $table->foreign('brand_id')->references('id')->on('brands');
+            $table->foreign('company_division_id')->references('id')->on('company_divisions');
+            $table->foreign('item_code_id')->references('id')->on('item_codes');
 
         });
     }

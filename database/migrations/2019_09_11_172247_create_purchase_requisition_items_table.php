@@ -40,22 +40,19 @@ class CreatePurchaseRequisitionItemsTable extends Migration
 
             $table->foreign('purchase_requisition_id')
                 ->references('id')
-                ->on('purchase_requisitions')
-                ->onDelete('cascade');
+                ->on('purchase_requisitions');
 
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies');
-                
+
             $table->foreign('company_division_id')
                 ->references('id')
-                ->on('company_divisions')
-                ->onDelete('cascade');
+                ->on('company_divisions');
 
             $table->foreign('item_code_id')
                 ->references('id')
-                ->on('item_codes')
-                ->onDelete('cascade');
+                ->on('item_codes');
 
         });
     }

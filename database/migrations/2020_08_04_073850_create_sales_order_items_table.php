@@ -42,18 +42,15 @@ class CreateSalesOrderItemsTable extends Migration
 
             $table->foreign('sales_order_id')
                 ->references('id')
-                ->on('sales_orders')
-                ->onDelete('cascade');
+                ->on('sales_orders');
 
             $table->foreign('brand_id')
                 ->references('id')
-                ->on('brands')
-                ->onDelete('cascade');
+                ->on('brands');
 
             $table->foreign('item_code_id')
                 ->references('id')
-                ->on('item_codes')
-                ->onDelete('cascade');
+                ->on('item_codes');
 
             $table->foreign('company_id')
                 ->references('id')
@@ -61,8 +58,7 @@ class CreateSalesOrderItemsTable extends Migration
 
             $table->foreign('company_division_id')
                 ->references('id')
-                ->on('company_divisions')
-                ->onDelete('cascade');
+                ->on('company_divisions');
 
         });
     }

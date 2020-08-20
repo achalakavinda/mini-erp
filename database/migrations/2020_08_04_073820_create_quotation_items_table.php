@@ -41,22 +41,19 @@ class CreateQuotationItemsTable extends Migration
 
             $table->foreign('quotation_id')
                 ->references('id')
-                ->on('quotations')
-                ->onDelete('cascade');
+                ->on('quotations');
 
             $table->foreign('item_code_id')
                 ->references('id')
-                ->on('item_codes')
-                ->onDelete('cascade');
+                ->on('item_codes');
 
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies');
-                
+
             $table->foreign('company_division_id')
                 ->references('id')
-                ->on('company_divisions')
-                ->onDelete('cascade');
+                ->on('company_divisions');
         });
     }
 

@@ -47,8 +47,11 @@ class CreateEmployeesTable extends Migration
             $table->double('hr_billing_rates')->nullable();
 
             $table->timestamps();
-            $table->unsignedInteger('created_by')->nullable();
-            $table->unsignedInteger('updated_by')->nullable();
+            $table->unsignedInteger('created_by')
+                ->nullable();
+
+            $table->unsignedInteger('updated_by')
+                ->nullable();
 
 
         });

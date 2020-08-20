@@ -41,11 +41,10 @@ class CreateGrnsTable extends Migration
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies');
-                
+
             $table->foreign('company_division_id')
                 ->references('id')
-                ->on('company_divisions')
-                ->onDelete('cascade');
+                ->on('company_divisions');
 
             $table->foreign('supplier_id')
                 ->references('id')

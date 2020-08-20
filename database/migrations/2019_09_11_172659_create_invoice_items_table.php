@@ -46,8 +46,7 @@ class CreateInvoiceItemsTable extends Migration
 
             $table->foreign('invoice_id')
                 ->references('id')
-                ->on('invoices')
-                ->onDelete('cascade');
+                ->on('invoices');
 
             $table->foreign('company_id')
                 ->references('id')
@@ -55,18 +54,15 @@ class CreateInvoiceItemsTable extends Migration
 
             $table->foreign('company_division_id')
                 ->references('id')
-                ->on('company_divisions')
-                ->onDelete('cascade');
+                ->on('company_divisions');
 
             $table->foreign('item_code_id')
                 ->references('id')
-                ->on('item_codes')
-                ->onDelete('cascade');
+                ->on('item_codes');
 
             $table->foreign('stock_item_id')
                 ->references('id')
-                ->on('stock_items')
-                ->onDelete('cascade');
+                ->on('stock_items');
 
         });
     }

@@ -65,11 +65,10 @@ class CreatePurchaseRequisitionsTable extends Migration
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies');
-                
+
             $table->foreign('company_division_id')
                 ->references('id')
-                ->on('company_divisions')
-                ->onDelete('cascade');
+                ->on('company_divisions');
 
             $table->foreign('purchase_requisition_status_id')
                 ->references('id')

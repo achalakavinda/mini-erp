@@ -19,6 +19,17 @@ class CreatePaymentsTable extends Migration
             $table->timestamps();
         });
 
+        DB::table('payment_types')->insert([
+            [
+                'id'=>1,
+                'code' => 'collection',
+            ],
+            [
+                'id'=>2,
+                'code' => 'payment',
+            ]
+        ]);
+
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('payment_type_id');

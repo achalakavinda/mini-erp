@@ -56,8 +56,10 @@ class CreateUsersTable extends Migration
 
             $table->rememberToken();
             $table->timestamps();
-            $table->unsignedInteger('created_by')->nullable();
-            $table->unsignedInteger('updated_by')->nullable();
+            $table->unsignedInteger('created_by')
+                ->nullable();
+            $table->unsignedInteger('updated_by')
+                ->nullable();
 
         });
 

@@ -65,13 +65,12 @@ class CreateItemCodesTable extends Migration
 
             $table->foreign('brand_id')
                 ->references('id')
-                ->on('brands')
-                ->onDelete('cascade');
+                ->on('brands');
 
             $table->foreign('item_code_batch_id')
                 ->references('id')
                 ->on('item_code_batches');
-                
+
             $table->foreign('color_id')
                 ->references('id')
                 ->on('colors');

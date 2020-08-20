@@ -13,6 +13,26 @@ class CreatePurchaseOrdersTable extends Migration
      */
     public function up()
     {
+        Schema::create('company_purchase_order_status', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('code');
+        });
+
+        DB::table('company_purchase_order_status')->insert([
+            [
+                'id'=>1,
+                'code'=>'Pending'
+            ],
+            [
+                'id'=>2,
+                'code'=>'Approved'
+            ],
+            [
+                'id'=>3,
+                'code'=>'Posted to GRN'
+            ]
+        ]);
+
         Schema::create('company_purchase_orders', function (Blueprint $table) {
 
             $table->increments('id');
@@ -43,8 +63,7 @@ class CreatePurchaseOrdersTable extends Migration
 
             $table->foreign('purchase_requisition_id')
                 ->references('id')
-                ->on('purchase_requisitions')
-                ->onDelete('cascade');
+                ->on('purchase_requisitions');
 
             $table->foreign('company_id')
                 ->references('id')
@@ -52,8 +71,7 @@ class CreatePurchaseOrdersTable extends Migration
 
             $table->foreign('company_division_id')
                 ->references('id')
-                ->on('company_divisions')
-                ->onDelete('cascade');
+                ->on('company_divisions');
 
         });
 
@@ -74,7 +92,7 @@ class CreatePurchaseOrdersTable extends Migration
             $table->unsignedInteger('company_division_id')->nullable();
 
             $table->timestamps();
-            $table->foreign('company_division_id')->references('id')->on('company_divisions')->onDelete('cascade');
+            $table->foreign('company_division_id')->references('id')->on('company_divisions');
 
         });
     }
@@ -88,5 +106,6 @@ class CreatePurchaseOrdersTable extends Migration
     {
         Schema::dropIfExists('company_purchase_orders');
         Schema::dropIfExists('customer_purchase_orders');
+        Schema::dropIfExists('company_purchase_order_status');
     }
 }

@@ -42,18 +42,15 @@ class CreateStocksTable extends Migration
 
             $table->foreign('stock_location_id')
                 ->references('id')
-                ->on('stock_location')
-                ->onDelete('cascade');
+                ->on('stock_location');
 
             $table->foreign('company_division_id')
                 ->references('id')
-                ->on('company_divisions')
-                ->onDelete('cascade');
+                ->on('company_divisions');
 
             $table->foreign('company_id')
                 ->references('id')
-                ->on('companies')
-                ->onDelete('cascade');
+                ->on('companies');
 
         });
     }
