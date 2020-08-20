@@ -13,8 +13,17 @@ class CreatePaymentsTable extends Migration
      */
     public function up()
     {
+        Schema::create('payment_types', function (Blueprint $table) {
+            $table->id();
+            $table->string('code')->unique();
+            $table->timestamps();
+        });
+
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('payment_type_id');
+            $table->double('total');
+            $table->unsignedInteger('created_by')->nullable();
             $table->timestamps();
         });
     }
@@ -27,5 +36,6 @@ class CreatePaymentsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('payments');
+        Schema::dropIfExists('payment_types');
     }
 }

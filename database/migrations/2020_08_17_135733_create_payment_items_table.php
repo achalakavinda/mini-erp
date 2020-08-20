@@ -15,6 +15,14 @@ class CreatePaymentItemsTable extends Migration
     {
         Schema::create('payment_items', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('payment_id');
+            $table->foreignId('grn_id')->nullable();
+            $table->foreignId('invoice_id')->nullable();
+            $table->double('amount');
+            $table->double('remain_amount');
+            $table->double('due_amount');
+            $table->text('remarks')->nullable();
+
             $table->timestamps();
         });
     }
