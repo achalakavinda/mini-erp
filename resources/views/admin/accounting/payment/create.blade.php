@@ -135,13 +135,13 @@
                                 '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input id="total'+count+'" disabled type="number" name="row['+count+'][total]" value="'+data.invoice.total+'" style="width: 100%">\n' +
+                                '                            <input id="total'+count+'" readonly type="number" name="row['+count+'][total]" value="'+data.invoice.total+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input onkeyup="calTol('+(count+1)+')" id="amount'+count+'"  type="number" name="row['+count+'][amount]" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input id="due_amount'+count+'"  type="number" disabled name="row['+count+'][due_amount]" value="'+data.due_amount+'" style="width: 100%">\n' +
+                                '                            <input id="due_amount'+count+'"  type="number" readonly name="row['+count+'][due_amount]" value="'+data.due_amount+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input  style="width: 100%" type="text" name="row['+count+'][remark]">\n' +
