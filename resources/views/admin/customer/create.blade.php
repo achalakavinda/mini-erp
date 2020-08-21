@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+
 @section('main-content-header')
     <!-- main header section -->
     <!-- Default box -->
@@ -8,16 +9,16 @@
         </div>
         @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
-            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+            <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
             </a>
-            <a href="{!! url('customer') !!}" class="btn btn-app">
+            <a href="{!! url('customer') !!}" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-arrow-left"></i> Go Back
             </a>
-            <a href="{!! url('customer/create') !!}" class="btn btn-app">
+            <a href="{!! url('customer/create') !!}" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-refresh"></i> Refresh
             </a>
-            <a href="#" id="ShowAdvance" class="btn btn-app">
+            <a href="#" id="ShowAdvance" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-list"></i> Show all Fields
             </a>
         </div>
@@ -39,11 +40,11 @@
 
 
 @section('js')
-            @include('error.swal')
-            <script>
-                $('#ShowAdvance').on('click',function () {
-                    $('#AdvanceForm').fadeIn('slow');
-                    $('#ShowAdvance').hide();
-                })
-            </script>
+    @include('error.swal')
+    <script>
+        $('#ShowAdvance').on('click',function () {
+            $('#AdvanceForm').fadeIn('slow');
+            $('#ShowAdvance').hide();
+        })
+    </script>
 @endsection
