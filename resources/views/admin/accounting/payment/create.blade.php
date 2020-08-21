@@ -135,10 +135,10 @@
                                 '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input onkeyup="calTol('+(count+1)+')" id="total'+count+'" disabled type="number" name="row['+count+'][total]" value="'+data.invoice.total+'" style="width: 100%">\n' +
+                                '                            <input id="total'+count+'" disabled type="number" name="row['+count+'][total]" value="'+data.invoice.total+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input onkeyup="calTol('+(count+1)+')" id="amount'+count+'"  type="number" name="row['+count+'][amount]" value="'+data.due_amount+'" style="width: 100%">\n' +
+                                '                            <input onkeyup="calTol('+(count+1)+')" id="amount'+count+'"  type="number" name="row['+count+'][amount]" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input id="due_amount'+count+'"  type="number" disabled name="row['+count+'][due_amount]" value="'+data.due_amount+'" style="width: 100%">\n' +
@@ -147,7 +147,7 @@
                                 '                            <input  style="width: 100%" type="text" name="row['+count+'][remark]">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <a style="cursor: pointer" type="button" onclick="rowRemove(\'.tr_'+count+'\')"><i class="fa fa-remove"></i></a>\n' +
+                                '                            <a style="cursor: pointer" type="button" onclick="rowRemove(\'.tr_'+count+'\','+count+')"><i class="fa fa-remove"></i></a>\n' +
                                 '                        </td>\n' +
                                 '                    <tr/>');
 
@@ -167,26 +167,18 @@
 
         });
 
-        function rowRemove(value) {
+        function rowRemove(value,i) {
+            $('#total').val($("#total").val() - $("#amount"+i).val());
             $(value).remove();
         }
 
         function calTol(count) {
             let total = 0;
-            let discount = 0;
-            let subtotal = 0;
+            
             for(let i=0; i<count; i++){
-                $('#tol'+i).val($("#price"+i).val() * $("#qty"+i).val());
-                subtotal = subtotal+parseFloat($('#tol'+i).val());
+                total = total+parseFloat($('#amount'+i).val());
             }
-            $('#subtotal').val(subtotal);
-
-            if(parseFloat($('#discountpercentage').val())>0){
-                let disamount = subtotal*(parseFloat($('#discountpercentage').val())/100);
-                $('#total').val(subtotal-disamount);
-            }else{
-                $('#total').val(subtotal);
-            }
+            $('#total').val(total);
         }
 
 </script>

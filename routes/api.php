@@ -62,19 +62,21 @@ Route::get('/invoice-for-payment/{id}',function ($id){
     ->get();
 
     $DUE_AMOUNT = 0;
+    $AMOUNT = 0;
     
     $Model = \App\Models\Ims\Invoice::find($id);
     
     if($PaymentItems->count() >0){
         foreach ($PaymentItems as $item){
-            $DUE_AMOUNT = $item->due_amount;
+            $AMOUNT = $AMOUNT + $item->amount;
         }
+        $DUE_AMOUNT = $Model->total - $AMOUNT;
     }else{
         $DUE_AMOUNT = $Model->total;
     }
     
     
-    return ['invoice'=>$Model,'due_amount'=>$DUE_AMOUNT];
+    return ['invoice'=>$Model,'payed_amount'=>$AMOUNT,'due_amount'=>$DUE_AMOUNT];
 });
 
 Route::get('/customer-for-invoices/{id}',function ($id){
