@@ -33,8 +33,12 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('payment_type_id');
+            $table->text('code');
+            $table->date('date');
             $table->double('total');
             $table->unsignedInteger('created_by')->nullable();
+            $table->boolean('commited')->default(0);
+            $table->text('remarks')->nullable();
             $table->timestamps();
         });
     }
