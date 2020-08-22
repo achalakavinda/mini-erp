@@ -365,4 +365,10 @@ class QuotationController extends Controller
 
         return redirect(url('ims/invoice/'.$Invoice->id));
     }
+
+    public function print($id)
+    {
+        $Quotation = Quotation::findOrFail($id);
+        return view('admin.ims.quotation.print',compact('Quotation'));
+    }
 }

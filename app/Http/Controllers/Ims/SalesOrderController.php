@@ -312,4 +312,10 @@ class SalesOrderController extends Controller
         return redirect(url('ims/invoice/'.$Invoice->id));
     }
 
+    public function print($id)
+    {
+        $SalesOrder = SalesOrder::findOrFail($id);
+        return view('admin.ims.sales-order.print',compact('SalesOrder'));
+    }
+
 }

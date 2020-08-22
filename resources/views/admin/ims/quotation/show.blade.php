@@ -230,10 +230,8 @@
                 Update</button>
 
             @endif
-            <button type="button" class="btn btn-app pull-right" target="_blank"
-                href="{{ url('ims/quotation') }}/{{ $Quotation->id }}/print"><i style="color: #00a157"
-                    class="fa fa-print"></i>
-                Print</button>
+            <a target="_blank" href="{{ url('ims/quotation') }}/{{ $Quotation->id }}/print"
+                class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-print"></i>Print</a>
 
         </div>
     </div>
