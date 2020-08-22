@@ -445,7 +445,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $user = \App\Models\User::where('email','admin@test.com')->first();
         $user->assignRole( config('constant.ROLE_SUPER_ADMIN') );
 
-        $user = \App\Models\User::where('email','systemadmin@test.com')->first();
+        $user = \App\Models\User::where('email','sysadmin@test.com')->first();
         $user->assignRole( config('constant.ROLE_SUPER_ADMIN') );
     }
 }

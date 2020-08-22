@@ -15,7 +15,6 @@ class CreateCompaniesTable extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->string('code')->unique();
             $table->timestamps();
         });
@@ -23,7 +22,6 @@ class CreateCompaniesTable extends Migration
         DB::table('companies')->insert([
             [
                 'id'=>1,
-                'name' => 'Master Company',
                 'code' => 'Master-Company',
                 'created_at' =>\Carbon\Carbon::now(),
                 'updated_at' =>\Carbon\Carbon::now()
