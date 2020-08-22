@@ -243,10 +243,10 @@ class WorkSheetController extends Controller
                     'to'=>$row['to'],
                     'work_hrs'=>$work_hr,
                     'leave_hrs'=>0,
-                    'hr_rate'=>$USER->hr_rates,
-                    'hr_cost'=>$USER->hr_rates*$work_hr,
+                    'hr_rate'=>$USER->employee->hr_rates,
+                    'hr_cost'=>$USER->employee->hr_rates*$work_hr,
                     'actual_work_hrs'=>$actual_work_hr,//this value is directly take into number of work hrs validation
-                    'actual_hr_cost'=>$USER->hr_rates*$actual_work_hr,
+                    'actual_hr_cost'=>$USER->employee->hr_rates*$actual_work_hr,
                     'extra_work_hrs'=>$actual_work_hr - $work_hr,
                     'remark'=>$INSERT_Remarks
                 ]);

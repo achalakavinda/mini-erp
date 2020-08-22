@@ -5,7 +5,7 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Employee</h3>
+            <h3 class="box-title">{{ config('appStrings.String_Staff_Create') }}</h3>
         </div>
         @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">

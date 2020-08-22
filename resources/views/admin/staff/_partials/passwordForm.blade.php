@@ -1,7 +1,5 @@
 <div class="box-body">
-
-    <div class="col-md-6">
-
+    <div class="col-md-12">
         <div class="col-md-12">
             <div class="form-group">
                 {!! Form::label('Old_Password','Old Password',['class' => 'control-label']) !!}
@@ -24,10 +22,9 @@
         </div>
 
     </div>
-
 </div>
 <!-- /.box-body -->
 
 <div class="box-footer">
-        {!! Form::submit('Change Password',['class'=>'btn btn-danger']) !!}
+    <button type="submit" class="btn btn-app pull-right"><i class="fa fa-save"></i> SAVE </button>
 </div>

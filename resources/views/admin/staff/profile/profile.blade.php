@@ -1,10 +1,4 @@
 <?php
-    $DESIGNATION_UI = null;
-
-    $DESIGNATION = \App\Models\Designation::find($User->designation_id);
-    if(!empty($DESIGNATION)){
-        $DESIGNATION_UI = $DESIGNATION->designationType;
-    }
 
     //worksheet table
         $WORKSHEETS = DB::table('work_sheets')
@@ -56,7 +50,7 @@
 
                         <h3 class="profile-username text-center">{!! $User->name !!}</h3>
 
-                        <p class="text-muted text-center">{!! $DESIGNATION_UI !!}</p>
+                        <p class="text-muted text-center"></p>
 
                         <ul class="list-group list-group-unbordered">
                             <li class="list-group-item">
@@ -98,13 +92,34 @@
             <div class="col-md-9">
                 <div class="nav-tabs-custom">
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#workdays" data-toggle="tab">Work Days</a></li>
+                        <li class="active"><a href="#settings" data-toggle="tab">About</a></li>
+                        <li><a href="#workdays" data-toggle="tab">Work Days</a></li>
                         <li><a href="#project" data-toggle="tab">Projects</a></li>
-                        <li><a href="#settings" data-toggle="tab">Settings</a></li>
+
                     </ul>
-                    @include('error.error')
                     <div class="tab-content">
-                        <div class="active tab-pane" id="workdays">
+
+                        <div class="tab-pane active" id="settings">
+                            @include('error.error')
+
+                            {!! Form::model($User, ['method' => 'PATCH', 'action' => ['StaffController@update', $User->id],'class'=>'form-horizontal']) !!}
+                                @include('admin.staff._partials.profileForm')
+                            {!! Form::close() !!}
+
+                            <?php
+                                if(Auth::user()->hasAnyPermission([config('constant.Permission_Profile_Update')])){
+                                    $disabled=null;
+                                }else{
+                                    $disabled ='disabled';
+                                }
+                            ?>
+                            {!! Form::model($User, ['method' => 'PATCH', 'action' => ['StaffController@resetPassword', $User->id],'class'=>'form-horizontal']) !!}
+                                @include('admin.staff._partials.passwordForm')
+                            {!! Form::close() !!}
+                        </div>
+                        <!-- /.tab-pane -->
+
+                        <div class="tab-pane" id="workdays">
 
                             <table id="table" class="table table-responsive table-bordered table-striped">
                                     <thead>
@@ -173,28 +188,6 @@
                         </div>
                         <!-- /.tab-pane -->
 
-                        <div class="tab-pane" id="settings">
-
-                            {!! Form::model($User, ['method' => 'PATCH', 'action' => ['StaffController@update', $User->id],'class'=>'form-horizontal']) !!}
-                               @include('admin.staff._partials.profileForm')
-                           {!! Form::close() !!}
-
-                            <hr/>
-
-                            <?php
-                            if(Auth::user()->hasAnyPermission([config('constant.Permission_Profile_Update')])){
-                                $disabled=null;
-                            }else{
-                                $disabled ='disabled';
-                            }
-                            ?>
-
-
-                            {!! Form::model($User, ['method' => 'PATCH', 'action' => ['StaffController@resetPassword', $User->id],'class'=>'form-horizontal']) !!}
-                                @include('admin.staff._partials.passwordForm')
-                            {!! Form::close() !!}
-                        </div>
-                        <!-- /.tab-pane -->
                     </div>
                     <!-- /.tab-content -->
                 </div>

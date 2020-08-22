@@ -22,8 +22,8 @@ class StaffController extends Controller
     public function index()
     {
         User::CheckPermission([ config('constant.Permission_Staff_Registry') ]);
-        $Rows = Employee::all();
-        return view('admin.staff.index',compact('Rows'));
+        $Employees = Employee::all();
+        return view('admin.staff.index',compact('Employees'));
     }
 
     /**
@@ -33,12 +33,12 @@ class StaffController extends Controller
     {
         User::CheckPermission([ config('constant.Permission_Staff_Creation') ]);
 
-        $Designation = Designation::all()->pluck('designationType','id');
+        $Designations = Designation::all()->pluck('designationType','id');
         $CA_TRAINGINS = CaTraining::all()->pluck('name','id');
         $CM_LOCATION_DISTRICTS = CmbLocationDistrict::all()->pluck('name','id');
         $HOMETOWN_DISTRICTS = HometownDistrict::all()->pluck('name','id');
 
-        return view('admin.staff.create',compact(['Designation','CA_TRAINGINS','CM_LOCATION_DISTRICTS','HOMETOWN_DISTRICTS']));
+        return view('admin.staff.create',compact(['Designations','CA_TRAINGINS','CM_LOCATION_DISTRICTS','HOMETOWN_DISTRICTS']));
     }
 
     /**
@@ -52,7 +52,7 @@ class StaffController extends Controller
             'name'=>'required',
             'nic'=>'required',
             'designation_id'=>'required',
-            'emp_no'=>'required | unique:users',
+            'emp_no'=>'required | unique:employees',
             'basic_sal'=>'required',
             'cost'=>'required',
             'hr_rates'=>'required',
@@ -162,7 +162,7 @@ class StaffController extends Controller
         $User = User::findOrFail($id);
         $Employee = Employee::find($id);
 
-        return view('admin.staff.profile.profile',compact('User'));
+        return view('admin.staff.profile.profile',compact(['User','Employee']));
     }
 
     /**
@@ -173,13 +173,14 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
-        $Employee = Employee::findorFail($id);
-        $Designation = Designation::all()->pluck('designationType','id');
+        $User = User::findOrFail($id);
+        $Employee = Employee::where('user_id',$id)->firstorFail();
+        $Designations = Designation::all()->pluck('designationType','id');
         $CA_TRAINGINS = CaTraining::all()->pluck('name','id');
         $CM_LOCATION_DISTRICTS = CmbLocationDistrict::all()->pluck('name','id');
         $HOMETOWN_DISTRICTS = HometownDistrict::all()->pluck('name','id');
 
-        return view('admin.staff.edit',compact(['Employee','Designation','CA_TRAINGINS','CM_LOCATION_DISTRICTS','HOMETOWN_DISTRICTS']));
+        return view('admin.staff.edit',compact(['Employee','Designations','CA_TRAINGINS','CM_LOCATION_DISTRICTS','HOMETOWN_DISTRICTS']));
     }
 
     /**
