@@ -4,6 +4,7 @@ return [
     //Roles
     'ROLE_SUPER_ADMIN'=>'Super-Admin',
     'ROLE_SUPER_STAFF'=>'Staff',
+    'ROLE_INVENTORY_ONLY'=>'Inventory-Only',
     //Permission
     'Permission_Dashboard'=>'Dashboard',
     //Project Access Controls
