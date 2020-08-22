@@ -18,7 +18,8 @@ class PaymentController extends Controller
      */
     public function index()
     {
-        //
+        $Payments = Payment::all();
+        return view('admin.accounting.payment.index',compact(['Payments']));
     }
 
     /**
@@ -94,7 +95,7 @@ class PaymentController extends Controller
             $Payment->delete();
             dd($exception->getMessage());
         }
-        //return redirect(url('accounting/payment/'.$Grn->id));
+        return redirect(url('accounting/payment'));
 
             
     }
@@ -107,7 +108,8 @@ class PaymentController extends Controller
      */
     public function show($id)
     {
-        //
+        $Payment = Payment::findOrFail($id);
+        return view('admin.accounting.payment.show',compact('Payment'));
     }
 
     /**
@@ -130,7 +132,58 @@ class PaymentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'row' => 'required',
+            'row.*.model_id' => 'required',
+            'row.*.model_name' => 'required',
+            'row.*.amount' => 'required',
+        ]);
+
+        $Payment = Payment::findOrFail($id);
+
+        try {
+            $TotalAmount = 0;
+            $Payment->items()->delete();
+            foreach ($request->row as $item) {
+                
+                $Model = Invoice::find($item['model_id']);
+                $PaymentItems = PaymentItem::where('invoice_id','=',$Model->id)->get();
+                $FullAmount = 0;
+                
+                if($PaymentItems->count() >0){
+                    
+                    foreach ($PaymentItems as $PaymentItem){
+                        $FullAmount =  $FullAmount + $PaymentItem->amount;
+                    }
+                    
+                }
+                $FullAmount = $FullAmount + $item['amount'];
+                if($Model){
+
+                    PaymentItem::create([
+                        'payment_id'=>$Payment->id,
+                        'invoice_id'=>$Model->id,
+                        'amount'=>$item['amount'],
+                        'remain_amount'=>0,
+                        'due_amount'=>$Model->total - $FullAmount,
+                        'remarks'=>$item['remark']?$item['remark']:null
+                    ]);
+
+                    $TotalAmount = $TotalAmount + $item['amount'];
+                }
+            }
+            $Payment->date = Carbon::now();
+            $Payment->created_by = auth()->user()->id;
+            $Payment->code = "PAY-".Carbon::now()->year."-".Carbon::now()->month."-".Carbon::now()->day."-000".$Payment->id;
+            $Payment->total = $TotalAmount;
+            $Payment->save();
+
+        }catch (\Exception $exception){
+            $Payment->delete();
+            dd($exception->getMessage());
+        }
+
+        return redirect(url('accounting/payment/'.$Payment->id));
     }
 
     /**
