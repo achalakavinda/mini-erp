@@ -260,4 +260,10 @@ class CompanyPurchaseOrderController extends Controller
 
         return redirect(url('ims/grn/'.$Grn->id));
     }
+
+    public function print($id)
+    {
+        $CompanyPurchaseOrder = CompanyPurchaseOrder::findOrFail($id);
+        return view('admin.ims.company-purchase-order.print',compact('CompanyPurchaseOrder'));
+    }
 }

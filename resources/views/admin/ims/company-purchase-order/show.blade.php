@@ -152,8 +152,8 @@
                     Update</button>
 
                 @endif
-                <a href="{{ url('/ims/company-purchase-order/'.$CompanyPurchaseOrder->id.'/print') }}" target="_blank"
-                    class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-print"></i> Print</a>
+                <a target="_blank" href="{{ url('ims/company-purchase-order') }}/{{ $CompanyPurchaseOrder->id }}/print"
+                    class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-print"></i>Print</a>
                 {{--                    <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i> Update</button>--}}
             </div>
         </div>

@@ -27,8 +27,8 @@ class CreateItemCodesTable extends Migration
             $table->unsignedInteger('item_code_batch_id')->nullable();
             $table->unsignedInteger('color_id')->nullable();
             $table->unsignedInteger('size_id')->nullable();
-            $table->unsignedInteger('company_id');
-            $table->unsignedInteger('company_division_id');
+            $table->unsignedInteger('company_id')->nullable();
+            $table->unsignedInteger('company_division_id')->nullable();
             $table->unsignedInteger('type_measurement_id')->nullable();
 
             $table->enum('type',['product','service'])->default('product');
@@ -36,14 +36,14 @@ class CreateItemCodesTable extends Migration
 
             $table->string('name');
             $table->string('description')->nullable();
-            $table->text('thumbnail_url')->default("http://itinerantnotes.com/blog/images/logo.png");
+            $table->text('thumbnail_url')->nullable();
 
             $table->float('unit_cost');
             $table->float('selling_price');
 
             $table->float('nbt_tax_percentage')->default(0);
             $table->float('vat_tax_percentage')->default(0);
-            $table->float('unit_price_with_tax');
+            $table->float('unit_price_with_tax')->default(0);
 
             $table->float('market_price')->nullable();
             $table->float('min_price')->nullable();

@@ -54,6 +54,31 @@ Route::get('/item-code-for-purchase-requisitions/{id}',function ($id){
     return ['item'=>$Model,'qty'=>$ITEM_QTY];
 });
 
+//api endpoint for the invoices
+Route::get('/invoice-for-payment/{id}',function ($id){
+    
+    $PaymentItems = \Illuminate\Support\Facades\DB::table('payment_items')
+    ->where('invoice_id','=',$id)
+    ->get();
+
+    $DUE_AMOUNT = 0;
+    $AMOUNT = 0;
+    
+    $Model = \App\Models\Ims\Invoice::find($id);
+    
+    if($PaymentItems->count() >0){
+        foreach ($PaymentItems as $item){
+            $AMOUNT = $AMOUNT + $item->amount;
+        }
+        $DUE_AMOUNT = $Model->total - $AMOUNT;
+    }else{
+        $DUE_AMOUNT = $Model->total;
+    }
+    
+    
+    return ['invoice'=>$Model,'payed_amount'=>$AMOUNT,'due_amount'=>$DUE_AMOUNT];
+});
+
 Route::get('/customer-for-invoices/{id}',function ($id){
     return \App\Models\Customer::find($id);
 });

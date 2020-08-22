@@ -110,7 +110,7 @@
                                 <tbody>
                                     <?php $count = 1 ;?>
                                     @foreach($Grn->items as $item)
-                                        <?php
+                                    <?php
                                             $ItemCode = \App\Models\Ims\ItemCode::find($item->item_code_id);
                                         ?>
                                     <tr class="tr_{{ $count }}">
@@ -118,7 +118,8 @@
                                             <input style="display:none" type="number" value="{{ $item->item_code_id }}"
                                                 name="row[{{ $count }}][model_id]">
                                             <input disabled type="text" name="row[{{ $count }}][model_name]"
-                                                value="{{ $item->item_code }} @if($ItemCode) {{ $ItemCode->size?' - '.$ItemCode->size->code:'' }}  {{ $ItemCode->color?' - '.$ItemCode->color->code:'' }} @endif" style="width: 100%">
+                                                value="{{ $item->item_code }} @if($ItemCode) {{ $ItemCode->size?' - '.$ItemCode->size->code:'' }}  {{ $ItemCode->color?' - '.$ItemCode->color->code:'' }} @endif"
+                                                style="width: 100%">
                                         </td>
                                         <td>
                                             <input style="width: 100%" type="text" name="row[{{ $count }}][remark]"
@@ -199,9 +200,8 @@
                 <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
                     Update</button>
                 @endif
-                <button target="_blank" type="button" href="{{ url('ims/grn/'.$Grn->id.'/print') }}"
-                    class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-print"></i>
-                    Print</button>
+                <a target="_blank" href="{{ url('ims/grn') }}/{{ $Grn->id }}/print" class="btn btn-app pull-right"><i
+                        style="color: #00a157" class="fa fa-print"></i>Print</a>
             </div>
 
         </div>

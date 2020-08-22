@@ -117,6 +117,11 @@ Route::group(['middleware' => ['auth']], function () {
 
         //print routes
         Route::get('/invoice/{id}/print','Ims\InvoiceController@print');
+        Route::get('/grn/{id}/print','Ims\GrnController@print');
+        Route::get('/sales-order/{id}/print','Ims\SalesOrderController@print');
+        Route::get('/quotation/{id}/print','Ims\QuotationController@print');
+        Route::get('/purchase-requisition/{id}/print','Ims\PurchaseRequisitionController@print');
+        Route::get('/company-purchase-order/{id}/print','Ims\CompanyPurchaseOrderController@print');
     });
 
     Route::prefix('accounting')->group(function ()

@@ -49,7 +49,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         {!! Form::label('designation_id','*Designation',['class' => 'control-label']) !!}
-                        {!! Form::select('designation_id',$Designation,null,['class'=>'form-control', 'placeholder'=>''])  !!}
+                        {!! Form::select('designation_id',$Designations,null,['class'=>'form-control', 'placeholder'=>''])  !!}
                     </div>
                 </div>
         </div>
