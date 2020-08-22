@@ -180,11 +180,15 @@ return [
     'Permission_Invoice_Creation'=> 'Invoice-Creation',
     'Permission_Invoice_Update'=> 'Invoice-Update',
 
+    'Permission_Accounting_Module'=>'Accounting-Module',
+
     'Permission_Payment'=> 'Payment',
     'Permission_Payment_Registry'=> 'Payment-Registry',
     'Permission_Payment_Show'=> 'Payment-Show',
     'Permission_Payment_Creation'=> 'Payment-Creation',
     'Permission_Payment_Update'=> 'Payment-Update',
+
+
 
     //utility permissions
     'Permission_Reports'=> 'Reports',

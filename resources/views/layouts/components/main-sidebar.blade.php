@@ -182,84 +182,84 @@
                         @endcan
 
                         @can(config('constant.Permission_Invoice'))
-                        <li class="treeview">
-                            <a href="{{ url('ims/invoice') }}"><i class="fa fa-info"></i> <span>Invoice</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                @can(config('constant.Permission_Invoice_Registry'))
-                                <li><a href="{{ url('ims/invoice') }}"><i class="fa fa-table"></i> Invoice</a></li>
-                                @endcan
+                            <li class="treeview">
+                                <a href="{{ url('ims/invoice') }}"><i class="fa fa-info"></i> <span>Invoice</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    @can(config('constant.Permission_Invoice_Registry'))
+                                        <li><a href="{{ url('ims/invoice') }}"><i class="fa fa-table"></i> Invoice</a></li>
+                                    @endcan
                                     @can(config('constant.Permission_Invoice_Creation'))
-                                <li><a href="{{ url('ims/invoice/create') }}"><i class="fa fa-plus"></i> New</a></li>
+                                            <li><a href="{{ url('ims/invoice/create') }}"><i class="fa fa-plus"></i> New</a></li>
                                         @endcan
-                            </ul>
-                        </li>
+                                </ul>
+                            </li>
                         @endcan
 
                         @can(config('constant.Permission_Quotation'))
-                        <li class="treeview">
-                            <a href="{{ url('ims/quotation') }}"><i class="fa fa-info"></i> <span>Quotation</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
+                            <li class="treeview">
+                                <a href="{{ url('ims/quotation') }}"><i class="fa fa-info"></i> <span>Quotation</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
 
-                            <ul class="treeview-menu">
-                                @can(config('constant.Permission_Quotation_Registry'))
-                                <li><a href="{{ url('ims/quotation') }}"><i class="fa fa-table"></i> Quotation</a></li>
-                                @endcan
+                                <ul class="treeview-menu">
+                                    @can(config('constant.Permission_Quotation_Registry'))
+                                        <li><a href="{{ url('ims/quotation') }}"><i class="fa fa-table"></i> Quotation</a></li>
+                                    @endcan
                                     @can(config('constant.Permission_Quotation_Creation'))
-                                <li><a href="{{ url('ims/quotation/create') }}"><i class="fa fa-plus"></i> New</a></li>
+                                            <li><a href="{{ url('ims/quotation/create') }}"><i class="fa fa-plus"></i> New</a></li>
                                         @endcan
-                            </ul>
-                        </li>
+                                </ul>
+                            </li>
                         @endcan
 
 
                         @can(config('constant.Permission_Company_Purchase_Requisition'))
-                        <li class="treeview">
-                            <a href="{{ url('ims/purchase-requisition') }}"><i class="fa fa-info"></i>
-                                <span>Requisition</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                @can(config('constant.Permission_Company_Purchase_Requisition_Registry'))
-                                <li><a href="{{ url('ims/purchase-requisition') }}"><i class="fa fa-table"></i>
-                                        Requisition</a></li>
-                                @endcan
+                            <li class="treeview">
+                                <a href="{{ url('ims/purchase-requisition') }}"><i class="fa fa-info"></i>
+                                    <span>Requisition</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    @can(config('constant.Permission_Company_Purchase_Requisition_Registry'))
+                                        <li><a href="{{ url('ims/purchase-requisition') }}"><i class="fa fa-table"></i>
+                                                Requisition</a></li>
+                                    @endcan
                                     @can(config('constant.Permission_Company_Purchase_Requisition_Creation'))
-                                <li><a href="{{ url('ims/purchase-requisition/create') }}"><i class="fa fa-plus"></i>
-                                        New</a></li>
+                                            <li><a href="{{ url('ims/purchase-requisition/create') }}"><i class="fa fa-plus"></i>
+                                                    New</a></li>
                                         @endcan
-                            </ul>
-                        </li>
+                                </ul>
+                            </li>
                         @endcan
 
                         @can(config('constant.Permission_Company_Purchase_Order'))
-                        <li class="treeview">
-                            <a href="{{ url('ims/company-purchase-order') }}"><i class="fa fa-info"></i>
-                                <span>Company Purchase Order</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                @can(config('constant.Permission_Company_Purchase_Order_Registry'))
-                                <li><a href="{{ url('ims/company-purchase-order') }}"><i class="fa fa-table"></i>
-                                        Company Purchase Order</a></li>
-                                @endcan
+                            <li class="treeview">
+                                <a href="{{ url('ims/company-purchase-order') }}"><i class="fa fa-info"></i>
+                                    <span>Company Purchase Order</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    @can(config('constant.Permission_Company_Purchase_Order_Registry'))
+                                        <li><a href="{{ url('ims/company-purchase-order') }}"><i class="fa fa-table"></i>
+                                                Company Purchase Order</a></li>
+                                    @endcan
                                     @can(config('constant.Permission_Company_Purchase_Order_Creation'))
-                                <li><a href="{{ url('ims/company-purchase-order/create') }}"><i class="fa fa-plus"></i>
-                                        New</a></li>
+                                            <li><a href="{{ url('ims/company-purchase-order/create') }}"><i class="fa fa-plus"></i>
+                                                    New</a></li>
                                         @endcan
-                            </ul>
-                        </li>
-                            @endcan
+                                </ul>
+                            </li>
+                        @endcan
 
 
                     </ul>
