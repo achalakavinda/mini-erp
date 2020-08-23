@@ -217,6 +217,7 @@
             </table>
         </div>
     </div>
+
     <div class="row invoice_details">
         <!-- invoiced to details -->
         <div class="col-4 offset-1 pt-3">
@@ -248,6 +249,7 @@
             </table>
         </div>
     </div>
+
     <p class="text-center pb-3"><em> </em></p>
     </div>
     <script>
