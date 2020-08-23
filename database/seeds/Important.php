@@ -15,26 +15,11 @@ class Important extends Seeder
         DB::table('customer_secretaries')->insert([
             [
                 'id'=>1,
-                'name'=>'KCS',
-                'description'=>'description',
-                "created_at"=>\Carbon\Carbon::now(),
-                "updated_at"=>\Carbon\Carbon::now()
-            ],
-            [
-                'id'=>2,
-                'name'=>'Em En Es(Assignments)(PVT)Ltd.',
-                'description'=>'description',
-                "created_at"=>\Carbon\Carbon::now(),
-                "updated_at"=>\Carbon\Carbon::now()
-            ],
-            [
-                'id'=>3,
                 'name'=>'Other',
                 'description'=>'description',
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
-
         ]);
 
         DB::table('customer_services')->insert([
@@ -187,6 +172,13 @@ class Important extends Seeder
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
+            [
+                'name'=>'Other',
+                'code'=>'OTHER',
+                'description'=>'description',
+                "created_at"=>\Carbon\Carbon::now(),
+                "updated_at"=>\Carbon\Carbon::now()
+            ],
 
         ]);
 
@@ -227,71 +219,12 @@ class Important extends Seeder
                 'created_at' => \Carbon\Carbon::now(),
                 'updated_at'=> \Carbon\Carbon::now()
             ],
-            [
-                'id'=>6,
-                'designationType' => "Senior Executive",
-                'avg_hr_rate'=>750,
-                'created_at' => \Carbon\Carbon::now(),
-                'updated_at'=> \Carbon\Carbon::now()
-            ],
-            [
-                'id'=>7,
-                'designationType' => "Executive",
-                'avg_hr_rate'=>1750,
-                'created_at' => \Carbon\Carbon::now(),
-                'updated_at'=> \Carbon\Carbon::now()
-            ],
-            [
-                'id'=>8,
-                'designationType' => "Senior Audit Associate",
-                'avg_hr_rate'=>650,
-                'created_at' => \Carbon\Carbon::now(),
-                'updated_at'=> \Carbon\Carbon::now()
-            ],
-            [
-                'id'=>9,
-                'designationType' => "Accounts Associates (BPS)",
-                'avg_hr_rate'=>650,
-                'created_at' => \Carbon\Carbon::now(),
-                'updated_at'=> \Carbon\Carbon::now()
-            ],
-            [
-                'id'=>10,
-                'designationType' => "Audit Associate 1",
-                'avg_hr_rate'=>550,
-                'created_at' => \Carbon\Carbon::now(),
-                'updated_at'=> \Carbon\Carbon::now()
-            ],
-            [
-                'id'=>11,
-                'designationType' => "Audit Associate 2",
-                'avg_hr_rate'=>500,
-                'created_at' => \Carbon\Carbon::now(),
-                'updated_at'=> \Carbon\Carbon::now()
-            ],
+
 
         ]);
 
         //Job Type Important seeds
         DB::table('job_types')->insert([
-            [
-                'JobType'=>"External Audit",
-                'key'=>'EA',
-                "created_at"=> \Carbon\Carbon::now(),
-                "updated_at"=> \Carbon\Carbon::now()
-            ],
-            [
-                'JobType'=>"Internal Audit",
-                'key'=>'IA',
-                "created_at"=>\Carbon\Carbon::now(),
-                "updated_at"=>\Carbon\Carbon::now()
-            ],
-            [
-                'JobType'=>"Feasibility",
-                'key'=>'FEA',
-                "created_at"=>\Carbon\Carbon::now(),
-                "updated_at"=>\Carbon\Carbon::now()
-            ],
             [
                 'JobType'=>"Other",
                 'key'=>'OTHER',
@@ -353,17 +286,9 @@ class Important extends Seeder
         DB::table('ca_trainings')->insert([
             [
                 'name' => 'NULL'
-            ],
-            [
-                'name' => 'EL'
-            ],
-            [
-                'name' => 'BL'
-            ],
-            [
-                'name' => 'CL'
             ]
         ]);
+
         DB::table('hometown_districts')->insert([
             [
                 'name' => 'Ampara'
@@ -441,6 +366,7 @@ class Important extends Seeder
                 'name' => 'Vavuniya'
             ]
         ]);
+
         DB::table('cmb_location_districts')->insert([
             [
                 'name' => 'Colombo'
@@ -484,7 +410,6 @@ class Important extends Seeder
 
         ]);
 
-
         DB::table('day_types')->insert([
             [
                 'id'=>1,
@@ -512,7 +437,6 @@ class Important extends Seeder
                 'workable'=>false,
             ],
         ]);
-
 
     }
 }

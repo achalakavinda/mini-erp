@@ -13,6 +13,31 @@ class nandaSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('company_details')->insert([
+            [
+                'company_id'=>1,
+                'company_detail_code'=> config('companyDetailType.name'),
+                'value'=>'Dress',
+                'created_at' =>\Carbon\Carbon::now(),
+                'updated_at' =>\Carbon\Carbon::now()
+            ],
+            [
+                'company_id'=>1,
+                'company_detail_code'=>config('companyDetailType.address'),
+                'value'=>'No 351 Pannipitiya Road, <br/> Thalawathugoda',
+                'created_at' =>\Carbon\Carbon::now(),
+                'updated_at' =>\Carbon\Carbon::now()
+            ],
+            [
+                'company_id'=>1,
+                'company_detail_code'=>config('companyDetailType.contact'),
+                'value'=>'001-222-7777',
+                'created_at' =>\Carbon\Carbon::now(),
+                'updated_at' =>\Carbon\Carbon::now()
+            ],
+
+        ]);
+
         DB::unprepared(file_get_contents('public/sql/qanda_insert.sql'));
 
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
