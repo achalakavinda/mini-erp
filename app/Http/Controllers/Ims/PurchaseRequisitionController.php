@@ -202,6 +202,12 @@ class PurchaseRequisitionController extends Controller
 
     }
 
+    public function print($id)
+    {
+        $PurchaseRequisition = PurchaseRequisition::findOrFail($id);
+        return view('admin.ims.purchase-requisition.print',compact('PurchaseRequisition'));
+    }
+
     /**
      * post company purchase requisition to company purchase orders.
      *

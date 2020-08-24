@@ -17,7 +17,6 @@ class CreateCompanyDivisionsTable extends Migration
         Schema::create('company_divisions', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code')->unique();
-            $table->string('name');
             $table->unsignedInteger('company_id');
             $table->timestamps();
 
@@ -30,8 +29,7 @@ class CreateCompanyDivisionsTable extends Migration
         DB::table('company_divisions')->insert([
             [
                 'id'=>1,
-                'code' => 'AAA0001',
-                'name' => 'Master - Division',
+                'code' => 'MASTER-COMPANY-DIVISION-1',
                 'company_id'=>1,
                 'created_at' =>\Carbon\Carbon::now(),
                 'updated_at' =>\Carbon\Carbon::now()

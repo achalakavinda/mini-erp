@@ -159,8 +159,8 @@
                     Update</button>
 
                 @endif
-                <button type="button" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-print"></i>
-                    Print</button>
+                <a target="_blank" href="{{ url('ims/purchase-requisition') }}/{{ $Requisition->id }}/print"
+                    class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-print"></i>Print</a>
 
             </div>
         </div>

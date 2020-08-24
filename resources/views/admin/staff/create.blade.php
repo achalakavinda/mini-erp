@@ -1,26 +1,27 @@
 @extends('layouts.admin')
+
 @section('main-content-header')
     <!-- main header section -->
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Staff</h3>
+            <h3 class="box-title">{{ config('appStrings.String_Staff_Create') }}</h3>
         </div>
         @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
-            <a href="{!! url('staff') !!}" class="btn btn-app">
+            <a href="{!! url('staff') !!}" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-close"></i> Cancel
             </a>
-            <a href="{!! url('staff') !!}/create" class="btn btn-app">
+            <a href="{!! url('staff') !!}/create" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-refresh"></i> Refresh
             </a>
-            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+            <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
             </a>
-            <a id="ShowAdvance" href="#" class="btn btn-app">
+            <a id="ShowAdvance" href="#" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-list"></i> Show All Fields
             </a>
-            <a href="{!! url('staff/create') !!}" class="btn btn-app">
+            <a href="{!! url('staff/create') !!}" class="btn btn-menu">
                 <i class="main-action-btn-danger fa fa-plus"></i> New
             </a>
         </div>
@@ -32,13 +33,13 @@
 
 @section('main-content')
     <!-- main section -->
-        <div class="row">
-                    {!! Form::open(['action'=>'StaffController@store','class'=>'form-horizontal','id'=>'Form']) !!}
-                        @include('error.error')
-                        @include('admin.staff._partials.createForm')
-                    {!! Form::close() !!}
-        </div>
-        <!-- /.row -->
+    <div class="row">
+        {!! Form::open(['action'=>'StaffController@store','class'=>'form-horizontal','id'=>'Form']) !!}
+        @include('error.error')
+        @include('admin.staff._partials.createForm')
+        {!! Form::close() !!}
+    </div>
+    <!-- /.row -->
     <!-- /main section -->
 @endsection
 
@@ -54,9 +55,9 @@
         });
 
         $('#GenerateBtn').on('click',function () {
-           if( getCost()>0){
-               calculate();
-           }
+            if( getCost()>0){
+                calculate();
+            }
         });
 
         $("#basicSalary").keyup(function () {

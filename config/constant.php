@@ -4,6 +4,7 @@ return [
     //Roles
     'ROLE_SUPER_ADMIN'=>'Super-Admin',
     'ROLE_SUPER_STAFF'=>'Staff',
+    'ROLE_INVENTORY_ONLY'=>'Inventory-Only',
     //Permission
     'Permission_Dashboard'=>'Dashboard',
     //Project Access Controls
@@ -92,6 +93,8 @@ return [
     'Permission_Attendance_Update'=> 'Attendance-Update',
 
     //Inventory permissions
+    'Permission_Inventory_Module'=> 'Inventory-Module',
+
     'Permission_Supplier'=> 'Supplier',
     'Permission_Supplier_Registry'=> 'Supplier-Registry',
     'Permission_Supplier_Show'=> 'Supplier-Show',
@@ -103,6 +106,24 @@ return [
     'Permission_Brand_Show'=> 'Brand-Show',
     'Permission_Brand_Creation'=> 'Brand-Creation',
     'Permission_Brand_Update'=> 'Brand-Update',
+
+    'Permission_Category'=> 'Category',
+    'Permission_Category_Registry'=> 'Category-Registry',
+    'Permission_Category_Show'=> 'Category-Show',
+    'Permission_Category_Creation'=> 'Category-Creation',
+    'Permission_Category_Update'=> 'Category-Update',
+
+    'Permission_Color'=> 'Color',
+    'Permission_Color_Registry'=> 'Color-Registry',
+    'Permission_Color_Show'=> 'Color-Show',
+    'Permission_Color_Creation'=> 'Color-Creation',
+    'Permission_Color_Update'=> 'Color-Update',
+
+    'Permission_Size'=> 'Size',
+    'Permission_Size_Registry'=> 'Size-Registry',
+    'Permission_Size_Show'=> 'Size-Show',
+    'Permission_Size_Creation'=> 'Size-Creation',
+    'Permission_Size_Update'=> 'Size-Update',
 
     'Permission_Item'=> 'Item',
     'Permission_Item_Registry'=> 'Item-Registry',
@@ -116,11 +137,58 @@ return [
     'Permission_Stock_Creation'=> 'Stock-Creation',
     'Permission_Stock_Update'=> 'Stock-Update',
 
-    'Permission_Inventory'=> 'Inventory',
-    'Permission_Inventory_Registry'=> 'Inventory-Registry',
-    'Permission_Inventory_Show'=> 'Inventory-Show',
-    'Permission_Inventory_Creation'=> 'Inventory-Creation',
-    'Permission_Inventory_Update'=> 'Inventory-Update',
+    //accounting reports
+    'Permission_Company_Purchase_Requisition'=> 'Company-Purchase-Requisitions',
+    'Permission_Company_Purchase_Requisition_Registry'=> 'Company-Purchase-Requisitions-Registry',
+    'Permission_Company_Purchase_Requisition_Show'=> 'Company-Purchase-Requisitions-Show',
+    'Permission_Company_Purchase_Requisition_Creation'=> 'Company-Purchase-Requisitions-Creation',
+    'Permission_Company_Purchase_Requisition_Update'=> 'Company-Purchase-Requisitions-Update',
+    'Permission_Company_Purchase_Requisition_Post_To_PO'=> 'Company-Purchase-Requisitions-Post_To_PO',
+
+    'Permission_Company_Purchase_Order'=> 'Company-Purchase-Order',
+    'Permission_Company_Purchase_Order_Registry'=> 'Company-Purchase-Order-Registry',
+    'Permission_Company_Purchase_Order_Show'=> 'Company-Purchase-Order-Show',
+    'Permission_Company_Purchase_Order_Creation'=> 'Company-Purchase-Order-Creation',
+    'Permission_Company_Purchase_Order_Update'=> 'Company-Purchase-Order-Update',
+    'Permission_Company_Purchase_Post_To_Grn'=> 'Company-Purchase-Post-To-Grn',
+
+    'Permission_Grn'=> 'Grn',
+    'Permission_Grn_Registry'=> 'Grn-Registry',
+    'Permission_Grn_Show'=> 'Grn-Show',
+    'Permission_Grn_Creation'=> 'Grn-Creation',
+    'Permission_Grn_Update'=> 'Grn-Update',
+    'Permission_Grn_Post_To_Stock'=> 'Grn-Post-To-Stock',
+
+    'Permission_Quotation'=> 'Quotation',
+    'Permission_Quotation_Registry'=> 'Quotation-Registry',
+    'Permission_Quotation_Show'=> 'Quotation-Show',
+    'Permission_Quotation_Creation'=> 'Quotation-Creation',
+    'Permission_Quotation_Update'=> 'Quotation-Update',
+    'Permission_Quotation_Post_To_Sales_Order'=> 'Quotation-Post-To-Sales-Order',
+    'Permission_Quotation_Post_To_Invoice'=> 'Quotation-Post-To-Invoice',
+
+    'Permission_Sales_Order'=> 'Sales-Order',
+    'Permission_Sales_Order_Registry'=> 'Sales-Order-Registry',
+    'Permission_Sales_Order_Show'=> 'Sales-Order-Show',
+    'Permission_Sales_Order_Creation'=> 'Sales-Order-Creation',
+    'Permission_Sales_Order_Update'=> 'Sales-Order-Update',
+    'Permission_Sales_Order_Post_To_Invoice'=> 'Sales-Order-Post-To-Invoice',
+
+    'Permission_Invoice'=> 'Invoice',
+    'Permission_Invoice_Registry'=> 'Invoice-Registry',
+    'Permission_Invoice_Show'=> 'Invoice-Show',
+    'Permission_Invoice_Creation'=> 'Invoice-Creation',
+    'Permission_Invoice_Update'=> 'Invoice-Update',
+
+    'Permission_Accounting_Module'=>'Accounting-Module',
+
+    'Permission_Payment'=> 'Payment',
+    'Permission_Payment_Registry'=> 'Payment-Registry',
+    'Permission_Payment_Show'=> 'Payment-Show',
+    'Permission_Payment_Creation'=> 'Payment-Creation',
+    'Permission_Payment_Update'=> 'Payment-Update',
+
+
 
     //utility permissions
     'Permission_Reports'=> 'Reports',

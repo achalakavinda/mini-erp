@@ -22,8 +22,8 @@ class StaffController extends Controller
     public function index()
     {
         User::CheckPermission([ config('constant.Permission_Staff_Registry') ]);
-        $Rows = Employee::all();
-        return view('admin.staff.index',compact('Rows'));
+        $Employees = Employee::all();
+        return view('admin.staff.index',compact('Employees'));
     }
 
     /**
@@ -33,12 +33,12 @@ class StaffController extends Controller
     {
         User::CheckPermission([ config('constant.Permission_Staff_Creation') ]);
 
-        $Designation = Designation::all()->pluck('designationType','id');
+        $Designations = Designation::all()->pluck('designationType','id');
         $CA_TRAINGINS = CaTraining::all()->pluck('name','id');
         $CM_LOCATION_DISTRICTS = CmbLocationDistrict::all()->pluck('name','id');
         $HOMETOWN_DISTRICTS = HometownDistrict::all()->pluck('name','id');
 
-        return view('admin.staff.create',compact(['Designation','CA_TRAINGINS','CM_LOCATION_DISTRICTS','HOMETOWN_DISTRICTS']));
+        return view('admin.staff.create',compact(['Designations','CA_TRAINGINS','CM_LOCATION_DISTRICTS','HOMETOWN_DISTRICTS']));
     }
 
     /**
@@ -52,7 +52,7 @@ class StaffController extends Controller
             'name'=>'required',
             'nic'=>'required',
             'designation_id'=>'required',
-            'emp_no'=>'required | unique:users',
+            'emp_no'=>'required | unique:employees',
             'basic_sal'=>'required',
             'cost'=>'required',
             'hr_rates'=>'required',
@@ -62,8 +62,16 @@ class StaffController extends Controller
 
         try {
 
-           $user =  User::create([
+            $user =  User::create([
+                'created_by'=>\Auth::id(),
                 'name'=>$request->name,
+                'email'=>$request->email,
+                'password'=> bcrypt($request->email)
+            ]);
+
+            Employee::create([
+                'user_id'=>$user->id,
+                'created_by'=>\Auth::id(),
                 'date_joined'=>$request->date_joined,
                 'mobile'=>$request->mobile,
                 'residence'=>$request->residence,
@@ -89,45 +97,19 @@ class StaffController extends Controller
                 'other_cost'=>$request->other_cost,
                 'cost'=>$request->cost,
                 'hr_rates'=>$request->hr_rates,
-                'hr_billing_rates'=>$request->hr_billing_rates,
-                'password'=> bcrypt('password')
+                'hr_billing_rates'=>$request->hr_billing_rates
             ]);
 
-           Employee::create([
-               'user_id'=>$user->id,
-               'date_joined'=>$request->date_joined,
-               'mobile'=>$request->mobile,
-               'residence'=>$request->residence,
-               'hometown_district_id'=>$request->hometown_district_id,
-               'hometown_city'=>$request->hometown_city,
-               'cmb_location_district'=>$request->cmb_location_district,
-               'cmb_city'=>$request->cmb_city,
-               'address'=>$request->address,
-               'emp_no'=>$request->emp_no,
-               'epf_no'=>$request->epf_no,
-               'designation_id'=>$request->designation_id,
-               'email'=>$request->email,
-               'nic'=>$request->nic,
-               'ca_agree_no'=>$request->ca_agree_no,
-               'ca_training_period_from'=>$request->ca_training_period_from,
-               'ca_training_period_to'=>$request->ca_training_period_to,
-               'ca_training'=>$request->ca_training,
-               'basic_sal'=>$request->basic_sal,
-               'epf_cost'=>$request->epf_cost,
-               'etf_cost'=>$request->etf_cost,
-               'allowance_cost'=>$request->allowance_cost,
-               'gratuity_cost'=>$request->gratuity_cost,
-               'other_cost'=>$request->other_cost,
-               'cost'=>$request->cost,
-               'hr_rates'=>$request->hr_rates,
-               'hr_billing_rates'=>$request->hr_billing_rates
-           ]);
+            $user->assignRole( config('constant.ROLE_SUPER_STAFF') );
 
-           $user->assignRole( config('constant.ROLE_SUPER_STAFF') );
         }catch (\Exception $exception){
-            return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);
+            return redirect()
+                ->back()
+                ->with(['created'=>'error','message'=>$exception->getMessage()]);
         }
-        return redirect()->back()->with(['created'=>'success','message'=>'Successfully created!']);
+        return redirect()
+            ->back()
+            ->with(['created'=>'success','message'=>'Successfully create!']);
     }
 
     public function resetPassword(Request $request,$id)
@@ -141,12 +123,16 @@ class StaffController extends Controller
         $User = User::findOrFail($id);
         $hashedPassword  = $User->password;
 
-        if (\Hash::check($request->old_password, $hashedPassword)) {
-            if($request->new_password === $request->re_password){
+        if (\Hash::check($request->old_password, $hashedPassword))
+        {
+
+            if($request->new_password === $request->re_password)
+            {
                 $User->password = bcrypt($request->new_password);
                 $User->save();
                 return back()->withErrors(['Password Reset!']);
-            }else{
+            }else
+            {
                 return back()->withErrors(['Password are mismatched']);
             }
         }else{
@@ -173,9 +159,10 @@ class StaffController extends Controller
     public function profile($id)
     {
         User::CheckPermission([ config('constant.Permission_Profile') ]);
-        $Employee = Employee::findorfail($id);
-        $User = User::findOrFail($Employee->user_id);
-        return view('admin.staff.profile.profile',compact('User'));
+        $User = User::findOrFail($id);
+        $Employee = Employee::find($id);
+
+        return view('admin.staff.profile.profile',compact(['User','Employee']));
     }
 
     /**
@@ -186,13 +173,14 @@ class StaffController extends Controller
      */
     public function edit($id)
     {
-        $Employee = Employee::findorFail($id);
-        $Designation = Designation::all()->pluck('designationType','id');
+        $User = User::findOrFail($id);
+        $Employee = Employee::where('user_id',$id)->firstorFail();
+        $Designations = Designation::all()->pluck('designationType','id');
         $CA_TRAINGINS = CaTraining::all()->pluck('name','id');
         $CM_LOCATION_DISTRICTS = CmbLocationDistrict::all()->pluck('name','id');
         $HOMETOWN_DISTRICTS = HometownDistrict::all()->pluck('name','id');
 
-        return view('admin.staff.edit',compact(['Employee','Designation','CA_TRAINGINS','CM_LOCATION_DISTRICTS','HOMETOWN_DISTRICTS']));
+        return view('admin.staff.edit',compact(['Employee','Designations','CA_TRAINGINS','CM_LOCATION_DISTRICTS','HOMETOWN_DISTRICTS']));
     }
 
     /**

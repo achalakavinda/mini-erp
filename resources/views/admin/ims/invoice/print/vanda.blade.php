@@ -117,7 +117,7 @@
 
         div.sub-table {
             /* border-left: 3px solid rgb(255, 77, 77); */
-            border-left: 3px solid rgb(0, 0, 0);
+            border: 3px solid rgb(0, 0, 0);
             padding-left: 0;
         }
 
@@ -130,7 +130,7 @@
             margin-top: 25px;
             /* background-color: #555; */
             /* color: white; */
-            border-top: 3px solid rgb(0, 0, 0);
+            /*border: 3px solid rgb(0, 0, 0);*/
         }
 
         p.footer {
@@ -217,6 +217,7 @@
             </table>
         </div>
     </div>
+
     <div class="row invoice_details">
         <!-- invoiced to details -->
         <div class="col-4 offset-1 pt-3">
@@ -238,7 +239,7 @@
                     </tr> --}}
                     <tr class="last-row">
                         <th scope="row">
-                            <h4>Total</h4>
+                            <h4>Total: </h4>
                         </th>
                         <td class="text-right">
                             <h4><span class="currency">RS </span>{{ number_format($Invoice->total,2) }}/=</h4>
@@ -248,6 +249,7 @@
             </table>
         </div>
     </div>
+
     <p class="text-center pb-3"><em> </em></p>
     </div>
     <script>

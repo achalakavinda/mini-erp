@@ -4,20 +4,20 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">User : {!! $Employee->User->name !!}</h3>
+            <h3 class="box-title">{{ config('appStrings.String_Staff_Edit') }} : {!! $Employee->User->name !!}</h3>
         </div>
         @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
-            <a href="{!! url('staff') !!}" class="btn btn-app">
+            <a href="{!! url('staff') !!}" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-close"></i> Cancel
             </a>
-            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+            <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
             </a>
-            <a href="{!! url('staff') !!}/{!! $Employee->id !!}/edit" class="btn btn-app">
+            <a href="{!! url('staff') !!}/{!! $Employee->id !!}/edit" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-refresh"></i> Refresh
             </a>
-            <a id="ShowAdvance" href="#" class="btn btn-app">
+            <a id="ShowAdvance" href="#" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-list"></i> Show All Fields
             </a>
         </div>

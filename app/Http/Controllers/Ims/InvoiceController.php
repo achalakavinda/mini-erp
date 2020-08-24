@@ -167,7 +167,7 @@ class InvoiceController extends Controller
     public function print($id)
     {
         $Invoice = Invoice::findOrFail($id);
-        return view('admin.ims..invoice.print',compact('Invoice'));
+        return view('admin.ims.invoice.print.vanda',compact('Invoice'));
     }
 
     /**

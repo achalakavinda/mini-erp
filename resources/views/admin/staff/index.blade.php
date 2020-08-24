@@ -1,35 +1,32 @@
 @extends('layouts.admin')
 
-@section('style')
-    {!! Html::style('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') !!}
-@endsection
-<!-- main header section -->
 @section('main-content-header')
+    <!-- main header section -->
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Staff Table</h3>
+            <h3 class="box-title">{{ config('appStrings.String_Staff_Index') }}</h3>
         </div>
         @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
-            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+            <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
             </a>
-            <a href="{!! url('staff') !!}" class="btn btn-app">
+            <a href="{!! url('staff') !!}" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-refresh"></i> Refresh
             </a>
-            <a href="{!! url('staff/create') !!}" class="btn btn-app">
+            <a href="{!! url('staff/create') !!}" class="btn btn-menu">
                 <i class="main-action-btn-danger fa fa-plus"></i> New
             </a>
         </div>
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
+    <!-- /main header section -->
 @endsection
-<!-- /main header section -->
 
-<!-- main section -->
 @section('main-content')
+    <!-- main section -->
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
@@ -50,23 +47,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                            @foreach($Rows as $row)
-                                <tr>
-                                    <td>{!! $row->id !!}</td>
-                                    <td>{!! $row->emp_no !!}</td>
-                                    <td>{!! $row->User->name !!}</td>
-                                    <td>{!! $row->address !!}</td>
-                                    <td>{!! $row->cost  !!}</td>
-                                    <td>{!! $row->hr_rates !!}</td>
-                                    <td>{!! $row->nic !!}</td>
-                                    <td>{!! $row->email !!}</td>
-                                    <td>
-                                        <a href="{!! url('/staff') !!}/{!! $row->id !!}/edit" >Edit <i class="fa fa-edit"></i></a>
-                                        <a href="{!! url('/staff/profile') !!}/{!! $row->id !!}" >Profile <i class="fa fa-user"></i></a>
-
-                                    </td>
-                                </tr>
-                            @endforeach
+                        @foreach($Employees as $employee)
+                            <tr>
+                                <td>{!! $employee->id !!}</td>
+                                <td>{!! $employee->emp_no !!}</td>
+                                <td>{!! $employee->User->name !!}</td>
+                                <td>{!! $employee->address !!}</td>
+                                <td>{!! $employee->cost  !!}</td>
+                                <td>{!! $employee->hr_rates !!}</td>
+                                <td>{!! $employee->nic !!}</td>
+                                <td>{!! $employee->email !!}</td>
+                                <td>
+                                    <a href="{!! url('/staff') !!}/{!! $employee->user_id !!}/edit" >Edit <i class="fa fa-edit"></i></a>
+                                    <a href="{!! url('/staff/profile') !!}/{!! $employee->user_id !!}" >Profile <i class="fa fa-user"></i></a>
+                                </td>
+                            </tr>
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -77,21 +73,9 @@
         <!-- /.col -->
     </div>
     <!-- /.row -->
-
+    <!-- /main section -->
 @endsection
-<!-- /main section -->
 
 @section('js')
-    {!! Html::script('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') !!}
-    {!! Html::script('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') !!}
-
-    <script type="text/javascript">
-
-        $(function () {
-            $('#table').DataTable({
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-            })
-        })
-    </script>
-
+    @include('layouts.components.dataTableJs.index')
 @endsection

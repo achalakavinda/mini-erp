@@ -33,10 +33,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_user');
     }
 
-    public static function CheckPermission($_value){
+    public function employee()
+    {
+        return $this->hasOne(Employee::class, 'user_id');
+    }
+
+
+    public static function CheckPermission($_value)
+    {
         if (is_array($_value))
         {
-
                 $permission = \Auth::user()->hasAnyPermission($_value);
                 if(!$permission){
                     abort(403);

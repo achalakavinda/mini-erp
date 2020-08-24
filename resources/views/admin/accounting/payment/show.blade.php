@@ -29,9 +29,8 @@
 <!-- main section -->
 @section('main-content')
 <div class="row">
-    {!!
-    Form::open(['action'=>'Accounting\PaymentController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])
-    !!}
+    {!! Form::model($Payment, ['method' => 'PATCH', 'action' => ['Accounting\PaymentController@update',
+    $Payment->id],'class'=>'form-horizontal']) !!}
 
     <div class="col-md-12">
         @include('error.error')
@@ -50,7 +49,6 @@
                             <table id="invoiceItemTable" class="table table-bordered">
                                 <thead>
                                     <tr style="text-align: center">
-                                        <th>No</th>
                                         <th>Invoice</th>
                                         <th>Total Amount (LKR)</th>
                                         <th>Amount (LKR)</th>
@@ -59,10 +57,51 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <?php $count = 1 ;?>
+                                    @foreach($Payment->items as $item)
+                                    <?php
+                                            $Invoice = \App\Models\Ims\Invoice::find($item->invoice_id);
+                                        ?>
+                                    <tr class="tr_{{ $count }}">
+                                        <td>
+                                            <input style="display:none" type="number" value="{{ $item->invoice_id }}"
+                                                name="row[{{ $count }}][model_id]">
+                                            <input readonly type="text" name="row[{{ $count }}][model_name]"
+                                                value="{{ $Invoice->code }}" style="width: 100%">
+                                        </td>
+                                        <td>
+                                            <input readonly style="width: 100%" type="text"
+                                                name="row[{{ $count }}][total]" value="{{ $Invoice->total }}">
+                                        </td>
+                                        <td>
+                                            <input onkeyup="calTol({{ $count }})" id="amount{{ $count }}" type="number"
+                                                name="row[{{ $count }}][amount]" style="width: 100%;"
+                                                value="{{ $item->amount }}">
+                                        </td>
+                                        <td>
+                                            <input readonly id="due_amount{{ $count }}" type="number"
+                                                name="row[{{ $count }}][due_amount]" value="{{ $item->due_amount }}"
+                                                style="width: 100%;">
+                                        </td>
+                                        <td>
+                                            <input id="remark{{ $count }}" type="text" name="row[{{ $count }}][remark]"
+                                                value="{{ $item->remarks }}" style="width: 100%;">
+                                        </td>
+                                        <td>
+                                            <a style="cursor: pointer" type="button"
+                                                onclick="rowRemove('.tr_{{ $count }}')"><i class="fa fa-remove"></i></a>
+                                        </td>
+                                        {{--                                            <td>--}}
+                                        {{--                                                <a  style="cursor: pointer" type="button" onclick="rowRemove('.tr_{{ $count }}')"><i
+                                            class="fa fa-remove"></i></a>--}}
+                                        {{--                                            </td>--}}
+                                        <tr />
+
+                                        <?php $count ++ ;?>
+                                        @endforeach
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th>No</th>
                                         <th>
                                             @include('layouts.selectors.accounting.invoice-dropdown.index')
                                         </th>
@@ -100,7 +139,7 @@
             <div class="box-footer">
 
                 <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
-                    Post</button>
+                    Update</button>
             </div>
         </div>
     </div>
@@ -129,7 +168,6 @@
                         if(data.invoice){
 
                             table.append('<tr class="tr_'+count+'">\n' +
-                                '                        <td>'+RawCount+'<input style="display:none" name="row['+count+'][insert]" type="checkbox" checked></td>\n' +
                                 '                        <td>\n' +
                                 '                            <input style="display:none" type="number" value="'+SelecTModelId+'" name="row['+count+'][model_id]" >\n' +
                                 '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'" style="width: 100%">\n' +
