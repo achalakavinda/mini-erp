@@ -19,6 +19,7 @@ class CreateStockItemsTable extends Migration
             $table->unsignedInteger('stock_id')->nullable();
             $table->unsignedInteger('grn_item_id')->nullable();
             $table->unsignedInteger('invoice_item_id')->nullable();
+            $table->unsignedInteger('customer_return_note_item_id')->nullable();
             $table->unsignedInteger('item_code_id');
             $table->boolean('commit')->default(true);
 
