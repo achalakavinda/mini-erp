@@ -167,7 +167,12 @@ class InvoiceController extends Controller
     public function print($id)
     {
         $Invoice = Invoice::findOrFail($id);
-        return view('admin.ims.invoice.print.vanda',compact('Invoice'));
+        if(env('COMPANY_KEY') === 'NANDA'){
+            return view('admin.ims.invoice.print.vanda',compact('Invoice'));
+        }else{
+            return view('admin.ims.invoice.print.default',compact('Invoice'));
+        }
+
     }
 
     /**
