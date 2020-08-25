@@ -18,9 +18,18 @@ class DatabaseSeeder extends Seeder
             RolesAndPermissionsSeeder::class,
             CompanyDetailSeeder::class,
             RequisitionStatusSeeder::class,
-            nandaSeeder::class
-//            TestDataSeeder::class,
-//            InventorySeeder::class,
         ]);
+
+        if( ENV('COMPANY_KEY') === "NANDA" ){
+            $this->call([
+                nandaSeeder::class
+            ]);
+        }else{
+            $this->call([
+                TestDataSeeder::class,
+                InventorySeeder::class,
+            ]);
+        }
+
     }
 }
