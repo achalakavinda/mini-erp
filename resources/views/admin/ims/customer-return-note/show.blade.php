@@ -27,9 +27,8 @@
 <!-- main section -->
 @section('main-content')
 <div class="row">
-    {!!
-    Form::open(['action'=>'Ims\CustomerReturnNoteController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])
-    !!}
+    {!! Form::model($CustomerReturnNote, ['method' => 'PATCH', 'action' => ['Ims\CustomerReturnNoteController@update',
+    $CustomerReturnNote->id],'class'=>'form-horizontal']) !!}
 
     <div class="col-md-12">
         @include('error.error')
@@ -115,7 +114,10 @@
                                     @foreach($CustomerReturnNote->items as $item)
                                     <tr class="tr_{{ $count }}">
                                         <td>{{ $count }} <input style="display:none" name="row[{{ $count }}][insert]"
-                                                type="checkbox" checked></td>
+                                                type="checkbox" checked>
+                                            <input style="display:none" type="number" value="{{ $item->id }}"
+                                                name="row[{{ $count }}][return_note_item_id]">
+                                        </td>
                                         <td>
                                             <input style="display:none" type="number" value="{{ $item->item_code_id }}"
                                                 name="row[{{ $count }}][model_id]">

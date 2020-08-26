@@ -225,9 +225,9 @@ class InvoiceController extends Controller
             'dispatched_date'=>$Invoice->dispatched_date,
             'purchase_order'=>$Invoice->purchase_order,
             'delivery_address'=>$Invoice->delivery_address,
-            'amount'=>$Invoice->amount,
+            'amount'=>0,
             'discount'=>$Invoice->discount,
-            'total'=>$Invoice->total,
+            'total'=>0,
             'remarks'=>$Invoice->remarks,
             'userdef1' => $Invoice->userdef1
         ]);
