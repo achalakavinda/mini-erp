@@ -4,7 +4,7 @@
 <!-- Default box -->
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Invoice</h3>
+        <h3 class="box-title">Return Note</h3>
     </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
@@ -13,26 +13,10 @@
         <a onclick="showMegaMenu()" href="#" class="btn btn-app">
             <i class="main-action-btn-info fa fa-list"></i> Quick Menu
         </a>
-        <a href="{{ url('/ims/invoice/create') }}" class="btn btn-app">
+        <a href="{!! url('ims/customer-return-note') !!}/{!! $CustomerReturnNote->id !!}" class="btn btn-app">
             <i class="main-action-btn-info fa fa-refresh"></i> Refresh
         </a>
-        <a href="{{ url('/ims/item') }}" class="btn btn-app">
-            <i class="main-action-btn-info fa fa-table"></i> Item
         </a>
-
-        <a href="{{ url('/ims/invoice/create') }}" class="btn btn-app">
-            <i class="main-action-btn-info fa fa-plus"></i> New
-        </a>
-
-        <a onclick="postToReturn()" id="postToReturnBtn" class="btn btn-app">
-            <i class="main-action-btn-info fa fa-refresh"></i> Return this invoice
-        </a>
-        {!!
-        Form::open(['action'=>'Ims\InvoiceController@postToReturn','style'=>'display:none','id'=>'postToReturn'])
-        !!}
-        @csrf()
-        <input type="hidden" value="{{ $Invoice->id }}" name="invoice_id">
-        {{ Form::close() }}
     </div>
     <!-- /.box-body -->
 </div>
@@ -44,7 +28,7 @@
 @section('main-content')
 <div class="row">
     {!!
-    Form::open(['action'=>'Ims\InvoiceController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])
+    Form::open(['action'=>'Ims\CustomerReturnNoteController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])
     !!}
 
     <div class="col-md-12">
@@ -61,9 +45,9 @@
                         <div class="col-xs-12">
                             <h4>
                                 Customer: {!!
-                                Form::select('customer_id',\App\Models\Customer::all()->pluck('name','id'),$Invoice->customer_id,['id'=>'CustomerId','disabled'])
+                                Form::select('customer_id',\App\Models\Customer::all()->pluck('name','id'),$CustomerReturnNote->customer_id,['id'=>'CustomerId','disabled'])
                                 !!}
-                                <small class="pull-right">Date: {{ $Invoice->created_at }}</small>
+                                <small class="pull-right">Date: {{ $CustomerReturnNote->created_at }}</small>
                             </h4>
                         </div>
                         <!-- /.col -->
@@ -83,19 +67,19 @@
                                     <tr>
                                         <td>Order Date :</td>
                                         <td><input disabled style="width: 100%" id="OrderDate" name="order_date"
-                                                type="date" value="{{ $Invoice->order_date }}"></td>
+                                                type="date" value="{{ $CustomerReturnNote->order_date }}"></td>
                                     </tr>
 
                                     <tr>
                                         <td>Courier Service : </td>
                                         <td><input disabled style="width: 100%" id="PurchaseOrder" name="purchase_order"
-                                                type="text" value="{{ $Invoice->userdef1 }}"></td>
+                                                type="text" value="{{ $CustomerReturnNote->userdef1 }}"></td>
                                     </tr>
 
                                     <tr>
                                         <td>Invoice No: </td>
                                         <td><input disabled style="width: 100%" id="InvoiceNo" name="invoice_no"
-                                                type="text" value="{{ $Invoice->code }}"></td>
+                                                type="text" value="{{ $CustomerReturnNote->code }}"></td>
                                     </tr>
 
                                     <tr>
@@ -119,6 +103,7 @@
                                         <th>No</th>
                                         <th>Item</th>
                                         <th>QTY</th>
+                                        <th>Return QTY</th>
                                         <th>Unit Price (LKR)</th>
                                         <th>Total (LKR)</th>
                                     </tr>
@@ -127,7 +112,7 @@
                                 </tbody>
                                 <tfoot>
                                     <?php $count = 1 ;?>
-                                    @foreach($Invoice->items as $item)
+                                    @foreach($CustomerReturnNote->items as $item)
                                     <tr class="tr_{{ $count }}">
                                         <td>{{ $count }} <input style="display:none" name="row[{{ $count }}][insert]"
                                                 type="checkbox" checked></td>
@@ -146,6 +131,11 @@
                                             <input disabled onkeyup="calTol({{ $count }})" id="qty{{ $count }}"
                                                 type="number" name="row[{{ $count }}][qty]" style="width: 100%"
                                                 value="{{ $item->qty }}">
+                                        </td>
+                                        <td>
+                                            <input onkeyup="calTol({{ $count }})" id="qty{{ $count }}" type="number"
+                                                name="row[{{ $count }}][return_qty]" style="width: 100%"
+                                                value="{{ $item->return_qty }}">
                                         </td>
                                         <td>
                                             <input disabled id="price{{ $count }}" type="text" readonly
@@ -191,18 +181,18 @@
                                     <tr>
                                         <th style="width:50%">Subtotal:</th>
                                         <td><input disabled style="width: 100%" id="subtotal" name="subtotal"
-                                                type="text" value="{{ $Invoice->amount }}"></td>
+                                                type="text" value="{{ $CustomerReturnNote->amount }}"></td>
                                     </tr>
                                     <tr>
                                         <th>Discount:</th>
                                         <td><input disabled style="width: 80%" id="discountpercentage"
                                                 name="discount_percentage" type="text"
-                                                value="{{ $Invoice->discount }}">%</td>
+                                                value="{{ $CustomerReturnNote->discount }}">%</td>
                                     </tr>
                                     <tr>
                                         <th>Total:</th>
                                         <td><input disabled style="width: 100%" id="total" name="total" type="text"
-                                                value="{{ $Invoice->total }}"></td>
+                                                value="{{ $CustomerReturnNote->total }}"></td>
                                     </tr>
                                 </table>
                             </div>
@@ -213,10 +203,10 @@
                 </div>
             </div>
             <div style="height: 100px" class="box-footer">
-                <button disabled style="position: absolute;right: 10px;width: 100px" type="submit"
-                    class="btn btn-primary">Edit</button>
-                <a style="position: absolute;right: 120px;width: 100px" target="_blank"
-                    href="{{ url('ims/invoice') }}/{{ $Invoice->id }}/print" class="btn btn-primary">Print</a>
+                <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
+                    Update</button>
+                <a target="_blank" href="{{ url('ims/customer-return-note') }}/{{ $CustomerReturnNote->id }}/print"
+                    class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-print"></i>Print</a>
             </div>
         </div>
     </div>
@@ -228,12 +218,6 @@
 
 @section('js')
 <script>
-    function postToReturn() {
-        if(confirm("Are you want to return this invoice")){
-            $('#postToReturn').submit();
-        }
-    }
-
     var table = $('#invoiceItemTable');
         var count = 0;
         var RawCount = 1;
@@ -257,8 +241,6 @@
             $('#addNewItem').click(function() {
                 var SelecTModelId = $('#ModelSelectId').val();
                 var SelecTModelName = $('#ModelSelectId option:selected').text();
-
-                $('#postToReturnBtn').fadeOut();
 
                 $.ajax('{!! url('api/item-code-for-invoices') !!}/'+SelecTModelId, {
                     type: 'GET',  // http method

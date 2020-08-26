@@ -104,6 +104,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('/sales-order','Ims\SalesOrderController');
 
         Route::resource('/invoice','Ims\InvoiceController');
+        Route::resource('/customer-return-note','Ims\CustomerReturnNoteController');
 
         //sub routes
         Route::post('/purchase-requisition/post-to-purchase','Ims\PurchaseRequisitionController@postToPurchase');
@@ -113,6 +114,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/quotation/post-to-sales-orders','Ims\QuotationController@postToSalesOrders');
         Route::post('/quotation/post-to-invoice','Ims\QuotationController@postToInvoice');
         Route::post('/sales-order/post-to-invoice','Ims\SalesOrderController@postToInvoice');
+        Route::post('/invoice/post-to-return','Ims\InvoiceController@postToReturn');
 
 
         //print routes

@@ -4,12 +4,12 @@ namespace App\Models\Ims;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Invoice extends Model
+class CustomerReturnNote extends Model
 {
     protected $guarded = ['id'];
 
     public  function items(){
-       return $this->hasMany('App\Models\Ims\InvoiceItem','invoice_id');
+       return $this->hasMany('App\Models\Ims\CustomerReturnNoteItem','customer_return_note_id');
     }
 
     public  function customer(){
