@@ -85,10 +85,11 @@
             @endcan
 
 
-            @can(config('constant.Permission_Accounting_Module'))
+            @can(config('constant.Permission_Accounting'))
                 <li class="col-md-2">
                     <ul>
                         <li class="list-header">Accounting</li>
+                        <li><a href="{{ url('accounting') }}">Account</a></li>
                         @can(config('constant.Permission_Payment_Registry'))
                             <li><a href="{{ url('accounting/payment') }}">Payments</a></li>
                         @endcan

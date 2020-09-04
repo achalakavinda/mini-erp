@@ -9,7 +9,6 @@
         </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
-
         <div class="box-body">
             <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
@@ -24,7 +23,7 @@
                 <i class="main-action-btn-info fa fa-table"></i> Invoice
             </a>
             <a href="{{ url('/ims/brand/create') }}" class="btn btn-menu">
-                <i class="main-action-btn-danger fa fa-plus"></i> New
+                <i class="main-action-btn-info fa fa-plus"></i> New
             </a>
 
         </div>
@@ -43,19 +42,20 @@
                     <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>#ID</th>
                             <th>Name</th>
-                            <th><i class="fa fa-cogs"></i></th>
+                            <th>Description</th>
+                            <th>Active</th>
+                            <th>Edit <i class="fa fa-paper-plane"></i></th>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($Brands as $brand)
                             <tr>
-                                <td>{!! $brand->id !!}</td>
                                 <td>{!! $brand->name !!}</td>
+                                <td>{!! $brand->description !!}</td>
+                                <td>{!! $brand->active?'Active':'' !!}</td>
                                 <td>
-                                    <a href="{!! url('ims/brand') !!}/{!! $brand->id !!}"><i
-                                            class="fa fa-paper-plane"></i></a>
+                                    <a href="{!! url('ims/brand') !!}/{!! $brand->id !!}">Edit <i class="fa fa-edit"></i></a>
                                 </td>
                             </tr>
                         @endforeach

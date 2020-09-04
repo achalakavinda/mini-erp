@@ -36,7 +36,7 @@ class CreateAccountTypesTable extends Migration
 
             $table->foreign('parent_id')
                 ->references('id')
-                ->on('brands')
+                ->on('account_types')
                 ->onDelete('cascade');
 
             $table->foreign('company_id')
