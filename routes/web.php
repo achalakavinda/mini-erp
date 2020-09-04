@@ -129,6 +129,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::prefix('accounting')->group(function ()
     {
         Route::resource('/payment','Accounting\PaymentController');
+        Route::resource('/account-type','Accounting\AccountTypeController');
     });
 
     Route::group(['middleware' => ['permission:Settings']], function () {
