@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Accounting;
 
 use App\Http\Controllers\Controller;
+use App\Models\Accounting\AccountEntryItem;
 use Illuminate\Http\Request;
 
 class AccountingController extends Controller
@@ -14,7 +15,8 @@ class AccountingController extends Controller
      */
     public function index()
     {
-        //
+        $AccountEntryItems = AccountEntryItem::all();
+        return view('admin.accounting.index',compact(['AccountEntryItems']));
     }
 
     /**

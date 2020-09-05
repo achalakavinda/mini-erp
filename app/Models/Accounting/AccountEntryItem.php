@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AccountEntryItem extends Model
 {
-    //
+    public function AccountEntry(){
+        return $this->belongsTo(AccountEntry::class);
+    }
 }

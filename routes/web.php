@@ -119,8 +119,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/company-purchase-order/{id}/print','Ims\CompanyPurchaseOrderController@print');
     });
 
-    Route::prefix('accounting')->group(function ()
-    {
+    Route::prefix('accounting')->group(function (){
         Route::resource('/','Accounting\AccountingController');
         Route::resource('/payment','Accounting\PaymentController');
         Route::resource('/account-type','Accounting\AccountTypeController');
