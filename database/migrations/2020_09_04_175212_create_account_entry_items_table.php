@@ -21,6 +21,17 @@ class CreateAccountEntryItemsTable extends Migration
             $table->enum('type',['debt ','credit']);
             $table->float('value')->default(0);
             $table->boolean('active')->default(true);
+            
+
+            $table->string('userdef1')->nullable();
+            $table->string('userdef2')->nullable();
+            $table->string('userdef3')->nullable();
+            $table->string('userdef4')->nullable();
+            $table->string('userdef5')->nullable();
+            $table->string('userdef6')->nullable();
+            $table->string('userdef7')->nullable();
+            $table->string('userdef8')->nullable();
+            $table->string('userdef9')->nullable();
             $table->timestamps();
         });
 

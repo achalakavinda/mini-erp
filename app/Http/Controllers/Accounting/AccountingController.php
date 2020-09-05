@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Accounting;
 
 use App\Http\Controllers\Controller;
+use App\Models\Accounting\AccountEntry;
 use App\Models\Accounting\AccountEntryItem;
+use App\Models\Accounting\AccountType;
 use Illuminate\Http\Request;
 
 class AccountingController extends Controller
@@ -26,7 +28,8 @@ class AccountingController extends Controller
      */
     public function create()
     {
-        //
+        $AccountTypes = AccountType::all();
+        return view('admin.accounting.create',compact(['AccountTypes']));
     }
 
     /**
@@ -37,7 +40,18 @@ class AccountingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'account_type_id'=>'required',
+            'name'=>'required',
+        ]);
+
+        $AccountEntry = AccountEntry::create([
+            'account_type_id'=>$request->account_type_id,
+            'name'=>$request->name,
+            'description'=>$request->description
+        ]);
+        
+        return redirect()->back();
     }
 
     /**
