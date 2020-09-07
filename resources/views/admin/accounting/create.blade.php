@@ -41,47 +41,50 @@ Form::open(['action'=>'Accounting\AccountingController@store','class'=>'form-hor
 !!}
 <div class="row">
     <!-- general form elements -->
-    <div class="box box-primary">
-        <div class="box-header with-border">
-        </div>
-        <!-- /.box-header -->
-        <div class="box-body">
-            <div class="col-md-6">
-                <div class="form-group">
-                    {!! Form::label("Account Type") !!}
-                    <select class="form-control" id="companyId" name="account_type_id">
-                        <option value="null">Select an account type</option>
-                        @foreach($AccountTypes as $AccountType)
-                        <option value="{{ $AccountType->id }}">{{ $AccountType->name }}</option>
-                        @endforeach
-                    </select>
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {!! Form::label("Account Type") !!}
+                        <select class="form-control" id="companyId" name="account_type_id">
+                            <option value="null">Select an account type</option>
+                            @foreach($AccountTypes as $AccountType)
+                            <option value="{{ $AccountType->id }}">{{ $AccountType->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        {!! Form::label("Account Entry Name") !!}
+                        {!! Form::text('name',null,['class'=>'form-control','id'=>'nameId',
+                        'placeholder'=>'Account Name']) !!}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        {!! Form::label("Description") !!}
+                        {!! Form::text('description',null,['class'=>'form-control','id'=>'descriptionId',
+                        'placeholder'=>'Description']) !!}
+                    </div>
                 </div>
             </div>
+            <!-- /.box-body -->
 
-            <div class="col-md-6">
-                <div class="form-group">
-                    {!! Form::label("Account Entry Name") !!}
-                    {!! Form::text('name',null,['class'=>'form-control','id'=>'nameId',
-                    'placeholder'=>'Account Name']) !!}
-                </div>
-            </div>
-            <div class="col-md-12">
-                <div class="form-group">
-                    {!! Form::label("Description") !!}
-                    {!! Form::text('description',null,['class'=>'form-control','id'=>'descriptionId',
-                    'placeholder'=>'Description']) !!}
-                </div>
+            <div class="box-footer">
+                <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157"
+                        class="fa fa-save"></i>Save
+                </button>
+
             </div>
         </div>
-        <!-- /.box-body -->
-
-        <div class="box-footer">
-            <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>Save
-            </button>
-
-        </div>
+        <!-- /.box -->
     </div>
-    <!-- /.box -->
 </div>
 <!-- /.row -->
 {!! Form::close() !!}
