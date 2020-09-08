@@ -94,6 +94,13 @@ return [
 
     //Inventory permissions
     'Permission_Inventory_Module'=> 'Inventory-Module',
+	
+	//Income permissions
+	'Permission_Income_Module'=> 'Income-Module',
+	
+	//Income permissions
+	'Permission_Purchase_Module'=> 'Purchase-Module',
+
 
     'Permission_Supplier'=> 'Supplier',
     'Permission_Supplier_Registry'=> 'Supplier-Registry',
