@@ -140,7 +140,7 @@
                                     @can(config('constant.Permission_Company_Purchase_Requisition_Creation'))
                                             <li><a href="{{ url('ims/purchase-requisition/create') }}"><i class="fa fa-plus"></i>
                                                     New</a></li>
-                                        @endcan
+                                    @endcan
                                 </ul>
                             </li>
                         @endcan
