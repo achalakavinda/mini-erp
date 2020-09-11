@@ -13,6 +13,7 @@ use App\Models\Ims\StockItem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
 
 class InvoiceController extends Controller
 {
@@ -43,7 +44,14 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        return view('admin.ims.invoice.forms.create');
+        $remarks = DB::table('invoice_settings')->where('title', '=', "Remarks")->get();
+        foreach ($remarks as $remark)
+        {
+            $remark = $remark->content; 
+        }
+
+
+        return view('admin.ims.invoice.forms.create',compact(['remark']));
     }
 
     /**
@@ -73,7 +81,7 @@ class InvoiceController extends Controller
             'dispatched_date'=>$date,
             'purchase_order'=>$request->purchase_order,
             'delivery_address'=>$request->delivery_address,
-            'remarks'=>$request->special_remarks,
+            'remarks'=>$request->remarks,
             'userdef1' => $request->courier_service
         ]);
 

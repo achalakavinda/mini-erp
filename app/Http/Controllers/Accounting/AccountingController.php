@@ -17,7 +17,7 @@ class AccountingController extends Controller
      */
     public function index()
     {
-        $AccountEntryItems = AccountEntryItem::all();
+        $AccountEntryItems = AccountEntry::all();
         return view('admin.accounting.index',compact(['AccountEntryItems']));
     }
 

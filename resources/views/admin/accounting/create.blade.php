@@ -73,6 +73,13 @@ Form::open(['action'=>'Accounting\AccountingController@store','class'=>'form-hor
                         'placeholder'=>'Description']) !!}
                     </div>
                 </div>
+                <div class="col-md-3">
+                    <div class="form-group">
+                        {!! Form::label("Opening Balance") !!}
+                        {!! Form::text('opbal',null,['class'=>'form-control','id'=>'opId',
+                        'placeholder'=>'Opening Balance']) !!}
+                    </div>
+                </div>
             </div>
             <!-- /.box-body -->
 

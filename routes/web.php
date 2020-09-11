@@ -26,7 +26,6 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('/staff/work-sheet/store', 'PageController@workSheetStore');
     Route::patch('staff/reset-password/{id}', 'StaffController@resetPassword');
     Route::resource('staff', 'StaffController');
-
     Route::post('work-sheet/delete','WorkSheetController@delete');
     Route::resource('work-sheet', 'WorkSheetController');
 
@@ -98,6 +97,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('/sales-order','Ims\SalesOrderController');
 
         Route::resource('/invoice','Ims\InvoiceController');
+        Route::resource('/jnl','Ims\JnlController');
+
         Route::resource('/customer-return-note','Ims\CustomerReturnNoteController');
 
         //sub routes
@@ -112,6 +113,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/invoice/post-to-return','Ims\InvoiceController@postToReturn');
 
         Route::get('/invoice/{id}/print','Ims\InvoiceController@print');
+        Route::get('/jnl/{id}/print','Ims\JnlController@print');
+
         Route::get('/grn/{id}/print','Ims\GrnController@print');
         Route::get('/sales-order/{id}/print','Ims\SalesOrderController@print');
         Route::get('/quotation/{id}/print','Ims\QuotationController@print');
@@ -136,3 +139,5 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 });
+
+Route::resource('admin/invoice-settings', 'Admin\\InvoiceSettingsController');

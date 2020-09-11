@@ -75,7 +75,7 @@
             {{--                </ul>--}}
             {{--            </li><!-- /GL MENU BLOCK -->--}}
 
-            @can(config('constant.Permission_Purchase_Module'))
+            @can(config('constant.Permission_Purchase1_Module'))
                 <li class="treeview">
                     <a href="{!! url('#') !!}">
                         <i class="fa fa-shopping-cart"></i> <span>Purchase</span>
@@ -150,7 +150,7 @@
             @endcan   
 
 
-            @can(config('constant.Permission_Income_Module'))
+            @can(config('constant.Permission_Income1_Module'))
                 <li class="treeview">
                     <a href="{!! url('#') !!}">
                         <i class="fa fa-money"></i> <span>Income</span>
@@ -177,7 +177,7 @@
                                         @endcan
                                 </ul>
                             </li>
-                        @endcan
+                    @endcan
 
 
                     @can(config('constant.Permission_Sales_Order'))
@@ -217,6 +217,24 @@
                                 </ul>
                             </li>
                         @endcan
+
+                        @can(config('constant.Permission_Invoice'))
+                            <li class="treeview">
+                                <a href="{{ url('ims/jnl') }}"><i class="fa fa-info"></i> <span>JNL</span>
+                                    <span class="pull-right-container">
+                                        <i class="fa fa-angle-left pull-right"></i>
+                                    </span>
+                                </a>
+                                <ul class="treeview-menu">
+                                    @can(config('constant.Permission_Invoice_Registry'))
+                                        <li><a href="{{ url('ims/jnl') }}"><i class="fa fa-table"></i> JNL</a></li>
+                                    @endcan
+                                    @can(config('constant.Permission_Invoice_Creation'))
+                                            <li><a href="{{ url('ims/jnl/create') }}"><i class="fa fa-plus"></i> New</a></li>
+                                        @endcan
+                                </ul>
+                            </li>
+                    @endcan
 
 
                   
@@ -351,6 +369,8 @@
                     </a>
                     <ul class="treeview-menu">
                         <li><a href="{{ url('/settings') }}"><i class="fa fa-cogs"></i> Settings</a></li>
+                        <li><a href="{{ url('/admin/invoice-settings') }}"><i class="fa fa-cogs"></i> Invoice Settings</a></li>
+
 
 
                         <li class="treeview">

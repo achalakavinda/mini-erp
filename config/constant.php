@@ -96,10 +96,10 @@ return [
     'Permission_Inventory_Module'=> 'Inventory-Module',
 	
 	//Income permissions
-	'Permission_Income_Module'=> 'Income-Module',
+	'Permission_Income1_Module'=> 'Income-Module',
 	
 	//Income permissions
-	'Permission_Purchase_Module'=> 'Purchase-Module',
+	'Permission_Purchase1_Module'=> 'Purchase-Module',
 
 
     'Permission_Supplier'=> 'Supplier',

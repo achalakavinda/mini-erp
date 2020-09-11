@@ -24,7 +24,9 @@
 <!-- /.box -->
 <!-- /main header section -->
 @endsection
-
+<?php
+$AccountEntryItems = DB::table('account_entries')->get();
+?>
 @section('main-content')
 <!-- main section -->
 <div class="row">
@@ -48,15 +50,20 @@
                     <tbody>
                         @foreach($AccountEntryItems as $entry)
                         <tr>
-                            <td>{!! $entry->AccountEntry?$entry->AccountEntry->name:'Unknown' !!}</td>
-                            <td>{!!
-                                $entry->AccountEntry?$entry->AccountEntry->AccountType?$entry->AccountEntry->AccountType->name:'Unknown':'Unknown'
-                                !!}</td>
+                            <td>{!! $entry->name !!}</td>
+                            
+                            <?php
+                                $AccountEntryTys = DB::table('account_entries')->where('id', '=', $entry->account_type_id)->get();
+                            ?>
+                            @foreach($AccountEntryTys as $AccEntry)
+                            <td>{!! $AccEntry->name !!}</td>
+
+                            @endforeach
+
+
+                            
                             <td>{!! $entry->description !!}</td>
-                            <td>{!! $entry->account_entry_id !!}</td>
-                            <td>{!! $entry->value !!}</td>
-                            <td>{!! $entry->type==='debt'?$entry->value:'' !!}</td>
-                            <td>{!! $entry->type==='credit'?$entry->value:'' !!}</td>
+                           
                             <td></td>
                         </tr>
                         @endforeach
