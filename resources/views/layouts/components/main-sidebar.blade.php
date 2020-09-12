@@ -75,7 +75,7 @@
             {{--                </ul>--}}
             {{--            </li><!-- /GL MENU BLOCK -->--}}
 
-            @can(config('constant.Permission_Purchase1_Module'))
+            @can(config('constant.Permission_Purchase_Module'))
                 <li class="treeview">
                     <a href="{!! url('#') !!}">
                         <i class="fa fa-shopping-cart"></i> <span>Purchase</span>
@@ -147,10 +147,10 @@
 
                     </ul>
                 </li>
-            @endcan   
+            @endcan
 
 
-            @can(config('constant.Permission_Income1_Module'))
+            @can(config('constant.Permission_Income_Module'))
                 <li class="treeview">
                     <a href="{!! url('#') !!}">
                         <i class="fa fa-money"></i> <span>Income</span>
@@ -237,10 +237,10 @@
                     @endcan
 
 
-                  
+
                     </ul>
                 </li>
-            @endcan           
+            @endcan
 
             @can(config('constant.Permission_Inventory_Module'))
                 <li class="treeview">
@@ -309,7 +309,7 @@
                             </li><!-- /stock -->
                         @endcan
 
-                      
+
                     </ul>
                 </li>
             @endcan
