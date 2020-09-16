@@ -18,6 +18,11 @@ class RolesAndPermissionsSeeder extends Seeder
         $role_admin = Role::create(['name' => config('constant.ROLE_SUPER_ADMIN') ]);
         $role_staff = Role::create(['name' => config('constant.ROLE_SUPER_STAFF') ]);
 
+        //module permissions
+        $permission = Permission::create(['name' => config('constant.Permission_Income_Module') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Purchase_Module') ]);
+        $role_admin->givePermissionTo($permission);
 
         //permission default
         $permission = Permission::create(['name' => config('constant.Permission_Dashboard')]);
@@ -263,6 +268,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $role_admin->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Stock_Update') ]);
         $role_admin->givePermissionTo($permission);
+
 
 
         //accounting

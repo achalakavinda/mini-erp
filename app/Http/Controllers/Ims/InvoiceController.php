@@ -45,9 +45,10 @@ class InvoiceController extends Controller
     public function create()
     {
         $remarks = DB::table('invoice_settings')->where('title', '=', "Remarks")->get();
+        $remark = null;
         foreach ($remarks as $remark)
         {
-            $remark = $remark->content; 
+            $remark = $remark->content;
         }
 
 
@@ -220,7 +221,7 @@ class InvoiceController extends Controller
     }
 
     public function postToReturn(Request $request){
-        
+
         $Invoice = Invoice::findOrFail($request->invoice_id);
 
         $CustomerReturnNote = CustomerReturnNote::create([
@@ -264,6 +265,6 @@ class InvoiceController extends Controller
         }
 
         return redirect(url('ims/customer-return-note/'.$CustomerReturnNote->id));
-        
+
     }
 }
