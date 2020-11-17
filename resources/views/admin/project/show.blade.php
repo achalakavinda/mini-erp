@@ -146,7 +146,9 @@
 
                 </div>
             </div>
+        </div>
 
+        <div class="col-md-4">
             <div class="box box-primary">
                 {{--summery table--}}
                 @include('admin.project.table.project_cost_summary_table')
@@ -155,7 +157,7 @@
         </div>
 
         <!-- BAR CHART -->
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Cost & Revenue Comparison</h3>
@@ -170,7 +172,7 @@
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
             <!-- DONUT CHART -->
             <div class="box box-primary">
                 <div class="box-header with-border">

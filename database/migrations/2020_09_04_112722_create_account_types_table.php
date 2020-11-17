@@ -13,6 +13,7 @@ class CreateAccountTypesTable extends Migration
      */
     public function up()
     {
+        //chart of accounts
         Schema::create('account_types', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('parent_id')->nullable();

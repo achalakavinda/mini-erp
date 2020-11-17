@@ -59,19 +59,24 @@ class PaymentController extends Controller
         try {
             $TotalAmount = 0;
             foreach ($request->row as $item) {
-                
+
+                //find the created invoice
                 $Model = Invoice::find($item['model_id']);
+                //looking for existing payment for invoice
                 $PaymentItems = PaymentItem::where('invoice_id','=',$Model->id)->get();
+                //initiate full amount for payed
                 $FullAmount = 0;
-                
+
                 if($PaymentItems->count() >0){
-                    
+
                     foreach ($PaymentItems as $PaymentItem){
                         $FullAmount =  $FullAmount + $PaymentItem->amount;
                     }
-                    
+
                 }
+                //add entered amount
                 $FullAmount = $FullAmount + $item['amount'];
+
                 if($Model){
 
                     PaymentItem::create([
@@ -95,9 +100,9 @@ class PaymentController extends Controller
             $Payment->delete();
             dd($exception->getMessage());
         }
+
         return redirect(url('accounting/payment'));
 
-            
     }
 
     /**
@@ -145,17 +150,17 @@ class PaymentController extends Controller
             $TotalAmount = 0;
             $Payment->items()->delete();
             foreach ($request->row as $item) {
-                
+
                 $Model = Invoice::find($item['model_id']);
                 $PaymentItems = PaymentItem::where('invoice_id','=',$Model->id)->get();
                 $FullAmount = 0;
-                
+
                 if($PaymentItems->count() >0){
-                    
+
                     foreach ($PaymentItems as $PaymentItem){
                         $FullAmount =  $FullAmount + $PaymentItem->amount;
                     }
-                    
+
                 }
                 $FullAmount = $FullAmount + $item['amount'];
                 if($Model){
