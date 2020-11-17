@@ -38,6 +38,7 @@
                     <thead>
                         <tr>
                             <th>#ID</th>
+                            <th>Main Account Type</th>
                             <th>Name</th>
                             <th><i class="fa fa-cogs"></i></th>
                         </tr>
@@ -46,6 +47,7 @@
                         @foreach($AccountTypes as $AccountType)
                         <tr>
                             <td>{!! $AccountType->id !!}</td>
+                            <td>{!! $AccountType->mainAccountType ? $AccountType->mainAccountType->name : null!!}</td>
                             <td>{!! $AccountType->name !!}</td>
                             <td>
                                 <a href="{!! url('accounting/account-type') !!}/{!! $AccountType->id !!}"><i

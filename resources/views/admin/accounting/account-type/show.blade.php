@@ -45,8 +45,8 @@
 </div>
 <!-- /.row -->
 {!! Form::close() !!}
-{!! Form::open(['method' => 'DELETE','route' => ['account-type.destroy', $AccountType->id]]) !!}
+{{-- {!! Form::open(['method' => 'DELETE','route' => ['account-type.destroy', $AccountType->id]]) !!}
 <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</button>
-{!! Form::close() !!}
+{!! Form::close() !!} --}}
 <!-- /main section -->
 @endsection

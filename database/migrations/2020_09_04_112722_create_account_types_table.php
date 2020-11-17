@@ -17,6 +17,7 @@ class CreateAccountTypesTable extends Migration
         Schema::create('account_types', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('parent_id')->nullable();
+            $table->unsignedInteger('main_account_types_id')->nullable();
             $table->integer('level')->default(0);
             $table->string('name')->unique();
             $table->string('description')->nullable();
@@ -39,6 +40,10 @@ class CreateAccountTypesTable extends Migration
                 ->references('id')
                 ->on('account_types')
                 ->onDelete('cascade');
+
+            $table->foreign('main_account_types_id')
+                ->references('id')
+                ->on('main_account_types');
 
             $table->foreign('company_id')
                 ->references('id')

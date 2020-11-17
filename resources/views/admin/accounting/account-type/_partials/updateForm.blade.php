@@ -1,6 +1,19 @@
 <div class="box-body">
     <div class="col-md-6">
         <div class="form-group">
+            {!! Form::label("Main Account Type") !!}
+            <select class="form-control" id="companyId" name="main_account_types_id">
+                <option value="null">Select a Main Account Type</option>
+                @foreach($MainAccountTypes as $MainAccountType)
+                <option @if($MainAccountType->id === $AccountType->main_account_types_id) selected @endif
+                    value="{{ $MainAccountType->id }}">{{ $MainAccountType->name }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="form-group">
             {!! Form::label("Parent Brand") !!}
             <select class="form-control" id="companyId" name="parent_account_type_id">
                 <option value="null">Select a Parent</option>
@@ -21,7 +34,15 @@
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label("Description") !!}
+            {!! Form::text('description',$AccountType->description,['class'=>'form-control','id'=>'descriptionId',
+            'placeholder'=>'Description']) !!}
+        </div>
+    </div>
+
+    <div class="col-md-6">
         <div class="form-group">
             {!! Form::label("company") !!}
             {!!
@@ -30,19 +51,12 @@
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="form-group">
             {!! Form::label("Company Division") !!}
             {!!
             Form::select('company_division_id',$CompanyDivision,$AccountType->company_division_id,['readonly','class'=>'form-control','id'=>'companyDivisionId'])
             !!}
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            {!! Form::label("Description") !!}
-            {!! Form::text('description',$AccountType->description,['class'=>'form-control','id'=>'descriptionId',
-            'placeholder'=>'Description']) !!}
         </div>
     </div>
 </div>

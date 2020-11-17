@@ -1,4 +1,17 @@
 <div class="box-body">
+
+    <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label("Main Account Type") !!}
+            <select class="form-control" id="companyId" name="main_account_types_id">
+                <option value="null">Select a Main Account Type</option>
+                @foreach($MainAccountTypes as $MainAccountType)
+                <option value="{{ $MainAccountType->id }}">{{ $MainAccountType->name }}</option>
+                @endforeach
+            </select>
+        </div>
+    </div>
+
     <div class="col-md-6">
         <div class="form-group">
             {!! Form::label("Parent Brand") !!}
@@ -18,27 +31,27 @@
             'placeholder'=>'Account Name']) !!}
         </div>
     </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            {!! Form::label("Description") !!}
+            {!! Form::text('description',null,['class'=>'form-control','id'=>'descriptionId',
+            'placeholder'=>'Description']) !!}
+        </div>
+    </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="form-group">
             {!! Form::label("company") !!}
             {!! Form::select('company_id',$Company,null,['readonly','class'=>'form-control','id'=>'companyId']) !!}
         </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="form-group">
             {!! Form::label("Company Division") !!}
             {!!
             Form::select('company_division_id',$CompanyDivision,null,['readonly','class'=>'form-control','id'=>'companyDivisionId'])
             !!}
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            {!! Form::label("Description") !!}
-            {!! Form::text('description',null,['class'=>'form-control','id'=>'descriptionId',
-            'placeholder'=>'Description']) !!}
         </div>
     </div>
 </div>
