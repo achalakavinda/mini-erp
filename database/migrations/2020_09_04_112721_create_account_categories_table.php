@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateAccountTypesTable extends Migration
+class CreateAccountCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,10 +14,10 @@ class CreateAccountTypesTable extends Migration
     public function up()
     {
         //chart of accounts
-        Schema::create('account_types', function (Blueprint $table) {
+        Schema::create('account_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('parent_id')->nullable();
-            $table->unsignedInteger('account_category_id');
+            $table->unsignedInteger('main_account_type_id');
             $table->integer('level')->default(0);
 
             $table->string('code')->unique();
@@ -31,13 +31,12 @@ class CreateAccountTypesTable extends Migration
 
             $table->foreign('parent_id')
                 ->references('id')
-                ->on('account_types')
+                ->on('account_categories')
                 ->onDelete('cascade');
 
-            $table->foreign('account_category_id')
+            $table->foreign('main_account_type_id')
                 ->references('id')
-                ->on('account_categories');
-
+                ->on('main_account_types');
 
             $table->foreign('company_id')
                 ->references('id')
@@ -56,6 +55,6 @@ class CreateAccountTypesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('account_types');
+        Schema::dropIfExists('account_categories');
     }
 }
