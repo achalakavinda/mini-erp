@@ -17,9 +17,6 @@
             <a href="{{ url('/ims/brand') }}" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-arrow-left"></i> Go Back
             </a>
-            {{-- <a href="{{ url('/ims/brand/create') }}" class="btn btn-app">
-        <i class="main-action-btn-info fa fa-refresh"></i> Refresh
-        </a> --}}
             <a href="{{ url('/ims/item') }}" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-table"></i> Item
             </a>
@@ -51,14 +48,12 @@
             </div>
             <!-- /.box -->
         </div>
-
         @include('admin.ims.brand._partials.extentions.extUpdateForm')
-
     </div>
     <!-- /.row -->
-    {!! Form::close() !!}
-    {!! Form::open(['method' => 'DELETE','route' => ['brand.destroy', $Brand->id]]) !!}
-    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</button>
-    {!! Form::close() !!}
+{{--    {!! Form::close() !!}--}}
+{{--    {!! Form::open(['method' => 'DELETE','route' => ['brand.destroy', $Brand->id]]) !!}--}}
+{{--    <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</button>--}}
+{{--    {!! Form::close() !!}--}}
     <!-- /main section -->
 @endsection

@@ -22,11 +22,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/dashboard','DashboardController@index');
 
     Route::get('/staff/profile/{id}','StaffController@profile');
-
-
     Route::get('/staff/work-sheet', 'PageController@workSheet');
     Route::post('/staff/work-sheet/store', 'PageController@workSheetStore');
-
+    Route::patch('staff/reset-password/{id}', 'StaffController@resetPassword');
+    Route::resource('staff', 'StaffController');
     Route::post('work-sheet/delete','WorkSheetController@delete');
     Route::resource('work-sheet', 'WorkSheetController');
 
@@ -40,35 +39,29 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('customer', 'CustomerController');
     Route::resource('supplier','SupplierController');
     Route::resource('general-ledger','GeneralLedgerController');
-
-    Route::patch('staff/reset-password/{id}', 'StaffController@resetPassword');
-    Route::resource('staff', 'StaffController');
-
     Route::resource('job-type', 'JobTypeController');
-
     Route::resource('designation','DesignationController');
 
     Route::resource('project','ProjectController');
-
-     Route::prefix('project')->group(function () {
-            Route::get('/{id}/actual-cost','ProjectController@actualCost');
-            Route::get('/{id}/budget-cost','ProjectController@budgetCost');
-            Route::get('/{id}/staff','ProjectController@staffAllocation');
-            Route::get('/{id}/estimation/edit/staff-allocation-estimation','ProjectController@editStaffAllocationEstimation');
-            Route::get('/{id}/estimation/edit/cost-type','ProjectController@editCostType');
-            Route::get('/{id}/settings','ProjectController@settings');
-            Route::post('/status','ProjectController@projectStatusStore');
-            Route::post('/variable-update','ProjectController@projectVariableUpdate');
-            Route::post('/budget-cost','ProjectController@budgetCostStore');
-            Route::post('/actual-cost','ProjectController@actualCostStore');
-            Route::post('/edit-budget-designation-cost','ProjectController@editBudgetDesignationCost');
-            Route::post('/store-new-budget-designation-cost','ProjectController@StoreNewBudgetDesignationCost');
-            Route::post('/edit-budget-cost-type','ProjectController@editBudgetCostType');
-            Route::post('/store-new-budget-cost-type','ProjectController@StoreNewBudgetCostType');
-            Route::post('/edit-actual-cost-type','ProjectController@editActualCostType');
-            Route::post('/store-new-actual-cost-type','ProjectController@StoreNewActualCostType');
-            Route::patch('/{id}/staff/update','ProjectController@staffAllocationUpdate');
-     });
+    Route::prefix('project')->group(function () {
+        Route::get('/{id}/actual-cost','ProjectController@actualCost');
+        Route::get('/{id}/budget-cost','ProjectController@budgetCost');
+        Route::get('/{id}/staff','ProjectController@staffAllocation');
+        Route::get('/{id}/estimation/edit/staff-allocation-estimation','ProjectController@editStaffAllocationEstimation');
+        Route::get('/{id}/estimation/edit/cost-type','ProjectController@editCostType');
+        Route::get('/{id}/settings','ProjectController@settings');
+        Route::post('/status','ProjectController@projectStatusStore');
+        Route::post('/variable-update','ProjectController@projectVariableUpdate');
+        Route::post('/budget-cost','ProjectController@budgetCostStore');
+        Route::post('/actual-cost','ProjectController@actualCostStore');
+        Route::post('/edit-budget-designation-cost','ProjectController@editBudgetDesignationCost');
+        Route::post('/store-new-budget-designation-cost','ProjectController@StoreNewBudgetDesignationCost');
+        Route::post('/edit-budget-cost-type','ProjectController@editBudgetCostType');
+        Route::post('/store-new-budget-cost-type','ProjectController@StoreNewBudgetCostType');
+        Route::post('/edit-actual-cost-type','ProjectController@editActualCostType');
+        Route::post('/store-new-actual-cost-type','ProjectController@StoreNewActualCostType');
+        Route::patch('/{id}/staff/update','ProjectController@staffAllocationUpdate');
+    });
 
     Route::prefix('spread-sheet')->group(function () {
         Route::get('/','SpreadSheet\SpreadSheetController@index');
@@ -104,6 +97,9 @@ Route::group(['middleware' => ['auth']], function () {
         Route::resource('/sales-order','Ims\SalesOrderController');
 
         Route::resource('/invoice','Ims\InvoiceController');
+        Route::resource('/jnl','Ims\JnlController');
+
+        Route::resource('/customer-return-note','Ims\CustomerReturnNoteController');
 
         //sub routes
         Route::post('/purchase-requisition/post-to-purchase','Ims\PurchaseRequisitionController@postToPurchase');
@@ -114,9 +110,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::post('/quotation/post-to-invoice','Ims\QuotationController@postToInvoice');
         Route::post('/sales-order/post-to-invoice','Ims\SalesOrderController@postToInvoice');
 
+        Route::post('/invoice/post-to-return','Ims\InvoiceController@postToReturn');
 
-        //print routes
         Route::get('/invoice/{id}/print','Ims\InvoiceController@print');
+        Route::get('/jnl/{id}/print','Ims\JnlController@print');
+
         Route::get('/grn/{id}/print','Ims\GrnController@print');
         Route::get('/sales-order/{id}/print','Ims\SalesOrderController@print');
         Route::get('/quotation/{id}/print','Ims\QuotationController@print');
@@ -124,9 +122,10 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('/company-purchase-order/{id}/print','Ims\CompanyPurchaseOrderController@print');
     });
 
-    Route::prefix('accounting')->group(function ()
-    {
+    Route::prefix('accounting')->group(function (){
+        Route::resource('/','Accounting\AccountingController');
         Route::resource('/payment','Accounting\PaymentController');
+        Route::resource('/account-type','Accounting\AccountTypeController');
     });
 
     Route::group(['middleware' => ['permission:Settings']], function () {
@@ -140,3 +139,5 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 });
+
+Route::resource('admin/invoice-settings', 'Admin\\InvoiceSettingsController');

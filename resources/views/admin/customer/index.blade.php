@@ -37,8 +37,8 @@
                         <tr>
                             <th>Name</th>
                             <th>Contact</th>
-                            <th>NIC/Passport No</th>
                             <th>Address</th>
+                            <th>NIC/Passport No</th>
                             <th>Email</th>
                             <th>DOB</th>
                             <th>View</th>

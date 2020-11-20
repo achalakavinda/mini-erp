@@ -5,6 +5,7 @@
     $companyEmail = '';
     $companyWebsite = '';
     $companyAddress = '';
+    $logo = "../../../../public/img/jatlogo.png";
 
     $CompanyDetailTypes = \App\Models\CompanyDetailType::all();
     foreach ($CompanyDetailTypes as $CompanyDetailType){
@@ -87,7 +88,6 @@
     }
 
     body {
-        background-color: #eee;
         padding-top: 25px;
         -webkit-print-color-adjust: exact !important;
         height: 100%;
@@ -118,7 +118,7 @@
     }
 
     div.invoice-table {
-        border-top: 3px solid rgb(255, 77, 77);
+        border-top: 1px solid rgb(0, 0, 0);
     }
 
     div.invoice-table > table.table > thead,
@@ -160,7 +160,7 @@
         background-color: #333;
         color: white;
         padding-top: 15px;
-        border-top: 3px solid red;
+        border-top: 3px solid black;
     }
 
 </style>
@@ -168,26 +168,33 @@
 
 <body onload="window.print();">
 <div class="container">
-    <div class="row invoice-header px-3 py-2">
+    <div class="row">
         <div class="col-4">
-            <p>{{ $companyName }}</p>
-            <h1>INVOICE</h1>
+
+        <img src="{{ $logo }}" height="120px" width="200px" />
+
         </div>
         <div class="col-4 text-right">
+            
+        </div>
+        <div class="col-4 text-right">
+        <p>{{ $companyName }}</p>
             <p>{{  $companyContact }}</p>
             <p>{{ $companyEmail }}</p>
             <p>{{ $companyWebsite }}</p>
-        </div>
-        <div class="col-4 text-right">
             <p>{!! $companyAddress !!}</p>
         </div>
     </div>
+    <h1 style="text-align:center">INVOICE</h1>
 
     <div class="invoice-content row px-5 pt-5">
         <div class="col-3">
             <h5 class="almost-gray mb-3">Invoiced to:</h5>
             <p class="gray-ish">{{ $Invoice->customer?$Invoice->customer->name:'' }}</p>
             <p class="gray-ish">{{ $Invoice->customer?$Invoice->customer->address_1:'' }}</p>
+        </div>
+        <div class="col-6">
+            
         </div>
         <div class="col-3">
             <h5 class="almost-gray">Invoice number:</h5>
@@ -197,11 +204,11 @@
             <p class="gray-ish">{{ $Invoice->dispatched_date }}</p>
 
         </div>
-        <div class="col-6 text-right total-field">
+        <!--div class="col-6 text-right total-field">
             <h4 class="almost-gray">Invoice Total</h4>
             <h1 class="gray-ish">{{ number_format($Invoice->total,2) }} <span class="curency">RS/=</span></h1>
             {{--            <h5 class="almost-gray due-date">Due Date: 01 / 01 / 20 20</h5>--}}
-        </div>
+        </div-->
     </div>
 
     <div class="row mt-5">
@@ -239,12 +246,12 @@
 
     <div class="row invoice_details">
         <!-- invoiced to details -->
-        <div class="col-4 offset-1 pt-3">
-            <h4 class="gray-ish">Invoice Summary & Notes</h4>
+        <div class="col-6">
+            <h4 class="gray-ish"></h4>
             <p class="pt-3 almost-gray"></p>
         </div>
         <!-- Invoice assets and total -->
-        <div class="offset-1 col-5 mb-3 pr-4 sub-table">
+        <div class="col-6">
             <table class="table table-borderless">
                 <tbody>
                 {{--                    <tr>--}}
@@ -256,7 +263,7 @@
                         <th scope="row gray-ish">Discounts</th>
                         <td class="text-right">{{ $Invoice->discount}}<span class="currency"> %</span></td>
                 </tr> --}}
-                <tr class="last-row">
+                <tr>
                     <th scope="row">
                         <h4>Total</h4>
                     </th>
@@ -269,7 +276,7 @@
         </div>
     </div>
 
-    <p class="text-center pb-3"><em> Taxes will be calculated in &euro; regarding transport and other taxable services.</em></p>
+    <div>{{ $Invoice->remarks }}</div>
 </div>
 <script type="text/javascript">
     /**

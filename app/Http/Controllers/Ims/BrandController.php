@@ -58,7 +58,8 @@ class BrandController extends Controller
             'description'=>$request->description
         ]);
 
-        if($request->file('img_url')){
+        if($request->file('img_url'))
+        {
             $image = $request->file('img_url');
             $Store = Storage::put('/images/system/brands/'.$Brand->id.'', $image);
 
@@ -68,7 +69,7 @@ class BrandController extends Controller
             }
         }
 
-        if($request->parent_brand_id>0){
+        if($request->parent_brand_id>0) {
             $parentBrand = Brand::find($request->parent_brand_id);
             if($parentBrand){
                 $Brand->name = $parentBrand->name.' - '.$request->name;
@@ -77,8 +78,6 @@ class BrandController extends Controller
                 $Brand->save();
             }
         }
-
-
 
         return redirect()->back();
     }

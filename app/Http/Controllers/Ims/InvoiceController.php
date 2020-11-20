@@ -5,12 +5,15 @@ namespace App\Http\Controllers\Ims;
 use App\Models\CompanyDivision;
 use App\Models\Ims\Invoice;
 use App\Models\Ims\InvoiceItem;
+use App\Models\Ims\CustomerReturnNote;
+use App\Models\Ims\CustomerReturnNoteItem;
 use App\Models\Ims\ItemCode;
 use App\Models\Ims\Stock;
 use App\Models\Ims\StockItem;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
 
 class InvoiceController extends Controller
 {
@@ -41,7 +44,15 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        return view('admin.ims.invoice.forms.create');
+        $remarks = DB::table('invoice_settings')->where('title', '=', "Remarks")->get();
+        $remark = null;
+        foreach ($remarks as $remark)
+        {
+            $remark = $remark->content;
+        }
+
+
+        return view('admin.ims.invoice.forms.create',compact(['remark']));
     }
 
     /**
@@ -71,7 +82,7 @@ class InvoiceController extends Controller
             'dispatched_date'=>$date,
             'purchase_order'=>$request->purchase_order,
             'delivery_address'=>$request->delivery_address,
-            'remarks'=>$request->special_remarks,
+            'remarks'=>$request->remarks,
             'userdef1' => $request->courier_service
         ]);
 
@@ -167,7 +178,12 @@ class InvoiceController extends Controller
     public function print($id)
     {
         $Invoice = Invoice::findOrFail($id);
-        return view('admin.ims..invoice.print.default',compact('Invoice'));
+        if(env('COMPANY_KEY') === 'NANDA'){
+            return view('admin.ims.invoice.print.vanda',compact('Invoice'));
+        }else{
+            return view('admin.ims.invoice.print.default',compact('Invoice'));
+        }
+
     }
 
     /**
@@ -202,5 +218,53 @@ class InvoiceController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function postToReturn(Request $request){
+
+        $Invoice = Invoice::findOrFail($request->invoice_id);
+
+        $CustomerReturnNote = CustomerReturnNote::create([
+            'company_division_id'=>$Invoice->company_division_id,
+            'customer_id'=>$Invoice->customer_id,
+            'invoice_id'=>$Invoice->id,
+            'code'=>'RETURN',
+            'date'=>$Invoice->date,
+            'order_date'=>$Invoice->order_date,
+            'dispatched_date'=>$Invoice->dispatched_date,
+            'purchase_order'=>$Invoice->purchase_order,
+            'delivery_address'=>$Invoice->delivery_address,
+            'amount'=>0,
+            'discount'=>$Invoice->discount,
+            'total'=>0,
+            'remarks'=>$Invoice->remarks,
+            'userdef1' => $Invoice->userdef1
+        ]);
+
+        $CustomerReturnNote->code = "RETURN-".Carbon::now()->year."-".Carbon::now()->month."-".Carbon::now()->day."-000".$CustomerReturnNote->id."C".$Invoice->customer_id;
+        $CustomerReturnNote->save();
+
+        try {
+            foreach ($Invoice->items as $item) {
+                CustomerReturnNoteItem::create([
+                    'customer_return_note_id'=>$CustomerReturnNote->id,
+                    'invoice_item_id'=>$item->id,
+                    'item_code_id'=>$item->item_code_id,
+                    'stock_item_id'=>$item->stock_item_id,
+                    'item_unit_cost_from_table'=>$item->item_unit_cost_from_table,
+                    'unit_price'=>$item->unit_price,
+                    'qty'=>$item->qty,
+                    'total'=>$item->total,
+                    'company_division_id'=>$item->company_division_id,
+                ]);
+
+            }
+        }catch (\Exception $exception){
+            $CustomerReturnNote->delete();
+            dd($exception->getMessage());
+        }
+
+        return redirect(url('ims/customer-return-note/'.$CustomerReturnNote->id));
+
     }
 }

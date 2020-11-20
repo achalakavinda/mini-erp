@@ -23,6 +23,16 @@
         <a href="{{ url('/ims/invoice/create') }}" class="btn btn-app">
             <i class="main-action-btn-info fa fa-plus"></i> New
         </a>
+
+        <a onclick="postToReturn()" id="postToReturnBtn" class="btn btn-app">
+            <i class="main-action-btn-info fa fa-refresh"></i> Return this invoice
+        </a>
+        {!!
+        Form::open(['action'=>'Ims\InvoiceController@postToReturn','style'=>'display:none','id'=>'postToReturn'])
+        !!}
+        @csrf()
+        <input type="hidden" value="{{ $Invoice->id }}" name="invoice_id">
+        {{ Form::close() }}
     </div>
     <!-- /.box-body -->
 </div>
@@ -123,7 +133,7 @@
                                                 type="checkbox" checked></td>
                                         <td>
                                             <input style="display:none" type="number" value="{{ $item->item_code_id }}"
-                                                name="row[{{ $count }}][model_id]" >
+                                                name="row[{{ $count }}][model_id]">
                                             <?php
                                                 $ItemCode = \App\Models\Ims\ItemCode::find($item->item_code_id);
                                             ?>
@@ -218,6 +228,12 @@
 
 @section('js')
 <script>
+    function postToReturn() {
+        if(confirm("Are you want to return this invoice")){
+            $('#postToReturn').submit();
+        }
+    }
+
     var table = $('#invoiceItemTable');
         var count = 0;
         var RawCount = 1;
@@ -241,6 +257,8 @@
             $('#addNewItem').click(function() {
                 var SelecTModelId = $('#ModelSelectId').val();
                 var SelecTModelName = $('#ModelSelectId option:selected').text();
+
+                $('#postToReturnBtn').fadeOut();
 
                 $.ajax('{!! url('api/item-code-for-invoices') !!}/'+SelecTModelId, {
                     type: 'GET',  // http method

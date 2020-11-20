@@ -77,6 +77,8 @@
                         <div class="form-group">
                             <label for="Requisition Date">Courier Service</label>
                             <input style="width: 100%" id="courier_service" name="courier_service" type="text" value="">
+                      
+                           
                         </div>
                     </div>
 
@@ -114,10 +116,12 @@
                     <div class="row">
                         <!-- accepted payments column -->
                         <div class="col-xs-8">
-
+                        <label for="Requisition Date">Remarks</label>
+                            <textarea style="width: 100%" id="remarks" name="remarks" type="text" value="">{{ $remark }}</textarea>
                         </div>
                         <!-- /.col -->
                         <div class="col-xs-4">
+                       
                             <div class="table-responsive">
                                 <table class="table">
                                     <tr>
