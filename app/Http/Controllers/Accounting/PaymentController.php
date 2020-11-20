@@ -48,15 +48,16 @@ class PaymentController extends Controller
         ]);
 
         $Payment = Payment::create([
-            'payment_type_id'=>1, //As the payment type is collection
+            'payment_type'=>'collection',
             'code' => "PAY",
             'date'=>Carbon::now(),
             'total'=>0,
-            'commited'=>true,
+            'commit'=>false,
             'created_by'=>auth()->user()->id,
         ]);
 
         try {
+
             $TotalAmount = 0;
             foreach ($request->row as $item) {
 
@@ -100,7 +101,6 @@ class PaymentController extends Controller
             $Payment->delete();
             dd($exception->getMessage());
         }
-
         return redirect(url('accounting/payment'));
 
     }

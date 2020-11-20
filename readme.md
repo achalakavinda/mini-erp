@@ -8,7 +8,7 @@ MIS is full-featured Inventory Management, Project and HR system for back office
 
 ## Highlights
 ### Project Management
- - Multi Site project managemnt
+ - Multi Site project management
  - Project tracking & monitoring
  - Project planning
 
