@@ -24,9 +24,7 @@
 <!-- /.box -->
 <!-- /main header section -->
 @endsection
-<?php
-$AccountEntryItems = DB::table('account_entries')->get();
-?>
+
 @section('main-content')
 <!-- main section -->
 <div class="row">
@@ -48,22 +46,15 @@ $AccountEntryItems = DB::table('account_entries')->get();
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($AccountEntryItems as $entry)
+                        @foreach($AccountItems as $entry)
                         <tr>
-                            <td>{!! $entry->name !!}</td>
-                            
-                            <?php
-                                $AccountEntryTys = DB::table('account_entries')->where('id', '=', $entry->account_type_id)->get();
-                            ?>
-                            @foreach($AccountEntryTys as $AccEntry)
-                            <td>{!! $AccEntry->name !!}</td>
-
-                            @endforeach
-
-
-                            
-                            <td>{!! $entry->description !!}</td>
-                           
+                            <td>{!! $entry !!}</td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                             <td></td>
                         </tr>
                         @endforeach

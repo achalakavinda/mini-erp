@@ -15,6 +15,8 @@ class CreateMainAccountTypesTable extends Migration
     {
         Schema::create('main_account_types', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('code')->unique();
+            $table->string('customize_code')->unique()->nullable();
             $table->string('name');
             $table->string('description')->nullable();
             $table->boolean('active')->default(true);
@@ -24,23 +26,28 @@ class CreateMainAccountTypesTable extends Migration
         DB::table('main_account_types')->insert([
             [
                 'id'=>1,
-                'name' => 'assets'
+                'code'=>'A001',
+                'name' => strtoupper('assets')
             ],
             [
                 'id'=>2,
-                'name' => 'capital'
+                'code'=>'C001',
+                'name' => strtoupper('capital')
             ],
             [
                 'id'=>3,
-                'name' => 'expenses'
+                'code'=>'E001',
+                'name' => strtoupper('expenses')
             ],
             [
                 'id'=>4,
-                'name' => 'income'
+                'code'=>'I001',
+                'name' => strtoupper('income')
             ],
             [
                 'id'=>5,
-                'name' => 'liability'
+                'code'=>'L001',
+                'name' => strtoupper('liability')
             ],
 
         ]);

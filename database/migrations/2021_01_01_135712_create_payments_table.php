@@ -13,34 +13,19 @@ class CreatePaymentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('payment_types', function (Blueprint $table) {
-            $table->id();
-            $table->string('code')->unique();
-            $table->timestamps();
-        });
-
-        DB::table('payment_types')->insert([
-            [
-                'id'=>1,
-                'code' => 'collection',
-            ],
-            [
-                'id'=>2,
-                'code' => 'payment',
-            ]
-        ]);
 
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('payment_type_id');
+            $table->enum('type',['collection','payment']);
+            $table->enum('status',['open','pending','close'])->default('open');
             $table->text('code');
             $table->date('date');
-            $table->double('total');
             $table->unsignedInteger('created_by')->nullable();
-            $table->boolean('commited')->default(0);
+            $table->boolean('commit')->default(0);
             $table->text('remarks')->nullable();
             $table->timestamps();
         });
+
     }
 
     /**
@@ -51,6 +36,5 @@ class CreatePaymentsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('payments');
-        Schema::dropIfExists('payment_types');
     }
 }
