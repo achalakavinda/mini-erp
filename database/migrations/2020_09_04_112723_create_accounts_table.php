@@ -20,7 +20,7 @@ class CreateAccountsTable extends Migration
 
             $table->string('code')->unique();
             $table->string('customize_code')->unique()->nullable();
-            $table->text('name')->unique();
+            $table->string('name')->unique();
             $table->text('description')->nullable();
             $table->unsignedInteger('company_id');
             $table->unsignedInteger('company_division_id');
