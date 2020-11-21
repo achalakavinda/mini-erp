@@ -14,19 +14,22 @@ class CreateUtilityStoredProcedures extends Migration
     public function up()
     {
         DB::unprepared("
+
             DROP PROCEDURE IF EXISTS `getStockItemQtyById`;
 
-            CREATE PROCEDURE `getStockItemQtyById`(IN `ItemCodeId` INT) NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER
+            CREATE PROCEDURE `getStockItemQtyById`
+            (IN `ItemCodeId` INT)
+            NOT DETERMINISTIC CONTAINS SQL SQL SECURITY DEFINER
 
-                SELECT
-                    IC.name, IC.description, IC.unit_cost, IC.selling_price, IC.unit_price_with_tax,
-                    COALESCE(SUM(SI.tol_qty),0) AS stock_qty
-                FROM stock_items SI
-                LEFT JOIN item_codes IC ON IC.id = SI.item_code_id
-                WHERE SI.item_code_id = ItemCodeId
-                GROUP BY SI.item_code_id
+            SELECT IC.name, IC.description, IC.unit_cost, IC.selling_price, IC.unit_price_with_tax,
 
-        ");
+            COALESCE(
+            (SELECT sum(SI.tol_qty) FROM stock_items SI where SI.item_code_id = ItemCodeId GROUP BY SI.item_code_id)
+            ,0) AS stock_qty
+
+            FROM item_codes IC WHERE IC.id = ItemCodeId
+
+              ");
     }
 
     /**
