@@ -4,7 +4,7 @@
     <!-- main header section -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Company Pruchase Requisition Order</h3>
+            <h3 class="box-title">Company Purchase Requisition Order</h3>
         </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
@@ -42,7 +42,6 @@
                             <div class="form-group">
                                 <label for="GRN Date">Supplier</label>
                                 <select name="supplier_id" class="form-control">
-                                    <option value="">Select a Supplier</option>
                                     @foreach(\App\Models\Ims\Supplier::all() as $supplier)
                                         <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                                     @endforeach

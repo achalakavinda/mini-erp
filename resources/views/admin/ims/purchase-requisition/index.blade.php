@@ -5,7 +5,7 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Purchase Requisition</h3>
+            <h3 class="box-title">Company Purchase Requisition Order</h3>
         </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->

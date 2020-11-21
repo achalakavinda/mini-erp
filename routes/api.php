@@ -38,9 +38,15 @@ Route::get('/item-code-for-invoices/{id}',function ($id){
     return ['item'=>$Model,'qty'=>$ITEM_QTY];
 });
 
-//api endpoint for the requisitions
-Route::get('/item-code-for-purchase-requisitions/{id}',function ($id)
-{
+/***
+ * END POINT GET STOCK ITEM QUANTITY
+ *
+ * Usage
+ *  1. Company Purchase Order Create
+ *  2. Company Purchase Order Update
+*/
+Route::get('/item-code-for-purchase-requisitions/{id}',function ($id){
+
     return DB::select('call getStockItemQtyById(?)',[$id]);
 });
 
