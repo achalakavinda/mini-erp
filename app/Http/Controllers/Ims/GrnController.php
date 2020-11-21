@@ -71,8 +71,8 @@ class GrnController extends Controller
         ]);
 
         try {
-
             $TotalAmount = 0;
+
             foreach ($request->row as $item)
             {
                 $Model = ItemCode::find($item['model_id']);
