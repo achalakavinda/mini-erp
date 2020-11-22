@@ -18,7 +18,6 @@
             <div class="form-group">
                 <label for="Requisition Date">Supplier</label>
                 <select name="supplier_id" class="form-control" id="SupplierId">
-                    <option value="">Select a Supplier</option>
                     @foreach(\App\Models\Ims\Supplier::all() as $supplier)
                     <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                     @endforeach
@@ -86,35 +85,23 @@
 
         $( document ).ready(function() {
 
-            $('#SupplierId').click(function() {
-                var customer_id =$('#SupplierId').val();
-                $.ajax('{!! url('api/supplier-for-invoices') !!}/'+supplier_id, {
-                    type: 'GET',  // http method
-                    success: function (data, status, xhr) {
-                        $('#SupplierDetail').val(data.address);
-                        $('#Address').val(data.address);
-                    },
-                    error: function (jqXhr, textStatus, errorMessage) {
-                        alert(errorMessage);
-                    }
-                });
-            });
-
             $('#addNewItem').click(function() {
-                var SelecTModelId = $('#ModelSelectId').val();
-                var SelecTModelName = $('#ModelSelectId option:selected').text();
+                let selectModelId = $('#ModelSelectId').val();
+                let selectModelName = $('#ModelSelectId option:selected').text();
 
-                $.ajax('{!! url('api/item-code-for-invoices') !!}/'+SelecTModelId, {
+                $.ajax('{!! url('api/item-code') !!}/'+selectModelId+'/stock', {
                     type: 'GET',  // http method
                     success: function (data, status, xhr) {
 
-                        if(data.item){
+                        if(data && data.length === 1){
+                            data = data[0];
 
                             table.append('<tr class="tr_'+count+'">\n' +
                                 '                        <td>'+RawCount+'<input style="display:none" name="row['+count+'][insert]" type="checkbox" checked></td>\n' +
                                 '                        <td>\n' +
-                                '                            <input style="display:none" type="number" value="'+SelecTModelId+'" name="row['+count+'][model_id]" >\n' +
-                                '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+' | Unit Price : '+data.item.unit_price_with_tax+'/=" style="width: 100%">\n' +
+                                '                            <input style="display:none" type="number" value="'+selectModelId+'" name="row['+count+'][model_id]" >\n' +
+                                '                            <input hidden type="text" name="row['+count+'][model_name]" value="'+selectModelName+' | Unit Price : '+data.unit_price_with_tax+'/=" style="width: 100%">\n' +
+                                '                            '+selectModelName+' | Unit Price : '+data.unit_price_with_tax+'/=' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input  style="width: 100%" type="text" name="row['+count+'][remark]">\n' +
@@ -123,7 +110,7 @@
                                 '                            <input onkeyup="calTol('+(count+1)+')" id="qty'+count+'"  type="number" name="row['+count+'][qty]" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input onkeyup="calTol('+(count+1)+')" id="price'+count+'"  type="number"  name="row['+count+'][unit_price]" value="'+data.item.unit_price_with_tax+'" style="width: 100%">\n' +
+                                '                            <input onkeyup="calTol('+(count+1)+')" id="price'+count+'"  type="number"  name="row['+count+'][unit_price]" value="'+data.unit_price_with_tax+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input id="tol'+count+'"  type="number" readonly name="row['+count+'][tol]" style="width: 100%">\n' +
@@ -137,12 +124,13 @@
                             RawCount++;
 
                         }else{
-                            alert('Empty Items');
+                            alert('some error has occurred..., please try again!');
                         }
 
                     },
                     error: function (jqXhr, textStatus, errorMessage) {
-                        alert(errorMessage);
+                        alert('some error has occurred..., please try again!');
+                        console.error(errorMessage);
                     }
                 });
             });
@@ -150,7 +138,6 @@
         });
 
         function rowRemove(value) {
-            alert(value);
             $(value).remove();
         }
         function calTol(count) {

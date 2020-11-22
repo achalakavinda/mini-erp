@@ -108,14 +108,12 @@
         $( document ).ready(function() {
 
             $('#addNewItem').click(function() {
-
                 let selectItemId = $('#ModelSelectId').val();
                 let selectModelName = $('#ModelSelectId option:selected').text();
 
-                $.ajax('{!! url('api/item-code-for-purchase-requisitions') !!}/'+selectItemId, {
+                $.ajax('{!! url('api/item-code') !!}/'+selectItemId+'/stock', {
                     type: 'GET',  // http method
                     success: function (data, status, xhr) {
-
                         if(data && data.length === 1){
                             data = data[0];
                             table.append('<tr class="tr_'+count+'">\n' +
@@ -143,11 +141,12 @@
                             count++;
                             RawCount++;
                         }else{
-                            alert('some error has occured..., please try again!');
+                            alert('some error has occurred..., please try again!');
                         }
                     },
                     error: function (jqXhr, textStatus, errorMessage) {
-                        alert(errorMessage);
+                        alert('some error has occurred..., please try again!');
+                        console.error(errorMessage);
                     }
                 });
             });

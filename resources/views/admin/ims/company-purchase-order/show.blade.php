@@ -1,44 +1,42 @@
 @extends('layouts.admin')
 
 @section('main-content-header')
-<!-- main header section -->
-<div class="box">
-    <div class="box-header with-border">
-        <h3 class="box-title">Dashboard / Company Purchase Order</h3>
-    </div>
+    <!-- main header section -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Company Purchase Order</h3>
+        </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
-    <div class="box-body">
-        <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
-            <i class="main-action-btn-info fa fa-list"></i> Quick Menu
-        </a>
-        <a href="{{ url('/ims/company-purchase-order') }}" class="btn btn-menu">
-            <i class="main-action-btn-info fa fa-refresh"></i> Company Purchase Order
-        </a>
+        <div class="box-body">
+            <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{{ url('/ims/company-purchase-order') }}" class="btn btn-menu">
+                <i class="main-action-btn-info fa fa-refresh"></i> Company Purchase Order
+            </a>
 
-        <a href="{{ url('/ims/company-purchase-order/create') }}" class="btn btn-menu">
-            <i class="main-action-btn-info fa fa-plus"></i> New
-        </a>
+            <a href="{{ url('/ims/company-purchase-order/create') }}" class="btn btn-menu">
+                <i class="main-action-btn-info fa fa-plus"></i> New
+            </a>
 
-        @if(!$CompanyPurchaseOrder->posted_to_grn)
-        <a onclick="postToGRN()" id="postToGRNBtn" class="btn btn-menu">
-            <i class="main-action-btn-info fa fa-save"></i> Post to GRN
-        </a>
-        @endif
+            @if(!$CompanyPurchaseOrder->posted_to_grn)
+                <a onclick="postToGRN()" id="postToGRNBtn" class="btn btn-menu">
+                    <i class="main-action-btn-info fa fa-save"></i> Post to GRN
+                </a>
+            @endif
+        </div>
     </div>
-</div>
-<!-- /.box -->
-<!-- /main header section -->
+    <!-- /.box -->
+    <!-- /main header section -->
 @endsection
 
 
 
 @section('main-content')
-<!-- main section -->
-<div class="row">
-    {!! Form::model($CompanyPurchaseOrder, ['action'
-    =>['Ims\CompanyPurchaseOrderController@update',$CompanyPurchaseOrder->id],'class'=>'form-horizontal','id'=>'Form'])
-    !!}
+    <!-- main section -->
+    <div class="row">
+        {!! Form::model($CompanyPurchaseOrder, ['action'=>['Ims\CompanyPurchaseOrderController@update',$CompanyPurchaseOrder->id],'class'=>'form-horizontal','id'=>'Form']) !!}
     @csrf
     @method('put')
     <div class="col-md-12">
@@ -185,18 +183,19 @@
         $( document ).ready(function() {
 
             $('#addNewItem').click(function() {
-                var SelecTItemId = $('#ModelSelectId').val();
-                var SelecTModelName = $('#ModelSelectId option:selected').text();
+                let selectItemId = $('#ModelSelectId').val();
+                let selectModelName = $('#ModelSelectId option:selected').text();
                 $('#postToGRNBtn').fadeOut();
 
-                $.ajax('{!! url('api/item-code-for-purchase-requisitions') !!}/'+SelecTItemId, {
+                $.ajax('{!! url('api/item-code') !!}/'+selectItemId+'/stock', {
                     type: 'GET',  // http method
                     success: function (data, status, xhr) {
-                        if(data.item){
+                        if(data && data.length === 1){
+                            data = data[0];
                             table.append('<tr class="tr_'+count+'">\n' +
                                 '                        <td>\n' +
-                                '                            <input style="display:none" type="number" value="'+SelecTItemId+'" name="row['+count+'][model_id]">\n' +
-                                '                            <input style="width: 100%" readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'">\n' +
+                                '                            <input style="display:none" type="number" value="'+selectItemId+'" name="row['+count+'][model_id]">\n' +
+                                '                            <input style="width: 100%" readonly type="text" name="row['+count+'][model_name]" value="'+selectModelName+'">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input style="width: 100%"  type="text" name="row['+count+'][remark]">\n' +
@@ -205,7 +204,7 @@
                                 '                            <input style="text-align: right; width: 100%" id="qty'+count+'"  type="number" onkeyup="calTol('+(RawCount)+')" name="row['+count+'][qty]">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input style="text-align: right; width: 100%" id="price'+count+'"  type="number" onkeyup="calTol('+(RawCount)+')" name="row['+count+'][unit_price]" value="'+data.item.unit_price_with_tax+'">\n' +
+                                '                            <input style="text-align: right; width: 100%" id="price'+count+'"  type="number" onkeyup="calTol('+(RawCount)+')" name="row['+count+'][unit_price]" value="'+data.unit_price_with_tax+'">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input style="text-align: right; width: 100%" id="tol'+count+'"  type="number" readonly name="row['+count+'][total]">\n' +
@@ -217,11 +216,12 @@
                             count++;
                             RawCount++;
                         }else{
-                            alert('Empty Items');
+                            alert('some error has occurred..., please try again!');
                         }
                     },
                     error: function (jqXhr, textStatus, errorMessage) {
-                        alert(errorMessage);
+                        alert('some error has occurred..., please try again!');
+                        console.error(errorMessage);
                     }
                 });
             });

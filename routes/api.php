@@ -6,11 +6,6 @@ use Illuminate\Http\Request;
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
 */
 
 //to get project details without customer array
@@ -42,12 +37,13 @@ Route::get('/item-code-for-invoices/{id}',function ($id){
  * END POINT GET STOCK ITEM QUANTITY
  *
  * Usage
- *  1. Company Purchase Order Create
- *  2. Company Purchase Order Update
+ *  1. Company Purchase Requisition Create
+ *  2. Company Purchase Requisition Update
+ *  3. Company Purchase Order Create
+ *  4. Company Purchase Order Update
 */
-Route::get('/item-code-for-purchase-requisitions/{id}',function ($id){
-
-    return DB::select('call getStockItemQtyById(?)',[$id]);
+Route::get('/item-code/{id}/stock',function ($id){
+    return DB::select('call getItemStockQtyByItemId(?)',[$id]);
 });
 
 //api endpoint for the invoices
