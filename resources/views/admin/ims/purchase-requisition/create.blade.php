@@ -1,58 +1,62 @@
 @extends('layouts.admin')
 
 @section('main-content-header')
-    <!-- main header section -->
-    <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">Company Purchase Requisition Order</h3>
-        </div>
+<!-- main header section -->
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Company Purchase Requisition Order</h3>
+    </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
-        <div class="box-body">
-            <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
-                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
-            </a>
-            <a href="{{ url('/ims/purchase-requisition/create') }}" class="btn btn-menu">
-                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
-            </a>
-            <a href="{{ url('/ims/purchase-requisition') }}" class="btn btn-menu">
-                <i class="main-action-btn-info fa fa-list"></i> Requisition
-            </a>
-        </div>
+    <div class="box-body">
+        <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+        </a>
+        <a href="{{ url('/ims/purchase-requisition/create') }}" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+        </a>
+        <a href="{{ url('/ims/purchase-requisition') }}" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-list"></i> Requisition
+        </a>
     </div>
-    <!-- /main header section -->
+</div>
+<!-- /main header section -->
 @endsection
 
 @section('main-content')
-    <!-- main section -->
-    <div class="row">
-        <div class="col-md-12">
-            {!! Form::open(['action'=>'Ims\PurchaseRequisitionController@store','class'=>'form-horizontal','id'=>'Form']) !!}
-            <div class="box box-primary">
-                <div class="box-body">
+<!-- main section -->
+<div class="row">
+    <div class="col-md-12">
+        {!! Form::open(['action'=>'Ims\PurchaseRequisitionController@store','class'=>'form-horizontal','id'=>'Form'])
+        !!}
+        <div class="box box-primary">
+            <div class="box-body">
                 @include('error.error')
-                    <div class="col-md-12">
-                        <div class="col-md-8"></div>
-                        <!-- requisition date -->
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                {!! Form::label('Requisition Date') !!}
-                                {!!  Form::date('date',\Carbon\Carbon::now(),['id'=>'RequisitionDate','class'=>'form-control'])  !!}
-                            </div>
-                            <div class="form-group">
-                                <label for="GRN Date">Supplier</label>
-                                <select name="supplier_id" class="form-control">
-                                    @foreach(\App\Models\Ims\Supplier::all() as $supplier)
-                                        <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                <div class="col-md-12">
+                    <div class="col-md-8"></div>
+                    <!-- requisition date -->
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            {!! Form::label('Requisition Date') !!}
+                            {!!
+                            Form::date('date',\Carbon\Carbon::now(),['id'=>'RequisitionDate','class'=>'form-control'])
+                            !!}
+                        </div>
+                        <div class="form-group">
+                            <label for="GRN Date">Supplier</label>
+                            <select name="supplier_id" class="form-control">
+                                <option value="">Select a Supplier</option>
+                                @foreach(\App\Models\Ims\Supplier::all() as $supplier)
+                                <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
+                </div>
 
-                    <div class="col-md-12">
-                        <table id="requisitionItemTable" class="table table-responsive table-bordered table-striped">
-                            <thead>
+                <div class="col-md-12">
+                    <table id="requisitionItemTable" class="table table-responsive table-bordered table-striped">
+                        <thead>
                             <tr>
                                 <th>Item Code</th>
                                 <th>QTY</th>
@@ -61,9 +65,9 @@
                                 <th>Total (LKR)</th>
                                 <th><i class="fa fa-remove"></i></th>
                             </tr>
-                            </thead>
-                            <tbody></tbody>
-                            <tfoot>
+                        </thead>
+                        <tbody></tbody>
+                        <tfoot>
                             <tr>
                                 <th>
                                     <!-- requisition item -->
@@ -77,31 +81,31 @@
                                     <button id="addNewItem" style="width: 100%" type="button" class="btn">Add</button>
                                 </th>
                             </tr>
-                            </tfoot>
-                        </table>
-                    </div><!-- requisition item table -->
-                    <hr />
-                </div>
-                <!-- /.box-body -->
-                <div class="box-footer">
-                    <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
-                        Submit</button>
-                </div>
+                        </tfoot>
+                    </table>
+                </div><!-- requisition item table -->
+                <hr />
             </div>
-            <!-- /.box -->
-            {!! Form::close() !!}
-
+            <!-- /.box-body -->
+            <div class="box-footer">
+                <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
+                    Submit</button>
+            </div>
         </div>
+        <!-- /.box -->
+        {!! Form::close() !!}
+
     </div>
-    <!-- /.row -->
-    <!-- /main section -->
+</div>
+<!-- /.row -->
+<!-- /main section -->
 @endsection
 
 
 @section('js')
-    @include('layouts.components.sematic-ui.dropdown')
-    <script>
-        var table = $('#requisitionItemTable');
+@include('layouts.components.sematic-ui.dropdown')
+<script>
+    var table = $('#requisitionItemTable');
         var count = 0;
         var RawCount = 1;
 
@@ -167,5 +171,5 @@
                 subtotal = subtotal+parseFloat($('#tol'+i).val());
             }
         }
-    </script>
+</script>
 @endsection
