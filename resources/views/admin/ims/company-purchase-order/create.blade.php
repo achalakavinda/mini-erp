@@ -14,8 +14,8 @@
         <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
             <i class="main-action-btn-info fa fa-list"></i> Quick Menu
         </a>
-        <a href="{{ url('/company-purchase-order/item') }}" class="btn btn-menu">
-            <i class="main-action-btn-info fa fa-table"></i> Company Purchase Order
+        <a href="{{ url('/ims/company-purchase-order') }}" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-refresh"></i> Company Purchase Orders
         </a>
 
         <a href="{{ url('/ims/company-purchase-order/create') }}" class="btn btn-menu">

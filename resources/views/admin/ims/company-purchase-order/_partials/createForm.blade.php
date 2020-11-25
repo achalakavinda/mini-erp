@@ -18,6 +18,7 @@
             <div class="form-group">
                 <label for="Requisition Date">Supplier</label>
                 <select name="supplier_id" class="form-control" id="SupplierId">
+                    <option value="">Select a Supplier</option>
                     @foreach(\App\Models\Ims\Supplier::all() as $supplier)
                     <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                     @endforeach

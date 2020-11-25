@@ -11,4 +11,7 @@ class CompanyPurchaseOrder extends Model
     public  function items(){
         return $this->hasMany('App\Models\Ims\CompanyPurchaseOrderItem');
     }
+    public  function supplier(){
+        return $this->belongsTo('App\Models\Ims\Supplier');
+    }
 }

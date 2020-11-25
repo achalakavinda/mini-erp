@@ -1,42 +1,44 @@
 @extends('layouts.admin')
 
 @section('main-content-header')
-    <!-- main header section -->
-    <div class="box">
-        <div class="box-header with-border">
-            <h3 class="box-title">Company Purchase Order</h3>
-        </div>
+<!-- main header section -->
+<div class="box">
+    <div class="box-header with-border">
+        <h3 class="box-title">Company Purchase Order</h3>
+    </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
-        <div class="box-body">
-            <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
-                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
-            </a>
-            <a href="{{ url('/ims/company-purchase-order') }}" class="btn btn-menu">
-                <i class="main-action-btn-info fa fa-refresh"></i> Company Purchase Order
-            </a>
+    <div class="box-body">
+        <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+        </a>
+        <a href="{{ url('/ims/company-purchase-order') }}" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-refresh"></i> Company Purchase Order
+        </a>
 
-            <a href="{{ url('/ims/company-purchase-order/create') }}" class="btn btn-menu">
-                <i class="main-action-btn-info fa fa-plus"></i> New
-            </a>
+        <a href="{{ url('/ims/company-purchase-order/create') }}" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-plus"></i> New
+        </a>
 
-            @if(!$CompanyPurchaseOrder->posted_to_grn)
-                <a onclick="postToGRN()" id="postToGRNBtn" class="btn btn-menu">
-                    <i class="main-action-btn-info fa fa-save"></i> Post to GRN
-                </a>
-            @endif
-        </div>
+        @if(!$CompanyPurchaseOrder->posted_to_grn)
+        <a onclick="postToGRN()" id="postToGRNBtn" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-save"></i> Post to GRN
+        </a>
+        @endif
     </div>
-    <!-- /.box -->
-    <!-- /main header section -->
+</div>
+<!-- /.box -->
+<!-- /main header section -->
 @endsection
 
 
 
 @section('main-content')
-    <!-- main section -->
-    <div class="row">
-        {!! Form::model($CompanyPurchaseOrder, ['action'=>['Ims\CompanyPurchaseOrderController@update',$CompanyPurchaseOrder->id],'class'=>'form-horizontal','id'=>'Form']) !!}
+<!-- main section -->
+<div class="row">
+    {!! Form::model($CompanyPurchaseOrder,
+    ['action'=>['Ims\CompanyPurchaseOrderController@update',$CompanyPurchaseOrder->id],'class'=>'form-horizontal','id'=>'Form'])
+    !!}
     @csrf
     @method('put')
     <div class="col-md-12">
@@ -63,7 +65,7 @@
                             <select name="supplier_id" class="form-control">
                                 <option value="">Select a Supplier</option>
                                 @foreach(\App\Models\Ims\Supplier::all() as $supplier)
-                                <option @if($CompanyPurchaseOrder->supplier_id === $supplier->id) selected @endif
+                                <option @if($CompanyPurchaseOrder->supplier_id == $supplier->id) selected @endif
                                     value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                                 @endforeach
                             </select>
