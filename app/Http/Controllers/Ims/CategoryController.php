@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Ims;
 
+use Storage;
 use App\Http\Controllers\Controller;
 use App\Models\Company;
 use App\Models\CompanyDivision;
 use App\Models\Ims\Brand;
 use App\Models\Ims\Category;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -73,8 +75,10 @@ class CategoryController extends Controller
             if( $parentCategory ){
                 $Category->name = $parentCategory->name.' - '.$request->name;
                 $Category->parent_id = $parentCategory->id;
-                $Category->level = $parentCategory->level+1;
                 $Category->save();
+
+                $parentCategory->level = $parentCategory->level+1;
+                $parentCategory->save();
             }
         }
 
@@ -117,7 +121,33 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'company_id'=>'required',
+            'company_division_id'=>'required'
+        ]);
+
+        $Category = Category::findorfail($id);
+
+        $Category->name = $request->name;
+        $Category->company_id = $request->company_id;
+        $Category->company_division_id = $request->company_division_id;
+        $Category->description = $request->description;
+        $Category->save();
+
+        if($request->file('img_url')){
+            $image = $request->file('img_url');
+            Storage::deleteDirectory('/images/system/brands/'.$Category->id.'');
+            $Store = Storage::put('/images/system/brands/'.$Category->id.'', $image);
+
+            if($Store){
+                $Category->img_url = '/storage/'.$Store;
+                $Category->save();
+            }
+        }
+
+        
+        return Redirect::back();
     }
 
     /**

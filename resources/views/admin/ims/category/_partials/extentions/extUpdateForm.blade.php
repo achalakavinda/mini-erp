@@ -17,7 +17,7 @@
                 </div>
                 <div class="form-group">
                     <label>Image</label>
-                    <img class="form-control" style="width: auto;" src="{{ $Category->img_url }}">
+                    <img class="form-control" style="width: 50%; height: 50%;" src="{{ $Category->img_url }}">
                 </div>
             </div>
         </div>
