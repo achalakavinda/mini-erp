@@ -5,7 +5,7 @@
 <!-- Default box -->
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Customers</h3>
+        <h3 class="box-title">New Supplier</h3>
     </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <div class="box-body">
