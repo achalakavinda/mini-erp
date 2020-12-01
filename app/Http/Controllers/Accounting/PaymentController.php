@@ -32,6 +32,22 @@ class PaymentController extends Controller
         return view('admin.accounting.payment.create');
     }
 
+
+    public function storeCustomerPayment(Request $request)
+    {
+        return $this->store($request);
+    }
+
+    public function storeInvoicePayment(Request $request)
+    {
+        return $this->store($request);
+    }
+
+    public function storeSupplierPayment(Request $request)
+    {
+        return $this->store($request);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
