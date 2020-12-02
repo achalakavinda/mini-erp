@@ -64,7 +64,7 @@ class PaymentController extends Controller
         ]);
 
         $Payment = Payment::create([
-            'payment_type'=>'collection',
+            'type'=>'collection',
             'code' => "PAY",
             'date'=>Carbon::now(),
             'commit'=>false,

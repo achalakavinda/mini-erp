@@ -2,6 +2,14 @@
 
 MIS is full-featured Inventory Management, Project and HR system for back offices.
 
+##How to Setup
+1. create .env file using .env.example
+2. composer install
+3. create database and update .env file
+4. php artisan migrate:refresh
+5. php artisan db:seed
+6. php artisan serve
+
 ##Features:
 * Laravel
 * ACL
