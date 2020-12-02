@@ -80,8 +80,8 @@ class PaymentController extends Controller
                     PaymentItem::create([
                         'payment_id'=>$Payment->id,
                         'invoice_id'=>$Model->id,
-                        'total_amount'=>$item['unit_price'],
-                        'payed_amount'=>$item['unit_price'],
+                        'total_amount'=>$item['amount'],
+                        'payed_amount'=>$item['amount'],
                         'remain_amount'=>0,
                         'remarks'=>$item['remark']?$item['remark']:null
                     ]);
