@@ -53,7 +53,8 @@ class CreateGrnItemsTable extends Migration
 
             $table->foreign('grn_id')
                 ->references('id')
-                ->on('grns');
+                ->on('grns')
+                ->onDelete('cascade');
         });
     }
 

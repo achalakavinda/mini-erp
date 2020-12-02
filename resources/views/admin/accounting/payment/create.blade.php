@@ -1,118 +1,133 @@
 @extends('layouts.admin')
+
 @section('main-content-header')
-<!-- main header section -->
-<!-- Default box -->
-<div class="box">
-    <div class="box-header with-border">
-        <h3 class="box-title">Payment</h3>
-    </div>
+    <!-- main header section -->
+    <!-- Default box -->
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Payment Window</h3>
+        </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
 
-    <div class="box-body">
-        <a onclick="showMegaMenu()" href="#" class="btn btn-app">
-            <i class="main-action-btn-info fa fa-list"></i> Quick Menu
-        </a>
-        <a href="{!! url('accounting/payment') !!}" class="btn btn-app">
-            <i class="main-action-btn-info fa fa-arrow-left"></i> Go Back
-        </a>
-        <a href="{{ url('/accounting/invoice/create') }}" class="btn btn-app">
-            <i class="main-action-btn-info fa fa-refresh"></i> Refresh
-        </a>
+        <div class="box-body">
+            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+            </a>
+            <a href="{!! url('accounting/payment') !!}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-arrow-left"></i> Go Back
+            </a>
+            <a href="{{ url('/accounting/invoice/create') }}" class="btn btn-app">
+                <i class="main-action-btn-info fa fa-refresh"></i> Refresh
+            </a>
+        </div>
+        <!-- /.box-body -->
     </div>
-    <!-- /.box-body -->
-</div>
-<!-- /.box -->
-<!-- /main header section -->
+    <!-- /.box -->
+    <!-- /main header section -->
 @endsection
 
-<!-- main section -->
+
 @section('main-content')
-<div class="row">
-    {!!
-    Form::open(['action'=>'Accounting\PaymentController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])
-    !!}
+    <!-- main section -->
 
-    <div class="col-md-12">
-        @include('error.error')
-        <!-- general form elements -->
-        <div class="box box-primary">
-            <!-- form start -->
-            <div class="box-body">
-                <!-- invoice date -->
-                <div class="col-md-12">
-
-
-
-                    <!-- Table row -->
-                    <div style="margin-top: 20px" class="row">
-                        <div class="col-xs-12">
-                            <table id="invoiceItemTable" class="table table-bordered">
-                                <thead>
-                                    <tr style="text-align: center">
-                                        <th>No</th>
-                                        <th>Invoice</th>
-                                        <th>Total Amount (LKR)</th>
-                                        <th>Amount (LKR)</th>
-                                        <th>Due Amount (LKR)</th>
-                                        <th>Remarks</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>
-                                            @include('layouts.selectors.accounting.invoice-dropdown.index')
-                                        </th>
-                                        <th><button id="addNewInvoiceItem" type="button" style="width: 100%"
-                                                class="btn">Add</button></th>
-                                    </tr>
-                                </tfoot>
-                            </table>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="nav-tabs-custom">
+                <ul class="nav nav-tabs">
+                    <li><a href="#customer-tab" data-toggle="tab" aria-expanded="false">Customer Payment</a></li>
+                    <li><a href="#supplier-tab" data-toggle="tab" aria-expanded="true">Supplier Payment</a></li>
+                    <li class="active"><a href="#invoice-tab" data-toggle="tab">Invoice Payment</a></li>
+                </ul>
+                <div class="tab-content">
+                    @include('error.error')
+                    <div class="tab-pane" id="customer-tab">
+                        <div class="row">
+                            //customer payment form
                         </div>
-                        <!-- /.col -->
                     </div>
-                    <!-- /.row -->
-
-                    <div class="row">
-                        <!-- accepted payments column -->
-                        <div class="col-xs-8">
-
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane" id="supplier-tab">
+                        <div class="row">
+                            //supplier payment form
                         </div>
-                        <!-- /.col -->
-                        <div class="col-xs-4">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <tr>
-                                        <th>Total:</th>
-                                        <td><input style="width: 100%" id="total" name="total" type="text"></td>
-                                    </tr>
-                                </table>
+                    </div>
+                    <!-- /.tab-pane -->
+                    <div class="tab-pane  active" id="invoice-tab">
+                        <div class="box-content">
+                            <!-- start invoice only form -->
+                        {!! Form::open(['action'=>'Accounting\PaymentController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl']) !!}
+                        <!-- Table row -->
+                            <div style="margin-top: 20px" class="row">
+                                <div class="col-xs-12">
+                                    <table id="invoiceItemTable" class="table table-bordered">
+                                        <thead>
+                                        <tr style="text-align: center">
+                                            <th>No</th>
+                                            <th>Invoice</th>
+                                            <th>Total Amount (LKR)</th>
+                                            <th>Amount (LKR)</th>
+                                            <th>Due Amount (LKR)</th>
+                                            <th>Remarks</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        </tbody>
+                                        <tfoot>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>
+                                                @include('layouts.selectors.accounting.invoice-dropdown.index')
+                                            </th>
+                                            <th><button id="addNewInvoiceItem" type="button" style="width: 100%"
+                                                        class="btn">Add</button></th>
+                                        </tr>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                                <!-- /.col -->
                             </div>
-                        </div>
-                        <!-- /.col -->
-                    </div>
-                    <!-- /.row -->
-                </div>
-            </div>
-            <div class="box-footer">
+                            <!-- /.row -->
 
-                <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
-                    Post</button>
+                            <div class="row">
+                                <!-- accepted payments column -->
+                                <div class="col-xs-8">
+
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-xs-4">
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <tr>
+                                                <th>Total:</th>
+                                                <td><input style="width: 100%" id="total" name="total" type="text"></td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- /.col -->
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>Post</button>
+                                </div>
+                            </div>
+                            <!-- /.row -->
+
+                        {!! Form::close() !!}
+                        <!-- end invoice only form -->
+                        </div>
+                    </div>
+                    <!-- /.tab-pane -->
+                </div><!-- end tab-content -->
             </div>
         </div>
-    </div>
-    {!! Form::close() !!}
-</div>
-<!-- /.row -->
-<!-- /main section -->
+    </div><!-- /.row -->
+
+    <!-- /main section -->
 @endsection
 
 @section('js')
-<script>
-    var table = $('#invoiceItemTable');
+    <script>
+        var table = $('#invoiceItemTable');
         var count = 0;
         var RawCount = 1;
 
@@ -174,12 +189,12 @@
 
         function calTol(count) {
             let total = 0;
-            
+
             for(let i=0; i<count; i++){
                 total = total+parseFloat($('#amount'+i).val());
             }
             $('#total').val(total);
         }
 
-</script>
+    </script>
 @endsection

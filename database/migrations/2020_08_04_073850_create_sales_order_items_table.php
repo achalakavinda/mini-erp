@@ -42,7 +42,8 @@ class CreateSalesOrderItemsTable extends Migration
 
             $table->foreign('sales_order_id')
                 ->references('id')
-                ->on('sales_orders');
+                ->on('sales_orders')
+                ->onDelete('cascade');
 
             $table->foreign('brand_id')
                 ->references('id')

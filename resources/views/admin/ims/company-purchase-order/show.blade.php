@@ -4,7 +4,7 @@
 <!-- main header section -->
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Dashboard / Company Purchase Order</h3>
+        <h3 class="box-title">Company Purchase Order</h3>
     </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
@@ -36,8 +36,8 @@
 @section('main-content')
 <!-- main section -->
 <div class="row">
-    {!! Form::model($CompanyPurchaseOrder, ['action'
-    =>['Ims\CompanyPurchaseOrderController@update',$CompanyPurchaseOrder->id],'class'=>'form-horizontal','id'=>'Form'])
+    {!! Form::model($CompanyPurchaseOrder,
+    ['action'=>['Ims\CompanyPurchaseOrderController@update',$CompanyPurchaseOrder->id],'class'=>'form-horizontal','id'=>'Form'])
     !!}
     @csrf
     @method('put')
@@ -65,7 +65,7 @@
                             <select name="supplier_id" class="form-control">
                                 <option value="">Select a Supplier</option>
                                 @foreach(\App\Models\Ims\Supplier::all() as $supplier)
-                                <option @if($CompanyPurchaseOrder->supplier_id === $supplier->id) selected @endif
+                                <option @if($CompanyPurchaseOrder->supplier_id == $supplier->id) selected @endif
                                     value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                                 @endforeach
                             </select>
@@ -185,18 +185,19 @@
         $( document ).ready(function() {
 
             $('#addNewItem').click(function() {
-                var SelecTItemId = $('#ModelSelectId').val();
-                var SelecTModelName = $('#ModelSelectId option:selected').text();
+                let selectItemId = $('#ModelSelectId').val();
+                let selectModelName = $('#ModelSelectId option:selected').text();
                 $('#postToGRNBtn').fadeOut();
 
-                $.ajax('{!! url('api/item-code-for-purchase-requisitions') !!}/'+SelecTItemId, {
+                $.ajax('{!! url('api/item-code') !!}/'+selectItemId+'/stock', {
                     type: 'GET',  // http method
                     success: function (data, status, xhr) {
-                        if(data.item){
+                        if(data && data.length === 1){
+                            data = data[0];
                             table.append('<tr class="tr_'+count+'">\n' +
                                 '                        <td>\n' +
-                                '                            <input style="display:none" type="number" value="'+SelecTItemId+'" name="row['+count+'][model_id]">\n' +
-                                '                            <input style="width: 100%" readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'">\n' +
+                                '                            <input style="display:none" type="number" value="'+selectItemId+'" name="row['+count+'][model_id]">\n' +
+                                '                            <input style="width: 100%" readonly type="text" name="row['+count+'][model_name]" value="'+selectModelName+'">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input style="width: 100%"  type="text" name="row['+count+'][remark]">\n' +
@@ -205,7 +206,7 @@
                                 '                            <input style="text-align: right; width: 100%" id="qty'+count+'"  type="number" onkeyup="calTol('+(RawCount)+')" name="row['+count+'][qty]">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input style="text-align: right; width: 100%" id="price'+count+'"  type="number" onkeyup="calTol('+(RawCount)+')" name="row['+count+'][unit_price]" value="'+data.item.unit_price_with_tax+'">\n' +
+                                '                            <input style="text-align: right; width: 100%" id="price'+count+'"  type="number" onkeyup="calTol('+(RawCount)+')" name="row['+count+'][unit_price]" value="'+data.unit_price_with_tax+'">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input style="text-align: right; width: 100%" id="tol'+count+'"  type="number" readonly name="row['+count+'][total]">\n' +
@@ -217,11 +218,12 @@
                             count++;
                             RawCount++;
                         }else{
-                            alert('Empty Items');
+                            alert('some error has occurred..., please try again!');
                         }
                     },
                     error: function (jqXhr, textStatus, errorMessage) {
-                        alert(errorMessage);
+                        alert('some error has occurred..., please try again!');
+                        console.error(errorMessage);
                     }
                 });
             });

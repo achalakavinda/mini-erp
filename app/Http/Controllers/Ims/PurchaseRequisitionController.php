@@ -57,6 +57,7 @@ class PurchaseRequisitionController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'supplier_id'=>'required',
             'row' => 'required',
             'row.*.item_code_id' => 'required',
             'row.*.unit_price' => 'required',

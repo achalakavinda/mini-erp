@@ -1,4 +1,5 @@
 @extends('layouts.admin')
+
 @section('main-content-header')
 <!-- main header section -->
 <!-- Default box -->
@@ -11,6 +12,9 @@
     <div class="box-body">
         <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
             <i class="main-action-btn-info fa fa-list"></i> Quick Menu
+        </a>
+        <a href="{{ url('/ims/grn') }}" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-refresh"></i> Goods Received Notes
         </a>
         <a href="{{ url('/ims/grn/create') }}" class="btn btn-menu">
             <i class="main-action-btn-info fa fa-refresh"></i> Refresh
@@ -51,7 +55,6 @@
             <div class="box-body">
                 <!-- invoice date -->
                 <div class="col-md-12">
-
                     <!-- title row -->
                     <div class="row">
                         <div class="col-xs-12">
@@ -77,7 +80,7 @@
                             <select name="supplier_id" class="form-control">
                                 <option value="">Select a Supplier</option>
                                 @foreach(\App\Models\Ims\Supplier::all() as $supplier)
-                                <option @if($Grn->supplier_id === $supplier->id) selected @endif
+                                <option @if($Grn->supplier_id == $supplier->id) selected @endif
                                     value="{{ $supplier->id }}">{{ $supplier->name }}</option>
                                 @endforeach
                             </select>
@@ -111,7 +114,7 @@
                                     <?php $count = 1 ;?>
                                     @foreach($Grn->items as $item)
                                     <?php
-                                            $ItemCode = \App\Models\Ims\ItemCode::find($item->item_code_id);
+                                        $ItemCode = \App\Models\Ims\ItemCode::find($item->item_code_id);
                                         ?>
                                     <tr class="tr_{{ $count }}">
                                         <td>
@@ -144,21 +147,10 @@
                                             <a style="cursor: pointer" type="button"
                                                 onclick="rowRemove('.tr_{{ $count }}')"><i class="fa fa-remove"></i></a>
                                         </td>
-                                        {{--                                            <td>--}}
-                                        {{--                                                <a  style="cursor: pointer" type="button" onclick="rowRemove('.tr_{{ $count }}')"><i
-                                            class="fa fa-remove"></i></a>--}}
-                                        {{--                                            </td>--}}
                                         <tr />
 
                                         <?php $count ++ ;?>
                                         @endforeach
-
-                                        {{--                                    <tr>--}}
-                                        {{--                                        <th>No</th>--}}
-                                        {{--                                        <th>{!! Form::select('model_select_id',\App\Models\Ims\ItemCode::all()->pluck('name','id'),null,['id'=>'ModelSelectId','class'=>'form-control']) !!}</th>--}}
-                                        {{--                                        <th>--}}
-                                        {{--                                            <button id="addNewItem" type="button" style="width: 100%" class="btn">Add</button></th>--}}
-                                        {{--                                    </tr>--}}
                                 </tbody>
                                 @if (!$Grn->posted_to_stock)
                                 <tfoot>
@@ -220,44 +212,31 @@
 
         $( document ).ready(function() {
 
-            $('#supplier_id').click(function() {
-                var supplier_id =$('#supplier_id').val();
-                $.ajax('{!! url('api/supplier-for-invoices') !!}/'+supplier_id, {
-                    type: 'GET',  // http method
-                    success: function (data, status, xhr) {
-                        $('#SupplierDetail').val(data.address);
-                        $('#Address').val(data.address);
-                    },
-                    error: function (jqXhr, textStatus, errorMessage) {
-                        alert(errorMessage);
-                    }
-                });
-            });
-
             $('#addNewItem').click(function() {
-                var SelecTModelId = $('#ModelSelectId').val();
-                var SelecTModelName = $('#ModelSelectId option:selected').text();
+
+                let selectModelId = $('#ModelSelectId').val();
+                let selectModelName = $('#ModelSelectId option:selected').text();
                 $('#postToStockBtn').fadeOut();
 
-                $.ajax('{!! url('api/item-code-for-invoices') !!}/'+SelecTModelId, {
+                $.ajax('{!! url('api/item-code') !!}/'+selectModelId+'/stock', {
                     type: 'GET',  // http method
                     success: function (data, status, xhr) {
 
-                        if(data.item){
-
+                        if(data && data.length === 1){
+                            data = data[0];
                             table.append('<tr class="tr_'+count+'">\n' +
                                 '                        <td>\n' +
-                                '                            <input style="display:none" type="number" value="'+SelecTModelId+'" name="row['+count+'][model_id]" >\n' +
-                                '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'" style="width: 100%">\n' +
+                                '                            <input style="display:none" type="number" value="'+selectModelId+'" name="row['+count+'][model_id]" >\n' +
+                                '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+selectModelName+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input style="width: 100%"  type="text" name="row['+count+'][remark]">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input onkeyup="calTol('+(count+1)+')" id="qty'+count+'"  type="number" name="row['+count+'][qty]" placeholder="In Stock '+data.qty+' items" style="width: 100%">\n' +
+                                '                            <input onkeyup="calTol('+(count+1)+')" id="qty'+count+'"  type="number" name="row['+count+'][qty]" placeholder="In Stock '+data.stock_qty+' items" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input id="price'+count+'"  type="number" readonly name="row['+count+'][unit_price]" value="'+data.item.unit_price_with_tax+'" style="width: 100%">\n' +
+                                '                            <input id="price'+count+'"  type="number" readonly name="row['+count+'][unit_price]" value="'+data.unit_price_with_tax+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input id="tol'+count+'"  type="number" readonly name="row['+count+'][tol]" style="width: 100%">\n' +
@@ -269,14 +248,13 @@
 
                             count++;
                             RawCount++;
-
                         }else{
-                            alert('Empty Items');
+                            alert('some error has occurred..., please try again!');
                         }
-
                     },
                     error: function (jqXhr, textStatus, errorMessage) {
-                        alert(errorMessage);
+                        alert('some error has occurred..., please try again!');
+                        console.error(errorMessage);
                     }
                 });
             });

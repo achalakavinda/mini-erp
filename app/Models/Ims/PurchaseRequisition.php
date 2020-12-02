@@ -16,4 +16,8 @@ class PurchaseRequisition extends Model
         return $this->belongsTo('App\Models\Ims\PurchaseRequisitionStatus');
     }
 
+    public  function supplier(){
+        return $this->belongsTo('App\Models\Ims\Supplier');
+    }
+
 }

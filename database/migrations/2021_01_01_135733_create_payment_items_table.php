@@ -34,7 +34,8 @@ class CreatePaymentItemsTable extends Migration
 
             $table->foreign('payment_id')
                 ->references('id')
-                ->on('payments');
+                ->on('payments')
+                ->onDelete('cascade');
 
             $table->foreign('credit_account_id')
                 ->references('id')

@@ -5,7 +5,7 @@
 <!-- Default box -->
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Category/Item</h3>
+        <h3 class="box-title">Supplier : {!! $supplier->name !!}</h3>
     </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->

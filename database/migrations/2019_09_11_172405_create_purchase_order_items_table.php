@@ -49,7 +49,8 @@ class CreatePurchaseOrderItemsTable extends Migration
 
             $table->foreign('company_purchase_order_id')
                 ->references('id')
-                ->on('company_purchase_orders');
+                ->on('company_purchase_orders')
+                ->onDelete('cascade');
 
 
 

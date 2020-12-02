@@ -2,11 +2,12 @@
     <div class="col-md-12">
         <div class="form-group">
             {!! Form::label("Parent Category") !!}
-            <select class="form-control" id="companyId" name="parent_brand_id">
+            <select class="form-control" id="companyId" name="parent_id">
                 <option value="null">Select a Parent</option>
 
                 @foreach($Categories as $item)
-                    <option @if($Category->parent_id == $item->id) selected @endif value="{{ $item->id }}">{{ $item->name }}</option>
+                <option @if($Category->parent_id == $item->id) selected @endif value="{{ $item->id }}">{{ $item->name }}
+                </option>
                 @endforeach
             </select>
         </div>
@@ -22,14 +23,18 @@
     <div class="col-md-12">
         <div class="form-group">
             {!! Form::label("company") !!}
-            {!! Form::select('company_id',$Company,$Category->company_id,['readonly','class'=>'form-control','id'=>'companyId'])  !!}
+            {!!
+            Form::select('company_id',$Company,$Category->company_id,['readonly','class'=>'form-control','id'=>'companyId'])
+            !!}
         </div>
     </div>
 
     <div class="col-md-12">
         <div class="form-group">
             {!! Form::label("Company Division") !!}
-            {!!  Form::select('company_division_id',$CompanyDivision,$Category->company_division_id,['readonly','class'=>'form-control','id'=>'companyDivisionId'])  !!}
+            {!!
+            Form::select('company_division_id',$CompanyDivision,$Category->company_division_id,['readonly','class'=>'form-control','id'=>'companyDivisionId'])
+            !!}
         </div>
     </div>
 </div>

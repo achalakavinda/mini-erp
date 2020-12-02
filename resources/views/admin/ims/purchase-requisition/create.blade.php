@@ -1,11 +1,10 @@
 @extends('layouts.admin')
 
-<!-- main header section -->
 @section('main-content-header')
-<!-- Default box -->
+<!-- main header section -->
 <div class="box">
     <div class="box-header with-border">
-        <h3 class="box-title">Dashboard / Requisition</h3>
+        <h3 class="box-title">Company Purchase Requisition Order</h3>
     </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
@@ -13,29 +12,26 @@
         <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
             <i class="main-action-btn-info fa fa-list"></i> Quick Menu
         </a>
-        <a href="{{ url('/ims/purchase-requisition') }}" class="btn btn-menu">
-            <i class="main-action-btn-info fa fa-list"></i> Requisition
-        </a>
         <a href="{{ url('/ims/purchase-requisition/create') }}" class="btn btn-menu">
             <i class="main-action-btn-info fa fa-refresh"></i> Refresh
         </a>
+        <a href="{{ url('/ims/purchase-requisition') }}" class="btn btn-menu">
+            <i class="main-action-btn-info fa fa-list"></i> Requisition
+        </a>
     </div>
 </div>
-<!-- /.box -->
-@endsection
 <!-- /main header section -->
+@endsection
 
-<!-- main section -->
 @section('main-content')
+<!-- main section -->
 <div class="row">
-    {!! Form::open(['action'=>'Ims\PurchaseRequisitionController@store','class'=>'form-horizontal','id'=>'Form']) !!}
     <div class="col-md-12">
-        @include('error.error')
-        <!-- general form elements -->
+        {!! Form::open(['action'=>'Ims\PurchaseRequisitionController@store','class'=>'form-horizontal','id'=>'Form'])
+        !!}
         <div class="box box-primary">
-            <!-- form start -->
             <div class="box-body">
-
+                @include('error.error')
                 <div class="col-md-12">
                     <div class="col-md-8"></div>
                     <!-- requisition date -->
@@ -46,9 +42,6 @@
                             Form::date('date',\Carbon\Carbon::now(),['id'=>'RequisitionDate','class'=>'form-control'])
                             !!}
                         </div>
-                    </div> <!-- /requisition date -->
-                    <div class="col-md-8"></div>
-                    <div class="col-md-4">
                         <div class="form-group">
                             <label for="GRN Date">Supplier</label>
                             <select name="supplier_id" class="form-control">
@@ -61,16 +54,14 @@
                     </div>
                 </div>
 
-                <!-- requisition item table -->
                 <div class="col-md-12">
-
                     <table id="requisitionItemTable" class="table table-responsive table-bordered table-striped">
                         <thead>
                             <tr>
                                 <th>Item Code</th>
-                                <th>Remark</th>
                                 <th>QTY</th>
                                 <th>Unit Price (LKR)</th>
+                                <th>Remark</th>
                                 <th>Total (LKR)</th>
                                 <th><i class="fa fa-remove"></i></th>
                             </tr>
@@ -102,12 +93,14 @@
             </div>
         </div>
         <!-- /.box -->
+        {!! Form::close() !!}
+
     </div>
-    {!! Form::close() !!}
 </div>
 <!-- /.row -->
-@endsection
 <!-- /main section -->
+@endsection
+
 
 @section('js')
 @include('layouts.components.sematic-ui.dropdown')
@@ -119,27 +112,27 @@
         $( document ).ready(function() {
 
             $('#addNewItem').click(function() {
-                var SelecTItemId = $('#ModelSelectId').val();
-                var SelecTModelName = $('#ModelSelectId option:selected').text();
+                let selectItemId = $('#ModelSelectId').val();
+                let selectModelName = $('#ModelSelectId option:selected').text();
 
-                $.ajax('{!! url('api/item-code-for-purchase-requisitions') !!}/'+SelecTItemId, {
+                $.ajax('{!! url('api/item-code') !!}/'+selectItemId+'/stock', {
                     type: 'GET',  // http method
                     success: function (data, status, xhr) {
-
-                        if(data.item){
+                        if(data && data.length === 1){
+                            data = data[0];
                             table.append('<tr class="tr_'+count+'">\n' +
                                 '                        <td>\n' +
-                                '                            <input style="display:none" type="number" value="'+SelecTItemId+'" name="row['+count+'][item_code_id]">\n' +
-                                '                            <input style="width: 100%" readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'">\n' +
+                                '                            <input style="display:none" type="number" value="'+selectItemId+'" name="row['+count+'][item_code_id]">\n' +
+                                '                            <input style="width: 100%" readonly type="text" name="row['+count+'][model_name]" value="'+selectModelName+'">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input id="qty'+count+'"  style="width: 100%" type="number" onkeyup="calculateRowTotal('+(count+1)+')" name="row['+count+'][qty]" value="1">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input id="price'+count+'" style="width: 100%" type="number" onkeyup="calculateRowTotal('+(count+1)+')" name="row['+count+'][unit_price]" value="'+data.unit_price_with_tax+'">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input  style="width: 100%" type="text" name="row['+count+'][remark]">\n' +
-                                '                        </td>\n' +
-                                '                        <td>\n' +
-                                '                            <input id="qty'+count+'"  style="width: 100%" type="number" onkeyup="calTol('+(count+1)+')" name="row['+count+'][qty]">\n' +
-                                '                        </td>\n' +
-                                '                        <td>\n' +
-                                '                            <input id="price'+count+'" style="width: 100%" type="number" onkeyup="calTol('+(count+1)+')" name="row['+count+'][unit_price]" value="'+data.item.unit_price_with_tax+'">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input id="tol'+count+'" style="width: 100%" type="number" readonly name="row['+count+'][total]">\n' +
@@ -148,14 +141,16 @@
                                 '                            <a style="cursor: pointer" type="button" onclick="rowRemove(\'.tr_'+count+'\')"><i class="fa fa-remove"></i></a>\n' +
                                 '                        </td>\n' +
                                 '                    <tr/>');
+                            calculateRowTotal(count+1);
                             count++;
                             RawCount++;
                         }else{
-                            alert('Empty Items');
+                            alert('some error has occurred..., please try again!');
                         }
                     },
                     error: function (jqXhr, textStatus, errorMessage) {
-                        alert(errorMessage);
+                        alert('some error has occurred..., please try again!');
+                        console.error(errorMessage);
                     }
                 });
             });
@@ -167,7 +162,7 @@
             $(value).remove();
         }
 
-        function calTol(count) {
+        function calculateRowTotal(count) {
             let total = 0;
             let discount = 0;
             let subtotal = 0;
@@ -177,5 +172,4 @@
             }
         }
 </script>
-
 @endsection

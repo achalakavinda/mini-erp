@@ -54,6 +54,7 @@ class GrnController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'supplier_id' => 'required',
             'row' => 'required',
             'row.*.model_id' => 'required',
             'row.*.qty' => 'required',
@@ -71,8 +72,8 @@ class GrnController extends Controller
         ]);
 
         try {
-
             $TotalAmount = 0;
+
             foreach ($request->row as $item)
             {
                 $Model = ItemCode::find($item['model_id']);

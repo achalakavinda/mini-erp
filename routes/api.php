@@ -6,11 +6,6 @@ use Illuminate\Http\Request;
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
 */
 
 //to get project details without customer array
@@ -38,34 +33,31 @@ Route::get('/item-code-for-invoices/{id}',function ($id){
     return ['item'=>$Model,'qty'=>$ITEM_QTY];
 });
 
-//api endpoint for the requisitions
-Route::get('/item-code-for-purchase-requisitions/{id}',function ($id){
-    $Model = \Illuminate\Support\Facades\DB::table('stock_items')
-        ->select(DB::raw('sum(tol_qty) as qty'))
-        ->where('item_code_id','=',$id)
-        ->get();
-
-    $ITEM_QTY = 0;
-
-    foreach ($Model as $item){
-        $ITEM_QTY = $ITEM_QTY+$item->qty;
-    }
-    $Model = \App\Models\Ims\ItemCode::find($id);
-    return ['item'=>$Model,'qty'=>$ITEM_QTY];
+/***
+ * END POINT GET STOCK ITEM QUANTITY
+ *
+ * Usage
+ *  1. Company Purchase Requisition Create
+ *  2. Company Purchase Requisition Update
+ *  3. Company Purchase Order Create
+ *  4. Company Purchase Order Update
+*/
+Route::get('/item-code/{id}/stock',function ($id){
+    return DB::select('call getItemStockQtyByItemId(?)',[$id]);
 });
 
 //api endpoint for the invoices
 Route::get('/invoice-for-payment/{id}',function ($id){
-    
+
     $PaymentItems = \Illuminate\Support\Facades\DB::table('payment_items')
     ->where('invoice_id','=',$id)
     ->get();
 
     $DUE_AMOUNT = 0;
     $AMOUNT = 0;
-    
+
     $Model = \App\Models\Ims\Invoice::find($id);
-    
+
     if($PaymentItems->count() >0){
         foreach ($PaymentItems as $item){
             $AMOUNT = $AMOUNT + $item->amount;
@@ -74,8 +66,8 @@ Route::get('/invoice-for-payment/{id}',function ($id){
     }else{
         $DUE_AMOUNT = $Model->total;
     }
-    
-    
+
+
     return ['invoice'=>$Model,'payed_amount'=>$AMOUNT,'due_amount'=>$DUE_AMOUNT];
 });
 

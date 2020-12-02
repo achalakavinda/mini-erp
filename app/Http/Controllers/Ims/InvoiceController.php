@@ -44,15 +44,7 @@ class InvoiceController extends Controller
      */
     public function create()
     {
-        $remarks = DB::table('invoice_settings')->where('title', '=', "Remarks")->get();
-        $remark = null;
-        foreach ($remarks as $remark)
-        {
-            $remark = $remark->content;
-        }
-
-
-        return view('admin.ims.invoice.forms.create',compact(['remark']));
+        return view('admin.ims.invoice.create');
     }
 
     /**
@@ -71,7 +63,7 @@ class InvoiceController extends Controller
         ]);
 
         $DiscountPercentage = $request->discount_percentage;
-        $date = $request->order_date?$request->order_date:Carbon::now();
+        $date = $request->order_date ?$request->order_date:Carbon::now();
 
         $Invoice = Invoice::create([
             'company_division_id'=>$this->CompanyDivision->id,
@@ -83,7 +75,6 @@ class InvoiceController extends Controller
             'purchase_order'=>$request->purchase_order,
             'delivery_address'=>$request->delivery_address,
             'remarks'=>$request->remarks,
-            'userdef1' => $request->courier_service
         ]);
 
         try{
