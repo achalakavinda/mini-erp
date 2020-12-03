@@ -71,6 +71,14 @@ Route::get('/invoice-for-payment/{id}',function ($id){
     return ['invoice'=>$Model,'payed_amount'=>$AMOUNT,'due_amount'=>$DUE_AMOUNT];
 });
 
+//api endpoint for the invoices
+Route::get('/invoice-for-customer/{id}',function ($id){
+
+    $Invoice = \App\Models\Ims\Invoice::where('customer_id',$id)->get();
+
+    return ['invoice'=>$Invoice];
+});
+
 Route::get('/customer-for-invoices/{id}',function ($id){
     return \App\Models\Customer::find($id);
 });
