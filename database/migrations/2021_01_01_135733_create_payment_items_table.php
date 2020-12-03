@@ -20,7 +20,7 @@ class CreatePaymentItemsTable extends Migration
 
             $table->foreignId('invoice_id')->nullable();
             $table->double('total_amount')->default(0);
-            $table->double('payment_amount')->default(0);
+            $table->double('payed_amount')->default(0);
             $table->double('remain_amount')->default(0);
 
             $table->unsignedInteger('credit_account_id')->nullable();

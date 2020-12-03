@@ -64,61 +64,39 @@ class PaymentController extends Controller
         ]);
 
         $Payment = Payment::create([
-            'payment_type'=>'collection',
+            'type'=>'collection',
             'code' => "PAY",
             'date'=>Carbon::now(),
-            'total'=>0,
             'commit'=>false,
             'created_by'=>auth()->user()->id,
         ]);
 
         try {
-
             $TotalAmount = 0;
-            foreach ($request->row as $item) {
-
+            foreach ( $request->row as $item ) {
                 //find the created invoice
-                $Model = Invoice::find($item['model_id']);
-                //looking for existing payment for invoice
-                $PaymentItems = PaymentItem::where('invoice_id','=',$Model->id)->get();
-                //initiate full amount for payed
-                $FullAmount = 0;
-
-                if($PaymentItems->count() >0){
-
-                    foreach ($PaymentItems as $PaymentItem){
-                        $FullAmount =  $FullAmount + $PaymentItem->amount;
-                    }
-
-                }
-                //add entered amount
-                $FullAmount = $FullAmount + $item['amount'];
-
+                $Model = Invoice::find($item['model_id']);// invoice id
                 if($Model){
-
                     PaymentItem::create([
                         'payment_id'=>$Payment->id,
                         'invoice_id'=>$Model->id,
-                        'amount'=>$item['amount'],
+                        'total_amount'=>$item['amount'],
+                        'payed_amount'=>$item['amount'],
                         'remain_amount'=>0,
-                        'due_amount'=>$Model->total - $FullAmount,
                         'remarks'=>$item['remark']?$item['remark']:null
                     ]);
-
-                    $TotalAmount = $TotalAmount + $item['amount'];
                 }
             }
 
             $Payment->code = "PAY-".Carbon::now()->year."-".Carbon::now()->month."-".Carbon::now()->day."-000".$Payment->id;
-            $Payment->total = $TotalAmount;
             $Payment->save();
 
         }catch (\Exception $exception){
             $Payment->delete();
             dd($exception->getMessage());
         }
-        return redirect(url('accounting/payment'));
 
+        return redirect(url('accounting/payment'));
     }
 
     /**

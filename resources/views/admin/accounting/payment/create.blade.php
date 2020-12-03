@@ -9,7 +9,6 @@
         </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
-
         <div class="box-body">
             <a onclick="showMegaMenu()" href="#" class="btn btn-app">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
@@ -27,10 +26,8 @@
     <!-- /main header section -->
 @endsection
 
-
 @section('main-content')
     <!-- main section -->
-
     <div class="row">
         <div class="col-md-12">
             <div class="nav-tabs-custom">
@@ -79,8 +76,7 @@
                                             <th>
                                                 @include('layouts.selectors.accounting.invoice-dropdown.index')
                                             </th>
-                                            <th><button id="addNewInvoiceItem" type="button" style="width: 100%"
-                                                        class="btn">Add</button></th>
+                                            <th><button id="addNewInvoiceItem" type="button" style="width: 100%" class="btn">Add</button></th>
                                         </tr>
                                         </tfoot>
                                     </table>
@@ -111,7 +107,6 @@
                                 </div>
                             </div>
                             <!-- /.row -->
-
                         {!! Form::close() !!}
                         <!-- end invoice only form -->
                         </div>
@@ -121,7 +116,6 @@
             </div>
         </div>
     </div><!-- /.row -->
-
     <!-- /main section -->
 @endsection
 
@@ -132,7 +126,6 @@
         var RawCount = 1;
 
         $( document ).ready(function() {
-
             $('#addNewInvoiceItem').click(function() {
                 var SelecTModelId = $('#ModelSelectId').val();
                 var SelecTModelName = $('#ModelSelectId option:selected').text();
@@ -140,7 +133,6 @@
                 $.ajax('{!! url('api/invoice-for-payment') !!}/'+SelecTModelId, {
                     type: 'GET',  // http method
                     success: function (data, status, xhr) {
-
                         if(data.invoice){
 
                             table.append('<tr class="tr_'+count+'">\n' +
@@ -172,14 +164,12 @@
                         }else{
                             alert('Empty Items');
                         }
-
                     },
                     error: function (jqXhr, textStatus, errorMessage) {
                         alert(errorMessage);
                     }
                 });
             });
-
         });
 
         function rowRemove(value,i) {
@@ -189,12 +179,10 @@
 
         function calTol(count) {
             let total = 0;
-
             for(let i=0; i<count; i++){
                 total = total+parseFloat($('#amount'+i).val());
             }
             $('#total').val(total);
         }
-
     </script>
 @endsection
