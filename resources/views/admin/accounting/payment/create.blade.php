@@ -81,7 +81,7 @@
                                         <tr>
                                             <th>No</th>
                                             <th>
-                                                @include('layouts.selectors.accounting.invoice-dropdown.index')
+                                                @include('layouts.selectors.accounting.invoice-dropdown.customer-invoice')
                                             </th>
                                             <th><button id="addNewInvoiceItemForCustomer" type="button"
                                                     style="width: 100%" class="btn">Add</button></th>
@@ -207,6 +207,9 @@
         var count = 0;
         var RawCount = 1;
 
+        var count2 = 0;
+        var RawCount2 = 1;
+
         $( document ).ready(function() {
 
             $('#addNewInvoiceItem').click(function() {
@@ -255,39 +258,39 @@
             });
 
             $('#addNewInvoiceItemForCustomer').click(function() {
-                var SelecTModelId = $('#ModelSelectId').val();
-                var SelecTModelName = $('#ModelSelectId option:selected').text();
+                var SelecTModelId = $('#CustomerInvoiceModelSelectId').val();
+                var SelecTModelName = $('#CustomerInvoiceModelSelectId option:selected').text();
                 
                 $.ajax('{!! url('api/invoice-for-payment') !!}/'+SelecTModelId, {
                     type: 'GET',  // http method
                     success: function (data, status, xhr) {
                         if(data.invoice){
 
-                            invoiceTableCustomer.append('<tr class="tr_'+count+'">\n' +
-                                '                        <td>'+RawCount+'<input style="display:none" name="row['+count+'][insert]" type="checkbox" checked></td>\n' +
+                            invoiceTableCustomer.append('<tr class="tr_'+count2+'">\n' +
+                                '                        <td>'+RawCount2+'<input style="display:none" name="row['+count2+'][insert]" type="checkbox" checked></td>\n' +
                                 '                        <td>\n' +
-                                '                            <input style="display:none" type="number" value="'+SelecTModelId+'" name="row['+count+'][model_id]" >\n' +
-                                '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'" style="width: 100%">\n' +
+                                '                            <input style="display:none" type="number" value="'+SelecTModelId+'" name="row['+count2+'][model_id]" >\n' +
+                                '                            <input readonly type="text" name="row['+count2+'][model_name]" value="'+SelecTModelName+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input id="total'+count+'" readonly type="number" name="row['+count+'][total]" value="'+data.invoice.total+'" style="width: 100%">\n' +
+                                '                            <input id="total'+count2+'" readonly type="number" name="row['+count2+'][total]" value="'+data.invoice.total+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input onkeyup="calTol('+(count+1)+')" id="amount'+count+'"  type="number" name="row['+count+'][amount]" style="width: 100%">\n' +
+                                '                            <input onkeyup="calTol('+(count2+1)+')" id="amount'+count2+'"  type="number" name="row['+count2+'][amount]" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input id="due_amount'+count+'"  type="number" readonly name="row['+count+'][due_amount]" value="'+data.due_amount+'" style="width: 100%">\n' +
+                                '                            <input id="due_amount'+count2+'"  type="number" readonly name="row['+count2+'][due_amount]" value="'+data.due_amount+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input  style="width: 100%" type="text" name="row['+count+'][remark]">\n' +
+                                '                            <input  style="width: 100%" type="text" name="row['+count2+'][remark]">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <a style="cursor: pointer" type="button" onclick="rowRemove(\'.tr_'+count+'\','+count+')"><i class="fa fa-remove"></i></a>\n' +
+                                '                            <a style="cursor: pointer" type="button" onclick="rowRemove(\'.tr_'+count2+'\','+count2+')"><i class="fa fa-remove"></i></a>\n' +
                                 '                        </td>\n' +
                                 '                    <tr/>');
 
-                            count++;
-                            RawCount++;
+                            count2++;
+                            RawCount2++;
 
                         }else{
                             alert('Empty Items');
@@ -306,9 +309,9 @@
                     type: 'GET',  // http method
                     success: function (data, status, xhr) {
                         if(data.invoice){
-                            $('#ModelSelectId').find('option').remove();
+                            $('#CustomerInvoiceModelSelectId').find('option').remove();
                             data.invoice.forEach(function(e, i){
-                                $('#ModelSelectId').append($('<option></option>').val(e.id).text(e.code)); 
+                                $('#CustomerInvoiceModelSelectId').append($('<option></option>').val(e.id).text(e.code)); 
                             });
                         }else{
                             alert('Empty Items');

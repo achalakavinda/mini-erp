@@ -46,9 +46,9 @@
                         @foreach($Payments as $Payment)
                         <tr>
                             <td>{!! $Payment->code !!}</td>
-                            <td>{!! $Payment->paymentType->code !!}</td>
+                            <td>{!! $Payment->paymentType ? $Payment->paymentType->code : null !!}</td>
                             <td>{!! $Payment->date !!}</td>
-                            <td style="text-align: right">{!! number_format( $Payment->total,2) !!}</td>
+                            <td style="text-align: right">{!! number_format( $Payment->total_amount,2) !!}</td>
                             <td>
                                 <a style="padding: 10px"
                                     href="{!! url('accounting/payment') !!}/{!! $Payment->id !!}"><i

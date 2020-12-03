@@ -75,12 +75,12 @@ class PaymentController extends Controller
             $TotalAmount = 0;
             foreach ( $request->row as $item ) {
                 //find the created invoice
-                $Model = Invoice::find($item['model_id']);// invoice id
+                $Model = Invoice::findOrFail($item['model_id']);// invoice id
                 if($Model){
                     PaymentItem::create([
                         'payment_id'=>$Payment->id,
                         'invoice_id'=>$Model->id,
-                        'total_amount'=>$item['amount'],
+                        'total_amount'=>$item['total'],
                         'payed_amount'=>$item['amount'],
                         'remain_amount'=>0,
                         'remarks'=>$item['remark']?$item['remark']:null

@@ -60,11 +60,11 @@ Route::get('/invoice-for-payment/{id}',function ($id){
 
     if($PaymentItems->count() >0){
         foreach ($PaymentItems as $item){
-            $AMOUNT = $AMOUNT + $item->amount;
+            $AMOUNT = $AMOUNT + $item->payed_amount;
         }
-        $DUE_AMOUNT = $Model->total - $AMOUNT;
+        $DUE_AMOUNT = $Model->amount - $AMOUNT;
     }else{
-        $DUE_AMOUNT = $Model->total;
+        $DUE_AMOUNT = $Model->amount;
     }
 
 
