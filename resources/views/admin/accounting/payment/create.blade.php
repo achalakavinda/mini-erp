@@ -64,7 +64,7 @@
                         </div>
                         <div style="margin-top: 20px" class="row">
                             <div class="col-xs-12">
-                                <table id="invoiceItemTable" class="table table-bordered">
+                                <table id="invoiceItemTableForCustomer" class="table table-bordered">
                                     <thead>
                                         <tr style="text-align: center">
                                             <th>No</th>
@@ -83,8 +83,8 @@
                                             <th>
                                                 @include('layouts.selectors.accounting.invoice-dropdown.index')
                                             </th>
-                                            <th><button id="addNewInvoiceItem" type="button" style="width: 100%"
-                                                    class="btn">Add</button></th>
+                                            <th><button id="addNewInvoiceItemForCustomer" type="button"
+                                                    style="width: 100%" class="btn">Add</button></th>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -203,6 +203,7 @@
 @section('js')
 <script>
     var table = $('#invoiceItemTable');
+    var invoiceTableCustomer = $('#invoiceItemTableForCustomer');
         var count = 0;
         var RawCount = 1;
 
@@ -218,6 +219,51 @@
                         if(data.invoice){
 
                             table.append('<tr class="tr_'+count+'">\n' +
+                                '                        <td>'+RawCount+'<input style="display:none" name="row['+count+'][insert]" type="checkbox" checked></td>\n' +
+                                '                        <td>\n' +
+                                '                            <input style="display:none" type="number" value="'+SelecTModelId+'" name="row['+count+'][model_id]" >\n' +
+                                '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+SelecTModelName+'" style="width: 100%">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input id="total'+count+'" readonly type="number" name="row['+count+'][total]" value="'+data.invoice.total+'" style="width: 100%">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input onkeyup="calTol('+(count+1)+')" id="amount'+count+'"  type="number" name="row['+count+'][amount]" style="width: 100%">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input id="due_amount'+count+'"  type="number" readonly name="row['+count+'][due_amount]" value="'+data.due_amount+'" style="width: 100%">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <input  style="width: 100%" type="text" name="row['+count+'][remark]">\n' +
+                                '                        </td>\n' +
+                                '                        <td>\n' +
+                                '                            <a style="cursor: pointer" type="button" onclick="rowRemove(\'.tr_'+count+'\','+count+')"><i class="fa fa-remove"></i></a>\n' +
+                                '                        </td>\n' +
+                                '                    <tr/>');
+
+                            count++;
+                            RawCount++;
+
+                        }else{
+                            alert('Empty Items');
+                        }
+                    },
+                    error: function (jqXhr, textStatus, errorMessage) {
+                        alert(errorMessage);
+                    }
+                });
+            });
+
+            $('#addNewInvoiceItemForCustomer').click(function() {
+                var SelecTModelId = $('#ModelSelectId').val();
+                var SelecTModelName = $('#ModelSelectId option:selected').text();
+                
+                $.ajax('{!! url('api/invoice-for-payment') !!}/'+SelecTModelId, {
+                    type: 'GET',  // http method
+                    success: function (data, status, xhr) {
+                        if(data.invoice){
+
+                            invoiceTableCustomer.append('<tr class="tr_'+count+'">\n' +
                                 '                        <td>'+RawCount+'<input style="display:none" name="row['+count+'][insert]" type="checkbox" checked></td>\n' +
                                 '                        <td>\n' +
                                 '                            <input style="display:none" type="number" value="'+SelecTModelId+'" name="row['+count+'][model_id]" >\n' +
