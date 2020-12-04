@@ -37,7 +37,7 @@ class CreateItemCodesView extends Migration
                     GROUP BY stock_items.item_code_id
                 ) as stock_qty
                 FROM item_codes IT
-                LEFT JOIN brands B on b.id = IT.brand_id
+                LEFT JOIN brands B on B.id = IT.brand_id
                 LEFT JOIN categories CAT on CAT.id = IT.category_id
                 LEFT JOIN sizes S on S.id = IT.size_id
                 LEFT JOIN colors C on C.id = IT.color_id
