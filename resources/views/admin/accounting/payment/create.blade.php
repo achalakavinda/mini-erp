@@ -215,7 +215,7 @@
             $('#addNewInvoiceItem').click(function() {
                 var SelecTModelId = $('#ModelSelectId').val();
                 var SelecTModelName = $('#ModelSelectId option:selected').text();
-                
+
                 $.ajax('{!! url('api/invoice-for-payment') !!}/'+SelecTModelId, {
                     type: 'GET',  // http method
                     success: function (data, status, xhr) {
@@ -260,7 +260,7 @@
             $('#addNewInvoiceItemForCustomer').click(function() {
                 var SelecTModelId = $('#CustomerInvoiceModelSelectId').val();
                 var SelecTModelName = $('#CustomerInvoiceModelSelectId option:selected').text();
-                
+
                 $.ajax('{!! url('api/invoice-for-payment') !!}/'+SelecTModelId, {
                     type: 'GET',  // http method
                     success: function (data, status, xhr) {
@@ -304,14 +304,14 @@
 
             $('#customerID').change(function(e) {
                 var customerID = e.target.value;
-                
+                $('#CustomerInvoiceModelSelectId').empty();
+
                 $.ajax('{!! url('api/invoice-for-customer') !!}/'+customerID, {
                     type: 'GET',  // http method
                     success: function (data, status, xhr) {
                         if(data.invoice){
-                            $('#CustomerInvoiceModelSelectId').find('option').remove();
                             data.invoice.forEach(function(e, i){
-                                $('#CustomerInvoiceModelSelectId').append($('<option></option>').val(e.id).text(e.code)); 
+                                $('#CustomerInvoiceModelSelectId').append($('<option></option>').val(e.id).text(e.code));
                             });
                         }else{
                             alert('Empty Items');

@@ -5,7 +5,7 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Category/Item</h3>
+            <h3 class="box-title">Item : {{ $Item->name }}</h3>
         </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
@@ -37,21 +37,21 @@
 @section('main-content')
     <!-- main section -->
     <div class="row">
-                <!-- /.box-header -->
-                {!!  Form::open(['action'=> ['Ims\ItemController@update',$Item->id],'class'=>'form-horizontal','id'=>'Form','enctype'=>'multipart/form-data']) !!}
-                @csrf
-                @method('put')
-                @include('error.error')
-                @include('admin.ims.item._partials.updateForm')
-                {!! Form::close() !!}
-{{--            {!! Form::open([--}}
-{{--        'method' => 'DELETE',--}}
-{{--        'route' => ['item.destroy', $Item->id]--}}
-{{--        ]) !!}--}}
-{{--        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Delete--}}
-{{--        </button>--}}
-        {!! Form::close() !!}
-        <!-- /.box -->
+        <!-- /.box-header -->
+    {!!  Form::open(['action'=> ['Ims\ItemController@update',$Item->id],'class'=>'form-horizontal','id'=>'Form','enctype'=>'multipart/form-data']) !!}
+    @csrf
+    @method('put')
+    @include('error.error')
+    @include('admin.ims.item._partials.updateForm')
+    {!! Form::close() !!}
+    {{--            {!! Form::open([--}}
+    {{--        'method' => 'DELETE',--}}
+    {{--        'route' => ['item.destroy', $Item->id]--}}
+    {{--        ]) !!}--}}
+    {{--        <button type="submit" class="btn btn-danger"><i class="fa fa-trash"></i> Delete--}}
+    {{--        </button>--}}
+    {!! Form::close() !!}
+    <!-- /.box -->
     </div>
     <!-- /main section -->
 @endsection

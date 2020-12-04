@@ -5,7 +5,7 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Inventory Item</h3>
+            <h3 class="box-title">Item Table</h3>
         </div>
     @include('layouts.components.header-widgets.dashboard-header')
     <!-- /.box-body -->
@@ -17,11 +17,15 @@
                 <i  class="main-action-btn-info fa fa-refresh"></i> Refresh
             </a>
             <a href="{{ url('/ims/brand') }}" class="btn btn-menu">
-                <i  class="main-action-btn-info fa fa-table"></i> Brand
+                <i  class="main-action-btn-info fa fa-table"></i> Item Brand
             </a>
-            <a href="{{ url('/ims/invoice') }}" class="btn btn-menu">
-                <i  class="main-action-btn-info fa fa-table"></i> Invoice
+            <a href="{{ url('/ims/size') }}" class="btn btn-menu">
+                <i  class="main-action-btn-info fa fa-table"></i> Item Size
             </a>
+            <a href="{{ url('/ims/color') }}" class="btn btn-menu">
+                <i  class="main-action-btn-info fa fa-table"></i> Item Color
+            </a>
+
             <a href="{{ url('/ims/item/create') }}" class="btn btn-menu">
                 <i  class="main-action-btn-info fa fa-plus"></i> New Item
             </a>
@@ -40,9 +44,10 @@
             <div class="box">
                 <div style="overflow: auto" class="box-body">
                     <table id="table" class="table table-responsive table-bordered table-striped">
+
                         <thead>
                         <tr>
-                            <th>#ID</th>
+                            <th>ID</th>
                             <th>Item</th>
                             <th>Brand</th>
                             <th>Category</th>
@@ -63,24 +68,13 @@
                         <tbody>
 
                         @foreach($Items as $item)
-                            <?php
-                            $brand = \App\Models\Ims\Brand::find($item->brand_id);
-                            $category = \App\Models\Ims\Category::find($item->category_id);
-                            $color = \App\Models\Ims\Color::find($item->color_id);
-                            $size = \App\Models\Ims\Size::find($item->size_id);
-                            $STOCKITEM = DB::table('stock_items')
-                                ->select(DB::raw('sum(stock_items.tol_qty) as qty'))
-                                ->where(['stock_items.item_code_id'=>$item->id])
-                                ->groupBy('stock_items.item_code_id')
-                                ->first();
-                            ?>
                             <tr>
-                                <td>{!! $item->id !!}</td>
-                                <td>{!! $item->name !!} {{ $item->description?' - '.$item->description:'' }}</td>
-                                <td>{!! $brand?$brand->name:''; !!}</td>
-                                <td>{!! $category?$category->name:''; !!}</td>
-                                <td>{!! $color?$color->code:''; !!}</td>
-                                <td>{!! $size?$size->code:''; !!}</td>
+                                <td>{!! $item->item_id !!}</td>
+                                <td>{!! $item->item_name !!} {{ $item->item_description?' - '.$item->item_description:'' }}</td>
+                                <td>{!! $item->brand_name !!}</td>
+                                <td>{!! $item->category_name !!}</td>
+                                <td>{!! $item->color_name !!}</td>
+                                <td>{!! $item->size_name !!}</td>
                                 <td style="text-align: right">{!! number_format($item->unit_cost,2) !!}</td>
                                 <td style="text-align: right">{!! number_format($item->selling_price,2) !!}</td>
                                 <td style="text-align: right">{!! number_format($item->market_price,2) !!}</td>
@@ -90,14 +84,8 @@
                                 <td style="text-align: right">{!! $item->nbt_tax_percentage !!}%</td>
                                 <td style="text-align: right">{!! $item->vat_tax_percentage !!}%</td>
                                 <td style="text-align: right">{!! number_format($item->unit_price_with_tax,2) !!}</td>
-                                <td style="text-align: right">
-                                    @if($STOCKITEM)
-                                        {{ $STOCKITEM->qty }}
-                                    @else
-                                        0
-                                    @endif
-                                </td>
-                                <td><a class="btn btn-sm" href="{!! url('ims/item') !!}/{!! $item->id !!}"><i class="fa fa-paper-plane"></i></a></td>
+                                <td style="text-align: right">{!! $item->stock_qty !!} </td>
+                                <td><a class="btn btn-sm" href="{!! url('ims/item') !!}/{!! $item->item_id !!}"><i class="fa fa-paper-plane"></i></a></td>
                             </tr>
                         @endforeach
 

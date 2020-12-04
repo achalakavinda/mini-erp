@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.2",
         "barryvdh/laravel-ide-helper": "^2.5",
+        "binarytorch/larecipe": "^2.4",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^7.0",
         "laravel/helpers": "^1.1",
