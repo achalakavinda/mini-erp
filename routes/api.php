@@ -60,15 +60,23 @@ Route::get('/invoice-for-payment/{id}',function ($id){
 
     if($PaymentItems->count() >0){
         foreach ($PaymentItems as $item){
-            $AMOUNT = $AMOUNT + $item->amount;
+            $AMOUNT = $AMOUNT + $item->payed_amount;
         }
-        $DUE_AMOUNT = $Model->total - $AMOUNT;
+        $DUE_AMOUNT = $Model->amount - $AMOUNT;
     }else{
-        $DUE_AMOUNT = $Model->total;
+        $DUE_AMOUNT = $Model->amount;
     }
 
 
     return ['invoice'=>$Model,'payed_amount'=>$AMOUNT,'due_amount'=>$DUE_AMOUNT];
+});
+
+//api endpoint for the invoices
+Route::get('/invoice-for-customer/{id}',function ($id){
+
+    $Invoice = \App\Models\Ims\Invoice::where('customer_id',$id)->get();
+
+    return ['invoice'=>$Invoice];
 });
 
 Route::get('/customer-for-invoices/{id}',function ($id){

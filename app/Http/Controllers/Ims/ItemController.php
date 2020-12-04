@@ -23,7 +23,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $Items = ItemCode::all();
+        $Items = \App\Models\Views\Ims\ItemCodeView::all();
         return view('admin.ims.item.index',compact('Items'));
     }
 
