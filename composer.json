@@ -14,7 +14,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "2.4",
         "laravelcollective/html": "^6.0",
-        "spatie/laravel-permission": "^3.9"
+        "spatie/laravel-permission": "^3.9",
+      "ext-pdo": "*"
     },
     "require-dev": {
         "appzcoder/crud-generator": "^3.2",
