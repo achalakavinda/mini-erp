@@ -4,6 +4,7 @@ This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -21,8 +22,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {!! Html::style('admin/css/skins/skin-blue.min.css') !!}
     {!! Html::style('admin/css/main-app.css') !!}
     <style>
-        .form-group{
-            padding-left:5px;
+        .form-group {
+            padding-left: 5px;
             padding-right: 5px;
         }
     </style>
@@ -37,7 +38,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <![endif]-->
     <!-- Google Font -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
     {!! Html::style('admin/css/semantic.min.css') !!}
@@ -45,48 +47,49 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 
 <body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper">
+    <div class="wrapper">
 
-    <!-- Main Header -->
+        <!-- Main Header -->
         @include('layouts.components.main-header')
-    <!-- /Main Header -->
-    <!-- Left side column. contains the logo and sidebar -->
-    <!-- main sidebar -->
+        <!-- /Main Header -->
+        <!-- Left side column. contains the logo and sidebar -->
+        <!-- main sidebar -->
         @include('layouts.components.main-sidebar')
-    <!-- /main sidebar -->
-    <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <section class="content-header">
-           @yield('main-content-header')
-        </section>
-        <!-- Main content -->
-        <section class="content container-fluid">
-            @yield('main-content')
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
-    <!-- Main Footer -->
+        <!-- /main sidebar -->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                @yield('main-content-header')
+            </section>
+            <!-- Main content -->
+            <section class="content container-fluid">
+                @yield('main-content')
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Main Footer -->
         @include('layouts.components.main-footer')
-    <!-- /Main Footer -->
-    @yield('model')
-</div>
-<!-- ./wrapper -->
+        <!-- /Main Footer -->
+        @yield('model')
+    </div>
+    <!-- ./wrapper -->
 
-<!-- REQUIRED JS SCRIPTS -->
-<!-- jQuery 3 -->
-{!! Html::script('admin/bower_components/jquery/dist/jquery.min.js') !!}
-<!-- Bootstrap 3.3.7 -->
-{!! Html::script('admin/bower_components/bootstrap/dist/js/bootstrap.min.js') !!}
-<!-- AdminLTE App -->
-{!! Html::script('admin/js/adminlte.min.js') !!}
-{!! Html::script('admin/js/semantic.min.js') !!}
+    <!-- REQUIRED JS SCRIPTS -->
+    <!-- jQuery 3 -->
+    {!! Html::script('admin/bower_components/jquery/dist/jquery.min.js') !!}
+    <!-- Bootstrap 3.3.7 -->
+    {!! Html::script('admin/bower_components/bootstrap/dist/js/bootstrap.min.js') !!}
+    <!-- AdminLTE App -->
+    {!! Html::script('admin/js/adminlte.min.js') !!}
+    {!! Html::script('admin/js/semantic.min.js') !!}
 
-@yield('js')
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
+    @yield('js')
+    <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the
      user experience. -->
-@stack('js-stack')
+    @stack('js-stack')
 </body>
+
 </html>

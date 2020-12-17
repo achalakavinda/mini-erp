@@ -33,13 +33,16 @@
 <!-- main section -->
 @section('main-content')
 <div class="row">
+    <div id="invoice"></div>
+</div>
+{{-- <div class="row">
     {!!
     Form::open(['action'=>'Ims\InvoiceController@store','class'=>'form-horizontal','id'=>'Form','ng-app'=>'xApp','ng-controller'=>'xAppCtrl'])
     !!}
     @include('error.error')
     @include('admin.ims.invoice._partials.createForm')
     {!! Form::close() !!}
-</div>
+</div> --}}
 <!-- /.row -->
 <!-- /main section -->
 @endsection
