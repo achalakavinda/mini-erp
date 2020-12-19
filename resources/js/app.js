@@ -12,5 +12,5 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./components/Example');
-require('./components/invoice/Invoice');
+require('./pages/Example');
+require('./pages/InvoicePage');

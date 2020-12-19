@@ -85,6 +85,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {!! Html::script('admin/js/adminlte.min.js') !!}
     {!! Html::script('admin/js/semantic.min.js') !!}
 
+    <script src="{{ asset('react-js/app.js?v='.env('VERSION')) }}"></script>
+
     @yield('js')
     <!-- Optionally, you can add Slimscroll and FastClick plugins.
      Both of these plugins are recommended to enhance the

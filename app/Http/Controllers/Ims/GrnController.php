@@ -129,7 +129,6 @@ class GrnController extends Controller
 
         $Total = 0;
         try {
-
             foreach ($Grn->items as $item)
             {
                 $Model = ItemCode::find($item->item_code_id);
