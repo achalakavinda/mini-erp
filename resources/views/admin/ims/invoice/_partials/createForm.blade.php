@@ -1,4 +1,3 @@
-
 @include('error.error')
 <!-- form start -->
 <div class="box-body">
@@ -12,7 +11,7 @@
                     <select id="CustomerId" name="customer_id" class="ui search dropdown">
                         <option value=""> Choose a customer </option>
                         @foreach(\App\Models\Customer::all() as $customer)
-                            <option value="{{ $customer->id }}"> {{ $customer->name }} </option>
+                        <option value="{{ $customer->id }}"> {{ $customer->name }} </option>
                         @endforeach
                     </select>
                     <i class="pull-right">Date: {{ \Carbon\Carbon::now() }}</i>
@@ -46,24 +45,24 @@
             <div class="col-xs-12">
                 <table id="invoiceItemTable" class="table table-bordered">
                     <thead>
-                    <tr style="text-align: center">
-                        <th>No</th>
-                        <th>Item</th>
-                        <th>QTY</th>
-                        <th>Unit Price (LKR)</th>
-                        <th>Total (LKR)</th>
-                    </tr>
+                        <tr style="text-align: center">
+                            <th>No</th>
+                            <th>Item</th>
+                            <th>QTY</th>
+                            <th>Unit Price (LKR)</th>
+                            <th>Total (LKR)</th>
+                        </tr>
                     </thead>
                     <tbody>
                     </tbody>
                     <tfoot>
-                    <tr>
-                        <th>
-                            @include('layouts.selectors.ims.item-dropdown.index')
-                        </th>
-                        <th><button id="addNewItem" type="button" style="width: 100%"
-                                    class="btn">Add</button></th>
-                    </tr>
+                        <tr>
+                            <th></th>
+                            <th>
+                                @include('layouts.selectors.ims.item-dropdown.index')
+                            </th>
+                            <th><button id="addNewItem" type="button" style="width: 100%" class="btn">Add</button></th>
+                        </tr>
                     </tfoot>
                 </table>
             </div>
@@ -85,7 +84,7 @@
                         <tr>
                             <th>Discount:</th>
                             <td><input style="width: 80%" id="discountpercentage" name="discount_percentage"
-                                       type="text">%</td>
+                                    type="text">%</td>
                         </tr>
                         <tr>
                             <th>Total:</th>

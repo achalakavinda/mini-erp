@@ -211,7 +211,7 @@
                                 '                            <input id="tol'+count+'"  type="number" readonly name="row['+count+'][tol]" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <a style="cursor: pointer" type="button" onclick="rowRemove(\'.tr_'+count+'\')"><i class="fa fa-remove"></i></a>\n' +
+                                '                            <a style="cursor: pointer" type="button" onclick="rowRemove(\'.tr_'+count+'\'); rowRemoveupdateTot('+(count)+');"><i class="fa fa-remove"></i></a>\n' +
                                 '                        </td>\n' +
                                 '                    <tr/>');
 
@@ -233,6 +233,23 @@
 
         function rowRemove(value) {
             $(value).remove();
+        }
+
+        function rowRemoveupdateTot(count){
+            // let total = 0;
+            // let discount = 0;
+            // let subtotal = 0;
+            // alert($('#subtotal').val());
+            // subtotal = parseFloat($('#subtotal').val() - $('#tol'+count).val());
+            // $('#subtotal').val(subtotal);
+
+            // if(parseFloat($('#discountpercentage').val())>0){
+            //     let disamount = subtotal*(parseFloat($('#discountpercentage').val())/100);
+            //     $('#total').val(subtotal-disamount);
+            // }else{
+            //     $('#total').val(subtotal);
+            // }
+            // alert($('#tol'+subtotal).val());
         }
 
         function calTol(count) {
