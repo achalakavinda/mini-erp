@@ -4,12 +4,12 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
             <div class="pull-left">
-                <img style="width: 70%" src="{!! asset('img/logo.png') !!}">
+{{--                <img style="width: 70%" src="{!! asset('img/logo.png') !!}">--}}
             </div>
         </div>
         <!-- Sidebar Menu -->
         <ul class="sidebar-menu" data-widget="tree">
-            <li class="header">System</li>
+            <li class="header">Navigation</li>
             <!-- Optionally, you can add icons to the links -->
             @can(config('constant.Permission_Dashboard'))
                 <li><a href="{{ url('/dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>

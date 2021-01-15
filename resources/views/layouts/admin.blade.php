@@ -22,9 +22,21 @@ scratch. This page gets rid of all links and provides the needed markup only.
     {!! Html::style('admin/css/skins/skin-blue.min.css') !!}
     {!! Html::style('admin/css/main-app.css') !!}
     <style>
+        body{
+            font-size: 120%;
+        }
         .form-group {
             padding-left: 5px;
             padding-right: 5px;
+        }
+        .form-control {
+            height: 30px;
+            padding: 6px;
+            font-size: 12px;
+            line-height: normal;
+        }
+        option{
+            min-height: auto;
         }
     </style>
 
@@ -38,8 +50,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <![endif]-->
     <!-- Google Font -->
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
 
     {!! Html::style('admin/css/semantic.min.css') !!}

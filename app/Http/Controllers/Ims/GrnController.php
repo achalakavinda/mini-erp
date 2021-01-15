@@ -267,6 +267,6 @@ class GrnController extends Controller
     public function print($id)
     {
         $Grn = Grn::findOrFail($id);
-        return view('admin.ims.grn.print',compact('Grn'));
+        return view('admin.ims.grn.print.default',compact('Grn'));
     }
 }
