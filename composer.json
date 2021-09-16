@@ -5,14 +5,14 @@
     "license": "MIT",
     "type": "project",
     "require": {
-        "php": "^7.2",
+        "php": "^8.0",
         "barryvdh/laravel-ide-helper": "^2.5",
         "binarytorch/larecipe": "^2.4",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^7.0",
         "laravel/helpers": "^1.1",
         "laravel/tinker": "^2.0",
-        "laravel/ui": "2.4",
+        "laravel/ui": "^2.4",
         "laravelcollective/html": "^6.0",
         "spatie/laravel-permission": "^3.9",
       "ext-pdo": "*"
