@@ -86,3 +86,13 @@ Route::get('/customer-for-invoices/{id}',function ($id){
 Route::get('/supplier-for-invoices/{id}',function ($id){
     return \App\Models\Supplier::find($id);
 });
+
+Route::get('/item-code',function (Request $request){
+
+    $perPage = $request->per_page?: 10;
+    $sortField = $request->sort_field?:'name';
+
+    $itemCodes =  \App\Models\Ims\ItemCode::orderBy($sortField)->paginate($perPage);
+    return \App\Http\Resources\ItemCodeResource::collection($itemCodes);
+});
+

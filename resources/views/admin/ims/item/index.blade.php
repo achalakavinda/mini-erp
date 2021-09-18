@@ -42,55 +42,56 @@
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <div style="overflow: auto" class="box-body">
-                    <table id="table" class="table table-responsive table-bordered table-striped">
+                <div id="itemCodeList" style="overflow: auto" class="box-body">
 
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Item</th>
-                            <th>Brand</th>
-                            <th>Category</th>
-                            <th>Color</th>
-                            <th>Size</th>
-                            <th>Unit Cost (LKR)</th>
-                            <th>Selling Price (LKR)</th>
-                            <th>Market Price (LKR)</th>
-                            <th>Min Price (LKR)</th>
-                            <th>Max Price (LKR)</th>
-                            <th>NBT %</th>
-                            <th>VAT %</th>
-                            <th>Unit Price With Taxes (LKR)</th>
-                            <th>In Stock</th>
-                            <th><i class="fa fa-plane"></i></th>
-                        </tr>
-                        </thead>
-                        <tbody>
+{{--                    <table id="table" class="table table-responsive table-bordered table-striped">--}}
+{{--                        <thead>--}}
+{{--                        <tr>--}}
+{{--                            <th>ID</th>--}}
+{{--                            <th>Item</th>--}}
+{{--                            <th>Brand</th>--}}
+{{--                            <th>Category</th>--}}
+{{--                            <th>Color</th>--}}
+{{--                            <th>Size</th>--}}
+{{--                            <th>Unit Cost (LKR)</th>--}}
+{{--                            <th>Selling Price (LKR)</th>--}}
+{{--                            <th>Market Price (LKR)</th>--}}
+{{--                            <th>Min Price (LKR)</th>--}}
+{{--                            <th>Max Price (LKR)</th>--}}
+{{--                            <th>NBT %</th>--}}
+{{--                            <th>VAT %</th>--}}
+{{--                            <th>Unit Price With Taxes (LKR)</th>--}}
+{{--                            <th>In Stock</th>--}}
+{{--                            <th><i class="fa fa-plane"></i></th>--}}
+{{--                        </tr>--}}
+{{--                        </thead>--}}
+{{--                        <tbody>--}}
 
-                        @foreach($Items as $item)
-                            <tr>
-                                <td>{!! $item->item_id !!}</td>
-                                <td>{!! $item->item_name !!} {{ $item->item_description?' - '.$item->item_description:'' }}</td>
-                                <td>{!! $item->brand_name !!}</td>
-                                <td>{!! $item->category_name !!}</td>
-                                <td>{!! $item->color_name !!}</td>
-                                <td>{!! $item->size_name !!}</td>
-                                <td style="text-align: right">{!! number_format($item->unit_cost,2) !!}</td>
-                                <td style="text-align: right">{!! number_format($item->selling_price,2) !!}</td>
-                                <td style="text-align: right">{!! number_format($item->market_price,2) !!}</td>
-                                <td style="text-align: right">{!! number_format($item->min_price,2) !!}</td>
-                                <td style="text-align: right">{!! number_format($item->max_price,2) !!}</td>
+{{--                        @foreach($Items as $item)--}}
+{{--                            <tr>--}}
+{{--                                <td>{!! $item->item_id !!}</td>--}}
+{{--                                <td>{!! $item->item_name !!} {{ $item->item_description?' - '.$item->item_description:'' }}</td>--}}
+{{--                                <td>{!! $item->brand_name !!}</td>--}}
+{{--                                <td>{!! $item->category_name !!}</td>--}}
+{{--                                <td>{!! $item->color_name !!}</td>--}}
+{{--                                <td>{!! $item->size_name !!}</td>--}}
+{{--                                <td style="text-align: right">{!! number_format($item->unit_cost,2) !!}</td>--}}
+{{--                                <td style="text-align: right">{!! number_format($item->selling_price,2) !!}</td>--}}
+{{--                                <td style="text-align: right">{!! number_format($item->market_price,2) !!}</td>--}}
+{{--                                <td style="text-align: right">{!! number_format($item->min_price,2) !!}</td>--}}
+{{--                                <td style="text-align: right">{!! number_format($item->max_price,2) !!}</td>--}}
 
-                                <td style="text-align: right">{!! $item->nbt_tax_percentage !!}%</td>
-                                <td style="text-align: right">{!! $item->vat_tax_percentage !!}%</td>
-                                <td style="text-align: right">{!! number_format($item->unit_price_with_tax,2) !!}</td>
-                                <td style="text-align: right">{!! $item->stock_qty !!} </td>
-                                <td><a class="btn btn-sm" href="{!! url('ims/item') !!}/{!! $item->item_id !!}"><i class="fa fa-paper-plane"></i></a></td>
-                            </tr>
-                        @endforeach
+{{--                                <td style="text-align: right">{!! $item->nbt_tax_percentage !!}%</td>--}}
+{{--                                <td style="text-align: right">{!! $item->vat_tax_percentage !!}%</td>--}}
+{{--                                <td style="text-align: right">{!! number_format($item->unit_price_with_tax,2) !!}</td>--}}
+{{--                                <td style="text-align: right">{!! $item->stock_qty !!} </td>--}}
+{{--                                <td><a class="btn btn-sm" href="{!! url('ims/item') !!}/{!! $item->item_id !!}"><i class="fa fa-paper-plane"></i></a></td>--}}
+{{--                            </tr>--}}
+{{--                        @endforeach--}}
 
-                        </tbody>
-                    </table>
+{{--                        </tbody>--}}
+{{--                    </table>--}}
+
                 </div>
                 <!-- /.box-body -->
             </div>

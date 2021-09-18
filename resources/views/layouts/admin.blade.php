@@ -1,25 +1,22 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html>
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Management Information System | MIS</title>
     <link rel="shortcut icon" href="{!! asset('img/logo.png') !!}" />
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    {!! Html::style('admin/bower_components/bootstrap/dist/css/bootstrap.min.css') !!}
+    {!! Html::style('admin/bower_components/bootstrap/dist/css/bootstrap.min.css?v='.env('APP_VERSION') ) !!}
     <!-- Font Awesome -->
-    {!! Html::style('admin/bower_components/font-awesome/css/font-awesome.min.css') !!}
+    {!! Html::style('admin/bower_components/font-awesome/css/font-awesome.min.css?v='.env('APP_VERSION')) !!}
     <!-- Ionicons -->
-    {!! Html::style('admin/bower_components/Ionicons/css/ionicons.min.css') !!}
+    {!! Html::style('admin/bower_components/Ionicons/css/ionicons.min.css?v='.env('APP_VERSION')) !!}
     <!-- Theme style -->
-    {!! Html::style('admin/css/AdminLTE.min.css') !!}
-    {!! Html::style('admin/css/skins/skin-blue.min.css') !!}
-    {!! Html::style('admin/css/main-app.css') !!}
+    {!! Html::style('admin/css/AdminLTE.min.css?v='.env('APP_VERSION')) !!}
+    {!! Html::style('admin/css/skins/skin-blue.min.css?v='.env('APP_VERSION')) !!}
+    {!! Html::style('admin/css/main-app.css?v='.env('APP_VERSION')) !!}
     <style>
         .form-group{
             padding-left:5px;
@@ -28,6 +25,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </style>
 
     @yield('style')
+
+    <script type="text/javascript">
+        var pageDate = {
+            base_url: '{{ url('/') }}',
+            api_url: '{{ url('api') }}',
+            _token: '{{ csrf_token() }}'
+        };
+    </script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -39,8 +44,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Google Font -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-
-    {!! Html::style('admin/css/semantic.min.css') !!}
+    {!! Html::style('admin/css/semantic.min.css?v='.env('APP_VERSION')) !!}
 </head>
 
 
@@ -76,17 +80,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <!-- REQUIRED JS SCRIPTS -->
 <!-- jQuery 3 -->
-{!! Html::script('admin/bower_components/jquery/dist/jquery.min.js') !!}
+{!! Html::script('admin/bower_components/jquery/dist/jquery.min.js?v='.env('APP_VERSION')) !!}
 <!-- Bootstrap 3.3.7 -->
-{!! Html::script('admin/bower_components/bootstrap/dist/js/bootstrap.min.js') !!}
+{!! Html::script('admin/bower_components/bootstrap/dist/js/bootstrap.min.js?v='.env('APP_VERSION')) !!}
 <!-- AdminLTE App -->
-{!! Html::script('admin/js/adminlte.min.js') !!}
-{!! Html::script('admin/js/semantic.min.js') !!}
+{!! Html::script('admin/js/adminlte.min.js?v='.env('APP_VERSION')) !!}
+{!! Html::script('admin/js/semantic.min.js?v='.env('APP_VERSION')) !!}
+
+<script src="{{ mix('js/app.js') }}"></script>
+
 
 @yield('js')
-<!-- Optionally, you can add Slimscroll and FastClick plugins.
-     Both of these plugins are recommended to enhance the
-     user experience. -->
 @stack('js-stack')
 </body>
 </html>

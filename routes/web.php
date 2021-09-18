@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('designation','DesignationController');
 
     Route::resource('project','ProjectController');
+
     Route::prefix('project')->group(function () {
         Route::get('/{id}/actual-cost','ProjectController@actualCost');
         Route::get('/{id}/budget-cost','ProjectController@budgetCost');

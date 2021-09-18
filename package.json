@@ -21,8 +21,9 @@
         "popper.js": "^1.12",
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
+        "resolve-url-loader": "^2.3.1",
         "sass": "^1.15.2",
-        "sass-loader": "^8.0.0"
+        "sass-loader": "^7.1.0"
     },
     "dependencies": {
         "@angular/animations": "^6.1.7",
