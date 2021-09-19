@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Str;
 
 class CreateUsersTable extends Migration
 {
@@ -36,18 +37,27 @@ class CreateUsersTable extends Migration
                 ->on('users');
         });
 
+        Schema::table('users', function ($table) {
+            $table->string('api_token', 80)->after('password')
+                ->unique()
+                ->nullable()
+                ->default(null);
+        });
+
         DB::table('users')->insert([
             [
                 'id'=>1,
                 'name' => 'Sys Admin',
                 'email' => 'sysadmin@test.com',
-                'password' => bcrypt('sysadmin123')
+                'password' => bcrypt('sysadmin123'),
+                'api_token' => Str::random(60),
             ],
             [
                 'id'=>2,
                 'name' => 'Admin',
                 'email' => 'admin@test.com',
-                'password' => bcrypt('admin123')
+                'password' => bcrypt('admin123'),
+                'api_token' => Str::random(60),
             ],
 
         ]);

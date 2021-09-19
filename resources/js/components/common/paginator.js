@@ -1,46 +1,55 @@
 import React, {useEffect, useState} from 'react';
+const OFFSET = 4;
 
 const Paginator = ({pagination, pageChanged}) => {
-    const OFFSET = 4;
+
     const [pageNumbers, setPageNumbers] = useState([]);
 
     useEffect(()=> {
-        let pages = [];
 
-        const {last_page,current_page, from,to } = pagination;
+        const setPaginationPages = () => {
+            let pages = [];
 
-        if(!to) return [];
+            const {last_page,current_page, from,to } = pagination;
 
-        let fromPage = current_page - OFFSET;
+            if(from === to && current_page!= 1) pageChanged(1);
 
-        if( fromPage < 1 ) fromPage = 1;
+            if(!to) return [];
 
-        let toPage = fromPage + OFFSET*2;
+            let fromPage = current_page - OFFSET;
 
-        if(toPage <= last_page){
-            toPage=last_page;
-        }
+            if( fromPage < 1 ) fromPage = 1;
 
-        for (let page = fromPage; page<= toPage; page++)
-        {
-            pages.push(page);
-        }
+            let toPage = fromPage + OFFSET*2;
 
-        setPageNumbers(pages);
+            if(toPage >= last_page){
+                toPage=last_page;
+            }
 
-    },[pagination.length]);
+            for (let page = fromPage; page<= toPage; page++)
+            {
+                pages.push(page);
+            }
+
+            setPageNumbers(pages);
+        };
+
+        setPaginationPages();
+
+
+    },[pagination]);
 
     return (
         <nav aria-label="Page navigation example">
             <ul className="pagination justify-content-center">
 
                 <li className={"page-item" + (pagination.current_page === 1? ' disabled': '')}>
-                    <a className="page-link" href="#" onClick={()=> pageChanged(pagination.current_page - 1)}>Previous</a>
+                    <a className="page-link" href="#" onClick={()=> { pagination.current_page === 1?null: pageChanged(pagination.current_page - 1) }}>Previous</a>
                 </li>
 
                 {pageNumbers.map((pageNumber,index)=>{
                     return(
-                        <li key={index} className={"page-item" + (pageNumber === pagination.current_page? ' active':'')}><a className="page-link" href="#" onClick={()=> { pageNumber === pagination.current_page? null:pageChanged(pageNumber); } }>{pageNumber}</a></li>
+                        <li key={index} className={"page-item" + (pageNumber === pagination.current_page? ' active':'')}><a className="page-link" href="#" onClick={()=> { pageChanged(pageNumber) } }>{pageNumber}</a></li>
                     );
                 })
                 }

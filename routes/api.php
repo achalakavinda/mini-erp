@@ -87,12 +87,27 @@ Route::get('/supplier-for-invoices/{id}',function ($id){
     return \App\Models\Supplier::find($id);
 });
 
-Route::get('/item-code',function (Request $request){
+Route::group(['middleware' => ['auth:api']], function () {
 
-    $perPage = $request->per_page?: 10;
-    $sortField = $request->sort_field?:'name';
+    Route::get('/item-code',function (Request $request) {
+        $perPage = $request->per_page?: 10;
+        $sortField = $request->sort_field?:'item_name';
+        $searchText = $request->search_text? $request->search_text : null;
 
-    $itemCodes =  \App\Models\Ims\ItemCode::orderBy($sortField)->paginate($perPage);
-    return \App\Http\Resources\ItemCodeResource::collection($itemCodes);
+        $itemCodesQueryBuilder =  \App\Models\Views\Ims\ItemCodeView::query();
+
+        if($searchText)
+        {
+            $itemCodesQueryBuilder->where('item_name','like','%'.$searchText.'%');
+        }
+
+        $itemCodes = $itemCodesQueryBuilder->orderBy($sortField)->paginate($perPage);
+
+        return \App\Http\Resources\ItemCodeResource::collection($itemCodes);
+
+    });
+
 });
+
+
 

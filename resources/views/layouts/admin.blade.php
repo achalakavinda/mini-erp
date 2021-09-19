@@ -30,7 +30,8 @@
         var pageDate = {
             base_url: '{{ url('/') }}',
             api_url: '{{ url('api') }}',
-            _token: '{{ csrf_token() }}'
+            _token: '{{ csrf_token() }}',
+            api_token: '{{ Auth::user()->api_token }}'
         };
     </script>
 
