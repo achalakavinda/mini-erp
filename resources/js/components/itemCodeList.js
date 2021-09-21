@@ -1,65 +1,147 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import ReactDOM from 'react-dom';
+import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Paginator from "./common/paginator";
 import BrandModal from "./common/modals/brand-modal";
 
 const ItemCodeTable = (props) => {
 
-
     const pageData = props.props;
     const [tableData, setTableData] = useState([{id:1}]);
     const [loading, setLoading] = useState(true);
 
-    const [sortField, setSortField] = useState('item_id');
+    const [sortFields, setSortFields] = useState('');
     const [sortOrder, setSortOrder] = useState('ASC');
-    const [perPage, setPerPage] = useState(10);
-    const [currentPage, setCurrentPage] = useState(1);
     const [searchText, setSearchText] = useState("");
 
+    const [perPage, setPerPage] = useState(10);
+    const [currentPage, setCurrentPage] = useState(1);
     const [pagination, setPagination] = useState({});
 
-    const [itemCol, setItemCol] = useState('checked');
+    //set column states
+    const [itemIdSorted, setItemIdSorted] = useState(false);
+    const [itemNameSorted, setItemNameSorted] = useState(false);
+    const [brandSorted, setBrandSorted] = useState(false);
+    const [categorySorted,setCategorySorted] = useState(false);
+    const [colorSorted,setColorSorted] = useState(false);
+    const [sizeSorted,setSizeSorted] = useState(false);
+    const [unitCostSorted,setUnitCostSorted] = useState(false);
+    const [sellingPriceSorted,setSellingPriceSorted] = useState(false);
+    const [marketPriceSorted,setMarketPriceSorted] = useState(false);
+    const [mixPriceSorted,setMixPriceSorted] = useState(false);
+    const [maxPriceSorted,setMaxPriceSorted] = useState(false);
+    const [unitPriceWithTexsSorted,setUnitPriceWithTexsSorted] = useState(false);
+    const [inStockSorted,setInStockSorted] = useState(false);
 
     const [modalShow, setModalShow] = React.useState(false);
 
-    useEffect(()=> {
-        const fetchTableData = async () => {
-            const  params = {
-                sort_field: sortField,
-                sort_order: sortOrder,
-                per_page: perPage,
-                page: currentPage,
-                search_text:searchText,
-                api_token: pageData.api_token
-            };
-            await axios.get(pageData.api_url+'/item-code',{params}).then( data => {
+    const buildSortQueryPram = () => {
+        let str = [];
+        if(itemNameSorted)
+            str.push(['item_name']);
+        if(brandSorted)
+            str.push(['brand_name']);
+        if(categorySorted)
+            str.push(['category_name']);
+        if(colorSorted)
+            str.push(['color_name']);
+        if(sizeSorted)
+            str.push(['size_name']);
+        if(unitCostSorted)
+            str.push(['unit_cost']);
+        if(sellingPriceSorted)
+            str.push(['selling_price']);
+        if(maxPriceSorted)
+            str.push(['max_price']);
+        if(mixPriceSorted)
+            str.push(['min_price']);
+        if(unitPriceWithTexsSorted)
+            str.push(['unit_price_with_tax']);
+        if(inStockSorted)
+            str.push(['stock_qty']);
 
-                if(data.data.data){
-                    setTableData(data.data.data);
-                    setPagination(data.data.meta);
-                }
+        str = str.join(",");
+        return str;
+    }
 
-                setLoading(false)
-            });
+
+
+    const fetchTableData = async () => {
+        const  params = {
+            sort_field: sortFields,
+            sort_order: sortOrder,
+            per_page: perPage,
+            page: currentPage,
+            search_text:searchText,
+            api_token: pageData.api_token
         };
+        await axios.get(pageData.api_url+'/item-code',{params}).then( data => {
 
+            if(data.data.data){
+                setTableData(data.data.data);
+                setPagination(data.data.meta);
+            }
+
+            setLoading(false)
+        });
+    };
+
+    useEffect(()=> {
         fetchTableData().then( data => {
             //todo write any post fetch logic here....
         });
+    },[sortFields,sortOrder,perPage,currentPage,searchText]);
 
-    },[sortField,sortOrder,perPage,currentPage,searchText]);
+    useEffect(()=> {
+        setSortFields(buildSortQueryPram());
+    }, [itemNameSorted,brandSorted,categorySorted,colorSorted,sizeSorted,unitCostSorted,sellingPriceSorted,maxPriceSorted,mixPriceSorted,maxPriceSorted,unitPriceWithTexsSorted,inStockSorted,maxPriceSorted]);
 
-    const sortFieldHandler = (field) => {
-        switch (field){
-            case 'name':
-                setSortField('item_name');
-                setItemCol(!itemCol);
+
+
+    const sortFieldHandler =async (field,e,setStateHandler) => {
+
+        const isChecked = e.target.checked;
+
+        switch (field) {
+            case 'item_name':
+                setStateHandler(isChecked);
+                break;
+            case 'brand_name':
+                setStateHandler(isChecked);
+                break;
+            case 'category_name':
+                setStateHandler(isChecked);
+                break;
+            case 'color_name':
+                setStateHandler(isChecked);
+                break;
+            case 'size_name':
+                setStateHandler(isChecked);
                 break;
             case 'unit_cost':
-                setSortField('unit_cost');
+                setStateHandler(isChecked);
                 break;
+            case 'selling_price':
+                setStateHandler(isChecked);
+                break;
+            case 'market_price':
+                setStateHandler(isChecked);
+                break;
+            case 'min_price':
+                setStateHandler(isChecked);
+                break;
+            case 'max_price':
+                setStateHandler(isChecked);
+                break;
+            case 'unit_price_with_tax':
+                setStateHandler(isChecked);
+                break;
+            case 'stock_qty':
+                setStateHandler(isChecked);
+                break;
+
             default:
-                setSortField('item_id');
+                setItemIdSorted(true);
                 break;
         }
     }
@@ -73,6 +155,23 @@ const ItemCodeTable = (props) => {
         setSearchText(event.target.value);
         setCurrentPage(1);
     }
+
+    const [columns, setColumns] = useState([
+        { key:'item_name', 'title': 'Name' ,'sort':true,'onChangeHandler':sortFieldHandler, checkedState:itemNameSorted,setStateHandler:setItemNameSorted},
+        { key:'brand_name', 'title': 'Brand','sort':true, 'onChangeHandler':sortFieldHandler, checkedState:brandSorted,setStateHandler:setBrandSorted},
+        { key:'category_name', 'title': 'Category','sort':true, 'onChangeHandler':sortFieldHandler, checkedState:categorySorted,setStateHandler:setCategorySorted },
+        { key:'color_name', 'title': 'Color','sort':true, 'onChangeHandler':sortFieldHandler, checkedState:colorSorted,setStateHandler:setColorSorted },
+        { key:'size_name', 'title': 'Size','sort':true,'onChangeHandler':sortFieldHandler, checkedState:sizeSorted,setStateHandler:setSizeSorted },
+        { key:'unit_cost', 'title': 'Unit Cost','sort':true,'onChangeHandler':sortFieldHandler, checkedState:unitCostSorted,setStateHandler:setUnitCostSorted },
+        { key:'selling_price', 'title': 'Selling Price','sort':true,'onChangeHandler':sortFieldHandler, checkedState:sellingPriceSorted,setStateHandler:setSellingPriceSorted },
+        { key:'market_price', 'title': 'Market Price','sort':true,'onChangeHandler':sortFieldHandler, checkedState:marketPriceSorted,setStateHandler:setMarketPriceSorted },
+        { key:'min_price', 'title': 'Min Price','sort':true,'onChangeHandler':sortFieldHandler, checkedState:mixPriceSorted,setStateHandler:setMixPriceSorted },
+        { key:'max_price', 'title': 'Max Price','sort':true,'onChangeHandler':sortFieldHandler, checkedState:maxPriceSorted,setStateHandler:setMaxPriceSorted },
+        { key:'nbt_tax_percentage', 'title': 'NBT%','sort':false,'onChangeHandler':sortFieldHandler, checkedState:false,setStateHandler:null },
+        { key:'vat_tax_percentage', 'title': 'VAT%','sort':false,'onChangeHandler':sortFieldHandler, checkedState:false,setStateHandler:null },
+        { key:'unit_price_with_tax', 'title': 'Unit Price With Taxes','sort':true,'onChangeHandler':sortFieldHandler, checkedState:unitPriceWithTexsSorted,setStateHandler:setUnitPriceWithTexsSorted },
+        { key:'stock_qty', 'title': 'In Stock','sort':true,'onChangeHandler':sortFieldHandler, checkedState:inStockSorted,setStateHandler:setInStockSorted },
+    ]);
 
     return (
 
@@ -101,27 +200,28 @@ const ItemCodeTable = (props) => {
                 </div>
             </div>
 
-            <table className="table table-responsive table-bordered table-striped">
+            <ReactHTMLTableToExcel
+                id="test-table-xls-button"
+                className="download-table-xls-button"
+                table="table-to-xls"
+                filename="Items"
+                sheet="items"
+                buttonText="Download as XLS"/>
+
+            <table id="table-to-xls" className="table table-responsive table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>
-                            <input defaultChecked={itemCol} type="checkbox" onChange={ (e) => sortFieldHandler("name")}/>
-                            <span> Item <i className="fa fa-sort"></i></span>
-                        </th>
-                        <th>Brand</th>
-                        <th>Category</th>
-                        <th>Color</th>
-                        <th>Size</th>
-                        <th onClick={ (e) => sortFieldHandler("unit_cost")} >Unit Cost (LKR) <span> <i className="fa fa-sort"></i> </span></th>
-                        <th>Selling Price (LKR)</th>
-                        <th>Market Price (LKR)</th>
-                        <th>Min Price (LKR)</th>
-                        <th>Max Price (LKR)</th>
-                        <th>NBT %</th>
-                        <th>VAT %</th>
-                        <th>Unit Price With Taxes (LKR)</th>
-                        <th>In Stock</th>
-                        <th><i className="fa fa-plane"></i></th>
+                        {columns.map((column,index)=>{
+                            return (
+                                <th key={column.key}>
+                                    {column.sort?(
+                                        <input defaultChecked={column.checkedState} type="checkbox" onClick={ (e) => { sortFieldHandler(column.key,e,column.setStateHandler); }}/>
+                                    ):''}
+                                    <span> {column.title} {column.sort?(<i className="fa fa-sort"></i>):''}</span>
+                                </th>
+                            );
+                        })}
+                        <th > view</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -133,20 +233,10 @@ const ItemCodeTable = (props) => {
                         tableData.map((data, index) => {
                             return (
                                 <tr key={index}>
-                                    <td>{data.name}</td>
-                                    <td onClick={() => setModalShow(true)} >{data.brand_name }</td>
-                                    <td>{data.category_name}</td>
-                                    <td>{data.color_name}</td>
-                                    <td>{data.size_name}</td>
-                                    <td>{data.unit_cost}</td>
-                                    <td>{data.selling_price}</td>
-                                    <td>{data.market_price}</td>
-                                    <td>{data.min_price}</td>
-                                    <td>{data.max_price}</td>
-                                    <td>{data.nbt_tax_percentage}</td>
-                                    <td>{data.vat_tax_percentage}</td>
-                                    <td>{data.unit_price_with_tax}</td>
-                                    <td>{data.stock_qty}</td>
+                                    {columns.map((column,index)=>{
+                                        return (
+                                            <td key={column.key}>{data[column.key]}</td>
+                                        ) })}
                                     <td>
                                         <a href={ pageData.base_url+'/ims/item/'+data.id } ><i className="fa fa-paper-plane"></i></a>
                                     </td>

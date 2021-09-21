@@ -90,9 +90,12 @@ Route::get('/supplier-for-invoices/{id}',function ($id){
 Route::group(['middleware' => ['auth:api']], function () {
 
     Route::get('/item-code',function (Request $request) {
+
+        $sortFieldArr = [];
+
         $perPage = $request->per_page?: 10;
-        $sortField = $request->sort_field?:'item_name';
-        $searchText = $request->search_text? $request->search_text : null;
+        $searchText = $request->search_text?  : null;
+        $sortOrder = $request->sort_order? : 'ASC';
 
         $itemCodesQueryBuilder =  \App\Models\Views\Ims\ItemCodeView::query();
 
@@ -101,10 +104,13 @@ Route::group(['middleware' => ['auth:api']], function () {
             $itemCodesQueryBuilder->where('item_name','like','%'.$searchText.'%');
         }
 
-        $itemCodes = $itemCodesQueryBuilder->orderBy($sortField)->paginate($perPage);
+        foreach (explode( ',', $request->sort_field?:'item_id' ) as $item) {
+            $itemCodesQueryBuilder->orderBy($item,$sortOrder);
+        }
+
+        $itemCodes = $itemCodesQueryBuilder->paginate($perPage);
 
         return \App\Http\Resources\ItemCodeResource::collection($itemCodes);
-
     });
 
 });

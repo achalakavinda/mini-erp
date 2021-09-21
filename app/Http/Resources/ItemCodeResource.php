@@ -27,7 +27,7 @@ class ItemCodeResource extends JsonResource
             'size_name'=>$this->size_name?:'Other',
             'category_id'=>$this->category_id,
             'category_name'=>$this->category_name?:'Other',
-            'name'=>$this->item_name,
+            'item_name'=>$this->item_name,
             'description'=>$this->item_description,
             'thumbnail_url'=>$this->thumbnail_url,
             'unit_cost'=>$this->unit_cost?:number_format(0,2),
