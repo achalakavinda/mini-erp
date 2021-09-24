@@ -1,5 +1,6 @@
 <?php
 
+use App\Services\ItemCodeService;
 use Illuminate\Http\Request;
 
 /*
@@ -66,16 +67,12 @@ Route::get('/invoice-for-payment/{id}',function ($id){
     }else{
         $DUE_AMOUNT = $Model->amount;
     }
-
-
     return ['invoice'=>$Model,'payed_amount'=>$AMOUNT,'due_amount'=>$DUE_AMOUNT];
 });
 
 //api endpoint for the invoices
 Route::get('/invoice-for-customer/{id}',function ($id){
-
     $Invoice = \App\Models\Ims\Invoice::where('customer_id',$id)->get();
-
     return ['invoice'=>$Invoice];
 });
 
@@ -89,28 +86,8 @@ Route::get('/supplier-for-invoices/{id}',function ($id){
 
 Route::group(['middleware' => ['auth:api']], function () {
 
-    Route::get('/item-code',function (Request $request) {
-
-        $sortFieldArr = [];
-
-        $perPage = $request->per_page?: 10;
-        $searchText = $request->search_text?  : null;
-        $sortOrder = $request->sort_order? : 'ASC';
-
-        $itemCodesQueryBuilder =  \App\Models\Views\Ims\ItemCodeView::query();
-
-        if($searchText)
-        {
-            $itemCodesQueryBuilder->where('item_name','like','%'.$searchText.'%');
-        }
-
-        foreach (explode( ',', $request->sort_field?:'item_id' ) as $item) {
-            $itemCodesQueryBuilder->orderBy($item,$sortOrder);
-        }
-
-        $itemCodes = $itemCodesQueryBuilder->paginate($perPage);
-
-        return \App\Http\Resources\ItemCodeResource::collection($itemCodes);
+    Route::get('/item-code', function (Request $request) {
+        return (new ItemCodeService())->get($request);
     });
 
 });

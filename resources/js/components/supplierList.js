@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
+import ReactDOM from 'react-dom';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Paginator from "./common/paginator";
+import BrandModal from "./common/modals/brand-modal";
 
 const ItemCodeTable = (props) => {
 
     const pageData = props.props;
-    const show_url = pageData.base_url+'/ims/item/';
-    const [tableData, setTableData] = useState([]);
+    const [tableData, setTableData] = useState([{id:1}]);
     const [loading, setLoading] = useState(true);
 
     const [sortFields, setSortFields] = useState('');
@@ -18,7 +19,6 @@ const ItemCodeTable = (props) => {
     const [pagination, setPagination] = useState({});
 
     //set column states
-    const [itemIdSorted, setItemIdSorted] = useState(false);
     const [itemNameSorted, setItemNameSorted] = useState(false);
     const [brandSorted, setBrandSorted] = useState(false);
     const [categorySorted,setCategorySorted] = useState(false);
@@ -31,6 +31,8 @@ const ItemCodeTable = (props) => {
     const [maxPriceSorted,setMaxPriceSorted] = useState(false);
     const [unitPriceWithTexsSorted,setUnitPriceWithTexsSorted] = useState(false);
     const [inStockSorted,setInStockSorted] = useState(false);
+
+    const [modalShow, setModalShow] = React.useState(false);
 
     const buildSortQueryPram = () => {
         let str = [];
@@ -61,6 +63,8 @@ const ItemCodeTable = (props) => {
         return str;
     }
 
+
+
     const fetchTableData = async () => {
         const  params = {
             sort_field: sortFields,
@@ -71,12 +75,10 @@ const ItemCodeTable = (props) => {
             api_token: pageData.api_token
         };
         await axios.get(pageData.api_url+'/item-code',{params}).then( data => {
-
-            if(data.data.data){
+            if(data.data.data) {
                 setTableData(data.data.data);
                 setPagination(data.data.meta);
             }
-
             setLoading(false)
         });
     };
@@ -89,7 +91,20 @@ const ItemCodeTable = (props) => {
 
     useEffect(()=> {
         setSortFields(buildSortQueryPram());
-    }, [itemNameSorted,brandSorted,categorySorted,colorSorted,sizeSorted,unitCostSorted,sellingPriceSorted,maxPriceSorted,mixPriceSorted,maxPriceSorted,unitPriceWithTexsSorted,inStockSorted,maxPriceSorted]);
+    }, [
+        itemNameSorted,
+        brandSorted,
+        categorySorted,
+        colorSorted,
+        sizeSorted,
+        unitCostSorted,
+        sellingPriceSorted,
+        maxPriceSorted,
+        mixPriceSorted,
+        maxPriceSorted,
+        unitPriceWithTexsSorted,
+        inStockSorted,
+        maxPriceSorted]);
 
 
 
@@ -136,7 +151,7 @@ const ItemCodeTable = (props) => {
                 break;
 
             default:
-                setItemIdSorted(true);
+
                 break;
         }
     }
@@ -151,26 +166,27 @@ const ItemCodeTable = (props) => {
         setCurrentPage(1);
     }
 
-    const columns = [
-        { key:'item_name', 'title': 'Name' ,'sort':true,'onChangeHandler':sortFieldHandler, defaultChecked:itemNameSorted,setStateHandler:setItemNameSorted},
-        { key:'brand_name', 'title': 'Brand','sort':true, 'onChangeHandler':sortFieldHandler, defaultChecked:brandSorted,setStateHandler:setBrandSorted},
-        { key:'category_name', 'title': 'Category','sort':true, 'onChangeHandler':sortFieldHandler, defaultChecked:categorySorted,setStateHandler:setCategorySorted },
-        { key:'color_name', 'title': 'Color','sort':true, 'onChangeHandler':sortFieldHandler, defaultChecked:colorSorted,setStateHandler:setColorSorted },
-        { key:'size_name', 'title': 'Size','sort':true,'onChangeHandler':sortFieldHandler, defaultChecked:sizeSorted,setStateHandler:setSizeSorted },
-        { key:'unit_cost', 'title': 'Unit Cost','sort':true,'onChangeHandler':sortFieldHandler, defaultChecked:unitCostSorted,setStateHandler:setUnitCostSorted },
-        { key:'selling_price', 'title': 'Selling Price','sort':true,'onChangeHandler':sortFieldHandler, defaultChecked:sellingPriceSorted,setStateHandler:setSellingPriceSorted },
-        { key:'market_price', 'title': 'Market Price','sort':true,'onChangeHandler':sortFieldHandler, defaultChecked:marketPriceSorted,setStateHandler:setMarketPriceSorted },
-        { key:'min_price', 'title': 'Min Price','sort':true,'onChangeHandler':sortFieldHandler, defaultChecked:mixPriceSorted,setStateHandler:setMixPriceSorted },
-        { key:'max_price', 'title': 'Max Price','sort':true,'onChangeHandler':sortFieldHandler, defaultChecked:maxPriceSorted,setStateHandler:setMaxPriceSorted },
-        { key:'nbt_tax_percentage', 'title': 'NBT%','sort':false,'onChangeHandler':sortFieldHandler, defaultChecked:false,setStateHandler:null },
-        { key:'vat_tax_percentage', 'title': 'VAT%','sort':false,'onChangeHandler':sortFieldHandler, defaultChecked:false,setStateHandler:null },
-        { key:'unit_price_with_tax', 'title': 'Unit Price With Taxes','sort':true,'onChangeHandler':sortFieldHandler, defaultChecked:unitPriceWithTexsSorted,setStateHandler:setUnitPriceWithTexsSorted },
-        { key:'stock_qty', 'title': 'In Stock','sort':true,'onChangeHandler':sortFieldHandler, defaultChecked:inStockSorted,setStateHandler:setInStockSorted },
-    ];
+    const [columns, setColumns] = useState([
+        { key:'item_name', 'title': 'Name' ,'sort':true,'onChangeHandler':sortFieldHandler, checked:itemNameSorted,setStateHandler:setItemNameSorted},
+        { key:'brand_name', 'title': 'Brand','sort':true, 'onChangeHandler':sortFieldHandler, checked:brandSorted,setStateHandler:setBrandSorted},
+        { key:'category_name', 'title': 'Category','sort':true, 'onChangeHandler':sortFieldHandler, checked:categorySorted,setStateHandler:setCategorySorted },
+        { key:'color_name', 'title': 'Color','sort':true, 'onChangeHandler':sortFieldHandler, checked:colorSorted,setStateHandler:setColorSorted },
+        { key:'size_name', 'title': 'Size','sort':true,'onChangeHandler':sortFieldHandler, checked:sizeSorted,setStateHandler:setSizeSorted },
+        { key:'unit_cost', 'title': 'Unit Cost','sort':true,'onChangeHandler':sortFieldHandler, checked:unitCostSorted,setStateHandler:setUnitCostSorted },
+        { key:'selling_price', 'title': 'Selling Price','sort':true,'onChangeHandler':sortFieldHandler, checked:sellingPriceSorted,setStateHandler:setSellingPriceSorted },
+        { key:'market_price', 'title': 'Market Price','sort':true,'onChangeHandler':sortFieldHandler, checked:marketPriceSorted,setStateHandler:setMarketPriceSorted },
+        { key:'min_price', 'title': 'Min Price','sort':true,'onChangeHandler':sortFieldHandler, checked:mixPriceSorted,setStateHandler:setMixPriceSorted },
+        { key:'max_price', 'title': 'Max Price','sort':true,'onChangeHandler':sortFieldHandler, checked:maxPriceSorted,setStateHandler:setMaxPriceSorted },
+        { key:'nbt_tax_percentage', 'title': 'NBT%','sort':false,'onChangeHandler':sortFieldHandler, checked:false,setStateHandler:null },
+        { key:'vat_tax_percentage', 'title': 'VAT%','sort':false,'onChangeHandler':sortFieldHandler, checked:false,setStateHandler:null },
+        { key:'unit_price_with_tax', 'title': 'Unit Price With Taxes','sort':true,'onChangeHandler':sortFieldHandler, checked:unitPriceWithTexsSorted,setStateHandler:setUnitPriceWithTexsSorted },
+        { key:'stock_qty', 'title': 'In Stock','sort':true,'onChangeHandler':sortFieldHandler, checked:inStockSorted,setStateHandler:setInStockSorted },
+    ]);
 
     return (
 
         <div>
+
             <div className="col-md-2">
                 <div className="form-group row">
                     <label className="col-sm-4 col-form-label">Rows</label>
@@ -209,13 +225,13 @@ const ItemCodeTable = (props) => {
                             return (
                                 <th key={column.key}>
                                     {column.sort?(
-                                        <input defaultChecked={column.defaultChecked} type="checkbox" onClick={ (e) => { sortFieldHandler(column.key,e,column.setStateHandler); }}/>
+                                        <input defaultChecked={column.checked} type="checkbox" onClick={ (e) => { sortFieldHandler(column.key,e,column.setStateHandler); }}/>
                                     ):''}
                                     <span> {column.title} {column.sort?(<i className="fa fa-sort"></i>):''}</span>
                                 </th>
                             );
                         })}
-                        <th> view</th>
+                        <th > view</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -232,19 +248,28 @@ const ItemCodeTable = (props) => {
                                             <td key={column.key}>{data[column.key]}</td>
                                         ) })}
                                     <td>
-                                        <a href={ show_url+data.id } ><i className="fa fa-paper-plane"></i></a>
+                                        <a href={ pageData.base_url+'/ims/item/'+data.id } ><i className="fa fa-paper-plane"></i></a>
                                     </td>
                                 </tr>
                             )
                         })
                     ) }
+
                 </tbody>
             </table>
 
             { !loading && tableData.length>0? (<Paginator pagination={pagination} pageChanged={ (page)=> setCurrentPage(page) }/>):null }
+
+            <BrandModal props={modalShow} />
 
         </div>
     );
 };
 
 export default ItemCodeTable;
+
+if (document.getElementById('itemCodeList')) {
+    ReactDOM.render(
+            <ItemCodeTable props={ window.pageDate }/>,
+        document.getElementById('itemCodeList'));
+}
