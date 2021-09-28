@@ -1,13 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import ReactDOM from 'react-dom';
+import  React, {useEffect, useState} from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Paginator from "./common/paginator";
-import BrandModal from "./common/modals/brand-modal";
 
-const ItemCodeTable = (props) => {
+const SupplierTable = (props) => {
 
     const pageData = props.props;
-    const [tableData, setTableData] = useState([{id:1}]);
+    const show_url = pageData.base_url+'/supplier/';
+    const [tableData, setTableData] = useState([]);
     const [loading, setLoading] = useState(true);
 
     const [sortFields, setSortFields] = useState('');
@@ -19,51 +18,25 @@ const ItemCodeTable = (props) => {
     const [pagination, setPagination] = useState({});
 
     //set column states
-    const [itemNameSorted, setItemNameSorted] = useState(false);
-    const [brandSorted, setBrandSorted] = useState(false);
-    const [categorySorted,setCategorySorted] = useState(false);
-    const [colorSorted,setColorSorted] = useState(false);
-    const [sizeSorted,setSizeSorted] = useState(false);
-    const [unitCostSorted,setUnitCostSorted] = useState(false);
-    const [sellingPriceSorted,setSellingPriceSorted] = useState(false);
-    const [marketPriceSorted,setMarketPriceSorted] = useState(false);
-    const [mixPriceSorted,setMixPriceSorted] = useState(false);
-    const [maxPriceSorted,setMaxPriceSorted] = useState(false);
-    const [unitPriceWithTexsSorted,setUnitPriceWithTexsSorted] = useState(false);
-    const [inStockSorted,setInStockSorted] = useState(false);
-
-    const [modalShow, setModalShow] = React.useState(false);
+    const [supplierNameSorted, setSupplierNameSorted] = useState(false);
+    const [supplierAddressSorted, setSupplierAddressSorted] = useState(false);
+    const [supplierContactSorted, setSupplierContactSorted] = useState(false);
+    const [supplierEmailSorted, setSupplierEmailSorted] = useState(false);
 
     const buildSortQueryPram = () => {
         let str = [];
-        if(itemNameSorted)
-            str.push(['item_name']);
-        if(brandSorted)
-            str.push(['brand_name']);
-        if(categorySorted)
-            str.push(['category_name']);
-        if(colorSorted)
-            str.push(['color_name']);
-        if(sizeSorted)
-            str.push(['size_name']);
-        if(unitCostSorted)
-            str.push(['unit_cost']);
-        if(sellingPriceSorted)
-            str.push(['selling_price']);
-        if(maxPriceSorted)
-            str.push(['max_price']);
-        if(mixPriceSorted)
-            str.push(['min_price']);
-        if(unitPriceWithTexsSorted)
-            str.push(['unit_price_with_tax']);
-        if(inStockSorted)
-            str.push(['stock_qty']);
+        if(supplierNameSorted)
+            str.push(['name']);
+        if(supplierAddressSorted)
+            str.push(['address']);
+        if(supplierContactSorted)
+            str.push(['contact']);
+        if(supplierEmailSorted)
+            str.push(['email']);
 
         str = str.join(",");
         return str;
     }
-
-
 
     const fetchTableData = async () => {
         const  params = {
@@ -74,8 +47,9 @@ const ItemCodeTable = (props) => {
             search_text:searchText,
             api_token: pageData.api_token
         };
-        await axios.get(pageData.api_url+'/item-code',{params}).then( data => {
-            if(data.data.data) {
+
+        await axios.get(pageData.api_url+'/supplier',{params}).then( data => {
+            if(data.data.data){
                 setTableData(data.data.data);
                 setPagination(data.data.meta);
             }
@@ -91,20 +65,7 @@ const ItemCodeTable = (props) => {
 
     useEffect(()=> {
         setSortFields(buildSortQueryPram());
-    }, [
-        itemNameSorted,
-        brandSorted,
-        categorySorted,
-        colorSorted,
-        sizeSorted,
-        unitCostSorted,
-        sellingPriceSorted,
-        maxPriceSorted,
-        mixPriceSorted,
-        maxPriceSorted,
-        unitPriceWithTexsSorted,
-        inStockSorted,
-        maxPriceSorted]);
+    }, [ supplierNameSorted, supplierAddressSorted, supplierContactSorted, supplierEmailSorted]);
 
 
 
@@ -113,45 +74,17 @@ const ItemCodeTable = (props) => {
         const isChecked = e.target.checked;
 
         switch (field) {
-            case 'item_name':
+            case 'name':
                 setStateHandler(isChecked);
                 break;
-            case 'brand_name':
+            case 'address':
                 setStateHandler(isChecked);
                 break;
-            case 'category_name':
+            case 'contact':
                 setStateHandler(isChecked);
                 break;
-            case 'color_name':
+            case 'email':
                 setStateHandler(isChecked);
-                break;
-            case 'size_name':
-                setStateHandler(isChecked);
-                break;
-            case 'unit_cost':
-                setStateHandler(isChecked);
-                break;
-            case 'selling_price':
-                setStateHandler(isChecked);
-                break;
-            case 'market_price':
-                setStateHandler(isChecked);
-                break;
-            case 'min_price':
-                setStateHandler(isChecked);
-                break;
-            case 'max_price':
-                setStateHandler(isChecked);
-                break;
-            case 'unit_price_with_tax':
-                setStateHandler(isChecked);
-                break;
-            case 'stock_qty':
-                setStateHandler(isChecked);
-                break;
-
-            default:
-
                 break;
         }
     }
@@ -166,27 +99,18 @@ const ItemCodeTable = (props) => {
         setCurrentPage(1);
     }
 
-    const [columns, setColumns] = useState([
-        { key:'item_name', 'title': 'Name' ,'sort':true,'onChangeHandler':sortFieldHandler, checked:itemNameSorted,setStateHandler:setItemNameSorted},
-        { key:'brand_name', 'title': 'Brand','sort':true, 'onChangeHandler':sortFieldHandler, checked:brandSorted,setStateHandler:setBrandSorted},
-        { key:'category_name', 'title': 'Category','sort':true, 'onChangeHandler':sortFieldHandler, checked:categorySorted,setStateHandler:setCategorySorted },
-        { key:'color_name', 'title': 'Color','sort':true, 'onChangeHandler':sortFieldHandler, checked:colorSorted,setStateHandler:setColorSorted },
-        { key:'size_name', 'title': 'Size','sort':true,'onChangeHandler':sortFieldHandler, checked:sizeSorted,setStateHandler:setSizeSorted },
-        { key:'unit_cost', 'title': 'Unit Cost','sort':true,'onChangeHandler':sortFieldHandler, checked:unitCostSorted,setStateHandler:setUnitCostSorted },
-        { key:'selling_price', 'title': 'Selling Price','sort':true,'onChangeHandler':sortFieldHandler, checked:sellingPriceSorted,setStateHandler:setSellingPriceSorted },
-        { key:'market_price', 'title': 'Market Price','sort':true,'onChangeHandler':sortFieldHandler, checked:marketPriceSorted,setStateHandler:setMarketPriceSorted },
-        { key:'min_price', 'title': 'Min Price','sort':true,'onChangeHandler':sortFieldHandler, checked:mixPriceSorted,setStateHandler:setMixPriceSorted },
-        { key:'max_price', 'title': 'Max Price','sort':true,'onChangeHandler':sortFieldHandler, checked:maxPriceSorted,setStateHandler:setMaxPriceSorted },
-        { key:'nbt_tax_percentage', 'title': 'NBT%','sort':false,'onChangeHandler':sortFieldHandler, checked:false,setStateHandler:null },
-        { key:'vat_tax_percentage', 'title': 'VAT%','sort':false,'onChangeHandler':sortFieldHandler, checked:false,setStateHandler:null },
-        { key:'unit_price_with_tax', 'title': 'Unit Price With Taxes','sort':true,'onChangeHandler':sortFieldHandler, checked:unitPriceWithTexsSorted,setStateHandler:setUnitPriceWithTexsSorted },
-        { key:'stock_qty', 'title': 'In Stock','sort':true,'onChangeHandler':sortFieldHandler, checked:inStockSorted,setStateHandler:setInStockSorted },
-    ]);
+    const columns = [
+        { key:'name', 'title': 'Name' ,'sort':true,'onChangeHandler':sortFieldHandler, defaultChecked:supplierNameSorted,setStateHandler:setSupplierNameSorted},
+        { key:'address', 'title': 'Address' ,'sort':true,'onChangeHandler':sortFieldHandler, defaultChecked:supplierAddressSorted,setStateHandler:setSupplierAddressSorted},
+        { key:'contact', 'title': 'Contact' ,'sort':true,'onChangeHandler':sortFieldHandler, defaultChecked:supplierContactSorted,setStateHandler:setSupplierContactSorted},
+        { key:'email', 'title': 'Email' ,'sort':true,'onChangeHandler':sortFieldHandler, defaultChecked:supplierEmailSorted,setStateHandler:setSupplierEmailSorted },
+        { key:'web_url', 'title': 'Web Site' },
+        { key:'view', 'title': 'View','sort':false, 'url':{ 'href':show_url } }
+    ];
 
     return (
 
         <div>
-
             <div className="col-md-2">
                 <div className="form-group row">
                     <label className="col-sm-4 col-form-label">Rows</label>
@@ -220,56 +144,53 @@ const ItemCodeTable = (props) => {
 
             <table id="table-to-xls" className="table table-responsive table-bordered table-striped">
                 <thead>
-                    <tr>
-                        {columns.map((column,index)=>{
-                            return (
-                                <th key={column.key}>
-                                    {column.sort?(
-                                        <input defaultChecked={column.checked} type="checkbox" onClick={ (e) => { sortFieldHandler(column.key,e,column.setStateHandler); }}/>
-                                    ):''}
-                                    <span> {column.title} {column.sort?(<i className="fa fa-sort"></i>):''}</span>
-                                </th>
-                            );
-                        })}
-                        <th > view</th>
-                    </tr>
+                <tr>
+                    {columns.map((column,index)=>{
+                        return (
+                            <th key={column.key}>
+                                {column.sort?(
+                                    <input defaultChecked={column.defaultChecked} type="checkbox" onClick={ (e) => { sortFieldHandler(column.key,e,column.setStateHandler); }}/>
+                                ):''}
+                                <span> {column.title} {column.sort?(<i className="fa fa-sort"></i>):''}</span>
+                            </th>
+                        );
+                    })}
+                </tr>
                 </thead>
                 <tbody>
-                    { loading? (
-                        <tr>
-                            <td colSpan={16} className="text-center">Loading data.....</td>
-                        </tr>
-                    ) : (
-                        tableData.map((data, index) => {
-                            return (
-                                <tr key={index}>
-                                    {columns.map((column,index)=>{
+                { loading? (
+                    <tr>
+                        <td colSpan={16} className="text-center">Loading data.....</td>
+                    </tr>
+                ) : (
+                    tableData.map((data, index) => {
+                        return (
+                            <tr key={index}>
+                                {columns.map((column,index)=> {
+                                    if (!column.url)
+                                    {
                                         return (
-                                            <td key={column.key}>{data[column.key]}</td>
-                                        ) })}
-                                    <td>
-                                        <a href={ pageData.base_url+'/ims/item/'+data.id } ><i className="fa fa-paper-plane"></i></a>
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    ) }
+                                            <td key={column.key}>{ data[column.key] }</td>
+                                        )
+                                    }
+                                    else {
+                                        return (
+                                            <td key={column.key}>
+                                                <a href={ column.url.href+data.id } ><i className="fa fa-paper-plane"></i></a>
+                                            </td>
+                                        )
+                                    }
+                                })}
 
+                            </tr>
+                        )
+                    })
+                ) }
                 </tbody>
             </table>
-
             { !loading && tableData.length>0? (<Paginator pagination={pagination} pageChanged={ (page)=> setCurrentPage(page) }/>):null }
-
-            <BrandModal props={modalShow} />
-
         </div>
     );
 };
 
-export default ItemCodeTable;
-
-if (document.getElementById('itemCodeList')) {
-    ReactDOM.render(
-            <ItemCodeTable props={ window.pageDate }/>,
-        document.getElementById('itemCodeList'));
-}
+export default SupplierTable;

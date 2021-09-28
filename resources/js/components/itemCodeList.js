@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import  React, {useEffect, useState} from 'react';
 import ReactHTMLTableToExcel from 'react-html-table-to-excel';
 import Paginator from "./common/paginator";
 
@@ -166,6 +166,7 @@ const ItemCodeTable = (props) => {
         { key:'vat_tax_percentage', 'title': 'VAT%','sort':false,'onChangeHandler':sortFieldHandler, defaultChecked:false,setStateHandler:null },
         { key:'unit_price_with_tax', 'title': 'Unit Price With Taxes','sort':true,'onChangeHandler':sortFieldHandler, defaultChecked:unitPriceWithTexsSorted,setStateHandler:setUnitPriceWithTexsSorted },
         { key:'stock_qty', 'title': 'In Stock','sort':true,'onChangeHandler':sortFieldHandler, defaultChecked:inStockSorted,setStateHandler:setInStockSorted },
+        { key:'view', 'title': 'View','sort':false, 'url':{ 'href':show_url } }
     ];
 
     return (
@@ -215,7 +216,6 @@ const ItemCodeTable = (props) => {
                                 </th>
                             );
                         })}
-                        <th> view</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -227,13 +227,22 @@ const ItemCodeTable = (props) => {
                         tableData.map((data, index) => {
                             return (
                                 <tr key={index}>
-                                    {columns.map((column,index)=>{
-                                        return (
-                                            <td key={column.key}>{data[column.key]}</td>
-                                        ) })}
-                                    <td>
-                                        <a href={ show_url+data.id } ><i className="fa fa-paper-plane"></i></a>
-                                    </td>
+                                    {columns.map((column,index)=> {
+                                        if (!column.url)
+                                        {
+                                            return (
+                                                <td key={column.key}>{ data[column.key] }</td>
+                                            )
+                                        }
+                                        else {
+                                            return (
+                                                <td key={column.key}>
+                                                    <a href={ column.url.href+data.id } ><i className="fa fa-paper-plane"></i></a>
+                                                </td>
+                                            )
+                                        }
+                                    })}
+
                                 </tr>
                             )
                         })

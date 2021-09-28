@@ -25,52 +25,17 @@
 @endsection
 <!-- /main header section -->
 
-<!-- main section -->
 @section('main-content')
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box">
-            <!-- /.box-header -->
-            <div style="overflow: auto" class="box-body">
-                <table id="table" class="table table-responsive table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Contact No</th>
-                            <th>Web URL</th>
-                            <th>Address</th>
-                            <th>View</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($Suppliers as $supplier)
-                        <tr>
-                            <td>{!! $supplier->name !!}</td>
-                            <td>{!! $supplier->email !!}</td>
-                            <td>{!! $supplier->contact !!}</td>
-                            <td>{!! $supplier->web_url !!}</td>
-                            <td>{!! $supplier->address !!}</td>
-                            <td>
-                                <a href="{!! url('/supplier/') !!}/{!! $supplier->id !!}"><i
-                                        class="fa fa-paper-plane"></i></a>
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div id="supplierTable" style="overflow: auto" class="box-body">
+                </div>
             </div>
-            <!-- /.box-body -->
         </div>
-        <!-- /.box -->
     </div>
-    <!-- /.col -->
-</div>
-<!-- /.row -->
-
 @endsection
-<!-- /main section -->
 
 @section('js')
-@include('layouts.components.dataTableJs.index')
+    <script src="{{ mix('js/supplier.js') }}"></script>
 @endsection

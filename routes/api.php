@@ -1,6 +1,7 @@
 <?php
 
 use App\Services\ItemCodeService;
+use App\Services\SupplierService;
 use Illuminate\Http\Request;
 
 /*
@@ -88,6 +89,10 @@ Route::group(['middleware' => ['auth:api']], function () {
 
     Route::get('/item-code', function (Request $request) {
         return (new ItemCodeService())->get($request);
+    });
+
+    Route::get('/supplier', function (Request $request) {
+        return (new SupplierService())->get($request);
     });
 
 });
