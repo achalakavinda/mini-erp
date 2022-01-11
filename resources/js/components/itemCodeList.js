@@ -18,7 +18,6 @@ const ItemCodeTable = (props) => {
     const [pagination, setPagination] = useState({});
 
     //set column states
-    const [itemIdSorted, setItemIdSorted] = useState(false);
     const [itemNameSorted, setItemNameSorted] = useState(false);
     const [brandSorted, setBrandSorted] = useState(false);
     const [categorySorted,setCategorySorted] = useState(false);
@@ -62,6 +61,7 @@ const ItemCodeTable = (props) => {
     }
 
     const fetchTableData = async () => {
+        setLoading(true);
         const  params = {
             sort_field: sortFields,
             sort_order: sortOrder,
@@ -76,8 +76,7 @@ const ItemCodeTable = (props) => {
                 setTableData(data.data.data);
                 setPagination(data.data.meta);
             }
-
-            setLoading(false)
+            setLoading(false);
         });
     };
 
@@ -136,7 +135,6 @@ const ItemCodeTable = (props) => {
                 break;
 
             default:
-                setItemIdSorted(true);
                 break;
         }
     }

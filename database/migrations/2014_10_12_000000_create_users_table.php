@@ -15,7 +15,9 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
+
             $table->increments('id');
+
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
 
@@ -35,6 +37,7 @@ class CreateUsersTable extends Migration
             $table->foreign('updated_by')
                 ->references('id')
                 ->on('users');
+
         });
 
         Schema::table('users', function ($table) {

@@ -51,16 +51,6 @@ class CreateCustomersTable extends Migration
             $table->unsignedInteger('updated_by')->nullable();
 
 
-            $table->string('userdef1')->nullable();
-            $table->string('userdef2')->nullable();
-            $table->string('userdef3')->nullable();
-            $table->string('userdef4')->nullable();
-            $table->string('userdef5')->nullable();
-            $table->string('userdef6')->nullable();
-            $table->string('userdef7')->nullable();
-            $table->string('userdef8')->nullable();
-            $table->string('userdef9')->nullable();
-
             $table->foreign('secretary_id')
                 ->references('id')
                 ->on('customer_secretaries');
