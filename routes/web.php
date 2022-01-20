@@ -11,6 +11,19 @@
 |
 */
 
+use App\Http\Controllers\AttendanceController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DesignationController;
+use App\Http\Controllers\GeneralLedgerController;
+use App\Http\Controllers\HolidayController;
+use App\Http\Controllers\JobTypeController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\StaffController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\WorkSheetController;
+
 Route::get('/', function () {
 	return redirect('/dashboard');
 });
@@ -19,30 +32,30 @@ Auth::routes();
 
 Route::group(['middleware' => ['auth']], function () {
 
-    Route::get('/dashboard','DashboardController@index');
+    Route::get('/dashboard', [DashboardController::class, 'index']);
 
-    Route::get('/staff/profile/{id}','StaffController@profile');
-    Route::get('/staff/work-sheet', 'PageController@workSheet');
-    Route::post('/staff/work-sheet/store', 'PageController@workSheetStore');
-    Route::patch('staff/reset-password/{id}', 'StaffController@resetPassword');
-    Route::resource('staff', 'StaffController');
-    Route::post('work-sheet/delete','WorkSheetController@delete');
-    Route::resource('work-sheet', 'WorkSheetController');
+    Route::get('staff/profile/{id}', [StaffController::class, 'profile']);
+    Route::get('staff/work-sheet', [PageController::class, 'workSheet']);
+    Route::post('staff/work-sheet/store', [PageController::class, 'workSheetStore']);
+    Route::patch('staff/reset-password/{id}', [StaffController::class, 'resetPassword']);
+    Route::resource('staff',StaffController::class);
 
-    Route::resource('holidays', 'HolidayController');
+    Route::post('work-sheet/delete',[WorkSheetController::class,'delete']);
+    Route::resource('work-sheet',WorkSheetController::class);
 
-    Route::post('send-missing-attendance-email','AttendanceController@sendEmailIndex');
-    Route::post('send-email-to-missing-attendance','AttendanceController@sendEmailToMissingAttendance');
+    Route::resource('holidays', HolidayController::class);
+    Route::post('send-missing-attendance-email',[AttendanceController::class,'sendEmailIndex']);
+    Route::post('send-email-to-missing-attendance',[AttendanceController::class,'sendEmailToMissingAttendance']);
 
-    Route::resource('attendance', 'AttendanceController');
 
-    Route::resource('customer', 'CustomerController');
-    Route::resource('supplier','SupplierController');
-    Route::resource('general-ledger','GeneralLedgerController');
-    Route::resource('job-type', 'JobTypeController');
-    Route::resource('designation','DesignationController');
+    Route::resource('attendance', AttendanceController::class);
+    Route::resource('customer', CustomerController::class);
+    Route::resource('supplier', SupplierController::class);
+    Route::resource('general-ledger', GeneralLedgerController::class);
+    Route::resource('job-type', JobTypeController::class);
+    Route::resource('designation', DesignationController::class);
+    Route::resource('project', ProjectController::class);
 
-    Route::resource('project','ProjectController');
 
     Route::prefix('project')->group(function () {
         Route::get('/{id}/actual-cost','ProjectController@actualCost');
