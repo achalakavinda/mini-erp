@@ -7,7 +7,7 @@ use Spatie\Permission\Models\Role;
 class RolesAndPermissionsSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeders.
      * Always add new seed on bottom
      * @return void
      */
@@ -135,7 +135,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $role_admin->givePermissionTo($permission);
 
 
-        //Please Add New seeds always from end
+        //Please Add New seeders always from end
         //P2 New Assigned Permission Types Seeder
         $permission = Permission::create(['name' => config('constant.Permission_Project_Assigned')]);
         $role_admin->givePermissionTo($permission);

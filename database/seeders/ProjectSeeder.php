@@ -2,15 +2,14 @@
 
 use Illuminate\Database\Seeder;
 
-class JobTypeTableSeeder extends Seeder
+class ProjectSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeders.
      *
      * @return void
      */
     public function run()
     {
-
     }
 }

@@ -5,13 +5,13 @@ use Illuminate\Database\Seeder;
 class Important extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeders.
      *
      * @return void
      */
     public function run()
     {
-        //Customer important seeds
+        //Customer important seeders
         DB::table('customer_secretaries')->insert([
             [
                 'id'=>1,
@@ -182,7 +182,7 @@ class Important extends Seeder
 
         ]);
 
-        //Designation important seeds
+        //Designation important seeders
         DB::table('designations')->insert([
             [
                 'id'=>1,
@@ -223,7 +223,7 @@ class Important extends Seeder
 
         ]);
 
-        //Job Type Important seeds
+        //Job Type Important seeders
         DB::table('job_types')->insert([
             [
                 'JobType'=>"Other",
@@ -257,7 +257,7 @@ class Important extends Seeder
                 ],
             ]);
 
-        //Project cost important seeds
+        //Project cost important seeders
         DB::table('project_cost_types')->insert([
             [
                 'id'=>1,
@@ -282,7 +282,7 @@ class Important extends Seeder
             ]
         ]);
 
-        //staff important seeds
+        //staff important seeders
         DB::table('ca_trainings')->insert([
             [
                 'name' => 'NULL'

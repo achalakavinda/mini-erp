@@ -2,10 +2,10 @@
 
 use Illuminate\Database\Seeder;
 
-class CompanyDetailSeeder extends Seeder
+class ProjectCostTypeTableSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Run the database seeders.
      *
      * @return void
      */
