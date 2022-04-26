@@ -129,7 +129,6 @@ class GrnController extends Controller
 
         $Total = 0;
         try {
-
             foreach ($Grn->items as $item)
             {
                 $Model = ItemCode::find($item->item_code_id);
@@ -268,6 +267,6 @@ class GrnController extends Controller
     public function print($id)
     {
         $Grn = Grn::findOrFail($id);
-        return view('admin.ims.grn.print',compact('Grn'));
+        return view('admin.ims.grn.print.default',compact('Grn'));
     }
 }

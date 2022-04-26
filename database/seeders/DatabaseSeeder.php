@@ -17,17 +17,17 @@ class DatabaseSeeder extends Seeder
             Important::class,
             RolesAndPermissionsSeeder::class,
             CompanyDetailSeeder::class,
-            RequisitionStatusSeeder::class
+            RequisitionStatusSeeder::class,
         ]);
 
         if( ENV('COMPANY_KEY') === "NANDA" ){
             $this->call([
                 nandaSeeder::class
             ]);
-        }else {
+        }else if( ENV('COMPANY_KEY') === "DEV" ){
             $this->call([
                 TestDataSeeder::class,
-                InventorySeeder::class
+                InventorySeeder::class,
             ]);
         }
 

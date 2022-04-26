@@ -13,20 +13,22 @@
         "@babel/preset-react": "^7.0.0",
         "axios": "^0.18",
         "babel-preset-react": "^6.24.1",
-        "bootstrap": "^5.1.1",
+        "bootstrap": "^4.0.0",
         "cross-env": "^5.1",
-        "jquery": "^3.6.0",
+        "jquery": "^3.2",
         "laravel-mix": "^2.0",
-        "lodash": "^4.17.21",
+        "lodash": "^4.17.5",
         "popper.js": "^1.12",
         "react": "^16.2.0",
         "react-dom": "^16.2.0",
-        "resolve-url-loader": "^2.3.1",
-        "sass": "^1.42.1",
-        "sass-loader": "^7.3.1"
+        "sass": "^1.15.2",
+        "sass-loader": "^8.0.0"
     },
     "dependencies": {
-        "react-bootstrap": "^2.0.0-rc.0",
-        "react-html-table-to-excel": "^2.0.0"
+        "@angular/animations": "^6.1.7",
+        "@angular/cdk": "^6.4.7",
+        "@angular/material": "^6.4.7",
+        "react-beautiful-dnd": "^13.0.0",
+        "react-icons": "^4.1.0"
     }
 }
