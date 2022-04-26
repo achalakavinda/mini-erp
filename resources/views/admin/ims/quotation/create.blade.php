@@ -196,16 +196,16 @@
                                 '                            <input  style="width: 100%" type="text" name="row['+count+'][remark]">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input onkeyup="calTol()" id="qty'+count+'"  type="number" name="row['+count+'][qty]" placeholder="In Stock '+data.qty+' items" style="width: 100%">\n' +
+                                '                            <input onkeyup="calTol('+(count+1)+')" id="qty'+count+'"  type="number" name="row['+count+'][qty]" placeholder="In Stock '+data.qty+' items" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <input onkeyup="calTol()" id="price'+count+'"  type="number"  name="row['+count+'][unit]" value="'+data.item.unit_price_with_tax+'" style="width: 100%">\n' +
+                                '                            <input onkeyup="calTol('+(count+1)+')" id="price'+count+'"  type="number"  name="row['+count+'][unit]" value="'+data.item.unit_price_with_tax+'" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
                                 '                            <input id="tol'+count+'"  type="number" readonly name="row['+count+'][tol]" style="width: 100%">\n' +
                                 '                        </td>\n' +
                                 '                        <td>\n' +
-                                '                            <a style="cursor: pointer" type="button" onclick="rowRemove(\'.tr_'+count+'\'); calTol()"><i class="fa fa-remove"></i></a>\n' +
+                                '                            <a style="cursor: pointer" type="button" onclick="rowRemove(\'.tr_'+count+'\')"><i class="fa fa-remove"></i></a>\n' +
                                 '                        </td>\n' +
                                 '                    <tr/>');
 
@@ -229,14 +229,11 @@
             $(value).remove();
         }
 
-        function calTol() {
+        function calTol(count) {
             let total = 0;
             let discount = 0;
             let subtotal = 0;
             for(let i=0; i<count; i++){
-                if(!$('#qty'+i).val()){
-                    continue;
-                }
                 $('#tol'+i).val($("#price"+i).val() * $("#qty"+i).val());
                 subtotal = subtotal+parseFloat($('#tol'+i).val());
             }
