@@ -24,7 +24,7 @@ class DatabaseSeeder extends Seeder
             $this->call([
                 nandaSeeder::class
             ]);
-        }else {
+        }else if( ENV('COMPANY_KEY') === "DEFAULT" ) {
             $this->call([
                 TestDataSeeder::class,
                 InventorySeeder::class
