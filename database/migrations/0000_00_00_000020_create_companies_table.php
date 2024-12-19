@@ -16,35 +16,21 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code')->unique();
+            $table->string('key')->unique();
+            $table->string('database')->unique();
+            $table->string('name');
+            $table->string('email')->unique();
             $table->timestamps();
-        });
-
-        Schema::create('company_detail_types', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('code')->unique();
-            $table->timestamps();
-        });
-
-        Schema::create('company_details', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedInteger('company_id');
-            $table->string('company_detail_code');
-            $table->text('value')->nullable();
-            $table->timestamps();
-
-            $table->foreign('company_id')
-                ->references('id')
-                ->on('companies');
-
-            $table->foreign('company_detail_code')
-                ->references('code')
-                ->on('company_detail_types');
         });
 
         DB::table('companies')->insert([
             [
                 'id'=>1,
-                'code' => 'Master-Company',
+                'code' => 'MC',
+                'name' => 'Master Company',
+                'key' => '100100',
+                'database' => 'db100100',
+                'email'=>'achalakavida25r@gmail.com',
                 'created_at' =>\Carbon\Carbon::now(),
                 'updated_at' =>\Carbon\Carbon::now()
             ]
@@ -58,8 +44,6 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_details');
-        Schema::dropIfExists('company_detail_types');
         Schema::dropIfExists('companies');
     }
 }

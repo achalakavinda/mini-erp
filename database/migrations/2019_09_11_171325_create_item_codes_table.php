@@ -51,8 +51,6 @@ class CreateItemCodesTable extends Migration
 
             $table->boolean('active')->default(1);
 
-            $table->timestamps();
-
             $table->string('userdef1')->nullable();
             $table->string('userdef2')->nullable();
             $table->string('userdef3')->nullable();
@@ -62,6 +60,10 @@ class CreateItemCodesTable extends Migration
             $table->string('userdef7')->nullable();
             $table->string('userdef8')->nullable();
             $table->string('userdef9')->nullable();
+
+            $table->timestamps();
+
+
 
             $table->foreign('brand_id')
                 ->references('id')

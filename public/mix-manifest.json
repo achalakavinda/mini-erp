@@ -1,3 +1,5 @@
 {
-    "/react-js/app.js": "/react-js/app.js"
+    "/js/app.js": "/js/app.js",
+    "/js/supplier.js": "/js/supplier.js",
+    "/js/item.js": "/js/item.js"
 }

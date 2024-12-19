@@ -63,8 +63,7 @@ class StockController extends Controller
 
         $Total = 0;
 
-        $Stock = Stock::create(
-            [
+        $Stock = Stock::create([
                 'code'=>'Batch',
                 'company_division_id'=>1,
                 'company_id'=>1

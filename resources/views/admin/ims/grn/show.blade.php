@@ -100,15 +100,8 @@
                     <div style="margin-top: 20px" class="row">
                         <div class="col-xs-12">
                             <table id="invoiceItemTable" class="table table-bordered">
-                                <colgroup>
-                                    <col style="width: 50px;">
-                                    <col style="width: 400px;">
-                                    <col style="width: 400px;">
-                                    <col style="width: 100px;">
-                                </colgroup>
                                 <thead>
                                     <tr style="text-align: center">
-                                        <th>No</th>
                                         <th>Item</th>
                                         <th>Remark</th>
                                         <th>QTY</th>
@@ -124,7 +117,6 @@
                                         $ItemCode = \App\Models\Ims\ItemCode::find($item->item_code_id);
                                         ?>
                                     <tr class="tr_{{ $count }}">
-                                        <td>{{ $count }}</td>
                                         <td>
                                             <input style="display:none" type="number" value="{{ $item->item_code_id }}"
                                                 name="row[{{ $count }}][model_id]">
@@ -163,7 +155,7 @@
                                 @if (!$Grn->posted_to_stock)
                                 <tfoot>
                                     <tr>
-                                        <th colspan="2">
+                                        <th>
                                             <!-- requisition item -->
                                             <div class="col-md-12">
                                                 <div class="form-group">
@@ -172,7 +164,8 @@
                                             </div> <!-- /requisition item -->
                                         </th>
                                         <th>
-                                            <button id="addNewItem" style="width: 100%" type="button" class="btn">Add</button>
+                                            <button id="addNewItem" style="width: 100%" type="button"
+                                                class="btn">Add</button>
                                         </th>
                                     </tr>
                                 </tfoot>
@@ -199,7 +192,8 @@
                 <button type="submit" class="btn btn-app pull-right"><i style="color: #00a157" class="fa fa-save"></i>
                     Update</button>
                 @endif
-                <a target="_blank" href="{{ url('ims/grn') }}/{{ $Grn->id }}/print" class="btn btn-app pull-right"><i  style="color: #00a157" class="fa fa-print"></i>Print</a>
+                <a target="_blank" href="{{ url('ims/grn') }}/{{ $Grn->id }}/print" class="btn btn-app pull-right"><i
+                        style="color: #00a157" class="fa fa-print"></i>Print</a>
             </div>
 
         </div>
@@ -231,7 +225,6 @@
                         if(data && data.length === 1){
                             data = data[0];
                             table.append('<tr class="tr_'+count+'">\n' +
-                                '<td></td>'+
                                 '                        <td>\n' +
                                 '                            <input style="display:none" type="number" value="'+selectModelId+'" name="row['+count+'][model_id]" >\n' +
                                 '                            <input readonly type="text" name="row['+count+'][model_name]" value="'+selectModelName+'" style="width: 100%">\n' +

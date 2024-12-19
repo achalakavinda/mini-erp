@@ -1,5 +1,7 @@
 <?php
 
+use App\Services\ItemCodeService;
+use App\Services\SupplierService;
 use Illuminate\Http\Request;
 
 /*
@@ -66,16 +68,12 @@ Route::get('/invoice-for-payment/{id}',function ($id){
     }else{
         $DUE_AMOUNT = $Model->amount;
     }
-
-
     return ['invoice'=>$Model,'payed_amount'=>$AMOUNT,'due_amount'=>$DUE_AMOUNT];
 });
 
 //api endpoint for the invoices
 Route::get('/invoice-for-customer/{id}',function ($id){
-
     $Invoice = \App\Models\Ims\Invoice::where('customer_id',$id)->get();
-
     return ['invoice'=>$Invoice];
 });
 
@@ -86,3 +84,18 @@ Route::get('/customer-for-invoices/{id}',function ($id){
 Route::get('/supplier-for-invoices/{id}',function ($id){
     return \App\Models\Supplier::find($id);
 });
+
+Route::group(['middleware' => ['auth:api']], function () {
+
+    Route::get('/item-code', function (Request $request) {
+        return (new ItemCodeService())->get($request);
+    });
+
+    Route::get('/supplier', function (Request $request) {
+        return (new SupplierService())->get($request);
+    });
+
+});
+
+
+
