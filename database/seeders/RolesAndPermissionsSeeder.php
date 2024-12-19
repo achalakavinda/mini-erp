@@ -49,7 +49,7 @@ class RolesAndPermissionsSeeder extends Seeder
         $permission = Permission::create(['name' => config('constant.Permission_Project_Setting')]);
         $role_admin->givePermissionTo($permission);
 
-        //work sheet
+        //Work Sheet
         $permission = Permission::create(['name' => config('constant.Permission_Work_Sheet')]);
         $role_admin->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Work_Sheet_Update')]);
