@@ -15,6 +15,7 @@ class CreateLeadTypesTable extends Migration
     {
         Schema::create('lead_types', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->timestamps();
         });
     }
