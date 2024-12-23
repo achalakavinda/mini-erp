@@ -81,6 +81,11 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get('view-job-type-wise-work-sheet-report','Reports\ReportController@ViewJobTypeWiseWorkSheetReport');
     });
 
+
+        Route::resource('/blog','Admin\BlogController');
+        Route::post('/blog/{id}/ck-editor-upload-image','Admin\BlogController@ckEditorFileStore');
+        
+
     Route::prefix('ims')->group(function ()
     {
         Route::get('/','Ims\ImsController@index');

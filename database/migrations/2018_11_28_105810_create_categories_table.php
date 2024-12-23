@@ -13,9 +13,10 @@ class CreateCategoriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id('id');
-            $table->foreignId('parent_id')->nullable();
+
+    Schema::create('categories', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('parent_id')->nullable();
             $table->integer('level')->default(0);
             $table->string('name');
             $table->string('description')->nullable();
@@ -23,7 +24,14 @@ class CreateCategoriesTable extends Migration
             $table->unsignedInteger('company_id');
             $table->unsignedInteger('company_division_id');
             $table->boolean('active')->default(true);
+            $table->string('slug')->unique();
+            $table->string('url')->nullable();
+            $table->boolean('access_to_blog')->default(1);
+            $table->boolean('access_to_place')->default(1);
+            $table->longText('summery')->nullable();
             $table->timestamps();
+
+            
 
             $table->foreign('parent_id')
                 ->references('id')
@@ -38,6 +46,7 @@ class CreateCategoriesTable extends Migration
                 ->references('id')
                 ->on('company_divisions');
         });
+
     }
 
     /**
