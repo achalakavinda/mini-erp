@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::resource('attendance', 'AttendanceController');
     Route::resource('customer', 'CustomerController');
+    Route::resource('lead', 'LeadController');
     Route::resource('supplier', 'SupplierController');
     Route::resource('general-ledger', 'GeneralLedgerController');
     Route::resource('job-type', 'JobTypeController');
