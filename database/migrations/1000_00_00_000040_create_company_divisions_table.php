@@ -31,7 +31,6 @@ class CreateCompanyDivisionsTable extends Migration
                 'updated_at' =>\Carbon\Carbon::now()
             ]
         ]);
-
     }
 
     /**

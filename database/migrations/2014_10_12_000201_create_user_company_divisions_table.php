@@ -40,11 +40,6 @@ class CreateUserCompanyDivisionsTable extends Migration
                 'company_id'=>1,
                 'company_division_id'=>1
 
-            ],
-            [
-                'user_id'=>2,
-                'company_id'=>1,
-                'company_division_id'=>1
             ]
         ]);
     }
