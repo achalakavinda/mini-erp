@@ -20,6 +20,14 @@ class CreateCountriesTable extends Migration
             $table->timestamps();
         });
 
+        Schema::create('country_locations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('code')->unique();
+            $table->string('name');
+            $table->foreignId('country_id')->nullable();
+            $table->timestamps();
+        });
+
         DB::table('countries')->insert([
             [
                 'id'=>1,
@@ -29,6 +37,7 @@ class CreateCountriesTable extends Migration
                 'updated_at' =>\Carbon\Carbon::now()
             ]
         ]);
+
     }
 
     /**
@@ -38,6 +47,7 @@ class CreateCountriesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('country_locations');
         Schema::dropIfExists('countries');
     }
 }

@@ -41,8 +41,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('send-email-to-missing-attendance',[AttendanceController::class,'sendEmailToMissingAttendance']);
 
     Route::resource('attendance', 'AttendanceController');
-    Route::resource('customer', 'CustomerController');
-    Route::resource('lead', 'LeadController');
+    Route::resource('customer', 'Crm\CustomerController');
+    Route::resource('lead', 'Crm\LeadController');
     Route::resource('supplier', 'SupplierController');
     Route::resource('general-ledger', 'GeneralLedgerController');
     Route::resource('job-type', 'JobTypeController');

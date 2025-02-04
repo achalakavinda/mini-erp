@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Crm;
 
+use App\Http\Controllers\Controller;
 use App\Models\CusSector;
 use App\Models\CusService;
 use App\Models\Customer;
