@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('updated_by')->nullable();
 
             $table->string('name');
-            $table->longText('img_url')->default("https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-512.png");
+            $table->string('img_url',500)->default("https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-512.png");
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

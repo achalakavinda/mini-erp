@@ -25,7 +25,7 @@ class CreateBlogsTable extends Migration
             $table->string('slug')->unique();
             $table->longText('post');
             $table->longText('summery')->nullable();
-            $table->longText('thumbnail')->default('https://www.itinerantnotes.com/blog-theme/images/logo.png');
+            $table->string('thumbnail',500)->default('https://www.itinerantnotes.com/blog-theme/images/logo.png');
             $table->string('parent_blog_id')->nullable();//blog tag feature
 
             $table->enum('status',['draft','publish']);
