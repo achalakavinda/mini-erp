@@ -10,7 +10,6 @@
         "barryvdh/laravel-ide-helper": "^2.5",
         "binarytorch/larecipe": "^2.4",
         "fideloper/proxy": "^4.0",
-        "kesmenenver/servicelayer": "dev-master",
         "laravel/framework": "^9.0",
         "laravel/helpers": "^1.1",
         "laravel/legacy-factories": "^1.3",

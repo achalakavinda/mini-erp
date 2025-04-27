@@ -15,6 +15,19 @@
                 <li><a href="{{ url('/dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             @endcan
 
+            
+            @can(config('constant.Permission_Customer'))
+            <li class="treeview">
+                <a href="{{ url('/lead') }}"><i class="fa fa-users"></i> <span>Lead</span>
+                    <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{ url('/lead') }}"><i class="fa fa-table"></i> Registry</a></li>
+                    <li><a href="{{ url('/lead/create') }}"><i class="fa fa-plus-square"></i> New </a></li>
+                </ul>
+            </li>
+            @endcan
+
             @can(config('constant.Permission_Customer'))
                 <li class="treeview">
                     <a href="{{ url('/customer') }}"><i class="fa fa-users"></i> <span>Customer</span>
@@ -26,6 +39,7 @@
                     </ul>
                 </li>
             @endcan
+
 
             <li class="treeview">
                 <a href="{{ url('/supplier') }}"><i class="fa fa-cubes"></i> <span>Supplier</span>

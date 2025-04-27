@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCompanyDivisionsTable extends Migration
+class CreateCountriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,20 +13,26 @@ class CreateCompanyDivisionsTable extends Migration
      */
     public function up()
     {
-
-        Schema::create('company_divisions', function (Blueprint $table) {
+        Schema::create('countries', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code')->unique();
-            $table->unsignedInteger('company_id');
+            $table->string('name');
             $table->timestamps();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
         });
 
-        DB::table('company_divisions')->insert([
+        Schema::create('country_locations', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('code')->unique();
+            $table->string('name');
+            $table->foreignId('country_id')->nullable();
+            $table->timestamps();
+        });
+
+        DB::table('countries')->insert([
             [
                 'id'=>1,
-                'code' => 'MASTER-COMPANY-DIVISION-1',
-                'company_id'=>1,
+                'code' => 'Sl',
+                'name' => 'Sri Lanka',
                 'created_at' =>\Carbon\Carbon::now(),
                 'updated_at' =>\Carbon\Carbon::now()
             ]
@@ -41,6 +47,7 @@ class CreateCompanyDivisionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_divisions');
+        Schema::dropIfExists('country_locations');
+        Schema::dropIfExists('countries');
     }
 }

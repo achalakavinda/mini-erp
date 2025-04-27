@@ -361,11 +361,6 @@ class RolesAndPermissionsSeeder extends Seeder
         $permission = Permission::create(['name' => config('constant.Permission_Payment_Update') ]);
         $role_admin->givePermissionTo($permission);
 
-
-
-        $user = \App\Models\User::where('email','sysadmin@test.com')->first();
-        $user->assignRole( config('constant.ROLE_SUPER_ADMIN') );
-
         $user = \App\Models\User::where('email','admin@test.com')->first();
         $user->assignRole( config('constant.ROLE_SUPER_ADMIN') );
 

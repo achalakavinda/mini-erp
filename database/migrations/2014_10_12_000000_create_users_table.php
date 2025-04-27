@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('updated_by')->nullable();
 
             $table->string('name');
-            $table->string('img_url')->default("https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-512.png");
+            $table->string('img_url',500)->default("https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-512.png");
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
@@ -50,13 +50,6 @@ class CreateUsersTable extends Migration
         DB::table('users')->insert([
             [
                 'id'=>1,
-                'name' => 'Sys Admin',
-                'email' => 'sysadmin@test.com',
-                'password' => bcrypt('sysadmin123'),
-                'api_token' => Str::random(60),
-            ],
-            [
-                'id'=>2,
                 'name' => 'Admin',
                 'email' => 'admin@test.com',
                 'password' => bcrypt('admin123'),

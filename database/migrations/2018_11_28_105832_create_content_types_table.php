@@ -16,7 +16,7 @@ class CreateContentTypesTable extends Migration
         Schema::create('content_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->text('icon')->default('https://itinerant.s3-ap-southeast-1.amazonaws.com/icon/accomodation.png');
+            $table->string('icon',500)->default('https://itinerant.s3-ap-southeast-1.amazonaws.com/icon/accomodation.png');
             $table->string('code')->unique();
             $table->boolean('access_to_blog')->default(1);
             $table->boolean('access_to_place')->default(1);
