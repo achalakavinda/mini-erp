@@ -13,11 +13,21 @@ class CreateLeadTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('lead_types', function (Blueprint $table) {
+        function leadtableStructure(Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->timestamps();
-        });
+        } 
+
+        Schema::create('lead_types', function(Blueprint $table) {
+            return leadtableStructure($table);
+        } );
+
+        // if (!Schema::connection('webcore')->hasTable('leads')) {
+        //         Schema::connection('webcore')
+        //         ->create('leads', function(Blueprint $table) {
+        //     return tableStructure($table);
+        // });
     }
 
     /**

@@ -13,7 +13,8 @@ class CreateLeadsTable extends Migration
      */
     public function up()
     {
-        Schema::create('leads', function (Blueprint $table) {
+
+        function tableStructure(Blueprint $table) {
             $table->id();
             $table->string('post_url');
             $table->string('company_name');
@@ -25,7 +26,18 @@ class CreateLeadsTable extends Migration
             ->references('id')
             ->on('lead_types')
             ->onDelete('cascade');
-        });
+        } 
+
+        Schema::create('leads', function(Blueprint $table) {
+            return tableStructure($table);
+        } );
+
+    //     if (!Schema::connection('webcore')->hasTable('leads')) {
+    //             Schema::connection('webcore')
+    //             ->create('leads', function(Blueprint $table) {
+    //         return tableStructure($table);
+    //     } );
+    // }
 
     }
 
