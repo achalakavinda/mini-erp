@@ -36,6 +36,7 @@
                         <thead>
                         <tr>
                             <th>Id</th>
+                             <th>Email</th>
                             <th>Post Url</th>
                             <th>Message</th>
                             <th>Time</th>
@@ -46,6 +47,7 @@
                         @foreach($Customers as $customer)
                             <tr>
                                 <td>{!! $customer->id !!}</td>
+                                <td>{!! $customer->email !!}</td>
                                 <td>{!! $customer->post_url !!}</td>
                                 <td>{!! $customer->message !!}</td>                    
                                 <td>{!! $customer->created_at !!}</td>
