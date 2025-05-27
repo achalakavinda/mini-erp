@@ -17,6 +17,7 @@ class CreateLeadsTable extends Migration
         function tableStructure(Blueprint $table) {
             $table->id();
             $table->string('post_url');
+            $table->string('email');
             $table->string('company_name');
             $table->foreignId('lead_type_id');
             $table->string('message');
