@@ -57,7 +57,7 @@ return [
             ]
         ],
 
-        'webcore' => [
+        'webcoredigitalsolutions' => [
             'driver' => 'mysql',
             'host' => env('WEB_CORE_DB_HOST', '127.0.0.1'),
             'port' => env('WEB_CORE_DB_PORT', '3306'),
