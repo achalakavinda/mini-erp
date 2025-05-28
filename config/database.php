@@ -75,6 +75,24 @@ return [
             ]
         ],
 
+        'tsautomotive' => [
+            'driver' => 'mysql',
+            'host' => env('TS_AUTOMOTIVE_DB_HOST', '127.0.0.1'),
+            'port' => env('TS_AUTOMOTIVE_DB_PORT', '3306'),
+            'database' => env('TS_AUTOMOTIVE_DB_DATABASE', 'forge'),
+            'username' => env('TS_AUTOMOTIVE_DB_USERNAME', 'forge'),
+            'password' => env('TS_AUTOMOTIVE_DB_PASSWORD', ''),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
+            'options'   => [
+                \PDO::ATTR_EMULATE_PREPARES => true
+            ]
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),

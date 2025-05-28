@@ -15,11 +15,9 @@ class LeadController extends Controller
      */
     public function index(Request $request)
     {
-        $source = $request->get('db_source', 'default'); // fallback to default
+        $source = $request->get('tenant', 'default'); // fallback to default
 
-        $connection = $source === 'webcore' ? 'webcore' : config('database.default');
-
-        $Customers = (new Lead)->setConnection($connection)->paginate(10);
+        $Customers = (new Lead)->setConnection($source)->paginate(10);
 
         return view('admin.lead.index',compact('Customers'));
     }
