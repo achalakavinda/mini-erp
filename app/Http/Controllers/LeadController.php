@@ -17,7 +17,9 @@ class LeadController extends Controller
     {
         $source = $request->get('tenant', 'default'); // fallback to default
 
-        $Customers = (new Lead)->setConnection($source)->paginate(10);
+        $connection = $source === 'default' ? config('database.default') : $source;
+
+        $Customers = (new Lead)->setConnection($connection)->paginate(10);
 
         return view('admin.lead.index',compact('Customers'));
     }
