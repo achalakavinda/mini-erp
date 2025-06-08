@@ -19,7 +19,7 @@ class CreateCompanyDivisionsTable extends Migration
             $table->string('code')->unique();
             $table->unsignedInteger('company_id');
             $table->timestamps();
-            $table->foreign('company_id')->references('id')->on('companies')->onDelete('cascade');
+            $table->foreign('company_id')->references('id')->on('companies');
         });
 
         DB::table('company_divisions')->insert([

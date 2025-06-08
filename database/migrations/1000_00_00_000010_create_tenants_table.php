@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCompaniesTable extends Migration
+class CreateTenantsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,23 +13,18 @@ class CreateCompaniesTable extends Migration
      */
     public function up()
     {
-        Schema::create('companies', function (Blueprint $table) {
+        Schema::create('tenants', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code')->unique();
             $table->string('name');
-            $table->string('email');
-            $table->unsignedInteger('tenant_id');
             $table->timestamps();
-            $table->foreign('tenant_id')->references('id')->on('tenants');
         });
 
-        DB::table('companies')->insert([
+        DB::table('tenants')->insert([
             [
                 'id'=>1,
-                'code' => 'MC',
-                'name' => 'Master Company',
-                'email'=>'achalakavida25r@gmail.com',
-                'tenant_id'=>1,
+                'code' => 'master',
+                'name' => 'Master tenant',
                 'created_at' =>\Carbon\Carbon::now(),
                 'updated_at' =>\Carbon\Carbon::now()
             ]
@@ -43,6 +38,6 @@ class CreateCompaniesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('companies');
+        Schema::dropIfExists('tenants');
     }
 }
