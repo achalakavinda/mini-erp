@@ -195,6 +195,12 @@ return [
     'Permission_Payment_Creation'=> 'Payment-Creation',
     'Permission_Payment_Update'=> 'Payment-Update',
 
+    'Permission_General_Ledger'=> 'General_Ledger',
+    'Permission_General_Ledger_Registry'=> 'General_Ledger-Registry',
+    'Permission_General_Ledger_Show'=> 'General_Ledger-Show',
+    'Permission_General_Ledger_Creation'=> 'General_Ledger-Creation',
+    'Permission_General_Ledger_Update'=> 'General_Ledger-Update',
+
 
 
     //utility permissions

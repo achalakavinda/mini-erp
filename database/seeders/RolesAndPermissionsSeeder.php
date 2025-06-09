@@ -361,7 +361,21 @@ class RolesAndPermissionsSeeder extends Seeder
         $permission = Permission::create(['name' => config('constant.Permission_Payment_Update') ]);
         $role_admin->givePermissionTo($permission);
 
+        $permission = Permission::create(['name' => config('constant.Permission_General_Ledger') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_General_Ledger_Registry') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_General_Ledger_Show') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_General_Ledger_Creation') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_General_Ledger_Update') ]);
+        $role_admin->givePermissionTo($permission);
+
         $user = \App\Models\User::where('email','admin@test.com')->first();
+        $user->assignRole( config('constant.ROLE_SUPER_ADMIN') );
+
+        $user = \App\Models\User::where('email','achalakavinda25r@gmail.com')->first();
         $user->assignRole( config('constant.ROLE_SUPER_ADMIN') );
 
     }

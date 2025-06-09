@@ -16,6 +16,28 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\StaffController;
 use App\Http\Controllers\WorkSheetController;
+use Laravel\Socialite\Facades\Socialite;
+
+Route::get('/auth/google', function () {
+    return Socialite::driver('google')->redirect();
+});
+
+Route::get('/auth/google/callback', function () {
+    $googleUser = Socialite::driver('google')->user();
+
+    // Find or create user logic
+    $user = \App\Models\User::updateOrCreate(
+        ['email' => $googleUser->getEmail()],
+        [
+            'name' => $googleUser->getName(),
+            'google_id' => $googleUser->getId(),
+        ]
+    );
+
+    Auth::login($user);
+
+    return redirect('/');
+}); 
 
 Route::get('/', function () {
 	return redirect('dashboard');

@@ -24,6 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('img_url',500)->default("https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-512.png");
             $table->string('email')->unique();
+            $table->string('google_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
 
@@ -53,6 +54,14 @@ class CreateUsersTable extends Migration
                 'name' => 'Admin',
                 'email' => 'admin@test.com',
                 'password' => bcrypt('admin123'),
+                'api_token' => Str::random(60),
+            ],
+
+             [
+                'id'=>2,
+                'name' => 'Achala Kavinda',
+                'email' => 'achalakavinda25r@gmail.com',
+                'password' => bcrypt('Admin123!'),
                 'api_token' => Str::random(60),
             ],
 

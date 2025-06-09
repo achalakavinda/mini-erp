@@ -76,6 +76,14 @@
                             </div>
                         </div>
 
+                        <div class="text-center p-t-20">
+                            <a href="{{ url('/auth/google') }}" class="btn btn-light" style="border: 1px solid #ccc; padding: 10px 20px; display: inline-flex; align-items: center; gap: 10px;">
+                                <img src="{{ asset('img/google_icon.png') }}" alt="Google" style="width: 20px; height: 20px;">
+                                <span>Sign in with Google</span>
+                            </a>
+                        </div>
+
+
                     </form>
 
 
