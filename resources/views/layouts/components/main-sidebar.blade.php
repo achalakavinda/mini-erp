@@ -67,7 +67,7 @@
             @can(config('constant.Permission_Brand'))
                 <!-- brand  -->
                 <li class="treeview">
-                    <a href="{!! url('ims/brand') !!}"><i class="fa fa-tags"></i> Brand
+                    <a href="{!! url('ims/brand') !!}"><i class="fa fa-tags"></i> <span>Brand</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
@@ -85,7 +85,7 @@
 
             @can(config('constant.Permission_Item'))
                 <li class="treeview">
-                    <a href="{!! url('ims/item') !!}"><i class="fa fa-cube"></i> Item
+                    <a href="{!! url('ims/item') !!}"><i class="fa fa-cube"></i> <span>Item</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
@@ -173,7 +173,7 @@
                     <ul class="treeview-menu">
                         @can(config('constant.Permission_Company_Purchase_Order_Registry'))
                             <li><a href="{{ url('ims/company-purchase-order') }}"><i class="fa fa-table"></i>
-                                    Company Purchase Order</a></li>
+                                    Company Order</a></li>
                         @endcan
                         @can(config('constant.Permission_Company_Purchase_Order_Creation'))
                             <li><a href="{{ url('ims/company-purchase-order/create') }}"><i class="fa fa-plus"></i>
@@ -223,7 +223,7 @@
             @can(config('constant.Permission_Stock'))
                 <!-- stock -->
                 <li class="treeview">
-                    <a href="{!! url('') !!}"><i class="fa fa-truck"></i> Stock
+                    <a href="{!! url('') !!}"><i class="fa fa-truck"></i> <span>Stock</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>
