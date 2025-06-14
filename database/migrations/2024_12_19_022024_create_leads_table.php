@@ -19,6 +19,7 @@ class CreateLeadsTable extends Migration
             $table->string('post_url');
             $table->string('email');
             $table->string('company_name');
+            $table->unsignedInteger('company_id');
             $table->foreignId('lead_type_id');
             $table->string('message');
             $table->timestamps();
@@ -27,6 +28,10 @@ class CreateLeadsTable extends Migration
             ->references('id')
             ->on('lead_types')
             ->onDelete('cascade');
+
+            $table->foreign('company_id')
+            ->references('id')
+            ->on('companies');
         } 
 
         Schema::create('leads', function(Blueprint $table) {

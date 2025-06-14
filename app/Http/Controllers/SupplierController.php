@@ -6,9 +6,12 @@ use App\Models\Company;
 use App\Models\CompanyDivision;
 use App\Models\Ims\Supplier;
 use Illuminate\Http\Request;
+use App\Traits\HasCompanyScope;
 
 class SupplierController extends Controller
 {
+     use HasCompanyScope;
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +19,7 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        $Suppliers = Supplier::all();
+        $Suppliers = Supplier::ownedByCompany()->paginate(10);
         return view('admin.supplier.index',compact(['Suppliers']));
     }
 
@@ -27,9 +30,10 @@ class SupplierController extends Controller
      */
     public function create()
     {
-        $Company = Company::all()->pluck('code','id');
-        $CompanyDivision = CompanyDivision::all()->pluck('code','id');
-        return view('admin.supplier.create',compact(['Company','CompanyDivision']));
+        
+        $Company = Company::whereIn('id', $this->companyIds())->pluck('code', 'id');
+
+        return view('admin.supplier.create',compact(['Company']));
     }
 
     /**
@@ -40,21 +44,22 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name'=>'required',
-            'company_id'=>'required',
-            'company_division_id'=>'required',
-
+       $request->validate([
+            'name' => 'required',
+            'company_id' => 'required',
         ]);
+       
+       if (!in_array($request->company_id, $this->companyIds())) {
+            abort(403, 'Unauthorized company access.');
+        }
 
         Supplier::create([
-            'name'=>$request->name,
-            'contact'=>$request->contact,
-            'email'=>$request->email,
-            'web_url'=>$request->web_url,
-            'address'=>$request->address,
-            'company_id'=>$request->company_id,
-            'company_division_id'=>$request->company_division_id,
+            'name' => $request->name,
+            'contact' => $request->contact,
+            'email' => $request->email,
+            'web_url' => $request->web_url,
+            'address' => $request->address,
+            'company_id' => $request->company_id,
         ]);
 
         return redirect()->back();
@@ -68,10 +73,11 @@ class SupplierController extends Controller
      */
     public function show($id)
     {
-        $supplier = Supplier::findorfail($id);
-        $Company = Company::all()->pluck('code','id');
-        $CompanyDivision = CompanyDivision::all()->pluck('code','id');
-        return view('admin.supplier.show',compact(['Company','CompanyDivision','supplier']));
+         $supplier = Supplier::ownedByCompany()->findOrFail($id);
+
+        $Company = Company::whereIn('id', $this->companyIds())->pluck('code', 'id');
+
+        return view('admin.supplier.show', compact('Company', 'supplier'));
     }
 
     /**

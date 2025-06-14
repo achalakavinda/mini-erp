@@ -36,14 +36,6 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            {!! Form::label("Company Division") !!}
-            {!!
-            Form::select('company_division_id',$CompanyDivision,null,['readonly','class'=>'form-control','id'=>'companyDivisionId'])
-            !!}
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="form-group">
             {!! Form::label('Address') !!}
             {!! Form::textarea('address',null,['class'=>'form-control','id'=>'address']) !!}
         </div>

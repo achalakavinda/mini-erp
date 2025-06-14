@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models\Crm;
+use App\Traits\HasCompanyScope;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -8,6 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 class Lead extends Model
 {
     use HasFactory;
+    use HasCompanyScope;
+
+    protected $guarded = ['id'];
 
     public function setConnection($connection)
     {

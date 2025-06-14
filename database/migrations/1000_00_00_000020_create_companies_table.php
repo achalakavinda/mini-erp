@@ -24,7 +24,28 @@ class CreateCompaniesTable extends Migration
         DB::table('companies')->insert([
             [
                 'id'=>1,
-                'code' => 'TEST_COMPANY',
+                'code' => 'TEST_COMPANY_1_TENANT_1',
+                'tenant_id'=>1,
+                'created_at' =>\Carbon\Carbon::now(),
+                'updated_at' =>\Carbon\Carbon::now()
+            ],
+             [
+                'id'=>2,
+                'code' => 'TEST_COMPANY_2_TENANT_1',
+                'tenant_id'=>1,
+                'created_at' =>\Carbon\Carbon::now(),
+                'updated_at' =>\Carbon\Carbon::now()
+             ],
+             [
+                'id'=>3,
+                'code' => 'TEST_COMPANY_1_TENANT_2',
+                'tenant_id'=>1,
+                'created_at' =>\Carbon\Carbon::now(),
+                'updated_at' =>\Carbon\Carbon::now()
+            ],
+             [
+                'id'=>4,
+                'code' => 'TEST_COMPANY_2_TENANT_2',
                 'tenant_id'=>1,
                 'created_at' =>\Carbon\Carbon::now(),
                 'updated_at' =>\Carbon\Carbon::now()

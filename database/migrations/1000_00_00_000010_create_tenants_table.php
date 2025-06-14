@@ -23,8 +23,15 @@ class CreateTenantsTable extends Migration
         DB::table('tenants')->insert([
             [
                 'id'=>1,
-                'code' => 'TEST_TENANT',
-                'name' => 'Test Tenant',
+                'code' => 'TEST_TENANT_1',
+                'name' => 'Test Tenant 1',
+                'created_at' =>\Carbon\Carbon::now(),
+                'updated_at' =>\Carbon\Carbon::now()
+            ],
+            [
+                'id'=>2,
+                'code' => 'TEST_TENANT_2',
+                'name' => 'Test Tenant 2',
                 'created_at' =>\Carbon\Carbon::now(),
                 'updated_at' =>\Carbon\Carbon::now()
             ]

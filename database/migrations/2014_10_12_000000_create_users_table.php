@@ -21,8 +21,6 @@ class CreateUsersTable extends Migration
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
 
-            $table->unsignedInteger('primary_company_id')->default(1);
-
             $table->string('name');
             $table->string('img_url',500)->default("https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-512.png");
             $table->string('email')->unique();
@@ -44,11 +42,6 @@ class CreateUsersTable extends Migration
             $table->foreign('updated_by')
                 ->references('id')
                 ->on('users');
-
-            $table->foreign('primary_company_id')
-                ->references('id')
-                ->on('companies');
-
                 
 
         });
@@ -66,21 +59,24 @@ class CreateUsersTable extends Migration
                 'name' => 'Admin',
                 'email' => 'admin@test.com',
                 'password' => bcrypt('admin123'),
+                'company_id'=>1,
                 'api_token' => Str::random(60),
             ],
 
              [
                 'id'=>2,
-                'name' => 'Achala Kavinda',
+                'name' => 'Achala Tenant01',
                 'email' => 'achalakavinda25r@gmail.com',
                 'password' => bcrypt('Admin321!'),
+                'company_id'=>1,
                 'api_token' => Str::random(60),
             ],
             [
                 'id'=>3,
-                'name' => 'Achala Kavinda',
+                'name' => 'Achala Tenant02',
                 'email' => 'achalakavinda95@gmail.com',
                 'password' => bcrypt('Admin321!'),
+                'company_id'=>2,
                 'api_token' => Str::random(60),
             ],
 
