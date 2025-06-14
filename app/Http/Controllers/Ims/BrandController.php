@@ -31,9 +31,8 @@ class BrandController extends Controller
     public function create()
     {
         $Company = Company::all()->pluck('code','id');
-        $CompanyDivision = CompanyDivision::all()->pluck('code','id');
         $Brands = Brand::all();
-        return view('admin.ims.brand.create',compact(['Company','CompanyDivision','Brands']));
+        return view('admin.ims.brand.create',compact(['Company','Brands']));
     }
 
     /**
@@ -46,7 +45,6 @@ class BrandController extends Controller
         $request->validate([
             'name'=>'required',
             'company_id'=>'required',
-            'company_division_id'=>'required'
         ]);
 
         $CompanyDivision = CompanyDivision::findOrFail($request->company_division_id);
@@ -54,7 +52,6 @@ class BrandController extends Controller
         $Brand = Brand::create([
             'name'=>$request->name,
             'company_id'=>$CompanyDivision->company_id,
-            'company_division_id'=>$CompanyDivision->id,
             'description'=>$request->description
         ]);
 
@@ -92,9 +89,8 @@ class BrandController extends Controller
     {
         $Brand = Brand::findorfail($id);
         $Company = Company::all()->pluck('code','id');
-        $CompanyDivision = CompanyDivision::all()->pluck('code','id');
         $Brands = Brand::all();
-        return view('admin.ims.brand.show',compact(['Brand','Company','CompanyDivision','Brands']));
+        return view('admin.ims.brand.show',compact(['Brand','Company','Brands']));
     }
 
     /**
@@ -119,7 +115,6 @@ class BrandController extends Controller
         $request->validate([
             'name'=>'required',
             'company_id'=>'required',
-            'company_division_id'=>'required',
             'description'=>'required',
             'img_url'=>'required',
         ]);
@@ -128,7 +123,6 @@ class BrandController extends Controller
 
         $Brand->name = $request->name;
         $Brand->company_id = $request->company_id;
-        $Brand->company_division_id = $request->company_division_id;
         $Brand->description = $request->description;
         $Brand->save();
 

@@ -17,14 +17,6 @@ use Illuminate\Http\Request;
 
 class CompanyPurchaseOrderController extends Controller
 {
-    public $Company_Division_id = 1;
-
-    public $CompanyDivision;
-
-    public function __construct()
-    {
-        $this->CompanyDivision = CompanyDivision::get()->first();
-    }
     /**
      * Display a listing of the resource.
      *
@@ -66,7 +58,6 @@ class CompanyPurchaseOrderController extends Controller
 
         $CompanyPurchaseOrder = CompanyPurchaseOrder::create([
             'supplier_id'=>$request->supplier_id,
-            'company_division_id'=>$this->CompanyDivision->id,
             'created_by'=> auth()->user()->id,
             'date'=>$date,
         ]);
@@ -80,7 +71,6 @@ class CompanyPurchaseOrderController extends Controller
                 if($Model && $item['qty']){
 
                     CompanyPurchaseOrderItem::create([
-                        'company_division_id'=>$Model->company_division_id,
                         'company_purchase_order_id'=>$CompanyPurchaseOrder->id,
                         'item_code_id'=>$Model->id,
                         'item_code'=>$Model->name,
@@ -162,7 +152,6 @@ class CompanyPurchaseOrderController extends Controller
                 if($Model && $item['qty']){
 
                     CompanyPurchaseOrderItem::create([
-                        'company_division_id'=>$Model->company_division_id,
                         'company_purchase_order_id'=>$CompanyPurchaseOrder->id,
                         'item_code_id'=>$Model->id,
                         'item_code'=>$Model->name,
@@ -178,7 +167,6 @@ class CompanyPurchaseOrderController extends Controller
             }
 
             $CompanyPurchaseOrder->supplier_id = $request->supplier_id;
-            $CompanyPurchaseOrder->company_division_id = $this->CompanyDivision->id;
             $CompanyPurchaseOrder->created_by = auth()->user()->id;
             $CompanyPurchaseOrder->date = $date;
             $CompanyPurchaseOrder->code = 'COM-PO-'.Carbon::now()->format('y').Carbon::now()->format('m').Carbon::now()->format('d').'-'.$CompanyPurchaseOrder->id;
@@ -211,7 +199,6 @@ class CompanyPurchaseOrderController extends Controller
 
         $Grn = Grn::create([
             'supplier_id'=>$CompanyPurchaseOrder->supplier_id,
-            'company_division_id'=>$this->CompanyDivision->id,
             'created_by'=>auth()->user()->id,
             'company_purchase_order_id'=>$CompanyPurchaseOrder->id,
             'code'=>'GRN',
@@ -232,7 +219,6 @@ class CompanyPurchaseOrderController extends Controller
                     GrnItem::create([
                         'grn_id'=>$Grn->id,
                         'item_code_id'=>$Model->id,
-                        'company_division_id'=>$this->CompanyDivision->id,
                         'company_purchase_order_item_id'=>$PurchaseOrderItem->id,
                         'item_code'=>$Model->name,
                         'item_unit_cost_from_table'=>$Model->unit_cost,

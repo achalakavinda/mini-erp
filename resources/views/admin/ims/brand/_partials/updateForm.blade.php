@@ -28,14 +28,6 @@
         </div>
     </div>
 
-    <div class="col-md-12">
-        <div class="form-group">
-            {!! Form::label("Company Division") !!}
-            {!!
-            Form::select('company_division_id',$CompanyDivision,$Brand->company_division_id,['readonly','class'=>'form-control','id'=>'companyDivisionId'])
-            !!}
-        </div>
-    </div>
 </div>
 <!-- /.box-body -->
 

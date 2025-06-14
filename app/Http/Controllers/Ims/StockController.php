@@ -12,13 +12,6 @@ use App\Http\Controllers\Controller;
 
 class StockController extends Controller
 {
-    public $CompanyDivision;
-
-    public function __construct()
-    {
-        $this->CompanyDivision = CompanyDivision::get()->first();
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -65,7 +58,6 @@ class StockController extends Controller
 
         $Stock = Stock::create([
                 'code'=>'Batch',
-                'company_division_id'=>1,
                 'company_id'=>1
             ]);
 
@@ -85,7 +77,6 @@ class StockController extends Controller
                             'unit_price'=>$item['unit_price'],
                             'created_qty'=>$item['qty'],//to identify the initial qty for bath item
                             'tol_qty'=>$item['qty'],
-                            'company_division_id'=>$this->CompanyDivision->id,
                             'company_id'=>1,
                             'total'=> $item['qty'] * $item['unit_price']
                         ]);

@@ -15,15 +15,6 @@ use Illuminate\Http\Request;
 
 class GrnController extends Controller
 {
-
-    public $Company_Division_id = 1;
-
-    public $CompanyDivision;
-
-    public function __construct()
-    {
-        $this->CompanyDivision = CompanyDivision::get()->first();
-    }
     /**
      * Display a listing of the resource.
      *
@@ -64,7 +55,6 @@ class GrnController extends Controller
         $date = $request->date? $request->date : Carbon::now();
 
         $Grn = Grn::create([
-            'company_division_id'=>$this->CompanyDivision->id,
             'supplier_id'=>$request->supplier_id,
             'created_by'=>auth()->user()->id,
             'code'=>'GRN',
@@ -83,7 +73,6 @@ class GrnController extends Controller
                     GrnItem::create([
                         'grn_id'=>$Grn->id,
                         'item_code_id'=>$Model->id,
-                        'company_division_id'=>$this->CompanyDivision->id,
                         'item_code'=>$Model->name,
                         'item_unit_cost_from_table'=>$Model->unit_cost,
                         'unit_price'=>$item['unit_price'],
@@ -123,7 +112,6 @@ class GrnController extends Controller
             [
                 'grn_id'=>$Grn->id,
                 'code'=>'Batch',
-                'company_division_id'=>1,
                 'company_id'=>1
             ]);
 
@@ -144,7 +132,6 @@ class GrnController extends Controller
                         'unit_price'=>$item->unit_price,
                         'created_qty'=>$item->qty,//to identify the initial qty for bath item
                         'tol_qty'=>$item->qty,
-                        'company_division_id'=>$this->CompanyDivision->id,
                         'company_id'=>1,
                         'total'=> $item->qty * $item->unit_price
                     ]);
@@ -227,7 +214,6 @@ class GrnController extends Controller
                     GrnItem::create([
                         'grn_id'=>$Grn->id,
                         'item_code_id'=>$Model->id,
-                        'company_division_id'=>$this->CompanyDivision->id,
                         'item_code'=>$Model->name,
                         'item_unit_cost_from_table'=>$Model->unit_cost,
                         'unit_price'=>$item['unit_price'],

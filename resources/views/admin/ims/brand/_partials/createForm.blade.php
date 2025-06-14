@@ -25,15 +25,6 @@
             {!! Form::select('company_id',$Company,null,['readonly','class'=>'form-control','id'=>'companyId']) !!}
         </div>
     </div>
-
-    <div class="col-md-12">
-        <div class="form-group">
-            {!! Form::label("Company Division") !!}
-            {!!
-            Form::select('company_division_id',$CompanyDivision,null,['readonly','class'=>'form-control','id'=>'companyDivisionId'])
-            !!}
-        </div>
-    </div>
 </div>
 <!-- /.box-body -->
 

@@ -18,15 +18,6 @@ use Illuminate\Http\Request;
 
 class QuotationController extends Controller
 {
-    public $Company_Division_id = 1;
-
-    public $CompanyDivision;
-
-    public function __construct()
-    {
-        $this->CompanyDivision = CompanyDivision::get()->first();
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -71,7 +62,6 @@ class QuotationController extends Controller
 
 
         $Quotation = Quotation::create([
-            'company_division_id'=>$this->CompanyDivision->id,
             'customer_id'=>$request->customer_id,
             'created_by'=>\Auth::id(),
             'code'=>'Quo',
@@ -90,7 +80,6 @@ class QuotationController extends Controller
                     QuotationItem::create([
                         'quotation_id'=>$Quotation->id,
                         'item_code_id'=>$Model->id,
-                        'company_division_id'=>$this->CompanyDivision->id,
 
                         'item_code'=>$Model->name,
                         'item_unit_cost_from_table'=>$Model->unit_cost,
@@ -188,7 +177,6 @@ class QuotationController extends Controller
                     QuotationItem::create([
                         'quotation_id'=>$Quotation->id,
                         'item_code_id'=>$Model->id,
-                        'company_division_id'=>$this->CompanyDivision->id,
 
                         'item_code'=>$Model->name,
                         'item_unit_cost_from_table'=>$Model->unit_cost,
@@ -207,7 +195,6 @@ class QuotationController extends Controller
                 $Amount = $TotalAmount;
                 $DiscountPercentage = 0;
             }
-            $Quotation->company_division_id = $this->CompanyDivision->id;
             $Quotation->customer_id = $request->customer_id;
             $Quotation->created_by = \Auth::id();
             $Quotation->code = 'Quo-'.Carbon::now()->format('y').Carbon::now()->format('m').Carbon::now()->format('d').'-'.$Quotation->id;
@@ -243,7 +230,6 @@ class QuotationController extends Controller
         $SalesOrder = SalesOrder::create([
             'quotation_id'=>$Quotation->id,
             'customer_id'=>$Quotation->customer_id,
-            'company_division_id'=>$Quotation->company_division_id,
             'code'=>'SO',
             'date'=>$Quotation->date,
             'remarks'=>$Quotation->remarks,
@@ -264,7 +250,6 @@ class QuotationController extends Controller
                         'brand_id'=>$Model->brand_id,
                         'item_code_id'=>$item->item_code_id,
                         'sales_order_id'=>$SalesOrder->id,
-                        'company_division_id'=>$this->CompanyDivision->id,
 
                         'item_code'=>$Model->name,
                         'unit_price'=>$item->quoted_price,
@@ -294,7 +279,6 @@ class QuotationController extends Controller
         $Quotation = Quotation::findOrFail($request->quotation_id);
 
         $Invoice = Invoice::create([
-            'company_division_id'=>$Quotation->company_division_id,
             'code'=>'Inv',
             'customer_id'=>$Quotation->customer_id,
             'remarks'=>$Quotation->remarks,

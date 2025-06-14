@@ -16,14 +16,6 @@ use Illuminate\Http\Request;
 
 class SalesOrderController extends Controller
 {
-    public $Company_Division_id = 1;
-
-    public $CompanyDivision;
-
-    public function __construct()
-    {
-        $this->CompanyDivision = CompanyDivision::get()->first();
-    }
     /**
      * Display a listing of the resource.
      *
@@ -68,7 +60,6 @@ class SalesOrderController extends Controller
         $SalesOrder = SalesOrder::create([
             'customer_id'=>$request->customer_id,
             'date'=>$date,
-            'company_division_id'=>$this->CompanyDivision->id,
             'code'=>'SO',
             'remarks'=>$request->remarks
         ]);
@@ -85,7 +76,6 @@ class SalesOrderController extends Controller
                         'brand_id'=>$Model->brand_id,
                         'item_code_id'=>$Model->id,
                         'sales_order_id'=>$SalesOrder->id,
-                        'company_division_id'=>$this->CompanyDivision->id,
 
                         'item_code'=>$Model->name,
                         'unit_price'=>$item['unit'],
@@ -184,8 +174,6 @@ class SalesOrderController extends Controller
                         'brand_id'=>$Model->brand_id,
                         'item_code_id'=>$Model->id,
                         'sales_order_id'=>$SalesOrder->id,
-                        'company_division_id'=>$this->CompanyDivision->id,
-
                         'item_code'=>$Model->name,
                         'unit_price'=>$item['unit'],
                         'qty'=>$item['qty'],
@@ -206,7 +194,6 @@ class SalesOrderController extends Controller
 
             $SalesOrder->customer_id = $request->customer_id;
             $SalesOrder->date = $date;
-            $SalesOrder->company_division_id = $this->CompanyDivision->id;
             $SalesOrder->remarks = $request->remarks;
             $SalesOrder->code = "SO-".Carbon::now()->year."|".Carbon::now()->month."|".Carbon::now()->day."-000".$SalesOrder->id;
             $SalesOrder->amount = $TotalAmount;
@@ -240,7 +227,6 @@ class SalesOrderController extends Controller
         $SalesOrder = SalesOrder::findOrFail($request->sales_order_id);
         
         $Invoice = Invoice::create([
-            'company_division_id'=>$SalesOrder->company_division_id,
             'code'=>'Inv',
             'customer_id'=>$SalesOrder->customer_id,
             'remarks'=>$SalesOrder->remarks,
@@ -253,7 +239,6 @@ class SalesOrderController extends Controller
 
             $Stock = Stock::create([
                 'code'=>'Batch',
-                'company_division_id'=>$this->CompanyDivision->id,
                 'company_id'=>1,
                 'invoice_id'=>$Invoice->id
             ]);
@@ -280,7 +265,6 @@ class SalesOrderController extends Controller
                         'created_qty'=>0,
                         'tol_qty'=>-$item->qty,
                         'total'=>-$item->unit_price * $item->qty,
-                        'company_division_id'=>$this->CompanyDivision->id,
                         'company_id'=>1,
                     ]);
 
@@ -292,7 +276,6 @@ class SalesOrderController extends Controller
                         'unit_price'=>$item->unit_price,
                         'qty'=>$item->qty,
                         'total'=>$item->qty * $item->unit_price,
-                        'company_division_id'=>$this->Company_Division_id
                     ]);
 
             }

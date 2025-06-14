@@ -17,15 +17,6 @@ use DB;
 
 class InvoiceController extends Controller
 {
-    public $Company_Division_id = 1;
-
-    public $CompanyDivision;
-
-    public function __construct()
-    {
-        $this->CompanyDivision = CompanyDivision::get()->first();
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -66,7 +57,6 @@ class InvoiceController extends Controller
         $date = $request->order_date ?$request->order_date:Carbon::now();
 
         $Invoice = Invoice::create([
-            'company_division_id'=>$this->CompanyDivision->id,
             'customer_id'=>$request->customer_id,
             'code'=>'INV',
             'date'=>$date,
@@ -86,7 +76,6 @@ class InvoiceController extends Controller
 
             $Stock = Stock::create([
                 'code'=>'Batch',
-                'company_division_id'=>$this->CompanyDivision->id,
                 'company_id'=>1,
                 'invoice_id'=>$Invoice->id
             ]);
@@ -110,7 +99,6 @@ class InvoiceController extends Controller
                         'created_qty'=>-$item['qty'],//to identify the initial qty for bath item
                         'tol_qty'=>-$item['qty'],
                         'total'=>-$item['qty']*$item['unit_price'],
-                        'company_division_id'=>$this->CompanyDivision->id,
                         'company_id'=>1,
                     ]);
 
@@ -122,7 +110,6 @@ class InvoiceController extends Controller
                         'unit_price'=>$item['unit_price'],
                         'qty'=>$item['qty'],
                         'total'=>$item['qty']*$item['unit_price'],
-                        'company_division_id'=>$this->Company_Division_id
                     ]);
 
                     $TotalAmount = $TotalAmount + ( $item['qty'] * $item['unit_price']) ;
@@ -216,7 +203,6 @@ class InvoiceController extends Controller
         $Invoice = Invoice::findOrFail($request->invoice_id);
 
         $CustomerReturnNote = CustomerReturnNote::create([
-            'company_division_id'=>$Invoice->company_division_id,
             'customer_id'=>$Invoice->customer_id,
             'invoice_id'=>$Invoice->id,
             'code'=>'RETURN',
@@ -246,7 +232,6 @@ class InvoiceController extends Controller
                     'unit_price'=>$item->unit_price,
                     'qty'=>$item->qty,
                     'total'=>$item->total,
-                    'company_division_id'=>$item->company_division_id,
                 ]);
 
             }
