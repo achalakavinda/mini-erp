@@ -16,8 +16,6 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code')->unique();
-            $table->string('name');
-            $table->string('email');
             $table->unsignedInteger('tenant_id');
             $table->timestamps();
             $table->foreign('tenant_id')->references('id')->on('tenants');
@@ -26,9 +24,7 @@ class CreateCompaniesTable extends Migration
         DB::table('companies')->insert([
             [
                 'id'=>1,
-                'code' => 'MC',
-                'name' => 'Master Company',
-                'email'=>'achalakavida25r@gmail.com',
+                'code' => 'TEST_COMPANY',
                 'tenant_id'=>1,
                 'created_at' =>\Carbon\Carbon::now(),
                 'updated_at' =>\Carbon\Carbon::now()

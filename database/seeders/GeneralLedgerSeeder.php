@@ -43,7 +43,6 @@ class GeneralLedgerSeeder extends Seeder
                 'main_account_type_id'=>3,
                 'description'=>null,
                 'company_id'=>1,
-                'company_division_id'=>1,
                 'active'=>true,
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
@@ -55,7 +54,6 @@ class GeneralLedgerSeeder extends Seeder
                 'main_account_type_id'=>1,
                 'description'=>null,
                 'company_id'=>1,
-                'company_division_id'=>1,
                 'active'=>true,
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
@@ -67,7 +65,6 @@ class GeneralLedgerSeeder extends Seeder
                 'main_account_type_id'=>5,
                 'description'=>null,
                 'company_id'=>1,
-                'company_division_id'=>1,
                 'active'=>true,
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
@@ -79,7 +76,6 @@ class GeneralLedgerSeeder extends Seeder
                 'main_account_type_id'=>1,
                 'description'=>null,
                 'company_id'=>1,
-                'company_division_id'=>1,
                 'active'=>true,
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
@@ -91,7 +87,6 @@ class GeneralLedgerSeeder extends Seeder
                 'main_account_type_id'=>4,
                 'description'=>null,
                 'company_id'=>1,
-                'company_division_id'=>1,
                 'active'=>true,
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
@@ -103,7 +98,6 @@ class GeneralLedgerSeeder extends Seeder
                 'main_account_type_id'=>2,
                 'description'=>null,
                 'company_id'=>1,
-                'company_division_id'=>1,
                 'active'=>true,
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
@@ -119,7 +113,6 @@ class GeneralLedgerSeeder extends Seeder
                 'account_category_id'=>1,
                 'description'=>null,
                 'company_id'=>1,
-                'company_division_id'=>1,
                 'active'=>true,
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
@@ -134,7 +127,6 @@ class GeneralLedgerSeeder extends Seeder
                 'account_type_id'=>1,
                 'description'=>null,
                 'company_id'=>1,
-                'company_division_id'=>1,
                 'active'=>true,
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
@@ -147,14 +139,11 @@ class GeneralLedgerSeeder extends Seeder
                 'account_type_id'=>1,
                 'description'=>null,
                 'company_id'=>1,
-                'company_division_id'=>1,
                 'active'=>true,
                 "created_at"=>\Carbon\Carbon::now(),
                 "updated_at"=>\Carbon\Carbon::now()
             ],
 
         ]);
-
-
     }
 }

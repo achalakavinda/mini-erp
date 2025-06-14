@@ -19,9 +19,6 @@ class CreateExcelImportsTable extends Migration
             $table->string('batch')->default('import code');
             $table->boolean('imported')->default(false);
             $table->unsignedInteger('company_division_id')->nullable();
-            $table->foreign('company_division_id')
-                ->references('id')->on('company_divisions')
-                ->onDelete('cascade');
             $table->timestamps();
 
         });
@@ -43,7 +40,6 @@ class CreateExcelImportsTable extends Migration
 
             //company division logic
             $table->unsignedInteger('company_division_id')->nullable();
-            $table->foreign('company_division_id')->references('id')->on('company_divisions')->onDelete('cascade');
         });
     }
 

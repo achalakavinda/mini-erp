@@ -19,7 +19,6 @@ class CreateGrnItemsTable extends Migration
             $table->foreignId('grn_id');
             $table->unsignedInteger('item_code_id');
             $table->unsignedInteger('company_id')->nullable();
-            $table->unsignedInteger('company_division_id');
             $table->unsignedInteger('company_purchase_order_item_id')->nullable();
 
             $table->string('item_code');//store stock item name, history log
@@ -42,10 +41,6 @@ class CreateGrnItemsTable extends Migration
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies');
-
-            $table->foreign('company_division_id')
-                ->references('id')
-                ->on('company_divisions');
 
             $table->foreign('item_code_id')
                 ->references('id')

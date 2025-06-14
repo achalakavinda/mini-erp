@@ -20,9 +20,7 @@ class CreateStockMetasTable extends Migration
             $table->text('name');
             $table->text('address')->nullable();
             $table->unsignedInteger('supervisor_id')->nullable();
-            $table->unsignedInteger('company_division_id')->nullable();
             $table->timestamps();
-            $table->foreign('company_division_id')->references('id')->on('company_divisions')->onDelete('cascade');
         });
     }
 

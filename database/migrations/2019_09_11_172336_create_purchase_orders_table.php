@@ -39,7 +39,6 @@ class CreatePurchaseOrdersTable extends Migration
             $table->unsignedInteger('purchase_requisition_id')->nullable();
             $table->unsignedInteger('supplier_id')->nullable();
             $table->unsignedInteger('company_id')->nullable();
-            $table->unsignedInteger('company_division_id');
             $table->unsignedInteger('created_by');
 
             $table->text('code')->nullable();
@@ -69,10 +68,6 @@ class CreatePurchaseOrdersTable extends Migration
                 ->references('id')
                 ->on('companies');
 
-            $table->foreign('company_division_id')
-                ->references('id')
-                ->on('company_divisions');
-
         });
 
         Schema::create('customer_purchase_orders', function (Blueprint $table) {
@@ -89,10 +84,8 @@ class CreatePurchaseOrdersTable extends Migration
             $table->string('supplier_quote_no')->nullable();
             $table->string('department')->nullable();
             $table->string('project_code')->nullable();
-            $table->unsignedInteger('company_division_id')->nullable();
 
             $table->timestamps();
-            $table->foreign('company_division_id')->references('id')->on('company_divisions');
 
         });
     }

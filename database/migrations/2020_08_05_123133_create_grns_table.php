@@ -16,7 +16,6 @@ class CreateGrnsTable extends Migration
         Schema::create('grns', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('company_id')->nullable();
-            $table->unsignedInteger('company_division_id')->nullable();
             $table->unsignedInteger('supplier_id')->nullable();
             $table->unsignedInteger('created_by');
             $table->unsignedInteger('company_purchase_order_id')->nullable();
@@ -28,23 +27,9 @@ class CreateGrnsTable extends Migration
             $table->boolean('commit')->default(false);
             $table->longText('remarks')->nullable();
 
-            $table->string('userdef1')->nullable();
-            $table->string('userdef2')->nullable();
-            $table->string('userdef3')->nullable();
-            $table->string('userdef4')->nullable();
-            $table->string('userdef5')->nullable();
-            $table->string('userdef6')->nullable();
-            $table->string('userdef7')->nullable();
-            $table->string('userdef8')->nullable();
-            $table->string('userdef9')->nullable();
-
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies');
-
-            $table->foreign('company_division_id')
-                ->references('id')
-                ->on('company_divisions');
 
             $table->foreign('supplier_id')
                 ->references('id')

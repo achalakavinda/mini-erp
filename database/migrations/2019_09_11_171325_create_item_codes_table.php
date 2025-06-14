@@ -28,7 +28,6 @@ class CreateItemCodesTable extends Migration
             $table->unsignedInteger('color_id')->nullable();
             $table->unsignedInteger('size_id')->nullable();
             $table->unsignedInteger('company_id')->nullable();
-            $table->unsignedInteger('company_division_id')->nullable();
             $table->unsignedInteger('type_measurement_id')->nullable();
 
             $table->enum('type',['product','service'])->default('product');
@@ -50,16 +49,6 @@ class CreateItemCodesTable extends Migration
             $table->float('max_price')->nullable();
 
             $table->boolean('active')->default(1);
-
-            $table->string('userdef1')->nullable();
-            $table->string('userdef2')->nullable();
-            $table->string('userdef3')->nullable();
-            $table->string('userdef4')->nullable();
-            $table->string('userdef5')->nullable();
-            $table->string('userdef6')->nullable();
-            $table->string('userdef7')->nullable();
-            $table->string('userdef8')->nullable();
-            $table->string('userdef9')->nullable();
 
             $table->timestamps();
 
@@ -88,10 +77,6 @@ class CreateItemCodesTable extends Migration
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies');
-
-            $table->foreign('company_division_id')
-                ->references('id')
-                ->on('company_divisions');
 
         });
     }

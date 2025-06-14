@@ -18,12 +18,10 @@ class CreateSupplierContactsTable extends Migration
             $table->enum('attribute',['contact','email','fax'])->default('contact');
             $table->text('value');
             $table->unsignedInteger('company_id');
-            $table->unsignedInteger('company_division_id');
             $table->timestamps();
 
             $table->foreign('supplier_id')->references('id')->on('suppliers');
             $table->foreign('company_id')->references('id')->on('companies');
-            $table->foreign('company_division_id')->references('id')->on('company_divisions');
 
         });
     }

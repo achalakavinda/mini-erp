@@ -20,7 +20,6 @@ class CreateSizesTable extends Migration
             $table->string('code')->unique();
             $table->string('description')->nullable();
             $table->unsignedInteger('company_id')->nullable();
-            $table->unsignedInteger('company_division_id')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
         });

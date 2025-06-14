@@ -19,7 +19,6 @@ class CreateSalesOrderItemsTable extends Migration
             $table->unsignedInteger('item_code_id');
             $table->foreignId('sales_order_id');
             $table->unsignedInteger('company_id')->nullable();
-            $table->unsignedInteger('company_division_id');
 
             $table->text('item_code');
             $table->double('unit_price');
@@ -30,15 +29,6 @@ class CreateSalesOrderItemsTable extends Migration
 
             $table->timestamps();
 
-            $table->string('userdef1')->nullable();
-            $table->string('userdef2')->nullable();
-            $table->string('userdef3')->nullable();
-            $table->string('userdef4')->nullable();
-            $table->string('userdef5')->nullable();
-            $table->string('userdef6')->nullable();
-            $table->string('userdef7')->nullable();
-            $table->string('userdef8')->nullable();
-            $table->string('userdef9')->nullable();
 
             $table->foreign('sales_order_id')
                 ->references('id')
@@ -56,10 +46,6 @@ class CreateSalesOrderItemsTable extends Migration
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies');
-
-            $table->foreign('company_division_id')
-                ->references('id')
-                ->on('company_divisions');
 
         });
     }

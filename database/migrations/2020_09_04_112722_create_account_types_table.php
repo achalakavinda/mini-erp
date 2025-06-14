@@ -42,10 +42,6 @@ class CreateAccountTypesTable extends Migration
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies');
-
-            $table->foreign('company_division_id')
-                ->references('id')
-                ->on('company_divisions');
         });
     }
 

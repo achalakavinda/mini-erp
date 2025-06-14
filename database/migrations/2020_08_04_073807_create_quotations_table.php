@@ -16,7 +16,6 @@ class CreateQuotationsTable extends Migration
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
             $table->unsignedInteger('company_id')->nullable();
-            $table->unsignedInteger('company_division_id')->nullable();
             $table->unsignedInteger('customer_id')->nullable();
             $table->unsignedInteger('created_by');
 
@@ -32,16 +31,6 @@ class CreateQuotationsTable extends Migration
 
             $table->timestamps();
 
-            $table->string('userdef1')->nullable();
-            $table->string('userdef2')->nullable();
-            $table->string('userdef3')->nullable();
-            $table->string('userdef4')->nullable();
-            $table->string('userdef5')->nullable();
-            $table->string('userdef6')->nullable();
-            $table->string('userdef7')->nullable();
-            $table->string('userdef8')->nullable();
-            $table->string('userdef9')->nullable();
-
             $table->foreign('customer_id')
                 ->references('id')
                 ->on('customers');
@@ -49,11 +38,6 @@ class CreateQuotationsTable extends Migration
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies');
-
-            $table->foreign('company_division_id')
-                ->references('id')
-                ->on('company_divisions');
-
         });
     }
 

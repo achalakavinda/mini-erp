@@ -1,22 +1,21 @@
-INSERT INTO `brands` (`id`, `parent_id`, `level`, `name`, `company_id`, `company_division_id`, `created_at`, `updated_at`) VALUES
-(1, NULL, 0, 'Atlas Sounds', 1, 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
-(2, NULL, 0, 'Audio Technica', 1, 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
-(3, NULL, 0, 'Dimer 2', 1, 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
-(4, NULL, 0, 'Double Relay', 1, 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
-(5, NULL, 0, 'Genelec', 1, 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
-(6, NULL, 0, 'Klark Teknik', 1, 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
-(7, NULL, 0, 'Klotz', 1, 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
-(8, NULL, 0, 'Lab Gruppen', 1, 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
-(9, NULL, 0, 'MIDAS', 1, 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
-(10, NULL, 0, 'Motu', 1, 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56'),
-(11, NULL, 0, 'Rack in the case', 1, 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56'),
-(12, NULL, 0, 'Roylight', 1, 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56'),
-(13, NULL, 0, 'Sonodyne', 1, 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56'),
-(14, NULL, 0, 'Sonos', 1, 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56'),
-(15, NULL, 0, 'Tannoy', 1, 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56'),
-(16, NULL, 0, 'Turbosound', 1, 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56'),
-(17, NULL, 0, 'Xilica', 1, 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56');
-
+INSERT INTO `brands` (`id`, `parent_id`, `level`, `name`, `company_id`, `created_at`, `updated_at`) VALUES
+(1, NULL, 0, 'Sony', 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
+(2, NULL, 0, 'Bose', 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
+(3, NULL, 0, 'Yamaha', 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
+(4, NULL, 0, 'Sennheiser', 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
+(5, NULL, 0, 'JBL', 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
+(6, NULL, 0, 'Shure', 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
+(7, NULL, 0, 'Pioneer', 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
+(8, NULL, 0, 'Marshall', 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
+(9, NULL, 0, 'Beats', 1, '2018-12-07 16:00:55', '2018-12-07 16:00:55'),
+(10, NULL, 0, 'AKG', 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56'),
+(11, NULL, 0, 'Bang & Olufsen', 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56'),
+(12, NULL, 0, 'Rode', 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56'),
+(13, NULL, 0, 'Harman Kardon', 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56'),
+(14, NULL, 0, 'Klipsch', 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56'),
+(15, NULL, 0, 'Cambridge Audio', 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56'),
+(16, NULL, 0, 'Denon', 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56'),
+(17, NULL, 0, 'Technics', 1, '2018-12-07 16:00:56', '2018-12-07 16:00:56');
 
 --
 -- Dumping data for table `item_codes`
@@ -24,8 +23,9 @@ INSERT INTO `brands` (`id`, `parent_id`, `level`, `name`, `company_id`, `company
 --
 -- Dumping data for table `item_codes`
 --
+ALTER TABLE `item_codes` ADD `company_division_id` INT;
 
-INSERT INTO `item_codes` (`id`, `brand_id`, `company_id`, `company_division_id`, `type_measurement_id`, `type`, `name`, `description`, `thumbnail_url`, `unit_cost`, `selling_price`, `nbt_tax_percentage`, `vat_tax_percentage`, `unit_price_with_tax`, `active`, `created_at`, `updated_at`) VALUES
+INSERT INTO `item_codes` (`id`, `brand_id`, `company_id`,`company_division_id`, `type_measurement_id`, `type`, `name`, `description`, `thumbnail_url`, `unit_cost`, `selling_price`, `nbt_tax_percentage`, `vat_tax_percentage`, `unit_price_with_tax`, `active`, `created_at`, `updated_at`) VALUES
 (1, 1, 1, 1, NULL, 'product', 'AA240', 'sample description', 'http://itinerantnotes.com/blog/images/logo.png', 115553.36, 115553.36, 0.00, 0.00, 115553.36, 1, '2018-12-06 18:00:55', '2018-12-06 18:00:55'),
 (2, 1, 1, 1, NULL, 'product', 'AT10', 'sample description', 'http://itinerantnotes.com/blog/images/logo.png', 2702.03, 2702.03, 0.00, 0.00, 2702.03, 1, '2018-12-06 18:00:55', '2018-12-06 18:00:55'),
 (3, 1, 1, 1, NULL, 'product', 'AT35', 'sample description', 'http://itinerantnotes.com/blog/images/logo.png', 3336.14, 3336.14, 0.00, 0.00, 3336.14, 1, '2018-12-06 18:00:55', '2018-12-06 18:00:55'),
@@ -229,19 +229,20 @@ INSERT INTO `item_codes` (`id`, `brand_id`, `company_id`, `company_division_id`,
 (201, 17, 1, 1, NULL, 'product', 'XD-8080', 'sample description', 'http://itinerantnotes.com/blog/images/logo.png', 180633.42, 180633.42, 0.00, 0.00, 180633.42, 1, '2018-12-06 18:00:56', '2018-12-06 18:00:56'),
 (202, 17, 1, 1, NULL, 'product', 'XP-2040', 'sample description', 'http://itinerantnotes.com/blog/images/logo.png', 79552.58, 79552.58, 0.00, 0.00, 79552.58, 1, '2018-12-06 18:00:56', '2018-12-06 18:00:56');
 
+ALTER TABLE `item_codes` DROP COLUMN `company_division_id`;
 
 --
 -- Dumping data for table `suppliers`
 --
 
-INSERT INTO `suppliers` (`id`, `name`, `address`, `contact`, `email`, `active`, `web_url`, `company_id`, `company_division_id`, `created_at`, `updated_at`) VALUES
-(1, 'SRI LANKA TELECOM', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:12', '2020-08-15 05:40:12'),
-(2, 'JAT HOLDINGS', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:26', '2020-08-15 05:40:26'),
-(3, 'DISTILLERIES COMPANY OF SRI LANKA', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:31', '2020-08-15 05:40:31'),
-(4, 'COMMERCIAL BANK OF CEYLON', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:37', '2020-08-15 05:40:37'),
-(5, 'DIALOG TELEKOM', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:42', '2020-08-15 05:40:42'),
-(6, 'HATTON NATIONAL BANK', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:47', '2020-08-15 05:40:47'),
-(7, 'LANKA IOC', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:52', '2020-08-15 05:40:52'),
-(8, 'CARSON CUMBERBATCH', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:40:58', '2020-08-15 05:40:58'),
-(9, 'AITKEN SPENCE & COMPANY', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:41:27', '2020-08-15 05:41:27'),
-(10, 'CARGILLS (CEYLON)', NULL, NULL, NULL, 1, NULL, 1, 1, '2020-08-15 05:41:33', '2020-08-15 05:41:33');
+INSERT INTO `suppliers` (`id`, `name`, `address`, `contact`, `email`, `active`, `web_url`, `company_id`, `created_at`, `updated_at`) VALUES
+(1, 'SRI LANKA TELECOM', 'Lotus Rd, Colombo 01', '+94 112 620 620', 'info@slt.lk', 1, 'https://www.slt.lk', 1, '2020-08-15 05:40:12', '2020-08-15 05:40:12'),
+(2, 'JAT HOLDINGS', 'No 351, Pannipitiya Rd, Pelawatta', '+94 112 799 900', 'contact@jat.lk', 1, 'https://www.jatholdings.com', 1, '2020-08-15 05:40:26', '2020-08-15 05:40:26'),
+(3, 'DISTILLERIES COMPANY OF SRI LANKA', '110 Norris Canal Rd, Colombo 10', '+94 112 699 288', 'info@dcsllk.com', 1, 'https://www.dcslgroup.com', 1, '2020-08-15 05:40:31', '2020-08-15 05:40:31'),
+(4, 'COMMERCIAL BANK OF CEYLON', 'No. 21, Sir Razik Fareed Mawatha, Colombo 01', '+94 112 353 353', 'info@combank.net', 1, 'https://www.combank.lk', 1, '2020-08-15 05:40:37', '2020-08-15 05:40:37'),
+(5, 'DIALOG TELEKOM', '475 Union Place, Colombo 02', '+94 777 678 678', 'support@dialog.lk', 1, 'https://www.dialog.lk', 1, '2020-08-15 05:40:42', '2020-08-15 05:40:42'),
+(6, 'HATTON NATIONAL BANK', '479 T.B. Jayah Mawatha, Colombo 10', '+94 112 462 462', 'info@hnb.lk', 1, 'https://www.hnb.net', 1, '2020-08-15 05:40:47', '2020-08-15 05:40:47'),
+(7, 'LANKA IOC', 'Maradana Rd, Colombo 10', '+94 112 325 421', 'contact@lankaioc.com', 1, 'https://www.lankaioc.com', 1, '2020-08-15 05:40:52', '2020-08-15 05:40:52'),
+(8, 'CARSON CUMBERBATCH', '61, Janadhipathi Mawatha, Colombo 01', '+94 112 033 000', 'carsons@carcumb.com', 1, 'https://www.carsoncumberbatch.com', 1, '2020-08-15 05:40:58', '2020-08-15 05:40:58'),
+(9, 'AITKEN SPENCE & COMPANY', '315, Vauxhall Street, Colombo 02', '+94 112 305 200', 'info@aitkenspence.lk', 1, 'https://www.aitkenspence.com', 1, '2020-08-15 05:41:27', '2020-08-15 05:41:27'),
+(10, 'CARGILLS (CEYLON)', '40 York Street, Colombo 01', '+94 112 421 200', 'hello@cargillsceylon.com', 1, 'https://www.cargillsceylon.com', 1, '2020-08-15 05:41:33', '2020-08-15 05:41:33');

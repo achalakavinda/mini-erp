@@ -32,7 +32,6 @@ class CreateStockItemsTable extends Migration
 
 
             $table->boolean("is_open_stock")->default(false);
-            $table->unsignedInteger('company_division_id');
             $table->unsignedInteger('company_id');
             $table->timestamps();
 
@@ -45,10 +44,6 @@ class CreateStockItemsTable extends Migration
             $table->string('userdef7')->nullable();
             $table->string('userdef8')->nullable();
             $table->string('userdef9')->nullable();
-
-            $table->foreign('company_division_id')
-                ->references('id')
-                ->on('company_divisions');
 
             $table->foreign('company_id')
                 ->references('id')

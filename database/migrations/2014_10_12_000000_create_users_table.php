@@ -17,9 +17,11 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
 
             $table->increments('id');
-
+            $table->unsignedInteger('company_id')->default(1);
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
+
+            $table->unsignedInteger('primary_company_id')->default(1);
 
             $table->string('name');
             $table->string('img_url',500)->default("https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-512.png");
@@ -31,6 +33,10 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->timestamps();
 
+            $table->foreign('company_id')
+                ->references('id')
+                ->on('companies');
+
             $table->foreign('created_by')
                 ->references('id')
                 ->on('users');
@@ -38,6 +44,12 @@ class CreateUsersTable extends Migration
             $table->foreign('updated_by')
                 ->references('id')
                 ->on('users');
+
+            $table->foreign('primary_company_id')
+                ->references('id')
+                ->on('companies');
+
+                
 
         });
 
@@ -61,7 +73,14 @@ class CreateUsersTable extends Migration
                 'id'=>2,
                 'name' => 'Achala Kavinda',
                 'email' => 'achalakavinda25r@gmail.com',
-                'password' => bcrypt('Admin123!'),
+                'password' => bcrypt('Admin321!'),
+                'api_token' => Str::random(60),
+            ],
+            [
+                'id'=>3,
+                'name' => 'Achala Kavinda',
+                'email' => 'achalakavinda95@gmail.com',
+                'password' => bcrypt('Admin321!'),
                 'api_token' => Str::random(60),
             ],
 

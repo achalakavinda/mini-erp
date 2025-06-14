@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             InventorySeeder::class
         ]);
 
+        // \App\Models\Ims\Brand::factory()->count(10)->create();
+        // \App\Models\Customer::factory()->count(10)->create();
 
 
     }

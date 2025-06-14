@@ -16,7 +16,6 @@ class CreateCustomerReturnNotesTable extends Migration
         Schema::create('customer_return_notes', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('company_id')->nullable();
-            $table->unsignedInteger('company_division_id')->nullable();
             $table->unsignedInteger('customer_id')->nullable();
             $table->unsignedInteger('invoice_id')->nullable();
 
@@ -37,16 +36,6 @@ class CreateCustomerReturnNotesTable extends Migration
             $table->unsignedInteger('invoice_payment_status_id')->default(1);
             $table->timestamps();
 
-            $table->string('userdef1')->nullable();
-            $table->string('userdef2')->nullable();
-            $table->string('userdef3')->nullable();
-            $table->string('userdef4')->nullable();
-            $table->string('userdef5')->nullable();
-            $table->string('userdef6')->nullable();
-            $table->string('userdef7')->nullable();
-            $table->string('userdef8')->nullable();
-            $table->string('userdef9')->nullable();
-
             $table->foreign('invoice_id')
                 ->references('id')
                 ->on('invoices');
@@ -58,10 +47,6 @@ class CreateCustomerReturnNotesTable extends Migration
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies');
-
-            $table->foreign('company_division_id')
-                ->references('id')
-                ->on('company_divisions');
         });
     }
 

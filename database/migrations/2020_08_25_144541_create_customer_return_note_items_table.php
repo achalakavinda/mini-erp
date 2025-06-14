@@ -20,7 +20,6 @@ class CreateCustomerReturnNoteItemsTable extends Migration
             $table->unsignedInteger('item_code_id');
             $table->unsignedInteger('stock_item_id');//use to map invoice to specific stock item
             $table->unsignedInteger('company_id')->nullable();
-            $table->unsignedInteger('company_division_id')->nullable();
 
             $table->double('item_unit_cost_from_table');
             $table->double('unit_price');
@@ -31,16 +30,6 @@ class CreateCustomerReturnNoteItemsTable extends Migration
 
             $table->text('remarks')->nullable();
             $table->timestamps();
-
-            $table->string('userdef1')->nullable();
-            $table->string('userdef2')->nullable();
-            $table->string('userdef3')->nullable();
-            $table->string('userdef4')->nullable();
-            $table->string('userdef5')->nullable();
-            $table->string('userdef6')->nullable();
-            $table->string('userdef7')->nullable();
-            $table->string('userdef8')->nullable();
-            $table->string('userdef9')->nullable();
 
             $table->foreign('customer_return_note_id')
                 ->references('id')
@@ -53,10 +42,6 @@ class CreateCustomerReturnNoteItemsTable extends Migration
             $table->foreign('company_id')
                 ->references('id')
                 ->on('companies');
-
-            $table->foreign('company_division_id')
-                ->references('id')
-                ->on('company_divisions');
 
             $table->foreign('item_code_id')
                 ->references('id')
