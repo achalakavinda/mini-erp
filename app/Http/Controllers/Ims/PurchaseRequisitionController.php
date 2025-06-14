@@ -19,13 +19,6 @@ use Illuminate\Http\Request;
 
 class PurchaseRequisitionController extends Controller
 {
-    public $Company_Division_id = 1;
-    public $CompanyDivision;
-
-    public function __construct()
-    {
-        $this->CompanyDivision = CompanyDivision::get()->first();
-    }
 
     /**
      * Display a listing of the resource.
@@ -68,7 +61,6 @@ class PurchaseRequisitionController extends Controller
 
         $PurchaseRequisition = PurchaseRequisition::create([
             'date'=>$date,
-            'company_division_id'=>$this->CompanyDivision->id,
             'supplier_id'=>$request->supplier_id,
             'created_by'=> auth()->user()->id,
             'purchase_requisition_status_id'=> 1
@@ -85,7 +77,6 @@ class PurchaseRequisitionController extends Controller
                         'purchase_requisition_id'=>$PurchaseRequisition->id,
                         'item_code_id'=>$Model->id,
                         'item_code'=>$Model->name,
-                        'company_division_id'=>$this->CompanyDivision->id,
                         'item_unit_cost_from_table'=>$Model->unit_cost,
                         'unit_price'=>$item['unit_price'],
                         'qty'=>$item['qty'],
@@ -167,7 +158,6 @@ class PurchaseRequisitionController extends Controller
                         'purchase_requisition_id'=>$PurchaseRequisition->id,
                         'item_code_id'=>$Model->id,
                         'item_code'=>$Model->name,
-                        'company_division_id'=>$this->CompanyDivision->id,
                         'item_unit_cost_from_table'=>$Model->unit_cost,
                         'unit_price'=>$item['unit_price'],
                         'qty'=>$item['qty'],
