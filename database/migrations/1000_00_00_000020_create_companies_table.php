@@ -16,6 +16,7 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
             $table->string('code')->unique();
+            $table->string('name');
             $table->unsignedInteger('tenant_id');
             $table->timestamps();
             $table->foreign('tenant_id')->references('id')->on('tenants');
@@ -25,6 +26,7 @@ class CreateCompaniesTable extends Migration
             [
                 'id'=>1,
                 'code' => 'TEST_COMPANY_1_TENANT_1',
+                'name' => 'C1 - T1',
                 'tenant_id'=>1,
                 'created_at' =>\Carbon\Carbon::now(),
                 'updated_at' =>\Carbon\Carbon::now()
@@ -32,6 +34,7 @@ class CreateCompaniesTable extends Migration
              [
                 'id'=>2,
                 'code' => 'TEST_COMPANY_2_TENANT_1',
+                'name' => 'C2 - T1',
                 'tenant_id'=>1,
                 'created_at' =>\Carbon\Carbon::now(),
                 'updated_at' =>\Carbon\Carbon::now()
@@ -39,6 +42,7 @@ class CreateCompaniesTable extends Migration
              [
                 'id'=>3,
                 'code' => 'TEST_COMPANY_1_TENANT_2',
+                'name' => 'C1 - T2',
                 'tenant_id'=>1,
                 'created_at' =>\Carbon\Carbon::now(),
                 'updated_at' =>\Carbon\Carbon::now()
@@ -46,6 +50,7 @@ class CreateCompaniesTable extends Migration
              [
                 'id'=>4,
                 'code' => 'TEST_COMPANY_2_TENANT_2',
+                'name' => 'C2 - T2',
                 'tenant_id'=>1,
                 'created_at' =>\Carbon\Carbon::now(),
                 'updated_at' =>\Carbon\Carbon::now()

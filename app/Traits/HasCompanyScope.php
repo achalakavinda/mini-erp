@@ -41,5 +41,18 @@ trait HasCompanyScope
         return $query->whereIn('company_id', $companyIds);
     }
 
+    /**
+     * Scope a query to only include records belonging to the authenticated user's company/companies.
+     *
+     * @param  Builder  $query
+     * @return Builder
+     */
+     public function scopeUserOwnedCompany(Builder $query)
+    {
+        // Handle multiple company IDs if available as an array or relation
+        $companyIds = $this->companyIds();
+        return $query->whereIn('id', $companyIds);
+    }
+
 
 }

@@ -1,33 +1,32 @@
 @extends('layouts.admin')
-@section('style')
-    {!! Html::style('admin/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css') !!}
-@endsection
-<!-- main header section -->
+
 @section('main-content-header')
+    <!-- main header section -->
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Job Types</h3>
+            <h3 class="box-title">Leads</h3>
         </div>
         @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
-            <a onclick="showMegaMenu()" href="#" class="btn btn-app">
+            <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
             </a>
-            <a href="{!! url('job-type') !!}" class="btn btn-app">
+            <a href="{!! url('lead') !!}" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-refresh"></i> Refresh
             </a>
-            <a href="{!! url('/job-type/create') !!}" class="btn btn-app">
+            <a href="{!! url('lead/create') !!}" class="btn btn-menu">
                 <i class="main-action-btn-danger fa fa-plus"></i> New
             </a>
         </div>
         <!-- /.box-body -->
     </div>
     <!-- /.box -->
+    <!-- /main header section -->
 @endsection
-<!-- /main header section -->
-<!-- main section -->
+
 @section('main-content')
+    <!-- main section -->
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
@@ -36,20 +35,26 @@
                     <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>
                         <tr>
-                            <th>Key</th>
-                            <th>Job</th>
-                            <th>Description</th>
+                            <th>Id</th>
+                            <th>Company</th>
+                            <th>Email</th>
+                            <th>Post Url</th>
+                            <th>Message</th>
+                            <th>Time</th>
                             <th>View</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($Rows as $row)
+                        @foreach($Leads as $item)
                             <tr>
-                                <td>{{ $row->key }}</td>
-                                <td>{{ $row->jobType }}</td>
-                                <td>{{ $row->description }}</td>
+                                <td>{!! $item->id !!}</td>
+                                <td>{!! $item->company->name ?? 'N/A' !!}</td>
+                                <td>{!! $item->email !!}</td>
+                                <td>{!! $item->post_url !!}</td>
+                                <td>{!! $item->message !!}</td>                    
+                                <td>{!! $item->created_at !!}</td>
                                 <td>
-                                    <a href="{{ url('/job-type') }}/{{ $row->id }}"><i class="fa fa-paper-plane"></i></a>
+                                    <a href="{!! url('/lead/') !!}/{!! $item->id !!}"><i class="fa fa-paper-plane"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -63,16 +68,9 @@
         <!-- /.col -->
     </div>
     <!-- /.row -->
+    <!-- /main section -->
 @endsection
-<!-- /main section -->
+
 @section('js')
-    {!! Html::script('admin/bower_components/datatables.net/js/jquery.dataTables.min.js') !!}
-    {!! Html::script('admin/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js') !!}
-    <script type="text/javascript">
-        $(function () {
-            $('#table').DataTable({
-                "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]]
-            })
-        })
-    </script>
+    @include('layouts.components.dataTableJs.index')
 @endsection

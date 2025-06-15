@@ -18,4 +18,9 @@ class Lead extends Model
         $this->connection = $connection;
         return $this;
     }
+
+    public function company()
+    {
+        return $this->belongsTo(\App\Models\Company::class);
+    }
 }
