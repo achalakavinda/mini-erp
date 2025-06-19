@@ -47,9 +47,6 @@
                         </thead>
 
                         <tbody>
-
-                        <?php $Projects = \App\Models\Project::all();?>
-
                         @foreach($Projects as $Project)
                             <tr>
                                 <td>

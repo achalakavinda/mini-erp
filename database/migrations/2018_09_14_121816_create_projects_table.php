@@ -64,7 +64,11 @@ class CreateProjectsTable extends Migration
 
             $table->timestamps();
             $table->unsignedInteger('created_by_id');
+            $table->unsignedInteger('company_id');
             $table->unsignedInteger('updated_by_id')->nullable();
+
+
+            $table->foreign('company_id')->references('id')->on('companies');
             $table->foreign('sector_id')->references('id')->on('customer_sectors');
             $table->foreign('customer_id')->references('id')->on('customers');
             $table->foreign('created_by_id')->references('id')->on('users');

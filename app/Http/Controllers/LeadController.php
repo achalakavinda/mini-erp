@@ -15,6 +15,11 @@ class LeadController extends Controller
 {
     use HasCompanyScope;
 
+    public function __construct()
+    {
+        $this->middleware(['permission:'.config('constant.Permission_Lead')]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -33,7 +38,7 @@ class LeadController extends Controller
 
         $Leads = $query->paginate(10);
 
-        return view('admin.crm.lead.index',compact('Leads'));
+        return view('admin.lead.index',compact('Leads'));
     }
 
     /**
@@ -46,7 +51,7 @@ class LeadController extends Controller
         $Company = Company::userOwnedCompany()->pluck('code', 'id');
         $LeadTypes = LeadType::pluck('name', 'id');
 
-        return view('admin.crm.lead.create', compact('Company', 'LeadTypes'));
+        return view('admin.lead.create', compact('Company', 'LeadTypes'));
     }
 
     /**
@@ -61,19 +66,15 @@ class LeadController extends Controller
         $validated = $request->validate([
            'post_url' => 'required|string|max:255',
            'email' => 'required|email|max:255',
-            'company_name' => 'required|string|max:255',
-            'company_id' => 'required|exists:companies,id',
-            'lead_type_id' => 'required|exists:lead_types,id',
-            'message' => 'nullable|string',
-           ]);
+           'company_name' => 'required|string|max:255',
+           'company_id' => 'required|exists:companies,id',
+           'lead_type_id' => 'required|exists:lead_types,id',
+           'message' => 'required|string',
+        ]);
 
-        CompanyHelper::checkUserCompaniesAccess($request->company_id,$this->companyIds());
+        $this->checkCompanyAccess($request->company_id);
 
-        $data = $validated;
-
-        // $data['message'] = $request->message;if you need add any optional
-
-        Lead::create($data);
+        Lead::create($validated);
 
         return redirect()->route('lead.index')->with('success', 'Lead created successfully.');
 
@@ -87,7 +88,7 @@ class LeadController extends Controller
      */
     public function show($id)
     {
-        //
+        $this->checkCompanyAccess($request->company_id);
     }
 
     /**

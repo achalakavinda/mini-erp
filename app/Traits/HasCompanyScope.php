@@ -38,7 +38,16 @@ trait HasCompanyScope
     {
         // Handle multiple company IDs if available as an array or relation
         $companyIds = $this->companyIds();
+        // echo dd($companyIds);
         return $query->whereIn('company_id', $companyIds);
+    }
+
+
+    public function checkCompanyAccess($companyId)
+    {
+        if (!in_array($companyId, $this->companyIds())) {
+            abort(403, 'Access denied to this company.');
+        }
     }
 
     /**

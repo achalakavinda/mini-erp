@@ -6,11 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Models\CusSector;
 use App\Models\CusService;
 use App\Models\Customer;
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Traits\HasCompanyScope;
+
 
 class CustomerController extends Controller
 {
+
+    use HasCompanyScope;
+
     public function __construct()
     {
         $this->middleware(['permission:'.config('constant.Permission_Customer')]);
@@ -24,7 +31,7 @@ class CustomerController extends Controller
     public function index()
     {
         User::CheckPermission([config('constant.Permission_Customer_Registry')]);
-        $Customers = Customer::all();
+        $Customers = Customer::ownedByCompany()->paginate(10);
         return view('admin.customer.index',compact('Customers'));
     }
 
@@ -36,7 +43,8 @@ class CustomerController extends Controller
     public function create()
     {
         User::CheckPermission([config('constant.Permission_Customer_Creation')]);
-        return view('admin.customer.create');
+        $Company = Company::userOwnedCompany()->pluck('code', 'id');
+        return view('admin.customer.create',compact('Company'));
     }
 
     /**
@@ -48,46 +56,47 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         User::CheckPermission([config('constant.Permission_Customer_Creation')]);
-        $request->validate([
-           'name'=>'required'
+        
+        $validated = $request->validate([
+           'name'=>'required',
+           'email'=>'required',
+           'code'=>'nullable',
+            'dob'=>'nullable',
+            'contact'=>'nullable',
+            'contact_1'=>'nullable',
+            'contact_2'=>'nullable',
+            'contact_3'=>'nullable',
+            'file_no'=>'nullable',
+            'address_1'=>'nullable',
+            'address_2'=>'nullable',
+            'address_3'=>'nullable',
+            'fax_number'=>'nullable',
+            'secretary_id'=>'nullable',
+            'date_of_incorporation'=>'nullable',
+            'tin_no'=>'nullable',
+            'vat_no'=>'nullable',
+            'nic'=>'nullable',
+            'passport'=>'nullable',
+            'ceo'=>'nullable|string',
+            'ceo_contact'=>'nullable',
+            'ceo_email'=>'nullable',
+            'cfo'=>'nullable',
+            'cfo_contact'=>'nullable',
+            'cfo_email'=>'nullable',
+            'website'=>'nullable',
+            'location'=>'nullable',
+            'description'=>'nullable',
+            'company_id' => 'required|exists:companies,id',
         ]);
 
-        $Customer = null;
+        $this->checkCompanyAccess($request->company_id);
+
+        $validated['created_by'] = Auth::id();
+        $validated['updated_by'] = Auth::id();
 
         try{
 
-            $Customer = Customer::create([
-                'name'=>$request->name,
-                'code'=>$request->code,
-                'dob'=>$request->dob,
-                'contact'=>$request->contact,
-                'contact_1'=>$request->contact_1,
-                'contact_2'=>$request->contact_2,
-                'contact_3'=>$request->contact_3,
-                'email'=>$request->email,
-                'file_no'=>$request->file_no,
-                'address_1'=>$request->address_1,
-                'address_2'=>$request->address_2,
-                'address_3'=>$request->address_3,
-                'fax_number'=>$request->fax_number,
-                'secretary_id'=>$request->secretary_id,
-                'date_of_incorporation'=>$request->date_of_incorporation,
-                'tin_no'=>$request->tin_no,
-                'vat_no'=>$request->vat_no,
-                'nic'=>$request->nic,
-                'passport'=>$request->passport,
-                'ceo'=>$request->ceo,
-                'ceo_contact'=>$request->ceo_contact,
-                'ceo_email'=>$request->ceo_email,
-                'cfo'=>$request->cfo,
-                'cfo_contact'=>$request->cfo_contact,
-                'cfo_email'=>$request->cfo_email,
-                'website'=>$request->website,
-                'location'=>$request->location,
-                'description'=>$request->description,
-                'created_by'=>\Auth::id(),
-                'updated_by'=>\Auth::id()
-            ]);
+            $Customer = Customer::create($validated);
 
             if($request->service_id){
                 foreach ($request->service_id as $item){

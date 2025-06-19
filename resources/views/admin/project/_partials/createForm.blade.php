@@ -1,7 +1,11 @@
 <div class="box-body">
+    <div class="col-md-12">
+        <x-form.select-company :companies="$Company" :selected="old('company_id')" />
+    </div>
+    
     <div class="col-md-6">
             <div class="form-group">
-                {!! Form::label('customer_id','Company',['class' => 'control-label']) !!}
+                {!! Form::label('customer_id','Customer',['class' => 'control-label']) !!}
                 {!! Form::select('customer_id',$Customers,null,['class'=>'form-control','id'=>'companyId']) !!}
             </div>
     </div>

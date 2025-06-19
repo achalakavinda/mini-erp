@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Models\Crm;
-use App\Traits\HasCompanyScope;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Traits\HasCompanyScope;
 
 class Lead extends Model
 {

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use App\Models\CustomerSector;
+use App\Models\Company;
 use App\Models\JobType;
 use App\Models\Project;
 use App\Models\ProjectCostType;
@@ -16,9 +17,12 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use App\Traits\HasCompanyScope;
+
 
 class ProjectController extends Controller
 {
+    use HasCompanyScope;
 
     public function __construct()
     {
@@ -33,21 +37,9 @@ class ProjectController extends Controller
      */
     public function index()
     {
-
-        User::CheckPermission([config('constant.Permission_Project_Registry'),config('constant.Permission_Project_Registry_Assigned')]);
-
-        if( User::checkPermission( config('constant.Permission_Project_Registry') ))
-        {
-            $Rows = Project::all();
-            return view('admin.project.index',compact('Rows'));
-
-        }elseif ( User::checkPermission( config('constant.Permission_Project_Registry_Assigned')) )
-        {
-            return view('admin.project.assigned.index');
-        }else
-        {
-           return view('errors.404');
-        }
+        User::CheckPermission([config('constant.Permission_Project_Registry')]);
+        $Projects = Project::ownedByCompany()->get();
+        return view('admin.project.index',compact('Projects'));
     }
 
     /**
@@ -56,12 +48,14 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        User::CheckPermission([config('constant.Permission_Project_Creation'),config('constant.Permission_Project_Budget_Creation_Assigned')]);
-        $Customers = Customer::all()->pluck('name','id');
+        User::CheckPermission([config('constant.Permission_Project_Creation')]);
+
+        $Company = Company::userOwnedCompany()->pluck('code', 'id');
+        $Customers = Customer::ownedByCompany()->pluck('name','id');
         $JobTypes = JobType::all()->pluck('jobType','id');
         $CustomerSector = CustomerSector::all()->pluck('name','id');
 
-        return view('admin.project.create',compact(['Customers','JobTypes','CustomerSector']));
+        return view('admin.project.create',compact(['Company','Customers','JobTypes','CustomerSector']));
     }
 
     /**
@@ -71,34 +65,35 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        User::CheckPermission([config('constant.Permission_Project_Creation'),config('constant.Permission_Project_Creation_Assigned')]);
+        User::CheckPermission([config('constant.Permission_Project_Creation')]);
 
-        $request->validate([
-            'customer_id' => 'required',
-            'job_type' => 'required',
-            'budget_number_of_hrs' => 'required',
-            'budget_cost' => 'required',
-            'p_y_quoted_price' => 'required',
-            'profit_ratio' => 'required',
-            'quoted_price' => 'required',
-            'sector_id'=>'required',
-        ]);
+         $validated = $request->validate([
+        'customer_id' => 'required|exists:customers,id',
+        'company_id' => 'required|exists:companies,id',
+        'job_type' => 'required|exists:job_types,id',
+        'budget_number_of_hrs' => 'required|numeric',
+        'budget_cost' => 'required|numeric',
+        'p_y_quoted_price' => 'required|numeric',
+        'profit_ratio' => 'required|numeric|min:10',
+        'quoted_price' => 'required|numeric',
+        'sector_id' => 'required|exists:customer_sectors,id',
+    ]);
+
+    $this->checkCompanyAccess($validated['company_id']);
 
         //fetch customer information
-        $CUSTOMER = Customer::findOrFail($request->customer_id);
-        $JobType = JobType::findOrFail($request->job_type);
-        $CustomerSector = CustomerSector::findOrFail($request->sector_id);
-        $TimeCode = Carbon::now()->format('yM-d');
+        $customer = Customer::ownedByCompany()->findOrFail($validated['customer_id']);
+        $jobType = JobType::findOrFail($validated['job_type']);
+        $sector = CustomerSector::findOrFail($validated['sector_id']);
 
         //Project Code
-        $code = $CUSTOMER->name."-".$JobType->key.$TimeCode;
+        $timeCode = now()->format('yM-d');
+        $code = "{$customer->name}-{$jobType->name}{$timeCode}";
+
 
         //Check code for unique project code validations
-        $CheckCode = Project::where('code',$code)->first();
-
-        if( $CheckCode )
-        {
-            return    \redirect()->back()->withErrors('*Code should be unique');
+        if (Project::ownedByCompany()->where('code', $code)->exists()) {
+            return redirect()->back()->withErrors('Project code must be unique.');
         }
 
         if( $request->profit_ratio<10 )
@@ -106,36 +101,37 @@ class ProjectController extends Controller
             return    \redirect()->back()->withErrors('Minimum mark up 10%');
         }
 
-        $quoted_price = $request->budget_cost +( $request->budget_cost* ($request->profit_ratio/100) );
+        $quotedPrice = $validated['budget_cost'] + ($validated['budget_cost'] * ($validated['profit_ratio'] / 100));
 
         //create project
-        $Project = Project::create([
-            'customer_id'=>$request->customer_id,
-            'customer_name'=>$CUSTOMER->name,
-            'code'=>$code,
-            'sector_id'=>$request->sector_id,
-            'sector_name'=>$CustomerSector->name,
-            'job_type_id'=>$JobType->id,
-            'job_type_name'=>$JobType->jobType,
-            'quoted_price'=>$quoted_price,
-            'budget_revenue'=>$quoted_price,
-            'budget_number_of_hrs'=>$request->budget_number_of_hrs,
-            'budget_cost_by_overhead'=>$request->budget_cost,
-            'p_y_quoted_price'=>$request->p_y_quoted_price,
-            'profit_ratio'=>$request->profit_ratio/100,
-            'status_id'=>1,
-            'created_by_id'=>\Auth::id(),
-            'updated_by_id'=>\Auth::id(),
+        $project = Project::create([
+        'company_id'            => $validated['company_id'],
+        'customer_id'           => $validated['customer_id'],
+        'customer_name'         => $customer->name,
+        'code'                  => $code,
+        'sector_id'             => $validated['sector_id'],
+        'sector_name'           => $sector->name,
+        'job_type_id'           => $jobType->id,
+        'job_type_name'         => $jobType->jobType,
+        'quoted_price'          => $quotedPrice,
+        'budget_revenue'        => $quotedPrice,
+        'budget_number_of_hrs'  => $validated['budget_number_of_hrs'],
+        'budget_cost_by_overhead' => $validated['budget_cost'],
+        'p_y_quoted_price'      => $validated['p_y_quoted_price'],
+        'profit_ratio'          => $validated['profit_ratio'] / 100,
+        'status_id'             => 1,
+        'created_by_id'         => auth()->id(),
+        'updated_by_id'         => auth()->id(),
+    ]);
+
+         if (User::CheckPermission(config('constant.Permission_Project_Creation_Assigned'))) {
+        ProjectEmployee::create([
+            'project_id' => $project->id,
+            'user_id'    => auth()->id(),
         ]);
+    }
 
-        if(User::CheckPermission( config('constant.Permission_Project_Creation_Assigned') )){
-            ProjectEmployee::create([
-                'project_id'=>$Project->id,
-                'user_id'=>\Auth::id()
-            ]);
-        }
-
-        return \redirect('project/'.$Project->id);
+        return redirect()->route('project.show', $project->id);
     }
 
     /**

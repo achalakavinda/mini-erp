@@ -49,6 +49,9 @@ class CreateCustomersTable extends Migration
             $table->timestamps();
             $table->unsignedInteger('created_by')->nullable();
             $table->unsignedInteger('updated_by')->nullable();
+            $table->unsignedInteger('company_id')->nullable();
+
+            
 
 
             $table->foreign('secretary_id')
@@ -62,6 +65,10 @@ class CreateCustomersTable extends Migration
             $table->foreign('sector_id')
                 ->references('id')
                 ->on('customer_sectors');
+
+                 $table->foreign('company_id')
+                ->references('id')
+                ->on('companies');
         });
 
     }
