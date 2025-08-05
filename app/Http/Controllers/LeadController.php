@@ -9,7 +9,6 @@ use App\Models\Company;
 use App\Models\Crm\LeadType;
 use Illuminate\Support\Facades\DB;
 use App\Traits\HasCompanyScope;
-use App\Helpers\CompanyHelper;
 
 class LeadController extends Controller
 {

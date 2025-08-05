@@ -31,21 +31,27 @@
                 </li>
             @endcan
 
-            @can(config('constant.Permission_Project'))
+            @can(config('constant.Permission_Customer'))
                 <li class="treeview">
-                    <a href="#"><i class="fa fa-folder"></i> <span> Project Costing </span>
+                    <a href="{{ url('/location') }}"><i class="fa fa-users"></i> <span>Location</span>
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
-
                     <ul class="treeview-menu">
-                        @can(config('constant.Permission_Project'))
-                            <li><a href="{{ url('/project') }}"><i class="fa fa-table"></i> <span>Project List</span></a></li>
-                        @elsecan(config('constant.Permission_Project_Assigned'))
-                            <li><a href="{{ url('/project') }}"><i class="fa fa-print"></i> <span>Assigned Project</span></a>
-                            </li>
-                        @endcan
+                        <li><a href="{{ url('/location') }}"><i class="fa fa-table"></i> Registry</a></li>
+                        <li><a href="{{ url('/location/create') }}"><i class="fa fa-plus-square"></i> New </a></li>
                     </ul>
+                </li>
+            @endcan
 
+             @can(config('constant.Permission_Customer'))
+                <li class="treeview">
+                    <a href="{{ url('/inspection') }}"><i class="fa fa-list"></i> <span>Inspection</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{{ url('/inspection') }}"><i class="fa fa-table"></i> Registry</a></li>
+                        <li><a href="{{ url('/inspection/create') }}"><i class="fa fa-plus-square"></i> New </a></li>
+                    </ul>
                 </li>
             @endcan
 
