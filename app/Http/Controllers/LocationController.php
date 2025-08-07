@@ -56,62 +56,18 @@ class LocationController extends Controller
         User::CheckPermission([config('constant.Permission_Customer_Creation')]);
         
         $validated = $request->validate([
-           'name'=>'required',
-           'email'=>'required',
-           'code'=>'nullable',
-            'dob'=>'nullable',
-            'contact'=>'nullable',
-            'contact_1'=>'nullable',
-            'contact_2'=>'nullable',
-            'contact_3'=>'nullable',
-            'file_no'=>'nullable',
-            'address_1'=>'nullable',
-            'address_2'=>'nullable',
-            'address_3'=>'nullable',
-            'fax_number'=>'nullable',
-            'secretary_id'=>'nullable',
-            'date_of_incorporation'=>'nullable',
-            'tin_no'=>'nullable',
-            'vat_no'=>'nullable',
-            'nic'=>'nullable',
-            'passport'=>'nullable',
-            'ceo'=>'nullable|string',
-            'ceo_contact'=>'nullable',
-            'ceo_email'=>'nullable',
-            'cfo'=>'nullable',
-            'cfo_contact'=>'nullable',
-            'cfo_email'=>'nullable',
-            'website'=>'nullable',
-            'location'=>'nullable',
-            'description'=>'nullable',
+            'name'=>'required',
+            'address'=>'nullable',
             'company_id' => 'required|exists:companies,id',
         ]);
 
         $this->checkCompanyAccess($request->company_id);
 
-        $validated['created_by'] = Auth::id();
-        $validated['updated_by'] = Auth::id();
-
         try{
 
-            $Customer = Customer::create($validated);
+            $location = Location::create($validated);
 
-            if($request->service_id){
-                foreach ($request->service_id as $item){
-                    CusService::create([
-                        'customer_id'=> $Customer->id,
-                        'service_id'=>$item
-                    ]);
-                }
-            }
-
-            if($request->sector_id){
-                foreach ($request->sector_id as $item){
-                CusSector::create([
-                    'customer_id'=> $Customer->id,
-                    'sector_id'=>$item
-                ]);
-            }}
+            $location->save();
 
         }catch (\Exception $exception){
             return redirect()->back()->with(['created'=>'error','message'=>$exception->getMessage()]);

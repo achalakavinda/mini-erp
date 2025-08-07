@@ -66,6 +66,24 @@ return [
     'Permission_Designation_Creation'=>'Designation-Creation',
     'Permission_Designation_Update'=> 'Designation-Update',
 
+    'Permission_Location'=>'Location',
+    'Permission_Location_Registry'=>'Location-Registry',
+    'Permission_Location_Show'=>'Location-Show',
+    'Permission_Location_Creation'=>'Location-Creation',
+    'Permission_Location_Update'=> 'Location-Update',
+
+    'Permission_Inspection'=>'Inspection',
+    'Permission_Inspection_Registry'=>'Inspection-Registry',
+    'Permission_Inspection_Show'=>'Inspection-Show',
+    'Permission_Inspection_Creation'=>'Inspection-Creation',
+    'Permission_Inspection_Update'=> 'Inspection-Update',
+
+    'Permission_Service'=>'Service',
+    'Permission_Service_Registry'=>'Service-Registry',
+    'Permission_Service_Show'=>'Service-Show',
+    'Permission_Service_Creation'=>'Service-Creation',
+    'Permission_Service_Update'=> 'Service-Update',
+
     'Permission_Job_Type'=> 'Job-Type',
     'Permission_Job_Type_Show'=> 'Job-Type-Show',
     'Permission_Job_Type_Registry'=> 'Job-Type-Registry',

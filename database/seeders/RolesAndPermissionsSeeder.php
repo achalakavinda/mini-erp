@@ -89,6 +89,24 @@ class RolesAndPermissionsSeeder extends Seeder
         $permission = Permission::create(['name' =>  config('constant.Permission_Designation_Update') ]);
         $role_admin->givePermissionTo($permission);
 
+        $permission = Permission::create(['name' =>  config('constant.Permission_Location') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' =>  config('constant.Permission_Location_Registry') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' =>  config('constant.Permission_Location_Creation') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' =>  config('constant.Permission_Location_Update') ]);
+        $role_admin->givePermissionTo($permission);
+
+        $permission = Permission::create(['name' =>  config('constant.Permission_Inspection') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' =>  config('constant.Permission_Inspection_Registry') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' =>  config('constant.Permission_Inspection_Creation') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' =>  config('constant.Permission_Inspection_Update') ]);
+        $role_admin->givePermissionTo($permission);
+
         $permission = Permission::create(['name' => config('constant.Permission_Job_Type') ]);
         $role_admin->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Job_Type_Registry') ]);
@@ -359,6 +377,17 @@ class RolesAndPermissionsSeeder extends Seeder
         $permission = Permission::create(['name' => config('constant.Permission_Payment_Creation') ]);
         $role_admin->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_Payment_Update') ]);
+        $role_admin->givePermissionTo($permission);
+
+        $permission = Permission::create(['name' => config('constant.Permission_Service') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Service_Registry') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Service_Show') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Service_Creation') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Service_Update') ]);
         $role_admin->givePermissionTo($permission);
 
         $permission = Permission::create(['name' => config('constant.Permission_General_Ledger') ]);

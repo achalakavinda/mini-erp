@@ -44,7 +44,7 @@
           <!-- AREA CHART -->
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Area Chart</h3>
+              <h3 class="box-title">Revenue</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -64,7 +64,7 @@
           <!-- DONUT CHART -->
           <div class="box box-danger">
             <div class="box-header with-border">
-              <h3 class="box-title">Donut Chart</h3>
+              <h3 class="box-title">Monthly Sales</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -85,7 +85,7 @@
           <!-- LINE CHART -->
           <div class="box box-info">
             <div class="box-header with-border">
-              <h3 class="box-title">Line Chart</h3>
+              <h3 class="box-title">Monthly Sales</h3>
 
               <div class="box-tools pull-right">
                 <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>

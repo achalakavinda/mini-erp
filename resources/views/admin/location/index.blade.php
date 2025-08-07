@@ -12,10 +12,10 @@
             <a onclick="showMegaMenu()" href="#" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-list"></i> Quick Menu
             </a>
-            <a href="{!! url('customer') !!}" class="btn btn-menu">
+            <a href="{!! url('location') !!}" class="btn btn-menu">
                 <i class="main-action-btn-info fa fa-refresh"></i> Refresh
             </a>
-            <a href="{!! url('customer/create') !!}" class="btn btn-menu">
+            <a href="{!! url('location/create') !!}" class="btn btn-menu">
                 <i class="main-action-btn-danger fa fa-plus"></i> New
             </a>
         </div>
@@ -46,7 +46,7 @@
                                     <td>{!! $item->name !!}</td>
                                     <td>{!! $item->address !!}</td>
                                     <td>
-                                        <a href="{!! url('/customer/') !!}/{!! $item->id !!}"><i
+                                        <a href="{!! url('/location/') !!}/{!! $item->id !!}"><i
                                                 class="fa fa-paper-plane"></i></a>
                                     </td>
                                 </tr>
