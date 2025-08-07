@@ -390,6 +390,18 @@ class RolesAndPermissionsSeeder extends Seeder
         $permission = Permission::create(['name' => config('constant.Permission_Service_Update') ]);
         $role_admin->givePermissionTo($permission);
 
+        
+        $permission = Permission::create(['name' => config('constant.Permission_Appointment') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Appointment_Registry') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Appointment_Show') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Appointment_Creation') ]);
+        $role_admin->givePermissionTo($permission);
+        $permission = Permission::create(['name' => config('constant.Permission_Appointment_Update') ]);
+        $role_admin->givePermissionTo($permission);
+
         $permission = Permission::create(['name' => config('constant.Permission_General_Ledger') ]);
         $role_admin->givePermissionTo($permission);
         $permission = Permission::create(['name' => config('constant.Permission_General_Ledger_Registry') ]);

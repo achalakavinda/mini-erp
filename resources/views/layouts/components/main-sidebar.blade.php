@@ -9,6 +9,25 @@
                 <li><a href="{{ url('/dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             @endcan
 
+            @can(config('constant.Permission_Appointment'))
+                <li class="treeview">
+                    <a href="{!! url('appointments') !!}"><i class="fa fa-calendar"></i> <span>Appointments</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @can(config('constant.Permission_Item_Registry'))
+                            <li><a href="{!! url('appointments') !!}"><i class="fa fa-table"></i> Appointments</a></li>
+                        @endcan
+                        @can(config('constant.Permission_Item_Creation'))
+                            <li><a href="{!! url('appointments/create') !!}"><i class="fa fa-plus"></i> new</a></li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
+
+
             @can(config('constant.Permission_Lead'))
                 <li class="treeview">
                     <a href="{{ url('/lead') }}"><i class="fa fa-magnet"></i> <span>Lead</span>
@@ -45,7 +64,7 @@
                 </li>
             @endcan
 
-             @can(config('constant.Permission_Inspection'))
+            @can(config('constant.Permission_Inspection'))
                 <li class="treeview">
                     <a href="{{ url('/inspection') }}"><i class="fa fa-list"></i> <span>Inspection</span>
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
@@ -91,23 +110,7 @@
                 </li><!-- /brand  -->
             @endcan
 
-            @can(config('constant.Permission_Item'))
-                <li class="treeview">
-                    <a href="{!! url('ims/appointments') !!}"><i class="fa fa-calendar"></i> <span>Appointments</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
-                    </a>
-                    <ul class="treeview-menu">
-                        @can(config('constant.Permission_Item_Registry'))
-                            <li><a href="{!! url('ims/appointments') !!}"><i class="fa fa-table"></i> Appointments</a></li>
-                        @endcan
-                        @can(config('constant.Permission_Item_Creation'))
-                            <li><a href="{!! url('ims/appointments/create') !!}"><i class="fa fa-plus"></i> new</a></li>
-                        @endcan
-                    </ul>
-                </li>
-            @endcan
+
 
             @can(config('constant.Permission_Item'))
                 <li class="treeview">

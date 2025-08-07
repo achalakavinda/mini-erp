@@ -84,6 +84,12 @@ return [
     'Permission_Service_Creation'=>'Service-Creation',
     'Permission_Service_Update'=> 'Service-Update',
 
+    'Permission_Appointment'=>'Appointment',
+    'Permission_Appointment_Registry'=>'Appointment-Registry',
+    'Permission_Appointment_Show'=>'Appointment-Show',
+    'Permission_Appointment_Creation'=>'Appointment-Creation',
+    'Permission_Appointment_Update'=> 'Appointment-Update',
+
     'Permission_Job_Type'=> 'Job-Type',
     'Permission_Job_Type_Show'=> 'Job-Type-Show',
     'Permission_Job_Type_Registry'=> 'Job-Type-Registry',
