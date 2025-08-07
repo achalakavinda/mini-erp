@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\CusSector;
 use App\Models\CusService;
-use App\Models\Customer;
+use App\Models\Location;
 use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -29,8 +29,8 @@ class LocationController extends Controller
     public function index()
     {
         User::CheckPermission([config('constant.Permission_Customer_Registry')]);
-        $Customers = Customer::ownedByCompany()->paginate(10);
-        return view('admin.customer.index',compact('Customers'));
+        $Locations = Location::ownedByCompany()->paginate(10);
+        return view('admin.location.index',compact('Locations'));
     }
 
     /**
@@ -42,7 +42,7 @@ class LocationController extends Controller
     {
         User::CheckPermission([config('constant.Permission_Customer_Creation')]);
         $Company = Company::userOwnedCompany()->pluck('code', 'id');
-        return view('admin.customer.create',compact('Company'));
+        return view('admin.location.create',compact('Company'));
     }
 
     /**

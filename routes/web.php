@@ -73,6 +73,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('designation', 'DesignationController');
     Route::resource('project', 'ProjectController');
 
+    Route::resource('inspection', 'InspectionController');
+    Route::resource('appointment', 'AppointmentController');
+    Route::resource('service', 'ServiceController');
+
     Route::prefix('project')->group(function () {
         Route::get('{id}/actual-cost','ProjectController@actualCost');
         Route::get('{id}/budget-cost','ProjectController@budgetCost');
@@ -107,8 +111,8 @@ Route::group(['middleware' => ['auth']], function () {
     });
 
 
-        Route::resource('/blog','Admin\BlogController');
-        Route::post('/blog/{id}/ck-editor-upload-image','Admin\BlogController@ckEditorFileStore');
+    Route::resource('/blog','Admin\BlogController');
+    Route::post('/blog/{id}/ck-editor-upload-image','Admin\BlogController@ckEditorFileStore');
         
 
     Route::prefix('ims')->group(function ()

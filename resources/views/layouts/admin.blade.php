@@ -87,6 +87,9 @@
 <!-- AdminLTE App -->
 {!! Html::script('admin/js/adminlte.min.js?v='.env('APP_VERSION')) !!}
 {!! Html::script('admin/js/semantic.min.js?v='.env('APP_VERSION')) !!}
+{!! Html::script('admin/bower_components/raphael/raphael.min.js') !!}
+{!! Html::script('admin/bower_components/morris.js/morris.min.js') !!}
+{!! Html::script('admin/bower_components/chart.js/Chart.js?v='.env('APP_VERSION')) !!}
 
 <script src="{{ mix('js/app.js') }}"></script>
 

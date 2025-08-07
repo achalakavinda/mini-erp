@@ -9,7 +9,7 @@
                 <li><a href="{{ url('/dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
             @endcan
 
-            @can(config('constant.Permission_Customer'))
+            @can(config('constant.Permission_Lead'))
                 <li class="treeview">
                     <a href="{{ url('/lead') }}"><i class="fa fa-magnet"></i> <span>Lead</span>
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
@@ -19,7 +19,9 @@
                         <li><a href="{{ url('/lead/create') }}"><i class="fa fa-plus-square"></i> New </a></li>
                     </ul>
                 </li>
+            @endcan
 
+            @can(config('constant.Permission_Customer'))
                 <li class="treeview">
                     <a href="{{ url('/customer') }}"><i class="fa fa-users"></i> <span>Customer</span>
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
@@ -31,7 +33,7 @@
                 </li>
             @endcan
 
-            @can(config('constant.Permission_Customer'))
+            @can(config('constant.Permission_Location'))
                 <li class="treeview">
                     <a href="{{ url('/location') }}"><i class="fa fa-users"></i> <span>Location</span>
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
@@ -43,7 +45,7 @@
                 </li>
             @endcan
 
-             @can(config('constant.Permission_Customer'))
+             @can(config('constant.Permission_Inspection'))
                 <li class="treeview">
                     <a href="{{ url('/inspection') }}"><i class="fa fa-list"></i> <span>Inspection</span>
                         <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
@@ -91,7 +93,39 @@
 
             @can(config('constant.Permission_Item'))
                 <li class="treeview">
-                    <a href="{!! url('ims/item') !!}"><i class="fa fa-cube"></i> <span>Item</span>
+                    <a href="{!! url('ims/appointments') !!}"><i class="fa fa-calendar"></i> <span>Appointments</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        @can(config('constant.Permission_Item_Registry'))
+                            <li><a href="{!! url('ims/appointments') !!}"><i class="fa fa-table"></i> Appointments</a></li>
+                        @endcan
+                        @can(config('constant.Permission_Item_Creation'))
+                            <li><a href="{!! url('ims/appointments/create') !!}"><i class="fa fa-plus"></i> new</a></li>
+                        @endcan
+                    </ul>
+                </li>
+            @endcan
+
+            @can(config('constant.Permission_Item'))
+                <li class="treeview">
+                    <a href="{!! url('ims/service') !!}"><i class="fa fa-cube"></i> <span>Service</span>
+                        <span class="pull-right-container">
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </span>
+                    </a>
+                    <ul class="treeview-menu">
+                        <li><a href="{!! url('ims/service') !!}"><i class="fa fa-table"></i> Service</a></li>
+                        <li><a href="{!! url('ims/Service/create') !!}"><i class="fa fa-plus"></i> new</a></li>
+                    </ul>
+                </li>
+            @endcan
+
+            @can(config('constant.Permission_Item'))
+                <li class="treeview">
+                    <a href="{!! url('ims/item') !!}"><i class="fa fa-cube"></i> <span>Products</span>
                         <span class="pull-right-container">
                             <i class="fa fa-angle-left pull-right"></i>
                         </span>

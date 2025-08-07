@@ -5,7 +5,7 @@
     <!-- Default box -->
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Customers</h3>
+            <h3 class="box-title">Location</h3>
         </div>
         @include('layouts.components.header-widgets.dashboard-header')
         <div class="box-body">
@@ -34,30 +34,23 @@
                 <div style="overflow: auto" class="box-body">
                     <table id="table" class="table table-responsive table-bordered table-striped">
                         <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Contact</th>
-                            <th>Address</th>
-                            <th>NIC/Passport No</th>
-                            <th>Email</th>
-                            <th>DOB</th>
-                            <th>View</th>
-                        </tr>
+                            <tr>
+                                <th>Name</th>
+                                <th>Address</th>
+                                <th>View</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach($Customers as $customer)
-                            <tr>
-                                <td>{!! $customer->name !!}</td>
-                                <td>{!! $customer->contact !!}</td>
-                                <td>{!! $customer->address_1 !!}</td>
-                                <td>NIC:@if($customer->nic)  {{ $customer->nic }}@endif <br/> Pass:  @if($customer->passport)  {{ $customer->passport }}@endif </td>
-                                <td>{!! $customer->email !!}</td>
-                                <td>{!! $customer->dob !!}</td>
-                                <td>
-                                    <a href="{!! url('/customer/') !!}/{!! $customer->id !!}"><i class="fa fa-paper-plane"></i></a>
-                                </td>
-                            </tr>
-                        @endforeach
+                            @foreach ($Locations as $item)
+                                <tr>
+                                    <td>{!! $item->name !!}</td>
+                                    <td>{!! $item->address !!}</td>
+                                    <td>
+                                        <a href="{!! url('/customer/') !!}/{!! $item->id !!}"><i
+                                                class="fa fa-paper-plane"></i></a>
+                                    </td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
