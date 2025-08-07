@@ -38,13 +38,6 @@ class CreateLeadsTable extends Migration
             return tableStructure($table);
         } );
 
-    //     if (!Schema::connection('webcore')->hasTable('leads')) {
-    //             Schema::connection('webcore')
-    //             ->create('leads', function(Blueprint $table) {
-    //         return tableStructure($table);
-    //     } );
-    // }
-
     }
 
     /**

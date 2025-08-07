@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('customers', function (Blueprint $table) {
-            $table->unsignedBigInteger('lead_id')->nullable()->after('id');
-            $table->foreign('lead_id')->references('id')->on('leads');
-        });
+        // Schema::table('customers', function (Blueprint $table) {
+        //     $table->unsignedBigInteger('lead_id')->nullable()->after('id');
+        //     $table->foreign('lead_id')->references('id')->on('leads');
+        // });
     }
 
     /**
@@ -26,9 +26,9 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('customers', function (Blueprint $table) {
-            $table->dropForeign(['lead_id']);
-            $table->dropColumn('lead_id');
-        });
+        // Schema::table('customers', function (Blueprint $table) {
+        //     $table->dropForeign(['lead_id']);
+        //     $table->dropColumn('lead_id');
+        // });
     }
 };
