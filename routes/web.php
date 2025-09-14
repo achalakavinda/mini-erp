@@ -49,6 +49,10 @@ Route::group(['middleware' => ['auth']], function () {
 
     Route::get('dashboard', [DashboardController::class, 'index']);
 
+    Route::get('coming-soon', function () {
+        return view('pages.coming-soon');
+    })->name('coming-soon');
+
     Route::get('staff/profile/{id}', [StaffController::class, 'profile']);
     Route::get('staff/work-sheet', [PageController::class, 'workSheet']);
     Route::post('staff/work-sheet/store', [PageController::class, 'workSheetStore']);
@@ -65,7 +69,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('attendance', 'AttendanceController');
     Route::resource('customer', 'CustomerController');
     Route::resource('location', 'LocationController');
-    Route::resource('inspection', 'InspectionController');
+    Route::get('inspection', function () {
+        return redirect()->route('coming-soon');
+    });
+    Route::get('inspection/create', function () {
+        return redirect()->route('coming-soon');
+    });
     Route::resource('lead', 'LeadController');
     Route::resource('supplier', 'SupplierController');
     Route::resource('general-ledger', 'GeneralLedgerController');
@@ -73,7 +82,12 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('designation', 'DesignationController');
     Route::resource('project', 'ProjectController');
 
-    Route::resource('inspection', 'InspectionController');
+    Route::get('inspection', function () {
+        return redirect()->route('coming-soon');
+    });
+    Route::get('inspection/create', function () {
+        return redirect()->route('coming-soon');
+    });
     Route::resource('appointment', 'AppointmentController');
     Route::resource('service', 'ServiceController');
 

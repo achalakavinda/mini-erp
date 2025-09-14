@@ -11,18 +11,12 @@
 
             @can(config('constant.Permission_Appointment'))
                 <li class="treeview">
-                    <a href="{!! url('appointments') !!}"><i class="fa fa-calendar"></i> <span>Appointments</span>
-                        <span class="pull-right-container">
-                            <i class="fa fa-angle-left pull-right"></i>
-                        </span>
+                    <a href="{{ url('/appointment') }}"><i class="fa fa-calendar"></i> <span>Appointment</span>
+                        <span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span>
                     </a>
                     <ul class="treeview-menu">
-                        @can(config('constant.Permission_Item_Registry'))
-                            <li><a href="{!! url('appointments') !!}"><i class="fa fa-table"></i> Appointments</a></li>
-                        @endcan
-                        @can(config('constant.Permission_Item_Creation'))
-                            <li><a href="{!! url('appointments/create') !!}"><i class="fa fa-plus"></i> new</a></li>
-                        @endcan
+                        <li><a href="{{ url('/appointment') }}"><i class="fa fa-table"></i> Registry</a></li>
+                        <li><a href="{{ url('/appointment/create') }}"><i class="fa fa-plus-square"></i> New</a></li>
                     </ul>
                 </li>
             @endcan
